@@ -1,0 +1,952 @@
+
+==================== FINAL INTERFACE ====================
+2019-02-26 08:26:47.458002 UTC
+
+interface sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Target.Eval 8044
+  interface hash: 281c9cce252ff223e2dd15dad3125688
+  ABI hash: cb65058d2c301f825b5ff981c984631c
+  export-list hash: 45de3a6d746986c1734d8bfc1e4571e9
+  orphan hash: 7abf000fc5e23f941c4298fca3936e90
+  flag hash: 9326ae6e8e6ac24ff34c483fa06dbf20
+  opt_hash: 14e536840aca4e889cad654e6f9b79c1
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.Target.Eval.evaluate
+module dependencies: SEDEL.Common SEDEL.Target.Syntax
+package dependencies: StateVar-1.1.1.1 array-0.5.2.0 async-2.2.1
+                      base-4.11.1.0 base-orphans-0.7 bifunctors-5.5.3 binary-0.8.5.1
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.5.11.0
+                      contravariant-1.4.1 deepseq-1.4.3.0 distributive-0.5.3
+                      exceptions-0.10.0 ghc-boot-th-8.4.4 ghc-prim-0.5.2.0
+                      hashable-1.2.7.0 integer-gmp-1.0.2.0 mtl-2.2.2 profunctors-5.2.2
+                      protolude-0.2.2 stm-2.4.5.1 tagged-0.8.5 template-haskell-2.13.0.0
+                      text-1.2.3.1 transformers-0.5.5.0 unbound-generics-0.3.4
+orphans: transformers-0.5.5.0:Control.Monad.Trans.Error
+         stm-2.4.5.1:Control.Monad.STM
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.5.1:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show base-4.11.1.0:GHC.Float
+         base-4.11.1.0:GHC.Base
+family instance modules: base-4.11.1.0:Control.Applicative
+                         base-4.11.1.0:Data.Complex base-4.11.1.0:Data.Functor.Compose
+                         base-4.11.1.0:Data.Functor.Const
+                         base-4.11.1.0:Data.Functor.Identity
+                         base-4.11.1.0:Data.Functor.Product base-4.11.1.0:Data.Functor.Sum
+                         base-4.11.1.0:Data.Monoid base-4.11.1.0:Data.Semigroup
+                         base-4.11.1.0:Data.Semigroup.Internal base-4.11.1.0:Data.Version
+                         base-4.11.1.0:Data.Void base-4.11.1.0:GHC.Exts
+                         base-4.11.1.0:GHC.Generics base-4.11.1.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.5.11.0:Data.IntMap.Internal
+                         containers-0.5.11.0:Data.IntSet.Internal
+                         containers-0.5.11.0:Data.Map.Internal
+                         containers-0.5.11.0:Data.Sequence.Internal
+                         containers-0.5.11.0:Data.Set.Internal containers-0.5.11.0:Data.Tree
+                         ghc-boot-th-8.4.4:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.4.4:GHC.LanguageExtensions.Type
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Common
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Target.Syntax
+                         tagged-0.8.5:Data.Tagged
+                         template-haskell-2.13.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.11.1.0:Control.Monad.IO.Class 96109c36cb3c919872278540487fa39e
+import  -/  base-4.11.1.0:Data.Either 39d922b371c4c52d426e9ee66de8371a
+import  -/  base-4.11.1.0:Data.IORef 7625124710852387e94dfb3e4df7515e
+import  -/  base-4.11.1.0:Data.Maybe 409c3da2b142470b68be39ce1d97a9f7
+import  -/  base-4.11.1.0:GHC.Base 604111500e81281298777e721c75643b
+import  -/  base-4.11.1.0:GHC.Float 99c69d365bb2607725a22530ce1ca4b4
+import  -/  base-4.11.1.0:GHC.IORef e92b95f2e36bdb5fe155921cbe861044
+import  -/  base-4.11.1.0:GHC.Num 8e54b26dce4495382dc4b50cf36ab754
+import  -/  base-4.11.1.0:GHC.Real b4beb0389ba1ad5d9640aae67848c5d3
+import  -/  base-4.11.1.0:GHC.Show 73be67392447c974f19c3befd83c46c0
+import  -/  base-4.11.1.0:Prelude 0750c25585e2b797cd78291d423d39dd
+import  -/  containers-0.5.11.0:Data.Map.Internal 0150e210d0ae8df0f3a0669d5e32d8fa
+import  -/  containers-0.5.11.0:Data.Map.Strict 40ac55e8c7db7b7f0f7e3d9769233909
+import  -/  containers-0.5.11.0:Data.Map.Strict.Internal 372117aaabc2f1ff2039eaf324fdb5c6
+import  -/  ghc-prim-0.5.2.0:GHC.Classes 122abfcd7450c6c11602933c9ca5f80d
+import  -/  ghc-prim-0.5.2.0:GHC.Types d9b3023de7feae4a5308d643da5543f7
+import  -/  mtl-2.2.2:Control.Monad.Error.Class df146c18e27154b8df4c8637c59fd61b
+import  -/  mtl-2.2.2:Control.Monad.Except a6fe75d3c5548ea9e926864b8cbfe1ee
+import  -/  SEDEL.Common 09f7298ba1fa8793b51809d87ff74b30
+  exports: f3e61cff89cd8529684da86ece3c0a45
+  Add f76724fbd233848d4db2c584e4631f16
+  Arith f7fe6387143aa84e6738506b1f896774
+  Comp 0ffc1eb707b1a3c7f47f038984f944d4
+  Div 5fd929bef9218e818e86b377cd706532
+  Equ e4cd480182774a7cd54e42cd1bd95792
+  Gt 827e090e1848b2483b441b5ae8dda41f
+  LAnd 2a02726bea66e7f6bcc2c4daf1c230a0
+  LOr 38f88815b1af7eb3bb3e454f371f5719
+  Logical b7768423591bd03d2d1824ef255c4024
+  Lt 4862d2bfe8b870372712c133a96a9261
+  Mul 5a7981aeaabbe827210610c003316ecd
+  Neq 6164569898ae6e177eb1207ff284aeb5
+  Operation 19f47e167b8dfddf756bf38a846d86d9
+  Sub 3f911cb4cdf8b0982017c37c2cbcc026
+import  -/  SEDEL.Target.Syntax c6622e5f9abe8f28e85d7c0c0a6e79a5
+  exports: d7a64829c71f2f04f965636abc6b48e6
+  Bot d6fcfc701cc924cb7d915a892c92e9d7
+  UApp 23c4b2f9f0933d37c321e885ceea82c6
+  UBoolV 7bb92bc1bda6067988bc17679a8c6143
+  UExpr 9bfcea255d0153a0de696df7d2ee637a
+  UIf 241b4ee8290ac277f844e637fcf793dd
+  ULam 127fec481f4b9ad0d8803d73f02a2b2d
+  ULet 4c3d30e8a955991e75db7b5e153b2bcf
+  ULitV c599a4801c5a9cffb85b4dd0800c31d6
+  UName 9bfcea255d0153a0de696df7d2ee637a
+  UP1 c799fcc7b660c15cef276903d934962f
+  UP2 902a5585480b9b4128ba53215ad6a2cd
+  UPair 3edbd9516fc6a64a3db1538a6f2cd0d4
+  UPrimOp e6a2c6a1b2944fabdb7c8244fbadb3f1
+  USqrt ca998cc2fe2f047c161e7a2c5cea3589
+  UStrV 8dfc112d0881c7c0fb433770341bcc80
+  UToString 389b5d15b622576cd49fbb6158682607
+  UUnit 21b0fe465af1ff42966a8df3370fd172
+  UVar e844003c4b21cecd01af5481fb61dce2
+import  -/  transformers-0.5.5.0:Control.Monad.Trans.Except 1cac4acbba7f36bd732fcc993d3cc20d
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless 8dd357a9d9fbbcf23f41fb39ba00f4e4
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Fresh 6f0bdf2414300284a1d43f913bee508e
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Name 34633dd5588f50a53bac3c657a64a3ac
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Operations 86bd0dbc8cb450c4ba4e75dad5d99714
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowThunk :: GHC.Show.Show SEDEL.Target.Eval.Thunk
+  DFunId
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ SEDEL.Target.Eval.Thunk
+                  SEDEL.Target.Eval.$fShowThunk_$cshowsPrec
+                  SEDEL.Target.Eval.$fShowThunk_$cshow
+                  SEDEL.Target.Eval.$fShowThunk_$cshowList -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowThunk1 ::
+    SEDEL.Target.Eval.Thunk -> GHC.Base.String -> [GHC.Types.Char]
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,A><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: SEDEL.Target.Eval.Thunk)
+                   (s :: GHC.Base.String)[OneShot] ->
+                 GHC.CString.unpackAppendCString# "<Thunk>"# s) -}
+7a4aaf6f82e9d2a31ac0cebda0463d0d
+  $fShowThunk2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowThunk3) -}
+a41dd633f612f08e2244da1155d3284a
+  $fShowThunk3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Thunk>"#) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowThunk_$cshow :: SEDEL.Target.Eval.Thunk -> GHC.Base.String
+  {- Arity: 1, Strictness: <L,A>,
+     Unfolding: InlineRule (1, True, True)
+                (\ (ds :: SEDEL.Target.Eval.Thunk) ->
+                 SEDEL.Target.Eval.$fShowThunk2) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowThunk_$cshowList ::
+    [SEDEL.Target.Eval.Thunk] -> GHC.Show.ShowS
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ls :: [SEDEL.Target.Eval.Thunk]) (s :: GHC.Base.String) ->
+                 GHC.Show.showList__
+                   @ SEDEL.Target.Eval.Thunk
+                   SEDEL.Target.Eval.$fShowThunk1
+                   ls
+                   s) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowThunk_$cshowsPrec ::
+    GHC.Types.Int -> SEDEL.Target.Eval.Thunk -> GHC.Show.ShowS
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,A><L,A><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ds :: GHC.Types.Int)
+                   (x :: SEDEL.Target.Eval.Thunk)
+                   (s :: GHC.Base.String) ->
+                 GHC.CString.unpackAppendCString# "<Thunk>"# s) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowValue :: GHC.Show.Show SEDEL.Target.Eval.Value
+  DFunId
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ SEDEL.Target.Eval.Value
+                  SEDEL.Target.Eval.$fShowValue_$cshowsPrec
+                  SEDEL.Target.Eval.$fShowValue_$cshow
+                  SEDEL.Target.Eval.$fShowValue_$cshowList -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowValue1 ::
+    SEDEL.Target.Eval.Value -> GHC.Base.String -> [GHC.Types.Char]
+  {- Arity: 2, Strictness: <S,1*U><L,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: SEDEL.Target.Eval.Value)
+                   (s :: GHC.Base.String)[OneShot] ->
+                 GHC.Base.augment
+                   @ GHC.Types.Char
+                   (\ @ b
+                      (c :: GHC.Types.Char -> b -> b)[OneShot]
+                      (n :: b)[OneShot] ->
+                    GHC.Base.foldr
+                      @ GHC.Types.Char
+                      @ b
+                      c
+                      n
+                      (SEDEL.Target.Eval.$fShowValue_$cshow x))
+                   s) -}
+53cce6ce6a34a999b12abfe23cbfac34
+  $fShowValue10 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue11) -}
+046424d50088ea378008cbca1cdd1218
+  $fShowValue11 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("false"#) -}
+db4527bf0017416020f5717eb4be865b
+  $fShowValue2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue3) -}
+7fd2188e83052388492f322b837eca36
+  $fShowValue3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Lambda>"#) -}
+14c147cb191248d7e95fc6ce861ac0e6
+  $fShowValue4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue5) -}
+5ad0bf7ee644f199d3501dc4fc860bfc
+  $fShowValue5 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("()"#) -}
+db75988b554b56041582e68e868f8d1e
+  $fShowValue6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue7) -}
+65e21224756bf9306ca895a32f3fa4a1
+  $fShowValue7 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Pair>"#) -}
+7f93c6f619b2727d73a8a3faa8b0b0c0
+  $fShowValue8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue9) -}
+5ab41fd441736132c7d136e44ecc6788
+  $fShowValue9 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("true"#) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowValue_$cshow :: SEDEL.Target.Eval.Value -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: SEDEL.Target.Eval.Value) ->
+                 case ds of wild {
+                   SEDEL.Target.Eval.VLit dt
+                   -> GHC.Float.$w$sshowSignedFloat
+                        GHC.Float.$fShowDouble2
+                        GHC.Float.minExpt
+                        dt
+                        (GHC.Types.[] @ GHC.Types.Char)
+                   SEDEL.Target.Eval.VBool ds1
+                   -> case ds1 of wild1 {
+                        GHC.Types.False -> SEDEL.Target.Eval.$fShowValue10
+                        GHC.Types.True -> SEDEL.Target.Eval.$fShowValue8 }
+                   SEDEL.Target.Eval.VStr s
+                   -> GHC.Types.:
+                        @ GHC.Types.Char
+                        GHC.Show.$fShow(,)3
+                        (GHC.Show.showLitString s GHC.Show.$fShow[]1)
+                   SEDEL.Target.Eval.VPair ds1 ds2 -> SEDEL.Target.Eval.$fShowValue6
+                   SEDEL.Target.Eval.VUnit -> SEDEL.Target.Eval.$fShowValue4
+                   SEDEL.Target.Eval.VLam ds1 -> SEDEL.Target.Eval.$fShowValue2 }) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowValue_$cshowList ::
+    [SEDEL.Target.Eval.Value] -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S,1*U><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ls :: [SEDEL.Target.Eval.Value]) (s :: GHC.Base.String) ->
+                 GHC.Show.showList__
+                   @ SEDEL.Target.Eval.Value
+                   SEDEL.Target.Eval.$fShowValue1
+                   ls
+                   s) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  $fShowValue_$cshowsPrec ::
+    GHC.Types.Int -> SEDEL.Target.Eval.Value -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,A><S,1*U><L,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ds :: GHC.Types.Int)
+                   (x :: SEDEL.Target.Eval.Value)
+                   (s :: GHC.Base.String) ->
+                 GHC.Base.augment
+                   @ GHC.Types.Char
+                   (\ @ b
+                      (c :: GHC.Types.Char -> b -> b)[OneShot]
+                      (n :: b)[OneShot] ->
+                    GHC.Base.foldr
+                      @ GHC.Types.Char
+                      @ b
+                      c
+                      n
+                      (SEDEL.Target.Eval.$fShowValue_$cshow x))
+                   s) -}
+60e3fab22be45f11baa82ad4006589b6
+  $s$fApplicativeExceptT ::
+    GHC.Base.Applicative
+      (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun: @ e.
+                  @ (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+                  (SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fFunctorExceptT @ e)
+                  (SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fApplicativeExceptT_$cpure
+                     @ e)
+                  (Control.Monad.Trans.Except.$fApplicativeExceptT_$c<*>
+                     @ GHC.Types.IO
+                     @ e
+                     GHC.Base.$fFunctorIO
+                     GHC.Base.$fMonadIO)
+                  (\ @ a
+                     @ b
+                     @ c
+                     (f1 :: a -> b -> c)
+                     (x :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a) ->
+                   Control.Monad.Trans.Except.$fApplicativeExceptT_$c<*>
+                     @ GHC.Types.IO
+                     @ e
+                     GHC.Base.$fFunctorIO
+                     GHC.Base.$fMonadIO
+                     @ b
+                     @ c
+                     (\ (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                      case x `cast`
+                           (Control.Monad.Trans.Except.N:ExceptT[0]
+                                <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                                   <Data.Either.Either e a>_R)
+                             s of ds { (#,#) ipv ipv1 ->
+                      (# ipv,
+                         Data.Either.$fApplicativeEither_$cfmap
+                           @ e
+                           @ a
+                           @ (b -> c)
+                           f1
+                           ipv1 #) })
+                       `cast`
+                     (Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e (b -> c)>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                            <e>_N <GHC.Types.IO>_R <b -> c>_N)))
+                  (SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fApplicativeExceptT_$c*>
+                     @ e)
+                  (\ @ a
+                     @ b
+                     (x :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a) ->
+                   Control.Monad.Trans.Except.$fApplicativeExceptT_$c<*>
+                     @ GHC.Types.IO
+                     @ e
+                     GHC.Base.$fFunctorIO
+                     GHC.Base.$fMonadIO
+                     @ b
+                     @ a
+                     (\ (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                      case x `cast`
+                           (Control.Monad.Trans.Except.N:ExceptT[0]
+                                <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                                   <Data.Either.Either e a>_R)
+                             s of ds { (#,#) ipv ipv1 ->
+                      (# ipv,
+                         Control.Monad.Trans.Except.$fApplicativeExceptT1
+                           @ a
+                           @ b
+                           @ e
+                           ipv1 #) })
+                       `cast`
+                     (Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e (b -> a)>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                            <e>_N <GHC.Types.IO>_R <b -> a>_N))) -}
+a22f75cf9cc75153522f01941b5d86ad
+  $s$fApplicativeExceptT_$c<*>1 ::
+    Control.Monad.Trans.Except.ExceptT e GHC.Types.IO (a -> b)
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, Data.Either.Either e b #)
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(S(SS)),1*C1(U(U,1*U))><L,1*C1(U(U,1*U))><S,U>,
+     Unfolding: (\ @ e
+                   @ a
+                   @ b
+                   (w1 :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO (a -> b))
+                   (w2 :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case w1
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <a -> b>_N ; GHC.Types.N:IO[0]
+                                                                   <Data.Either.Either
+                                                                      e (a -> b)>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1 -> (# ipv, Data.Either.Left @ e @ b e1 #)
+                   Data.Either.Right k
+                   -> case w2
+                             `cast`
+                           (Control.Monad.Trans.Except.N:ExceptT[0]
+                                <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                                   <Data.Either.Either e a>_R)
+                             ipv of ds2 { (#,#) ipv2 ipv3 ->
+                      case ipv3 of wild1 {
+                        Data.Either.Left e1 -> (# ipv2, Data.Either.Left @ e @ b e1 #)
+                        Data.Either.Right x
+                        -> (# ipv2, Data.Either.Right @ e @ b (k x) #) } } } }) -}
+a574143014ad5be055eb78688efecb79
+  $s$fApplicativeExceptT_$s$fApplicativeExceptT_$c*> ::
+    Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(S(SS)),1*C1(U(U,1*U))><L,1*C1(U(U,U))><S,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ e
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a)
+                   (k :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case m1
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e a>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1 -> (# ipv, Data.Either.Left @ e @ b e1 #)
+                   Data.Either.Right x
+                   -> k `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <b>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e b>_R)
+                        ipv } })
+                  `cast`
+                (forall (e :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a>_R
+                 ->_R <Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e b>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                     <e>_N <GHC.Types.IO>_R <b>_N)) -}
+433c985a958a3b65889ed96fe2532eaa
+  $s$fApplicativeExceptT_$s$fApplicativeExceptT_$cpure ::
+    a -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><S,U>,
+     Inline: (sat-args=1),
+     Unfolding: InlineRule (1, False, False)
+                (\ @ e @ a (a1 :: a) (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 (# s, Data.Either.Right @ e @ a a1 #))
+                  `cast`
+                (forall (e :: <*>_N) (a :: <*>_N).
+                 <a>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e a>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                     <e>_N <GHC.Types.IO>_R <a>_N)) -}
+8237df216e4891877d0d127316f3f4d5
+  $s$fApplicativeExceptT_$s$fFunctorExceptT ::
+    GHC.Base.Functor
+      (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun: @ e.
+                  @ (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+                  (Control.Monad.Trans.Except.$fFunctorExceptT_$cfmap
+                     @ GHC.Types.IO
+                     @ e
+                     GHC.Base.$fFunctorIO)
+                  (Control.Monad.Trans.Except.$fFunctorExceptT_$c<$
+                     @ GHC.Types.IO
+                     @ e
+                     GHC.Base.$fFunctorIO) -}
+2fa4cadf2248e231a20e4188d8ea621d
+  $s$fApplicativeFreshMT_$s$fMonadExceptT ::
+    GHC.Base.Monad (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun: @ e.
+                  @ (Control.Monad.Trans.Except.ExceptT e GHC.Types.IO)
+                  (SEDEL.Target.Eval.$s$fApplicativeExceptT @ e)
+                  (SEDEL.Target.Eval.$s$fApplicativeFreshMT_$s$fMonadExceptT_$c>>=
+                     @ e)
+                  (SEDEL.Target.Eval.$s$fApplicativeFreshMT_$s$fMonadExceptT_$c>>
+                     @ e)
+                  (\ @ a (eta :: a) (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                   (# s, Data.Either.Right @ e @ a eta #))
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <a>_R
+                   ->_R Sym (GHC.Types.N:IO[0]
+                                 <Data.Either.Either
+                                    e a>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                       <e>_N <GHC.Types.IO>_R <a>_N))
+                  (\ @ a (x :: GHC.Base.String) ->
+                   GHC.Magic.noinline
+                     @ (forall a1. [GHC.Types.Char] -> GHC.Types.IO a1)
+                     GHC.IO.failIO1
+                       `cast`
+                     (forall (a1 :: <*>_N).
+                      <GHC.Base.String>_R ->_R Sym (GHC.Types.N:IO[0] <a1>_R))
+                     @ (Data.Either.Either e a)
+                     x)
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <GHC.Base.String>_R
+                   ->_R Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                 <e>_N <GHC.Types.IO>_R <a>_N)) -}
+0a5b17105db95111531469b197a8804e
+  $s$fApplicativeFreshMT_$s$fMonadExceptT_$c>> ::
+    Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(S(SS)),1*C1(U(U,1*U))><L,1*C1(U(U,U))><S,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ e
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a)
+                   (k :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case m1
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e a>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1 -> (# ipv, Data.Either.Left @ e @ b e1 #)
+                   Data.Either.Right x
+                   -> k `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <b>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e b>_R)
+                        ipv } })
+                  `cast`
+                (forall (e :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a>_R
+                 ->_R <Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e b>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                     <e>_N <GHC.Types.IO>_R <b>_N)) -}
+26bd3a05d54923e1249e62bf95de8276
+  $s$fApplicativeFreshMT_$s$fMonadExceptT_$c>>= ::
+    Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a
+    -> (a -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b)
+    -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(S(SS)),1*C1(U(U,1*U))><L,1*C1(C1(U(U,U)))><S,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ e
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a)
+                   (k :: a -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case m1
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <a>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e a>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1 -> (# ipv, Data.Either.Left @ e @ b e1 #)
+                   Data.Either.Right x
+                   -> (k x)
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <e>_N <GHC.Types.IO>_R <b>_N ; GHC.Types.N:IO[0]
+                                                              <Data.Either.Either e b>_R)
+                        ipv } })
+                  `cast`
+                (forall (e :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Except.ExceptT e GHC.Types.IO a>_R
+                 ->_R <a -> Control.Monad.Trans.Except.ExceptT e GHC.Types.IO b>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  e b>_R) ; Sym (Control.Monad.Trans.Except.N:ExceptT[0]
+                                                     <e>_N <GHC.Types.IO>_R <b>_N)) -}
+d260490f70ed25be9d50f928bd26550f
+  $sinsert_$sgo8 ::
+    SEDEL.Target.Syntax.UName
+    -> a1
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a1
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a1
+  {- Arity: 3, Strictness: <S,1*U><S,1*U><S,1*U> -}
+fdc29c87e56d7a4009ae4cc529c11d8a
+  $slookup1 ::
+    SEDEL.Target.Syntax.UName
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a
+    -> GHC.Base.Maybe a
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+a2f36b4ad3cb1c3f0a12cbb14a460601
+  $tc'Thunk :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   5367726529606945857##
+                   2492172642184329817##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'Thunk2
+                   0#
+                   SEDEL.Target.Eval.$tc'Thunk1) -}
+9b615567a8e518af73084c9bd29c184c
+  $tc'Thunk1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+be11dd4e2b077572d6b28eb7b82712ef
+  $tc'Thunk2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'Thunk3) -}
+0167010f41e377045af32bcede106be1
+  $tc'Thunk3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'Thunk"#) -}
+0c89e8d60adc534a03f5a38c5acfa9b2
+  $tc'VBool :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   7089107312578958025##
+                   9693069648160190923##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VBool2
+                   0#
+                   SEDEL.Target.Eval.$tc'VBool1) -}
+1dfbde6d63fa54f13c441ae5804c76e3
+  $tc'VBool1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+46378fea35b9c33c7919b31730e8f28c
+  $tc'VBool2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VBool3) -}
+4070f3c91e28ef534b18befbcdb334bc
+  $tc'VBool3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VBool"#) -}
+d0e3b5e82f0f9fbc48f7670bff63bc67
+  $tc'VLam :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17916622647498349655##
+                   11139394906945914728##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VLam2
+                   0#
+                   SEDEL.Target.Eval.$tc'VLam1) -}
+c6f48c4362624f31536b406055c959db
+  $tc'VLam1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+97518192d0d51c76a45520222edf5949
+  $tc'VLam2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VLam3) -}
+934662d1eed9dd114f033af8190f6bfe
+  $tc'VLam3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VLam"#) -}
+d0e8e6f34658d3d8340d3eeaa4f8d323
+  $tc'VLit :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   15233985563149338315##
+                   5280458628435301114##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VLit2
+                   0#
+                   SEDEL.Target.Eval.$tc'VLit1) -}
+8d847b932f62823004bfa5e2142dd90d
+  $tc'VLit1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+410a02b9c21e22fbf61e89024035ce13
+  $tc'VLit2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VLit3) -}
+65f7e491a0a5afd4ab85b44a7d447a16
+  $tc'VLit3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VLit"#) -}
+5533bad4c1d43d18c76aeabc52f17f04
+  $tc'VPair :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   16131890868735468766##
+                   18024057552988224761##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VPair2
+                   0#
+                   SEDEL.Target.Eval.$tc'VPair1) -}
+39de84d19b509f5d24fbc41844c6d305
+  $tc'VPair1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+5dcb8e5f5d6e193b5283b8af9da40eb4
+  $tc'VPair2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VPair3) -}
+d447fd250936c8dfcb2520374861a855
+  $tc'VPair3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VPair"#) -}
+acfe17d32a6a48216c71bcd2e89f5594
+  $tc'VStr :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6353925852122052285##
+                   17197678278756125944##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VStr2
+                   0#
+                   SEDEL.Target.Eval.$tc'VStr1) -}
+0c192512848d7b2025741b0e55528452
+  $tc'VStr1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+35f9e1f09f5a72b3967cf84357b2800c
+  $tc'VStr2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VStr3) -}
+13b5464567619b8c165c3314dbaf5f9e
+  $tc'VStr3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VStr"#) -}
+7877e1c22c5b479004081e36257ce4ec
+  $tc'VUnit :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9418603944450361295##
+                   7260280552158976205##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VUnit2
+                   0#
+                   SEDEL.Target.Eval.$tc'VUnit1) -}
+35229310d2b9f6dc0ce074dfe4e1126c
+  $tc'VUnit1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m1, Inline: [~] -}
+f886fb5e940f09e0ce3d225ee5658530
+  $tc'VUnit2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VUnit3) -}
+4c0509afeb4f77c769156494308f0c69
+  $tc'VUnit3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VUnit"#) -}
+033e3daa8f26b2b035f029f2738ee622
+  $tcThunk :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   14114441284013430615##
+                   4876137434522007206##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tcThunk1
+                   0#
+                   GHC.Types.krep$*) -}
+9e70ebf79e0307fabb13bae2f384f7df
+  $tcThunk1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tcThunk2) -}
+2d85fcc8bb90ea65024558a800dd65df
+  $tcThunk2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Thunk"#) -}
+66c89da8c8f635332861b98bcfba99a4
+  $tcValue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17967702681499788936##
+                   5446852641905122297##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tcValue1
+                   0#
+                   GHC.Types.krep$*) -}
+aa2337860a71648ec6d3406a8c70cbd3
+  $tcValue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tcValue2) -}
+f35e67451ae173a12e9181febb889a67
+  $tcValue2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Value"#) -}
+f7456c9c06b7787bedd0acc1c3d9566c
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.Target.Eval.$trModule3
+                   SEDEL.Target.Eval.$trModule1) -}
+7177a60bfc0a4a3bae253d0565d94256
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$trModule2) -}
+fb36261cb84b171d8f2aa72d1f55156f
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.Target.Eval"#) -}
+0b7deab4ea25e8ba2a08e81fcd02c553
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$trModule4) -}
+0e87bb66a89af0dd292d9a37ec7c6e88
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP"#) -}
+11aa2f56dda107e151a467024488ed95
+  type Env =
+    Data.Map.Internal.Map
+      SEDEL.Target.Syntax.UName SEDEL.Target.Eval.Thunk
+a91dd603aecc952614b51a5b2e103bbb
+  type EvalM a =
+    Unbound.Generics.LocallyNameless.Fresh.FreshMT
+      (Control.Monad.Trans.Except.ExceptT GHC.Base.String GHC.Types.IO) a
+6ac55f12908fbc209a3815b353fe7cb7
+  newtype Thunk
+    = Thunk {force :: SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value}
+6ac55f12908fbc209a3815b353fe7cb7
+  data Value
+    = VLit {-# UNPACK #-}GHC.Types.Double
+    | VBool !GHC.Types.Bool
+    | VStr !GHC.Base.String
+    | VPair !SEDEL.Target.Eval.Thunk !SEDEL.Target.Eval.Thunk
+    | VUnit
+    | VLam !(SEDEL.Target.Eval.Thunk
+             -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value)
+1580147c4c9a1d1c0c5b603212e46fb0
+  eval ::
+    SEDEL.Target.Eval.Env
+    -> SEDEL.Target.Syntax.UExpr
+    -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value
+  {- Arity: 2, Strictness: <L,U><S,1*U> -}
+61d765d47296f3bba758bab8a91a3d5f
+  evaluate ::
+    SEDEL.Target.Syntax.UExpr
+    -> GHC.Types.IO
+         (Data.Either.Either GHC.Base.String SEDEL.Target.Eval.Value)
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.Target.Eval.evaluate1
+                  `cast`
+                (<SEDEL.Target.Syntax.UExpr>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  [GHC.Types.Char] SEDEL.Target.Eval.Value>_R)) -}
+8bd3cbc5caa13320c7f7f7f15b47eafe
+  evaluate1 ::
+    SEDEL.Target.Syntax.UExpr
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          Data.Either.Either [GHC.Types.Char] SEDEL.Target.Eval.Value #)
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: (\ (e :: SEDEL.Target.Syntax.UExpr)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case ((SEDEL.Target.Eval.eval
+                          (Data.Map.Internal.Tip
+                             @ SEDEL.Target.Syntax.UName
+                             @ SEDEL.Target.Eval.Thunk)
+                          e)
+                         `cast`
+                       (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0] <Control.Monad.Trans.Except.ExceptT
+                                                                               GHC.Base.String
+                                                                               GHC.Types.IO>_N <SEDEL.Target.Eval.Value>_N ; Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                                                                 <GHC.Integer.Type.Integer>_N
+                                                                                                                                 <Control.Monad.Trans.Except.ExceptT
+                                                                                                                                    GHC.Base.String
+                                                                                                                                    GHC.Types.IO>_R
+                                                                                                                                 <SEDEL.Target.Eval.Value>_N)
+                         Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <[GHC.Types.Char]>_N
+                           <GHC.Types.IO>_R
+                           <(SEDEL.Target.Eval.Value,
+                             GHC.Integer.Type.Integer)>_N ; GHC.Types.N:IO[0]
+                                                                <Data.Either.Either
+                                                                   [GHC.Types.Char]
+                                                                   (SEDEL.Target.Eval.Value,
+                                                                    GHC.Integer.Type.Integer)>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1
+                   -> (# ipv,
+                         Data.Either.Left @ [GHC.Types.Char] @ SEDEL.Target.Eval.Value e1 #)
+                   Data.Either.Right x
+                   -> (# ipv,
+                         Data.Either.Right
+                           @ [GHC.Types.Char]
+                           @ SEDEL.Target.Eval.Value
+                           (case x of wild1 { (,) a1 ds2 -> a1 }) #) } }) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  force ::
+    SEDEL.Target.Eval.Thunk
+    -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value
+  RecSel Left SEDEL.Target.Eval.Thunk
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.Target.Eval.force1
+                  `cast`
+                (<SEDEL.Target.Eval.Thunk>_R ->_R SEDEL.Target.Eval.N:Thunk[0]) -}
+6ac55f12908fbc209a3815b353fe7cb7
+  force1 :: SEDEL.Target.Eval.Thunk -> SEDEL.Target.Eval.Thunk
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, True)
+                (\ (ds :: SEDEL.Target.Eval.Thunk) -> ds) -}
+instance GHC.Show.Show [SEDEL.Target.Eval.Thunk]
+  = SEDEL.Target.Eval.$fShowThunk
+instance GHC.Show.Show [SEDEL.Target.Eval.Value]
+  = SEDEL.Target.Eval.$fShowValue
+"SPEC/SEDEL.Target.Eval $fApplicativeExceptT @ IO _" [orphan] forall @ e
+                                                                     (v1 :: GHC.Base.Monad
+                                                                              GHC.Types.IO)
+                                                                     (v :: GHC.Base.Functor
+                                                                             GHC.Types.IO)
+  Control.Monad.Trans.Except.$fApplicativeExceptT @ GHC.Types.IO
+                                                  @ e
+                                                  v
+                                                  v1
+  = SEDEL.Target.Eval.$s$fApplicativeExceptT @ e
+"SPEC/SEDEL.Target.Eval $fApplicativeExceptT_$c*> @ IO _" [orphan] forall @ e
+                                                                          ($dMonad :: GHC.Base.Monad
+                                                                                        GHC.Types.IO)
+                                                                          ($dFunctor :: GHC.Base.Functor
+                                                                                          GHC.Types.IO)
+  Control.Monad.Trans.Except.$fApplicativeExceptT_$c*> @ GHC.Types.IO
+                                                       @ e
+                                                       $dFunctor
+                                                       $dMonad
+  = SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fApplicativeExceptT_$c*>
+      @ e
+"SPEC/SEDEL.Target.Eval $fApplicativeExceptT_$cpure @ IO _" [orphan] forall @ e
+                                                                            ($dMonad :: GHC.Base.Monad
+                                                                                          GHC.Types.IO)
+                                                                            ($dFunctor :: GHC.Base.Functor
+                                                                                            GHC.Types.IO)
+  Control.Monad.Trans.Except.$fApplicativeExceptT_$cpure @ GHC.Types.IO
+                                                         @ e
+                                                         $dFunctor
+                                                         $dMonad
+  = SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fApplicativeExceptT_$cpure
+      @ e
+"SPEC/SEDEL.Target.Eval $fFunctorExceptT @ IO _" [orphan] forall @ e
+                                                                 (v :: GHC.Base.Functor
+                                                                         GHC.Types.IO)
+  Control.Monad.Trans.Except.$fFunctorExceptT @ GHC.Types.IO @ e v
+  = SEDEL.Target.Eval.$s$fApplicativeExceptT_$s$fFunctorExceptT @ e
+"SPEC/SEDEL.Target.Eval $fMonadExceptT @ IO _" [orphan] forall @ e
+                                                               (v :: GHC.Base.Monad GHC.Types.IO)
+  Control.Monad.Trans.Except.$fMonadExceptT @ GHC.Types.IO @ e v
+  = SEDEL.Target.Eval.$s$fApplicativeFreshMT_$s$fMonadExceptT @ e
+"SPEC/SEDEL.Target.Eval $fMonadExceptT_$c>> @ IO _" [orphan] forall @ e
+                                                                    ($dMonad :: GHC.Base.Monad
+                                                                                  GHC.Types.IO)
+  Control.Monad.Trans.Except.$fMonadExceptT_$c>> @ GHC.Types.IO
+                                                 @ e
+                                                 $dMonad
+  = SEDEL.Target.Eval.$s$fApplicativeFreshMT_$s$fMonadExceptT_$c>>
+      @ e
+"SPEC/SEDEL.Target.Eval $fMonadExceptT_$c>>= @ IO _" [orphan] forall @ e
+                                                                     ($dMonad :: GHC.Base.Monad
+                                                                                   GHC.Types.IO)
+  Control.Monad.Trans.Except.$fMonadExceptT_$c>>= @ GHC.Types.IO
+                                                  @ e
+                                                  $dMonad
+  = SEDEL.Target.Eval.$s$fApplicativeFreshMT_$s$fMonadExceptT_$c>>=
+      @ e
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

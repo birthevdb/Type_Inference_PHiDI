@@ -1,0 +1,1115 @@
+
+==================== FINAL INTERFACE ====================
+2019-04-01 09:33:49.749167 UTC
+
+interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Util 8063
+  interface hash: 25cfe0fe475c046c30769cc16e75c846
+  ABI hash: 852fd4a639e7732ead5b4498cf00b60a
+  export-list hash: 3deb26de07e49528c70b6f9f7e5d21d6
+  orphan hash: cc9afb999a6d1e299c75e022a99fffcc
+  flag hash: 77e0b76db453e2958210ce9cd3d853a9
+  opt_hash: 6faf2de08de32d19db9870899d88e59a
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  plugin_hash: ad164012d6b1e14942349d58b1132007
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.Util.eapp
+  SEDEL.Util.ebind
+  SEDEL.Util.elam
+  SEDEL.Util.elet
+  SEDEL.Util.evar
+  SEDEL.Util.mkArr
+  SEDEL.Util.mkRecds
+  SEDEL.Util.mkRecds'
+  SEDEL.Util.mkRecdsT
+  SEDEL.Util.tforall
+  SEDEL.Util.translType
+  SEDEL.Util.translate
+  SEDEL.Util.tvar
+module dependencies: SEDEL.Common SEDEL.Source.Syntax
+                     SEDEL.Target.Syntax
+package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
+                      base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.6.0.1
+                      deepseq-1.4.4.0 distributive-0.6 exceptions-0.10.0
+                      ghc-boot-th-8.6.3 ghc-prim-0.5.3 hashable-1.2.7.0
+                      integer-gmp-1.0.2.0 megaparsec-7.0.4 mtl-2.2.2
+                      parser-combinators-1.0.1 pretty-1.1.3.6 prettyprinter-1.2.1
+                      profunctors-5.3 protolude-0.2.3 stm-2.5.0.0 tagged-0.8.6
+                      template-haskell-2.14.0.0 text-1.2.3.1 transformers-0.5.5.0
+                      unbound-generics-0.4.0
+orphans: sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.6.0:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show stm-2.5.0.0:Control.Monad.STM
+         transformers-0.5.5.0:Control.Monad.Trans.Error
+         base-4.12.0.0:GHC.Float base-4.12.0.0:GHC.Base
+family instance modules: base-4.12.0.0:Control.Applicative
+                         base-4.12.0.0:Data.Complex base-4.12.0.0:Data.Functor.Compose
+                         base-4.12.0.0:Data.Functor.Const
+                         base-4.12.0.0:Data.Functor.Identity
+                         base-4.12.0.0:Data.Functor.Product base-4.12.0.0:Data.Functor.Sum
+                         base-4.12.0.0:Data.Monoid base-4.12.0.0:Data.Semigroup
+                         base-4.12.0.0:Data.Semigroup.Internal base-4.12.0.0:Data.Version
+                         base-4.12.0.0:Data.Void base-4.12.0.0:GHC.Exts
+                         base-4.12.0.0:GHC.Generics base-4.12.0.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.6.0.1:Data.IntMap.Internal
+                         containers-0.6.0.1:Data.IntSet.Internal
+                         containers-0.6.0.1:Data.Map.Internal
+                         containers-0.6.0.1:Data.Sequence.Internal
+                         containers-0.6.0.1:Data.Set.Internal containers-0.6.0.1:Data.Tree
+                         ghc-boot-th-8.6.3:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.6.3:GHC.LanguageExtensions.Type
+                         megaparsec-7.0.4:Text.Megaparsec.Error
+                         megaparsec-7.0.4:Text.Megaparsec.Pos
+                         megaparsec-7.0.4:Text.Megaparsec.State
+                         megaparsec-7.0.4:Text.Megaparsec.Stream
+                         pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
+                         pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
+                         prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Target.Syntax
+                         tagged-0.8.6:Data.Tagged
+                         template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Ignore
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.12.0.0:Data.Foldable 00188ddf89c975fee76bdfad479443c1
+import  -/  base-4.12.0.0:Data.List ce2c69da408fdc014383cede9e1f9adf
+import  -/  base-4.12.0.0:GHC.Base cc906f98291a1b830546e99a96674547
+import  -/  base-4.12.0.0:GHC.List 734a72beb76d276fb4a0ba2689a5711f
+import  -/  base-4.12.0.0:Prelude 5c01365ec01f83bd405ac01cbb9a8d76
+import  -/  SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
+  exports: d4d2fd645eff9adcf509b28019caf96b
+  And 858cda1fbe6f64a52489f771e0708139
+  App 2c964fefc28aabf42ed9dbe40c3accd3
+  Arr 22416be279c31386e9cc95e9c9b2de68
+  BoolT 9eb5ff7582ee586b5677d133bc3c5a82
+  BotT e9fc1220c215208a25f3ef509fa1d4c0
+  DForall 3b7d6b5afb57e716755254c1449edcb0
+  DRec 67d90dc5830827b93ce062be4b2fee0f
+  DRec' 4cfdae78935e00e853289c18a1ad3519
+  Expr 76520494bd75ab62670e86072668ba13
+  Join a4919cbd9c43f86a7e132f12d2cdc38f
+  Label fc63c6ec9c84d81eb04bc3ecb5e488a0
+  Lam 89716123ec809e2cc8bdc155ae4f4668
+  Let eef6e727cd3f41679ad959a78238d920
+  Meet b52f57d57eb5f073ea5cb7b7cef99237
+  Merge bfed41bbda08db4fffae7c43cde3fe30
+  NumT adf11e6708e5e8a7ec46f283d84a97ad
+  SRecT 9b864ff12762d70109c77b1f5eea4c3a
+  SType a5fd2e9b5e852c36afadad4c1a615a65
+  SType 76520494bd75ab62670e86072668ba13
+  Scheme 76520494bd75ab62670e86072668ba13
+  TUni 9eb22e5d95f0de04502f16ea4eb97bf9
+  TVar 3e45bba34d2b60ad4b6a831b8a2e52f8
+  TmBind 76520494bd75ab62670e86072668ba13
+  TmName 76520494bd75ab62670e86072668ba13
+  Top 072bc63b13d03508f9113d1a45bc6153
+  TopT 1b95963f14ca91731abc40c7b31bb3cf
+  Var 6d082d2f0a5af10d8ab316bafa598eed
+import  -/  SEDEL.Target.Syntax 2589141e2792ef4fd114aa83be20e48d
+  exports: b36744e56246d62dcae7b00d023dfc0b
+  UArr cc4d721f613b7e0f4a3ba21d8fa3fc84
+  UBoolT 19bde08bab09c6dad14feb83bcfaa010
+  UNumT 77264928d916524ba0812e4a647aca34
+  UPairT 6a01637ea8f28b18e026d93b2352c812
+  UScheme 900f1aedd6e2a49c96063612252e6ccc
+  UTVar 3b3d148d46b120b44ca02c19435ee9a7
+  UType 162eab31fa304c5161d105f4cae61946
+  UUnitT 0f797debfdaad05b73c2630319c185d6
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless 36704d4dbfb3fb22f46cde363ae796f2
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Bind 3c4064682c8bdf96e868ab5666aaa835
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed f74cff3aea20e9a2f5e6bfc539a9689b
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Fresh e0f8d49fe8e0f78dfcabb34436892778
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name 81d6e7baa0bd0880e550478df477614a
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Operations d0c219408974b95413509bf76023577c
+e58ae4428334b7f46085be4748960535
+  $s$fAlpha(,)_$s$fAlphaEmbed ::
+    Unbound.Generics.LocallyNameless.Alpha.Alpha
+      (Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme)
+  {- Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                       SEDEL.Source.Syntax.Scheme)
+                  SEDEL.Util.$s$fAlpha(,)_$s$fShowEmbed
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme)
+                     (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme) ->
+                   SEDEL.Source.Syntax.$fAlphaScheme_$caeq'
+                     (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                      Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                        Unbound.Generics.LocallyNameless.Alpha.Term
+                        ds3 })
+                     ds
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)
+                     ds1
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R))
+                  (Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cfvAny'
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fAlphaScheme)
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (b :: Unbound.Generics.LocallyNameless.Alpha.NamePatFind)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed6
+                          @ SEDEL.Source.Syntax.Scheme
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaScheme_$cclose
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           b
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (b :: Unbound.Generics.LocallyNameless.Alpha.NthPatFind)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed5
+                          @ SEDEL.Source.Syntax.Scheme
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaScheme_$copen
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           b
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case (SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Data.Semigroup.Internal.N:All[0]) of wild {
+                     GHC.Types.False
+                     -> (GHC.Maybe.Nothing
+                           @ [Unbound.Generics.LocallyNameless.Name.AnyName])
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                  <Unbound.Generics.LocallyNameless.Name.AnyName>_R))
+                     GHC.Types.True
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed4
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                  <Unbound.Generics.LocallyNameless.Name.AnyName>_R)) })
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   GHC.Types.False)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Data.Semigroup.Internal.N:All[0]))
+                  SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                    `cast`
+                  (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                            <SEDEL.Source.Syntax.Scheme>_R)
+                   ->_R Data.Semigroup.Internal.N:All[0])
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   Data.Either.Left
+                     @ GHC.Integer.Type.Integer
+                     @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Alpha.N:NthPatFind[0]))
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   Unbound.Generics.LocallyNameless.Alpha.$fAlpha()2)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (perm :: Unbound.Generics.PermM.Perm
+                                Unbound.Generics.LocallyNameless.Name.AnyName)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term -> ds
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaExpr_$cswaps'
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           perm
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ @ m :: * -> *
+                     @ b
+                     ($dLFresh :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                   Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed2
+                     @ b
+                     @ m
+                     @ SEDEL.Source.Syntax.Scheme)
+                  (\ @ m :: * -> *
+                     ($dFresh :: Unbound.Generics.LocallyNameless.Fresh.Fresh m)
+                     (eta :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (eta1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                                SEDEL.Source.Syntax.Scheme) ->
+                   case eta of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed1
+                          @ SEDEL.Source.Syntax.Scheme
+                          @ m
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> GHC.Base.return
+                          @ m
+                          (Unbound.Generics.LocallyNameless.Fresh.$p1Fresh @ m $dFresh)
+                          @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme,
+                             Unbound.Generics.PermM.Perm
+                               Unbound.Generics.LocallyNameless.Name.AnyName)
+                          (eta1,
+                           (Data.Map.Internal.Tip
+                              @ Unbound.Generics.LocallyNameless.Name.AnyName
+                              @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                             `cast`
+                           (Sym (Unbound.Generics.PermM.N:Perm[0]
+                                     <Unbound.Generics.LocallyNameless.Name.AnyName>_N))) } })
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme)
+                     (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme) ->
+                   SEDEL.Source.Syntax.$fAlphaScheme_$cacompare'
+                     (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                      Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                        Unbound.Generics.LocallyNameless.Alpha.Term
+                        ds3 })
+                     ds
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)
+                     ds1
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)) -}
+1bb836c904f8cf32f14ba0025f14c87c
+  $s$fAlpha(,)_$s$fShowEmbed ::
+    GHC.Show.Show
+      (Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme)
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                       SEDEL.Source.Syntax.Scheme)
+                  (Unbound.Generics.LocallyNameless.Embed.$fShowEmbed_$cshowsPrec
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fShowScheme)
+                  (\ (x :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                   GHC.CString.unpackAppendCString#
+                     Unbound.Generics.LocallyNameless.Embed.$fShowEmbed3
+                     (SEDEL.Source.Syntax.$fShowScheme_$cshowsPrec
+                        Unbound.Generics.LocallyNameless.Embed.$fShowEmbed2
+                        x `cast`
+                        (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                             <SEDEL.Source.Syntax.Scheme>_R)
+                        Unbound.Generics.LocallyNameless.Embed.$fShowEmbed4))
+                  (Unbound.Generics.LocallyNameless.Embed.$fShowEmbed_$cshowList
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fShowScheme) -}
+dd314ed9f6e1a193b1a13467110eba00
+  $s$fAlphaEmbed_$cacompare' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> GHC.Types.Ordering
+  {- Arity: 3, Strictness: <L,1*U(A,U)><S,1*U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme)
+                   (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                 SEDEL.Source.Syntax.$fAlphaScheme_$cacompare'
+                   (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                      Unbound.Generics.LocallyNameless.Alpha.Term
+                      ds3 })
+                   ds
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)
+                   ds1
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)) -}
+b15e9d2db15397c2f95b147f5574542d
+  $s$fAlphaEmbed_$caeq' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> GHC.Types.Bool
+  {- Arity: 3, Strictness: <L,1*U(A,U)><S,1*U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme)
+                   (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                 SEDEL.Source.Syntax.$fAlphaScheme_$caeq'
+                   (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                      Unbound.Generics.LocallyNameless.Alpha.Term
+                      ds3 })
+                   ds
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)
+                   ds1
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)) -}
+f085978c447540deca6688b5e97d7e7d
+  $s$fAlphaEmbed_$cclose ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Alpha.NamePatFind
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (b :: Unbound.Generics.LocallyNameless.Alpha.NamePatFind)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed6
+                        @ SEDEL.Source.Syntax.Scheme
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaScheme_$cclose
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         b
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+8fbc0c32a876d9de77b62c53c4e96dfc
+  $s$fAlphaEmbed_$cfreshen' ::
+    Unbound.Generics.LocallyNameless.Fresh.Fresh m =>
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> m (Unbound.Generics.LocallyNameless.Embed.Embed
+            SEDEL.Source.Syntax.Scheme,
+          Unbound.Generics.PermM.Perm
+            Unbound.Generics.LocallyNameless.Name.AnyName)
+  {- Arity: 3,
+     Strictness: <S(S(LLLC(S)L)L),1*U(1*U(A,A,A,1*C1(U),A),A)><S(SL),1*U(U,A)><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ m :: * -> *
+                   ($dFresh :: Unbound.Generics.LocallyNameless.Fresh.Fresh m)
+                   (eta :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (eta1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                 case eta of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed1
+                        @ SEDEL.Source.Syntax.Scheme
+                        @ m
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.Fresh.$p1Fresh @ m $dFresh)
+                        @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme,
+                           Unbound.Generics.PermM.Perm
+                             Unbound.Generics.LocallyNameless.Name.AnyName)
+                        (eta1,
+                         (Data.Map.Internal.Tip
+                            @ Unbound.Generics.LocallyNameless.Name.AnyName
+                            @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                           `cast`
+                         (Sym (Unbound.Generics.PermM.N:Perm[0]
+                                   <Unbound.Generics.LocallyNameless.Name.AnyName>_N))) } }) -}
+d919b7b686d0d6c8660c8e32ae7dd61c
+  $s$fAlphaEmbed_$cisPat ::
+    Unbound.Generics.LocallyNameless.Embed.Embed
+      SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Alpha.DisjointSet
+         Unbound.Generics.LocallyNameless.Name.AnyName
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case (SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Data.Semigroup.Internal.N:All[0]) of wild {
+                   GHC.Types.False
+                   -> (GHC.Maybe.Nothing
+                         @ [Unbound.Generics.LocallyNameless.Name.AnyName])
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                <Unbound.Generics.LocallyNameless.Name.AnyName>_R))
+                   GHC.Types.True
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed4
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                <Unbound.Generics.LocallyNameless.Name.AnyName>_R)) }) -}
+21c9828ba17f0bc529b05338f5e1e9b0
+  $s$fAlphaEmbed_$copen ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Alpha.NthPatFind
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (b :: Unbound.Generics.LocallyNameless.Alpha.NthPatFind)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed5
+                        @ SEDEL.Source.Syntax.Scheme
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaScheme_$copen
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         b
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+8fc30868f89d57a8681a370ef85657fc
+  $s$fAlphaEmbed_$cswaps' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.PermM.Perm
+         Unbound.Generics.LocallyNameless.Name.AnyName
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (perm :: Unbound.Generics.PermM.Perm
+                              Unbound.Generics.LocallyNameless.Name.AnyName)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term -> ds
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaExpr_$cswaps'
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         perm
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+8f84b4289b1cf1497286fd957aad42bc
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.Util.$trModule3
+                   SEDEL.Util.$trModule1) -}
+8a96f46c1aa03f940bb9cc74d3c706f6
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Util.$trModule2) -}
+156b237b47307cb9be6a54e66f1256dd
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.Util"#) -}
+35b6a4ca75626ca07ed92dc0d5a73d5d
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Util.$trModule4) -}
+a8dc3573fc297c3b69fe4466bd25285a
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
+28069177a049e42dd5dfa765186b5d6f
+  $welet ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Scheme
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TmName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               SEDEL.Source.Syntax.Scheme)
+            (SEDEL.Source.Syntax.Expr, SEDEL.Source.Syntax.Expr) #)
+  {- Arity: 4, Strictness: <L,U><L,U><L,1*U><L,1*U>, Inline: [2],
+     Unfolding: (\ (w :: GHC.Base.String)
+                   (w1 :: SEDEL.Source.Syntax.Scheme)
+                   (w2 :: SEDEL.Source.Syntax.Expr)
+                   (w3 :: SEDEL.Source.Syntax.Expr) ->
+                 (# let {
+                      p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                              SEDEL.Source.Syntax.Expr
+                      = Unbound.Generics.LocallyNameless.Name.Fn
+                          @ SEDEL.Source.Syntax.Expr
+                          w
+                          Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                    } in
+                    Unbound.Generics.LocallyNameless.Bind.B
+                      @ (Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.Expr,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           SEDEL.Source.Syntax.Scheme)
+                      @ (SEDEL.Source.Syntax.Expr, SEDEL.Source.Syntax.Expr)
+                      (p1,
+                       w1
+                         `cast`
+                       (Sym (Data.Functor.Identity.N:Identity[0]
+                                 (Nth:1
+                                      (Nth:2
+                                           (Nth:3
+                                                (Nth:3
+                                                     (<Data.Profunctor.Unsafe.Profunctor
+                                                         (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                            (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                               (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                  SEDEL.Source.Syntax.Scheme))
+                                                            (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                               (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                  SEDEL.Source.Syntax.Scheme)))>_R
+                                                      ->_R <GHC.Base.Functor
+                                                              Data.Functor.Identity.Identity>_R
+                                                      ->_R (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                              <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme)>_R
+                                                              <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme)>_R
+                                                              (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                        <SEDEL.Source.Syntax.Scheme>_N))
+                                                              (Data.Functor.Identity.Identity
+                                                                 (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                           <SEDEL.Source.Syntax.Scheme>_N)))_R)_R
+                                                      ->_R <Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                 SEDEL.Source.Syntax.Scheme)
+                                                              (Data.Functor.Identity.Identity
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))>_R)))) ; Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                   <SEDEL.Source.Syntax.Scheme>_N))) ; (Nth:3
+                                                                                                                                                            (Nth:2
+                                                                                                                                                                 (Nth:3
+                                                                                                                                                                      (Nth:3
+                                                                                                                                                                           (<Data.Profunctor.Unsafe.Profunctor
+                                                                                                                                                                               (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                  (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                     (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                        SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                  (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                     (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                        SEDEL.Source.Syntax.Scheme)))>_R
+                                                                                                                                                                            ->_R <GHC.Base.Functor
+                                                                                                                                                                                    Data.Functor.Identity.Identity>_R
+                                                                                                                                                                            ->_R (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                    <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme)>_R
+                                                                                                                                                                                    <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme)>_R
+                                                                                                                                                                                    (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                                                                                              <SEDEL.Source.Syntax.Scheme>_N))
+                                                                                                                                                                                    (Data.Functor.Identity.Identity
+                                                                                                                                                                                       (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                                                                                                 <SEDEL.Source.Syntax.Scheme>_N)))_R)_R
+                                                                                                                                                                            ->_R <Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                       SEDEL.Source.Syntax.Scheme)
+                                                                                                                                                                                    (Data.Functor.Identity.Identity
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))>_R)))) ; Data.Functor.Identity.N:Identity[0]
+                                                                                                                                                                                                                                    (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                                                                                                                                                                                                                              <SEDEL.Source.Syntax.Scheme>_R)))))
+                      (let {
+                         b1 :: Unbound.Generics.LocallyNameless.Name.AnyName
+                               -> Data.Either.Either
+                                    GHC.Integer.Type.Integer GHC.Integer.Type.Integer
+                           {- Arity: 1, Strictness: <S,1*U> -}
+                         = \ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                           case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                  @ SEDEL.Source.Syntax.Expr
+                                  SEDEL.Source.Syntax.$fAlphaExpr_v1
+                                  p1
+                                  nm of wild {
+                             Data.Either.Left n
+                             -> case GHC.Integer.Type.plusInteger
+                                       n
+                                       Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                                Data.Either.Left
+                                  @ GHC.Integer.Type.Integer
+                                  @ GHC.Integer.Type.Integer
+                                  vx }
+                             Data.Either.Right ds2 -> wild }
+                       } in
+                       (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                          Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                          b1
+                            `cast`
+                          (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                          w2,
+                        SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                          Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                          b1
+                            `cast`
+                          (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                          w3)) #)) -}
+bbdbb4f6359498ee285420538fc80310
+  $wtforall ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Scheme
+    -> SEDEL.Source.Syntax.Scheme
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TyName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               SEDEL.Source.Syntax.Scheme)
+            SEDEL.Source.Syntax.Scheme #)
+  {- Arity: 3, Strictness: <L,U><L,U><L,1*U>, Inline: [2],
+     Unfolding: (\ (ww :: GHC.Base.String)
+                   (ww1 :: SEDEL.Source.Syntax.Scheme)
+                   (w :: SEDEL.Source.Syntax.Scheme) ->
+                 (# let {
+                      p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                              SEDEL.Source.Syntax.SType
+                      = Unbound.Generics.LocallyNameless.Name.Fn
+                          @ SEDEL.Source.Syntax.SType
+                          ww
+                          Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                    } in
+                    Unbound.Generics.LocallyNameless.Bind.B
+                      @ (Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.SType,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           SEDEL.Source.Syntax.Scheme)
+                      @ SEDEL.Source.Syntax.Scheme
+                      (p1,
+                       ww1
+                         `cast`
+                       (Sym (Data.Functor.Identity.N:Identity[0]
+                                 (Nth:1
+                                      (Nth:2
+                                           (Nth:3
+                                                (Nth:3
+                                                     (<Data.Profunctor.Unsafe.Profunctor
+                                                         (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                            (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                               (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                  SEDEL.Source.Syntax.Scheme))
+                                                            (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                               (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                  SEDEL.Source.Syntax.Scheme)))>_R
+                                                      ->_R <GHC.Base.Functor
+                                                              Data.Functor.Identity.Identity>_R
+                                                      ->_R (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                              <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme)>_R
+                                                              <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme)>_R
+                                                              (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                        <SEDEL.Source.Syntax.Scheme>_N))
+                                                              (Data.Functor.Identity.Identity
+                                                                 (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                           <SEDEL.Source.Syntax.Scheme>_N)))_R)_R
+                                                      ->_R <Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))
+                                                              (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                 SEDEL.Source.Syntax.Scheme)
+                                                              (Data.Functor.Identity.Identity
+                                                                 (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                    SEDEL.Source.Syntax.Scheme))>_R)))) ; Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                   <SEDEL.Source.Syntax.Scheme>_N))) ; (Nth:3
+                                                                                                                                                            (Nth:2
+                                                                                                                                                                 (Nth:3
+                                                                                                                                                                      (Nth:3
+                                                                                                                                                                           (<Data.Profunctor.Unsafe.Profunctor
+                                                                                                                                                                               (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                  (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                     (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                        SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                  (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                     (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                        SEDEL.Source.Syntax.Scheme)))>_R
+                                                                                                                                                                            ->_R <GHC.Base.Functor
+                                                                                                                                                                                    Data.Functor.Identity.Identity>_R
+                                                                                                                                                                            ->_R (Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                    <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme)>_R
+                                                                                                                                                                                    <Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme)>_R
+                                                                                                                                                                                    (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                                                                                              <SEDEL.Source.Syntax.Scheme>_N))
+                                                                                                                                                                                    (Data.Functor.Identity.Identity
+                                                                                                                                                                                       (Sub (Unbound.Generics.LocallyNameless.Embed.D:R:EmbeddedEmbed[0]
+                                                                                                                                                                                                 <SEDEL.Source.Syntax.Scheme>_N)))_R)_R
+                                                                                                                                                                            ->_R <Unbound.Generics.LocallyNameless.Internal.Iso.Exchange
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embedded
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))
+                                                                                                                                                                                    (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                       SEDEL.Source.Syntax.Scheme)
+                                                                                                                                                                                    (Data.Functor.Identity.Identity
+                                                                                                                                                                                       (Unbound.Generics.LocallyNameless.Embed.Embed
+                                                                                                                                                                                          SEDEL.Source.Syntax.Scheme))>_R)))) ; Data.Functor.Identity.N:Identity[0]
+                                                                                                                                                                                                                                    (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                                                                                                                                                                                                                              <SEDEL.Source.Syntax.Scheme>_R)))))
+                      (SEDEL.Source.Syntax.$fAlphaScheme_$cclose
+                         Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                         (\ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                          case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                 @ SEDEL.Source.Syntax.SType
+                                 SEDEL.Source.Syntax.$fAlphaExpr_v
+                                 p1
+                                 nm of wild {
+                            Data.Either.Left n
+                            -> case GHC.Integer.Type.plusInteger
+                                      n
+                                      Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                               Data.Either.Left
+                                 @ GHC.Integer.Type.Integer
+                                 @ GHC.Integer.Type.Integer
+                                 vx }
+                            Data.Either.Right ds2 -> wild })
+                           `cast`
+                         (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                         w) #)) -}
+15d29e734e517c6a30d9ec1c03b29f74
+  $wtranslType ::
+    GHC.Base.Applicative m =>
+    (forall a b. m a -> (a -> m b) -> m b)
+    -> (forall a b. m a -> m b -> m b)
+    -> (forall a. a -> m a)
+    -> (forall a. GHC.Base.String -> m a)
+    -> (forall a.
+        Unbound.Generics.LocallyNameless.Name.Name a
+        -> m (Unbound.Generics.LocallyNameless.Name.Name a))
+    -> SEDEL.Source.Syntax.Scheme
+    -> m SEDEL.Target.Syntax.UType
+  {- Arity: 7, Strictness: <L,U><L,U><L,U><L,U><L,U><L,U><S,1*U>,
+     Inline: [2] -}
+f4a24dfb1da2f579f4bf309efb787c8e
+  eapp ::
+    SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>m2,
+     Unfolding: InlineRule (0, True, True) SEDEL.Source.Syntax.App -}
+0357f8fa5fc0e12e22d3acf553071522
+  ebind ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr
+    -> Unbound.Generics.LocallyNameless.Bind.Bind
+         SEDEL.Source.Syntax.TmName SEDEL.Source.Syntax.Expr
+  {- Arity: 2, Strictness: <L,U><L,1*U>m, Inline: [2],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: GHC.Base.String) (w1 :: SEDEL.Source.Syntax.Expr) ->
+                 let {
+                   p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.Expr
+                   = Unbound.Generics.LocallyNameless.Name.Fn
+                       @ SEDEL.Source.Syntax.Expr
+                       w
+                       Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                 } in
+                 Unbound.Generics.LocallyNameless.Bind.B
+                   @ SEDEL.Source.Syntax.TmName
+                   @ SEDEL.Source.Syntax.Expr
+                   p1
+                   (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                      Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                      (Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                         @ SEDEL.Source.Syntax.Expr
+                         SEDEL.Source.Syntax.$fAlphaExpr_v1
+                         p1)
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                      w1)) -}
+c63b9f2a7822b309396db11a4804c102
+  elam ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, Strictness: <L,U><L,1*U>m3,
+     Unfolding: InlineRule (2, True, False)
+                (\ (b :: GHC.Base.String) (e :: SEDEL.Source.Syntax.Expr) ->
+                 SEDEL.Source.Syntax.Lam (SEDEL.Util.ebind b e)) -}
+6886d73ac46ecde14c189190dbc2459b
+  elet ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Scheme
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+  {- Arity: 4, Strictness: <L,U><L,U><L,1*U><L,1*U>m4, Inline: [2],
+     Unfolding: InlineRule (4, True, False)
+                (\ (w :: GHC.Base.String)
+                   (w1 :: SEDEL.Source.Syntax.Scheme)
+                   (w2 :: SEDEL.Source.Syntax.Expr)
+                   (w3 :: SEDEL.Source.Syntax.Expr) ->
+                 case SEDEL.Util.$welet w w1 w2 w3 of ww { Unit# ww1 ->
+                 SEDEL.Source.Syntax.Let ww1 }) -}
+fb5cd28449c7bf61d6760be3fcc07dad
+  evar :: GHC.Base.String -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m1,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: GHC.Base.String) ->
+                 SEDEL.Source.Syntax.Var
+                   (Unbound.Generics.LocallyNameless.Name.string2Name
+                      @ SEDEL.Source.Syntax.Expr
+                      x)) -}
+44856ad75f0ad4d40220ae713b7d1a7b
+  mkArr ::
+    SEDEL.Source.Syntax.SType
+    -> [SEDEL.Source.Syntax.SType] -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, HasNoCafRefs,
+     Unfolding: (GHC.Base.foldr
+                   @ SEDEL.Source.Syntax.SType
+                   @ SEDEL.Source.Syntax.SType
+                   SEDEL.Source.Syntax.Arr) -}
+4257a8375cf93374ca517d9282b44959
+  mkRecds ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.Expr)]
+    -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: [(SEDEL.Source.Syntax.Label,
+                            SEDEL.Source.Syntax.Expr)]) ->
+                 case ds of wild {
+                   [] -> SEDEL.Source.Syntax.Top
+                   : ds1 r
+                   -> case ds1 of wild1 { (,) l e ->
+                      SEDEL.Util.mkRecds_go r (SEDEL.Source.Syntax.DRec l e) } }) -}
+f083deea0dd1968ea891861ba66e0bbd
+  mkRecds' ::
+    [SEDEL.Source.Syntax.TmBind] -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (x :: [SEDEL.Source.Syntax.TmBind]) ->
+                 case GHC.Base.map
+                        @ SEDEL.Source.Syntax.TmBind
+                        @ SEDEL.Source.Syntax.Expr
+                        SEDEL.Source.Syntax.DRec'
+                        x of wild {
+                   [] -> GHC.List.foldl1'1 @ SEDEL.Source.Syntax.Expr
+                   : x1 xs -> SEDEL.Util.mkRecds'_go xs x1 }) -}
+668b6251d248ac287fb7be2e6fb6cbf6
+  mkRecds'_go ::
+    [SEDEL.Source.Syntax.Expr]
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+1b4d8bbcba019d8db8a6132784ba9bfa
+  mkRecdsT ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.SType)]
+    -> SEDEL.Source.Syntax.SType
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: [(SEDEL.Source.Syntax.Label,
+                            SEDEL.Source.Syntax.SType)]) ->
+                 case ds of wild {
+                   [] -> SEDEL.Source.Syntax.TopT
+                   : ds1 r
+                   -> case ds1 of wild1 { (,) l e ->
+                      SEDEL.Util.mkRecdsT_go r (SEDEL.Source.Syntax.SRecT l e) } }) -}
+5bb1046c87a396558449b5987147ac1c
+  mkRecdsT_go ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.SType)]
+    -> SEDEL.Source.Syntax.SType -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U> -}
+36d482619ba89658a6ac164bb694409c
+  mkRecds_go ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.Expr)]
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+3facec132ad986c8b6858c73f5a216b6
+  tforall ::
+    (GHC.Base.String, SEDEL.Source.Syntax.Scheme)
+    -> SEDEL.Source.Syntax.Scheme -> SEDEL.Source.Syntax.Scheme
+  {- Arity: 2, Strictness: <S,1*U(U,U)><L,1*U>m2, Inline: [2],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: (GHC.Base.String, SEDEL.Source.Syntax.Scheme))
+                   (w1 :: SEDEL.Source.Syntax.Scheme) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case SEDEL.Util.$wtforall ww1 ww2 w1 of ww3 { Unit# ww4 ->
+                 SEDEL.Source.Syntax.DForall ww4 } }) -}
+6fa5b16cfceb5a2dd039239934103b7c
+  translType ::
+    Unbound.Generics.LocallyNameless.Fresh.Fresh m =>
+    SEDEL.Source.Syntax.Scheme -> m SEDEL.Target.Syntax.UType
+  {- Arity: 2, Strictness: <S(SL),1*U(1*U(U,U,U,U,U),U)><S,1*U>,
+     Inline: [2],
+     Unfolding: InlineRule (2, True, False)
+                (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.Fresh.Fresh m)
+                   (w1 :: SEDEL.Source.Syntax.Scheme) ->
+                 case w of ww { Unbound.Generics.LocallyNameless.Fresh.C:Fresh ww1 ww2 ->
+                 case ww1 of ww3 { GHC.Base.C:Monad ww4 ww5 ww6 ww7 ww8 ->
+                 SEDEL.Util.$wtranslType @ m ww4 ww5 ww6 ww7 ww8 ww2 w1 } }) -}
+d0b236b1da26ed7519e9598588769645
+  translate ::
+    Unbound.Generics.LocallyNameless.Name.Name a
+    -> Unbound.Generics.LocallyNameless.Name.Name b
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a @ b (ds :: Unbound.Generics.LocallyNameless.Name.Name a) ->
+                 case ds of wild {
+                   Unbound.Generics.LocallyNameless.Name.Fn x y
+                   -> Unbound.Generics.LocallyNameless.Name.Fn @ b x y
+                   Unbound.Generics.LocallyNameless.Name.Bn x y
+                   -> Unbound.Generics.LocallyNameless.Name.Bn @ b x y }) -}
+b859690d5afd464a63318a68f823a7a3
+  tvar :: GHC.Base.String -> SEDEL.Source.Syntax.SType
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m5,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: GHC.Base.String) ->
+                 SEDEL.Source.Syntax.TVar
+                   (Unbound.Generics.LocallyNameless.Name.string2Name
+                      @ SEDEL.Source.Syntax.SType
+                      x)) -}
+"SPEC/SEDEL.Util $fAlphaEmbed @ Scheme" [orphan] forall (v :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed @ SEDEL.Source.Syntax.Scheme
+                                                      v
+  = SEDEL.Util.$s$fAlpha(,)_$s$fAlphaEmbed
+"SPEC/SEDEL.Util $fAlphaEmbed_$cacompare' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                  SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cacompare' @ SEDEL.Source.Syntax.Scheme
+                                                                  $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$cacompare'
+"SPEC/SEDEL.Util $fAlphaEmbed_$caeq' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                             SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$caeq' @ SEDEL.Source.Syntax.Scheme
+                                                             $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$caeq'
+"SPEC/SEDEL.Util $fAlphaEmbed_$cclose @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                              SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cclose @ SEDEL.Source.Syntax.Scheme
+                                                              $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$cclose
+"SPEC/SEDEL.Util $fAlphaEmbed_$cfreshen' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                 SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cfreshen' @ SEDEL.Source.Syntax.Scheme
+                                                                 $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$cfreshen'
+"SPEC/SEDEL.Util $fAlphaEmbed_$cisPat @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                              SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cisPat @ SEDEL.Source.Syntax.Scheme
+                                                              $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$cisPat
+"SPEC/SEDEL.Util $fAlphaEmbed_$copen @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                             SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$copen @ SEDEL.Source.Syntax.Scheme
+                                                             $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$copen
+"SPEC/SEDEL.Util $fAlphaEmbed_$cswaps' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                               SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cswaps' @ SEDEL.Source.Syntax.Scheme
+                                                               $dAlpha
+  = SEDEL.Util.$s$fAlphaEmbed_$cswaps'
+"SPEC/SEDEL.Util $fShowEmbed @ Scheme" [orphan] forall (v :: GHC.Show.Show
+                                                               SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fShowEmbed @ SEDEL.Source.Syntax.Scheme
+                                                     v
+  = SEDEL.Util.$s$fAlpha(,)_$s$fShowEmbed
+trusted: none
+require own pkg trusted: False
+module header:
+  Nothing
+declaration docs:
+arg docs:
+

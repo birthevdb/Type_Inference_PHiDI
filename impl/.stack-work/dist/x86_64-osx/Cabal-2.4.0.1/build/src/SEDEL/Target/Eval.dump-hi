@@ -1,0 +1,609 @@
+
+==================== FINAL INTERFACE ====================
+2019-04-01 09:33:48.515441 UTC
+
+interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Target.Eval 8063
+  interface hash: 128afc51f0ff70937ca5ac34656bfc7f
+  ABI hash: 5abc9cc0435022005551c3f733d2accd
+  export-list hash: f850cb10bac4a9b30b429752cecbce0d
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: e580f49babaf8084db70d01b7d5e6518
+  opt_hash: 6faf2de08de32d19db9870899d88e59a
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  plugin_hash: ad164012d6b1e14942349d58b1132007
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.Target.Eval.evaluate
+module dependencies: SEDEL.Common SEDEL.Target.Syntax
+package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
+                      base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.6.0.1
+                      deepseq-1.4.4.0 distributive-0.6 exceptions-0.10.0
+                      ghc-boot-th-8.6.3 ghc-prim-0.5.3 hashable-1.2.7.0
+                      integer-gmp-1.0.2.0 mtl-2.2.2 profunctors-5.3 protolude-0.2.3
+                      stm-2.5.0.0 tagged-0.8.6 template-haskell-2.14.0.0 text-1.2.3.1
+                      transformers-0.5.5.0 unbound-generics-0.4.0
+orphans: transformers-0.5.5.0:Control.Monad.Trans.Error
+         stm-2.5.0.0:Control.Monad.STM
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.6.0:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show base-4.12.0.0:GHC.Float
+         base-4.12.0.0:GHC.Base
+family instance modules: base-4.12.0.0:Control.Applicative
+                         base-4.12.0.0:Data.Complex base-4.12.0.0:Data.Functor.Compose
+                         base-4.12.0.0:Data.Functor.Const
+                         base-4.12.0.0:Data.Functor.Identity
+                         base-4.12.0.0:Data.Functor.Product base-4.12.0.0:Data.Functor.Sum
+                         base-4.12.0.0:Data.Monoid base-4.12.0.0:Data.Semigroup
+                         base-4.12.0.0:Data.Semigroup.Internal base-4.12.0.0:Data.Version
+                         base-4.12.0.0:Data.Void base-4.12.0.0:GHC.Exts
+                         base-4.12.0.0:GHC.Generics base-4.12.0.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.6.0.1:Data.IntMap.Internal
+                         containers-0.6.0.1:Data.IntSet.Internal
+                         containers-0.6.0.1:Data.Map.Internal
+                         containers-0.6.0.1:Data.Sequence.Internal
+                         containers-0.6.0.1:Data.Set.Internal containers-0.6.0.1:Data.Tree
+                         ghc-boot-th-8.6.3:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.6.3:GHC.LanguageExtensions.Type
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Target.Syntax
+                         tagged-0.8.6:Data.Tagged
+                         template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Ignore
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.12.0.0:Control.Monad.IO.Class e8f65a5571f64fe686cca3ac75a1aa0e
+import  -/  base-4.12.0.0:Data.Either 946a3435d06773e1dbcad1ba5dc18a2c
+import  -/  base-4.12.0.0:Data.IORef 30d8bbbd600bd9d9c6a9b4fea90cdc2e
+import  -/  base-4.12.0.0:Data.Maybe 1e8e1362415df45376dffd98f8a47766
+import  -/  base-4.12.0.0:GHC.Base cc906f98291a1b830546e99a96674547
+import  -/  base-4.12.0.0:GHC.IORef 2192434d60e192a8992978faa80f48d7
+import  -/  base-4.12.0.0:GHC.Num 847723f2584d989dac1eada133ac3fb8
+import  -/  base-4.12.0.0:GHC.Real f7dad82c1d43d80823865d3e6c6636e0
+import  -/  base-4.12.0.0:GHC.Show 4e438f26d903388cc6c2c5d64ed01b98
+import  -/  base-4.12.0.0:Prelude 5c01365ec01f83bd405ac01cbb9a8d76
+import  -/  containers-0.6.0.1:Data.Map.Internal e652f5f18be5bf564604b214e5c1dad8
+import  -/  containers-0.6.0.1:Data.Map.Strict c9c15d36149113668379264c6ca4bcc8
+import  -/  containers-0.6.0.1:Data.Map.Strict.Internal 6df6fcb6b071f5a925d4fa53758ddeff
+import  -/  ghc-prim-0.5.3:GHC.Classes e0d9c979f6368701f34fa421754d2cce
+import  -/  ghc-prim-0.5.3:GHC.Types 57064c9f957b09bc2e360061ad5cae0b
+import  -/  mtl-2.2.2:Control.Monad.Error.Class 396bb83814f3ba40535fffb311f79b73
+import  -/  mtl-2.2.2:Control.Monad.Except 50e515fe4eac4821a9bcec9a647f5aa7
+import  -/  SEDEL.Common dd957746dc264eb9e0f081197e6a170a
+  exports: 2f8960fc3866b3ed3935cca8fdf4af32
+  Add 7b5689630bb805d45c2d9b7c91a94aa7
+  Arith ba6e6ee2769ab90fc6f8bfe05c457547
+  Comp 95be31892a65ce02162c0359b2fd7836
+  Div 9d90e9fa046956310d732e8eb846ddaa
+  Equ be009671f59de591c88946764f695cd4
+  Gt be31fcc4422ad1046b7cadef42d4a00a
+  LAnd 76e1d65d2c4efb84dfc892b6876887fc
+  LOr 3d9fb39352f5a35a5a2f3fb33be00346
+  Logical 5f88c0dcda3f0bb8a2151f64e886bf39
+  Lt d3b4077c262575c1c54e4e55843feca5
+  Mul dbcecb52257f0e0de6cdb3f840d576b0
+  Neq 2a26dcc2307ec55211eb17750235a9c5
+  Operation 0aaa00a153eb626e5d21bd1750de97e0
+  Sub 10f07d4be3387d45df0fd4398e7b0df1
+import  -/  SEDEL.Target.Syntax 2589141e2792ef4fd114aa83be20e48d
+  exports: b36744e56246d62dcae7b00d023dfc0b
+  Bot c734897797b2a62ac45955e97383d723
+  UApp 719a706229ae3c802cf6c86cb22237ec
+  UBLam 238cf98c684ebafa42f2b8a80df80c12
+  UBoolV 5954c5bc63f985d11a93ad131f6f73c6
+  UExpr e143c1a7574a05400d7144cf1b16fbbb
+  UIf 656ed9093b4b7c42a7565694246c32b6
+  ULam 8c4c86bcc2abe90c16c3fa849f7fdf12
+  ULitV fe225ea27707f771720586ed0af72607
+  UName e143c1a7574a05400d7144cf1b16fbbb
+  UP1 0d2caaa6f62d6eef71e11223b30dc1a9
+  UP2 6572c6235c34ab67253e2fc2c5c8fb93
+  UPair cece624353823557d79018d11c09a41b
+  UPrimOp 4d62249c585876243f7f372df2ca13b3
+  UUnit dfd44aa113b0d584cdd6e71d429baf45
+  UVar 9b01596724234c0181c1c174186fd745
+import  -/  transformers-0.5.5.0:Control.Monad.Trans.Except 492e1fc9e7bdded285216f81f05ba982
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless 36704d4dbfb3fb22f46cde363ae796f2
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Fresh e0f8d49fe8e0f78dfcabb34436892778
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name 81d6e7baa0bd0880e550478df477614a
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Operations d0c219408974b95413509bf76023577c
+456e62b1bc507b32e375506971ece6cd
+  $fShowThunk :: GHC.Show.Show SEDEL.Target.Eval.Thunk
+  DFunId
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ SEDEL.Target.Eval.Thunk
+                  SEDEL.Target.Eval.$fShowThunk_$cshowsPrec
+                  SEDEL.Target.Eval.$fShowThunk_$cshow
+                  SEDEL.Target.Eval.$fShowThunk_$cshowList -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowThunk1 ::
+    SEDEL.Target.Eval.Thunk -> GHC.Base.String -> [GHC.Types.Char]
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,A><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: SEDEL.Target.Eval.Thunk)
+                   (s :: GHC.Base.String)[OneShot] ->
+                 GHC.CString.unpackAppendCString# "<Thunk>"# s) -}
+83e81277bd7fa5bc9dd6eabd423e1b19
+  $fShowThunk2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowThunk3) -}
+63b8aa6ce9c0b515e304e71f393fe779
+  $fShowThunk3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Thunk>"#) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowThunk_$cshow :: SEDEL.Target.Eval.Thunk -> GHC.Base.String
+  {- Arity: 1, Strictness: <L,A>,
+     Unfolding: InlineRule (1, True, True)
+                (\ (ds :: SEDEL.Target.Eval.Thunk) ->
+                 SEDEL.Target.Eval.$fShowThunk2) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowThunk_$cshowList ::
+    [SEDEL.Target.Eval.Thunk] -> GHC.Show.ShowS
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ls :: [SEDEL.Target.Eval.Thunk]) (s :: GHC.Base.String) ->
+                 GHC.Show.showList__
+                   @ SEDEL.Target.Eval.Thunk
+                   SEDEL.Target.Eval.$fShowThunk1
+                   ls
+                   s) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowThunk_$cshowsPrec ::
+    GHC.Types.Int -> SEDEL.Target.Eval.Thunk -> GHC.Show.ShowS
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,A><L,A><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ds :: GHC.Types.Int)
+                   (x :: SEDEL.Target.Eval.Thunk)
+                   (s :: GHC.Base.String) ->
+                 GHC.CString.unpackAppendCString# "<Thunk>"# s) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowValue :: GHC.Show.Show SEDEL.Target.Eval.Value
+  DFunId
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ SEDEL.Target.Eval.Value
+                  SEDEL.Target.Eval.$fShowValue_$cshowsPrec
+                  SEDEL.Target.Eval.$fShowValue_$cshow
+                  SEDEL.Target.Eval.$fShowValue_$cshowList -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowValue1 ::
+    SEDEL.Target.Eval.Value -> GHC.Base.String -> [GHC.Types.Char]
+  {- Arity: 2, Strictness: <S,1*U><L,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (x :: SEDEL.Target.Eval.Value)
+                   (s :: GHC.Base.String)[OneShot] ->
+                 GHC.Base.augment
+                   @ GHC.Types.Char
+                   (\ @ b
+                      (c :: GHC.Types.Char -> b -> b)[OneShot]
+                      (n :: b)[OneShot] ->
+                    GHC.Base.foldr
+                      @ GHC.Types.Char
+                      @ b
+                      c
+                      n
+                      (SEDEL.Target.Eval.$fShowValue_$cshow x))
+                   s) -}
+c62dfb11f02404fee9b2b14d8098788a
+  $fShowValue10 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue11) -}
+81e077e390dc5c688cf8cca59fc46b22
+  $fShowValue11 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("true"#) -}
+fe576261961e342fbb0f6f408255bd8b
+  $fShowValue12 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue13) -}
+c9d02adf03970ae456562baaf17cfadc
+  $fShowValue13 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("false"#) -}
+e1e747cc9fa7b6a6abdef7110035cc28
+  $fShowValue2 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue3) -}
+775c6fd3b2561264fdeca2878f8f36d7
+  $fShowValue3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Lambda>"#) -}
+ff825959ce3113d1378e5aeecadb66e2
+  $fShowValue4 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue5) -}
+02f30b7e582782c0e5f1fe8c25f92411
+  $fShowValue5 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<lambda>"#) -}
+009398c01ae4fd1a8ce359f847709ba8
+  $fShowValue6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue7) -}
+97d1bf150ce72b2aeecdd1a369d8905f
+  $fShowValue7 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("()"#) -}
+e38d4c6dbb18079a7fb67ea29d8b02b7
+  $fShowValue8 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString#
+                   SEDEL.Target.Eval.$fShowValue9) -}
+d8b946b8806cfd0caf9afdfcd3fb8426
+  $fShowValue9 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<Pair>"#) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowValue_$cshow :: SEDEL.Target.Eval.Value -> GHC.Base.String
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: SEDEL.Target.Eval.Value) ->
+                 case ds of wild {
+                   SEDEL.Target.Eval.VLit dt
+                   -> GHC.Float.$w$sshowSignedFloat
+                        GHC.Float.$fShowDouble2
+                        GHC.Float.minExpt
+                        dt
+                        (GHC.Types.[] @ GHC.Types.Char)
+                   SEDEL.Target.Eval.VBool ds1
+                   -> case ds1 of wild1 {
+                        GHC.Types.False -> SEDEL.Target.Eval.$fShowValue12
+                        GHC.Types.True -> SEDEL.Target.Eval.$fShowValue10 }
+                   SEDEL.Target.Eval.VPair ds1 ds2 -> SEDEL.Target.Eval.$fShowValue8
+                   SEDEL.Target.Eval.VUnit -> SEDEL.Target.Eval.$fShowValue6
+                   SEDEL.Target.Eval.VLam ds1 -> SEDEL.Target.Eval.$fShowValue4
+                   SEDEL.Target.Eval.VBLam ds1 -> SEDEL.Target.Eval.$fShowValue2 }) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowValue_$cshowList ::
+    [SEDEL.Target.Eval.Value] -> GHC.Show.ShowS
+  {- Arity: 2, Strictness: <S,1*U><L,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ls :: [SEDEL.Target.Eval.Value]) (s :: GHC.Base.String) ->
+                 GHC.Show.showList__
+                   @ SEDEL.Target.Eval.Value
+                   SEDEL.Target.Eval.$fShowValue1
+                   ls
+                   s) -}
+456e62b1bc507b32e375506971ece6cd
+  $fShowValue_$cshowsPrec ::
+    GHC.Types.Int -> SEDEL.Target.Eval.Value -> GHC.Show.ShowS
+  {- Arity: 3, Strictness: <L,A><S,1*U><L,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ds :: GHC.Types.Int)
+                   (x :: SEDEL.Target.Eval.Value)
+                   (s :: GHC.Base.String) ->
+                 GHC.Base.augment
+                   @ GHC.Types.Char
+                   (\ @ b
+                      (c :: GHC.Types.Char -> b -> b)[OneShot]
+                      (n :: b)[OneShot] ->
+                    GHC.Base.foldr
+                      @ GHC.Types.Char
+                      @ b
+                      c
+                      n
+                      (SEDEL.Target.Eval.$fShowValue_$cshow x))
+                   s) -}
+4032a4e4d7a38fa7554c0f684da6de58
+  $sinsert_$sgo8 ::
+    SEDEL.Target.Syntax.UName
+    -> a1
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a1
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a1
+  {- Arity: 3, Strictness: <S,1*U><S,1*U><S,1*U> -}
+75cd1f44916cc8b2a44c4e0a2ee7cf52
+  $slookup1 ::
+    SEDEL.Target.Syntax.UName
+    -> Data.Map.Internal.Map SEDEL.Target.Syntax.UName a
+    -> GHC.Maybe.Maybe a
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+97131b2d2a90f73470e2f5364f6ad2cc
+  $tc'Thunk :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9152555915471946963##
+                   1798549648856030660##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'Thunk2
+                   0#
+                   SEDEL.Target.Eval.$tc'Thunk1) -}
+d67240aa2ba1f4f6d7952bca9546eadf
+  $tc'Thunk1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+9a20dd133535039f928945b5f0665bbd
+  $tc'Thunk2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'Thunk3) -}
+9b4d35698e22e7ec04674f4b80faffa5
+  $tc'Thunk3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'Thunk"#) -}
+611c9a6f2e59dabd28b54e211535a0ba
+  $tc'VBLam :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   13201219514546224664##
+                   17380454251625088329##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VBLam2
+                   0#
+                   SEDEL.Target.Eval.$tc'VBLam1) -}
+19a396b231a7fa4fc0dd5d9c6750f8f3
+  $tc'VBLam1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+a32624a96d99f26d47ba7a731305ee00
+  $tc'VBLam2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VBLam3) -}
+57ba8014a90de439e368b1c6e9f051f0
+  $tc'VBLam3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VBLam"#) -}
+e38fe7c01079d15e858ffe340f24b3bf
+  $tc'VBool :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   17208978704884050375##
+                   10058716161876667708##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VBool2
+                   0#
+                   SEDEL.Target.Eval.$tc'VBool1) -}
+bcb998759f53b316d1e6ed6e40485293
+  $tc'VBool1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+0a0e4f00f9bb0e786c21d09251f3ed26
+  $tc'VBool2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VBool3) -}
+f7ac2a5871cdd155fb54a79c55125162
+  $tc'VBool3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VBool"#) -}
+ae5b0366bdbbf28b81489554935e2e5d
+  $tc'VLam :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3880279237825603165##
+                   12145559481309340861##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VLam1
+                   0#
+                   SEDEL.Target.Eval.$tc'VBLam1) -}
+59d199aa8a2d64d9237d89cec1d5ed32
+  $tc'VLam1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VLam2) -}
+4446354ee9236faab031a029ce12fd40
+  $tc'VLam2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VLam"#) -}
+2e774d00a4498b6911901f21f2ede681
+  $tc'VLit :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2853760944990619876##
+                   1329818859834024159##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VLit2
+                   0#
+                   SEDEL.Target.Eval.$tc'VLit1) -}
+18b520763f86e7e9eeead1c7e1ec9205
+  $tc'VLit1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+afbe84b9966d294588d0e25e0093235e
+  $tc'VLit2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VLit3) -}
+c8b301df7b25433051a1ea4f11b163e5
+  $tc'VLit3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VLit"#) -}
+2595d4eb3b7385b1451cdba69b8aa0f0
+  $tc'VPair :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9917443863449875835##
+                   16733311023410377648##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VPair2
+                   0#
+                   SEDEL.Target.Eval.$tc'VPair1) -}
+6c49ee4bba66fdcf3fdbbf9117723b32
+  $tc'VPair1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+1948ddc479c3640f4c544498d5a212ce
+  $tc'VPair2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VPair3) -}
+8da7876a5a6cba48bc3d5e2dfa864a33
+  $tc'VPair3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VPair"#) -}
+d2a7d44886f7f435c1b5d0a76c7ad882
+  $tc'VUnit :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   15522753275324028616##
+                   14935659654087778945##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tc'VUnit2
+                   0#
+                   SEDEL.Target.Eval.$tc'VUnit1) -}
+a229c390e3bc86a3a417f4b0464ed31a
+  $tc'VUnit1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m1, Inline: [~] -}
+7a3ccb45b3adf3ce613da62b12e819b2
+  $tc'VUnit2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tc'VUnit3) -}
+6db1128f5ca0abdcc26214c346aaea0c
+  $tc'VUnit3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'VUnit"#) -}
+9e95728b42b1ed6a791ec4a28c00a479
+  $tcThunk :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   15030379931245762655##
+                   7419575976271689720##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tcThunk1
+                   0#
+                   GHC.Types.krep$*) -}
+65c7ecf0a78b374cc53d802b60cca948
+  $tcThunk1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tcThunk2) -}
+6c90fad675b4a941fc713b00a957823b
+  $tcThunk2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Thunk"#) -}
+b5dd447c31c213682ea8938dd1ef0dc7
+  $tcValue :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3907452716652057142##
+                   5129407843782173401##
+                   SEDEL.Target.Eval.$trModule
+                   SEDEL.Target.Eval.$tcValue1
+                   0#
+                   GHC.Types.krep$*) -}
+259164bc92cca66ca89c248db2cbdb68
+  $tcValue1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$tcValue2) -}
+32c5be424eac52005b8622166cdda655
+  $tcValue2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Value"#) -}
+f872a475f411f61c0362069deee72d05
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.Target.Eval.$trModule3
+                   SEDEL.Target.Eval.$trModule1) -}
+201a25c6b86caf9a74d4ee510797cd0b
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$trModule2) -}
+a8d259b00571e0c0468b76b36e0c6b52
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.Target.Eval"#) -}
+09eb993ec5a469755bc6b42d4bdf654a
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Target.Eval.$trModule4) -}
+157b4fceb5e32d936fd18da2fa604475
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
+895c568b42079497bc8d17ab958a8402
+  type Env =
+    Data.Map.Internal.Map
+      SEDEL.Target.Syntax.UName SEDEL.Target.Eval.Thunk
+ca4cdb8b9bb9271bf0a9013d47b57f2c
+  type EvalM a =
+    Unbound.Generics.LocallyNameless.Fresh.FreshMT
+      (Control.Monad.Trans.Except.ExceptT GHC.Base.String GHC.Types.IO) a
+456e62b1bc507b32e375506971ece6cd
+  newtype Thunk
+    = Thunk {force :: SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value}
+456e62b1bc507b32e375506971ece6cd
+  data Value
+    = VLit {-# UNPACK #-}GHC.Types.Double
+    | VBool !GHC.Types.Bool
+    | VPair !SEDEL.Target.Eval.Thunk !SEDEL.Target.Eval.Thunk
+    | VUnit
+    | VLam !(SEDEL.Target.Eval.Thunk
+             -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value)
+    | VBLam !(SEDEL.Target.Eval.Thunk
+              -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value)
+567b539e1ce5810eefa2b1ee87695bbd
+  eval ::
+    SEDEL.Target.Eval.Env
+    -> SEDEL.Target.Syntax.UExpr
+    -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value
+  {- Arity: 2, Strictness: <L,U><S,1*U> -}
+817df55c9f521f468e2620c2f6c1bfe0
+  evaluate ::
+    SEDEL.Target.Syntax.UExpr
+    -> GHC.Types.IO
+         (Data.Either.Either GHC.Base.String SEDEL.Target.Eval.Value)
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.Target.Eval.evaluate1
+                  `cast`
+                (<SEDEL.Target.Syntax.UExpr>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <Data.Either.Either
+                                  [GHC.Types.Char] SEDEL.Target.Eval.Value>_R)) -}
+b86cef837f1456f7848f6c144f83e111
+  evaluate1 ::
+    SEDEL.Target.Syntax.UExpr
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          Data.Either.Either [GHC.Types.Char] SEDEL.Target.Eval.Value #)
+  {- Arity: 2, Strictness: <S,1*U><S,U>,
+     Unfolding: (\ (e :: SEDEL.Target.Syntax.UExpr)
+                   (eta :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case ((SEDEL.Target.Eval.eval
+                          (Data.Map.Internal.Tip
+                             @ SEDEL.Target.Syntax.UName
+                             @ SEDEL.Target.Eval.Thunk)
+                          e)
+                         `cast`
+                       (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0] <Control.Monad.Trans.Except.ExceptT
+                                                                               GHC.Base.String
+                                                                               GHC.Types.IO>_N <SEDEL.Target.Eval.Value>_N ; Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                                                                 <GHC.Integer.Type.Integer>_N
+                                                                                                                                 <Control.Monad.Trans.Except.ExceptT
+                                                                                                                                    GHC.Base.String
+                                                                                                                                    GHC.Types.IO>_R
+                                                                                                                                 <SEDEL.Target.Eval.Value>_N)
+                         Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                        `cast`
+                      (Control.Monad.Trans.Except.N:ExceptT[0]
+                           <[GHC.Types.Char]>_N
+                           <GHC.Types.IO>_R
+                           <(SEDEL.Target.Eval.Value,
+                             GHC.Integer.Type.Integer)>_N ; GHC.Types.N:IO[0]
+                                                                <Data.Either.Either
+                                                                   [GHC.Types.Char]
+                                                                   (SEDEL.Target.Eval.Value,
+                                                                    GHC.Integer.Type.Integer)>_R)
+                        eta of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left e1
+                   -> (# ipv,
+                         Data.Either.Left @ [GHC.Types.Char] @ SEDEL.Target.Eval.Value e1 #)
+                   Data.Either.Right x
+                   -> (# ipv,
+                         Data.Either.Right
+                           @ [GHC.Types.Char]
+                           @ SEDEL.Target.Eval.Value
+                           (case x of wild1 { (,) a1 ds2 -> a1 }) #) } }) -}
+456e62b1bc507b32e375506971ece6cd
+  force ::
+    SEDEL.Target.Eval.Thunk
+    -> SEDEL.Target.Eval.EvalM SEDEL.Target.Eval.Value
+  RecSel Left SEDEL.Target.Eval.Thunk
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.Target.Eval.force1
+                  `cast`
+                (<SEDEL.Target.Eval.Thunk>_R ->_R SEDEL.Target.Eval.N:Thunk[0]) -}
+456e62b1bc507b32e375506971ece6cd
+  force1 :: SEDEL.Target.Eval.Thunk -> SEDEL.Target.Eval.Thunk
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, True)
+                (\ (ds :: SEDEL.Target.Eval.Thunk) -> ds) -}
+instance GHC.Show.Show [SEDEL.Target.Eval.Thunk]
+  = SEDEL.Target.Eval.$fShowThunk
+instance GHC.Show.Show [SEDEL.Target.Eval.Value]
+  = SEDEL.Target.Eval.$fShowValue
+trusted: none
+require own pkg trusted: False
+module header:
+  Nothing
+declaration docs:
+arg docs:
+

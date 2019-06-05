@@ -1,0 +1,551 @@
+
+==================== FINAL INTERFACE ====================
+2019-02-26 08:26:43.451671 UTC
+
+interface sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Util 8044
+  interface hash: 2abd1159ef55ded080cee4b6dfc53e29
+  ABI hash: 9c7b554d120905f8937ada4b7a10aaf5
+  export-list hash: 0dc9e2e0bf37de7f9de603f3ef4259bd
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: bd16ad8317a50ad09b96c51fa3346639
+  opt_hash: 14e536840aca4e889cad654e6f9b79c1
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.Util.eapp
+  SEDEL.Util.ebind
+  SEDEL.Util.elam
+  SEDEL.Util.elam2
+  SEDEL.Util.elet
+  SEDEL.Util.evar
+  SEDEL.Util.mkArr
+  SEDEL.Util.mkForall
+  SEDEL.Util.mkRecds
+  SEDEL.Util.mkRecdsT
+  SEDEL.Util.tforall
+  SEDEL.Util.translate
+  SEDEL.Util.tvar
+module dependencies: SEDEL.Common SEDEL.Source.Syntax
+package dependencies: StateVar-1.1.1.1 array-0.5.2.0 async-2.2.1
+                      base-4.11.1.0 base-orphans-0.7 bifunctors-5.5.3 binary-0.8.5.1
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.5.11.0
+                      contravariant-1.4.1 deepseq-1.4.3.0 distributive-0.5.3
+                      exceptions-0.10.0 ghc-boot-th-8.4.4 ghc-prim-0.5.2.0
+                      hashable-1.2.7.0 integer-gmp-1.0.2.0 megaparsec-6.5.0 mtl-2.2.2
+                      parser-combinators-1.0.0 pretty-1.1.3.6 prettyprinter-1.2.1
+                      profunctors-5.2.2 protolude-0.2.2 stm-2.4.5.1 tagged-0.8.5
+                      template-haskell-2.13.0.0 text-1.2.3.1 transformers-0.5.5.0
+                      unbound-generics-0.3.4
+orphans: sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Source.Syntax
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.5.1:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show stm-2.4.5.1:Control.Monad.STM
+         transformers-0.5.5.0:Control.Monad.Trans.Error
+         base-4.11.1.0:GHC.Float base-4.11.1.0:GHC.Base
+family instance modules: base-4.11.1.0:Control.Applicative
+                         base-4.11.1.0:Data.Complex base-4.11.1.0:Data.Functor.Compose
+                         base-4.11.1.0:Data.Functor.Const
+                         base-4.11.1.0:Data.Functor.Identity
+                         base-4.11.1.0:Data.Functor.Product base-4.11.1.0:Data.Functor.Sum
+                         base-4.11.1.0:Data.Monoid base-4.11.1.0:Data.Semigroup
+                         base-4.11.1.0:Data.Semigroup.Internal base-4.11.1.0:Data.Version
+                         base-4.11.1.0:Data.Void base-4.11.1.0:GHC.Exts
+                         base-4.11.1.0:GHC.Generics base-4.11.1.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.5.11.0:Data.IntMap.Internal
+                         containers-0.5.11.0:Data.IntSet.Internal
+                         containers-0.5.11.0:Data.Map.Internal
+                         containers-0.5.11.0:Data.Sequence.Internal
+                         containers-0.5.11.0:Data.Set.Internal containers-0.5.11.0:Data.Tree
+                         ghc-boot-th-8.4.4:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.4.4:GHC.LanguageExtensions.Type
+                         megaparsec-6.5.0:Text.Megaparsec.Error
+                         megaparsec-6.5.0:Text.Megaparsec.Pos
+                         megaparsec-6.5.0:Text.Megaparsec.State
+                         megaparsec-6.5.0:Text.Megaparsec.Stream
+                         pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
+                         pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
+                         prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Common
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Source.Syntax
+                         tagged-0.8.5:Data.Tagged
+                         template-haskell-2.13.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.11.1.0:Data.Foldable 8ed35c38958063956af33c935ea03444
+import  -/  base-4.11.1.0:Data.List 83dc843e47bfc0c5af51e19c6f3476d5
+import  -/  base-4.11.1.0:GHC.Base 604111500e81281298777e721c75643b
+import  -/  base-4.11.1.0:Prelude 0750c25585e2b797cd78291d423d39dd
+import  -/  SEDEL.Source.Syntax 0548d3668eda4620fc3ff3e6cf2368fb
+  exports: 6168fc739a7e41a0b25e4ca6cc08e10c
+  And d67643cb17880b1abddc6abf91d4f8a5
+  App ba2b2df00e3d440fb7ee2e97fad450c2
+  Arr 397e828962dfd176efed92f2c56bc256
+  DForall 2b7a02b818deac1f73f2f3a86bff1b86
+  DRec 2513c98ff2386be4280e3e970adb31bb
+  Expr e82999745a2326527e020a915d2988cd
+  Label 48063cbab0cf231dc589db9acdc7a78c
+  Lam d55f0f183a033abcc4314ddffdc9d233
+  LamA 384c9fe854b392e7c0e51c021088a74c
+  Letrec c5ec78127f48cd6d07be6d328051b53c
+  Merge 4cd641e29b94c82fdea109d702d90942
+  SRecT b2e8745a356f68d4ee38e06d46be62f9
+  SType e82999745a2326527e020a915d2988cd
+  TVar 8a2dafe14d3e9f11f76bcae45d3021c4
+  TmName e82999745a2326527e020a915d2988cd
+  Top 414867fb90328e5b1b256a7cc866e8b5
+  TopT 37aa61935fae500ca4d2904f9fa8d48b
+  TyName e82999745a2326527e020a915d2988cd
+  Var 54737d5977b92619bc58e6ac2bf3ec0b
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless 8dd357a9d9fbbcf23f41fb39ba00f4e4
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Bind 779b9219ed791533e12106eb581c9f57
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Embed a6d67338db1f14cf42fb5b5b69a561d5
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Name 34633dd5588f50a53bac3c657a64a3ac
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Operations 86bd0dbc8cb450c4ba4e75dad5d99714
+a3ebf0ae97cb01149817453232251884
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.Util.$trModule3
+                   SEDEL.Util.$trModule1) -}
+954be0ae1c709230f13ff9b4ed92071e
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Util.$trModule2) -}
+c5bb1d584bf1c6c5355ea30197d21eed
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.Util"#) -}
+3ba452dc133168d6fadf913b0d24b904
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Util.$trModule4) -}
+761777f27de77d7cc47706e459e06e72
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP"#) -}
+310480637b4c9bfe3eaadf7884161a34
+  $welam2 ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.SType
+    -> SEDEL.Source.Syntax.Expr
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TmName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               SEDEL.Source.Syntax.SType)
+            SEDEL.Source.Syntax.Expr #)
+  {- Arity: 3, Strictness: <L,U><L,U><L,1*U>, Inline: [0],
+     Unfolding: (\ (ww :: GHC.Base.String)
+                   (ww1 :: SEDEL.Source.Syntax.SType)
+                   (w :: SEDEL.Source.Syntax.Expr) ->
+                 (# let {
+                      p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                              SEDEL.Source.Syntax.Expr
+                      = Unbound.Generics.LocallyNameless.Name.Fn
+                          @ SEDEL.Source.Syntax.Expr
+                          ww
+                          Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                    } in
+                    Unbound.Generics.LocallyNameless.Bind.B
+                      @ (Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.Expr,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           SEDEL.Source.Syntax.SType)
+                      @ SEDEL.Source.Syntax.Expr
+                      (p1,
+                       ww1
+                         `cast`
+                       (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                 <SEDEL.Source.Syntax.SType>_R)))
+                      (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                         Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                         (\ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                          case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                 @ SEDEL.Source.Syntax.Expr
+                                 SEDEL.Source.Syntax.$fAlphaExpr6
+                                   `cast`
+                                 (Sym (Data.Typeable.Internal.N:Typeable[0]) <*>_N <SEDEL.Source.Syntax.Expr>_N)
+                                 p1
+                                 nm of wild {
+                            Data.Either.Left n
+                            -> case GHC.Integer.Type.plusInteger
+                                      n
+                                      Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                               Data.Either.Left
+                                 @ GHC.Integer.Type.Integer
+                                 @ GHC.Integer.Type.Integer
+                                 vx }
+                            Data.Either.Right ds2 -> wild })
+                           `cast`
+                         (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                         w) #)) -}
+2764213980c987cdfb3ab9ac5b045548
+  $welet ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TmName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               (GHC.Base.Maybe SEDEL.Source.Syntax.SType))
+            (SEDEL.Source.Syntax.Expr, SEDEL.Source.Syntax.Expr) #)
+  {- Arity: 3, Strictness: <L,U><L,1*U><L,1*U>, Inline: [0],
+     Unfolding: (\ (w :: GHC.Base.String)
+                   (w1 :: SEDEL.Source.Syntax.Expr)
+                   (w2 :: SEDEL.Source.Syntax.Expr) ->
+                 (# let {
+                      p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                              SEDEL.Source.Syntax.Expr
+                      = Unbound.Generics.LocallyNameless.Name.Fn
+                          @ SEDEL.Source.Syntax.Expr
+                          w
+                          Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                    } in
+                    Unbound.Generics.LocallyNameless.Bind.B
+                      @ (Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.Expr,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           (GHC.Base.Maybe SEDEL.Source.Syntax.SType))
+                      @ (SEDEL.Source.Syntax.Expr, SEDEL.Source.Syntax.Expr)
+                      (p1,
+                       (GHC.Base.Nothing @ SEDEL.Source.Syntax.SType)
+                         `cast`
+                       (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                 <GHC.Base.Maybe SEDEL.Source.Syntax.SType>_R)))
+                      (let {
+                         b1 :: Unbound.Generics.LocallyNameless.Name.AnyName
+                               -> Data.Either.Either
+                                    GHC.Integer.Type.Integer GHC.Integer.Type.Integer
+                           {- Arity: 1, Strictness: <S,1*U> -}
+                         = \ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                           case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                  @ SEDEL.Source.Syntax.Expr
+                                  SEDEL.Source.Syntax.$fAlphaExpr6
+                                    `cast`
+                                  (Sym (Data.Typeable.Internal.N:Typeable[0]) <*>_N <SEDEL.Source.Syntax.Expr>_N)
+                                  p1
+                                  nm of wild {
+                             Data.Either.Left n
+                             -> case GHC.Integer.Type.plusInteger
+                                       n
+                                       Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                                Data.Either.Left
+                                  @ GHC.Integer.Type.Integer
+                                  @ GHC.Integer.Type.Integer
+                                  vx }
+                             Data.Either.Right ds2 -> wild }
+                       } in
+                       (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                          Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                          b1
+                            `cast`
+                          (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                          w1,
+                        SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                          Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                          b1
+                            `cast`
+                          (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                          w2)) #)) -}
+d64c789634e3e68babc6dcb37ed39ce1
+  $wmkForall ::
+    (SEDEL.Source.Syntax.TyName,
+     Unbound.Generics.LocallyNameless.Embed.Embed
+       SEDEL.Source.Syntax.SType)
+    -> SEDEL.Source.Syntax.SType
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TyName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               SEDEL.Source.Syntax.SType)
+            SEDEL.Source.Syntax.SType #)
+  {- Arity: 2, Strictness: <L,U(U,U)><L,1*U>, Inline: [0],
+     Unfolding: (\ (w :: (SEDEL.Source.Syntax.TyName,
+                          Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.SType))
+                   (w1 :: SEDEL.Source.Syntax.SType) ->
+                 (# Unbound.Generics.LocallyNameless.Bind.B
+                      @ (SEDEL.Source.Syntax.TyName,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           SEDEL.Source.Syntax.SType)
+                      @ SEDEL.Source.Syntax.SType
+                      w
+                      (SEDEL.Source.Syntax.$fAlphaSType_$cclose
+                         Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                         (case w of wild { (,) g1 g2 ->
+                          (\ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                           case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                  @ SEDEL.Source.Syntax.SType
+                                  SEDEL.Source.Syntax.$fAlphaSType16
+                                    `cast`
+                                  (Sym (Data.Typeable.Internal.N:Typeable[0]) <*>_N <SEDEL.Source.Syntax.SType>_N)
+                                  g1
+                                  nm of wild1 {
+                             Data.Either.Left n
+                             -> case GHC.Integer.Type.plusInteger
+                                       n
+                                       Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                                Data.Either.Left
+                                  @ GHC.Integer.Type.Integer
+                                  @ GHC.Integer.Type.Integer
+                                  vx }
+                             Data.Either.Right ds2 -> wild1 })
+                            `cast`
+                          (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0])) })
+                         w1) #)) -}
+68bd9ca2c613b36cda1c65dca0a1d60c
+  $wtforall ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.SType
+    -> SEDEL.Source.Syntax.SType
+    -> (# Unbound.Generics.LocallyNameless.Bind.Bind
+            (SEDEL.Source.Syntax.TyName,
+             Unbound.Generics.LocallyNameless.Embed.Embed
+               SEDEL.Source.Syntax.SType)
+            SEDEL.Source.Syntax.SType #)
+  {- Arity: 3, Strictness: <L,U><L,U><L,1*U>, Inline: [0],
+     Unfolding: (\ (ww :: GHC.Base.String)
+                   (ww1 :: SEDEL.Source.Syntax.SType)
+                   (w :: SEDEL.Source.Syntax.SType) ->
+                 (# let {
+                      p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                              SEDEL.Source.Syntax.SType
+                      = Unbound.Generics.LocallyNameless.Name.Fn
+                          @ SEDEL.Source.Syntax.SType
+                          ww
+                          Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                    } in
+                    Unbound.Generics.LocallyNameless.Bind.B
+                      @ (Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.SType,
+                         Unbound.Generics.LocallyNameless.Embed.Embed
+                           SEDEL.Source.Syntax.SType)
+                      @ SEDEL.Source.Syntax.SType
+                      (p1,
+                       ww1
+                         `cast`
+                       (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                 <SEDEL.Source.Syntax.SType>_R)))
+                      (SEDEL.Source.Syntax.$fAlphaSType_$cclose
+                         Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                         (\ (nm :: Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                          case Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                 @ SEDEL.Source.Syntax.SType
+                                 SEDEL.Source.Syntax.$fAlphaSType16
+                                   `cast`
+                                 (Sym (Data.Typeable.Internal.N:Typeable[0]) <*>_N <SEDEL.Source.Syntax.SType>_N)
+                                 p1
+                                 nm of wild {
+                            Data.Either.Left n
+                            -> case GHC.Integer.Type.plusInteger
+                                      n
+                                      Unbound.Generics.LocallyNameless.Alpha.$fAlpha()4 of vx { DEFAULT ->
+                               Data.Either.Left
+                                 @ GHC.Integer.Type.Integer
+                                 @ GHC.Integer.Type.Integer
+                                 vx }
+                            Data.Either.Right ds2 -> wild })
+                           `cast`
+                         (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                         w) #)) -}
+9f0d66da3a77720709cf284ec8ea3788
+  eapp ::
+    SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>m2,
+     Unfolding: InlineRule (0, True, True) SEDEL.Source.Syntax.App -}
+075a916d9f4af09223cf0e1aa1796dcf
+  ebind ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr
+    -> Unbound.Generics.LocallyNameless.Bind.Bind
+         SEDEL.Source.Syntax.TmName SEDEL.Source.Syntax.Expr
+  {- Arity: 2, Strictness: <L,U><L,1*U>m, Inline: [0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: GHC.Base.String) (w1 :: SEDEL.Source.Syntax.Expr) ->
+                 let {
+                   p1 :: Unbound.Generics.LocallyNameless.Name.Name
+                           SEDEL.Source.Syntax.Expr
+                   = Unbound.Generics.LocallyNameless.Name.Fn
+                       @ SEDEL.Source.Syntax.Expr
+                       w
+                       Unbound.Generics.LocallyNameless.Name.$fShowAnyName3
+                 } in
+                 Unbound.Generics.LocallyNameless.Bind.B
+                   @ SEDEL.Source.Syntax.TmName
+                   @ SEDEL.Source.Syntax.Expr
+                   p1
+                   (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                      Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                      (Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                         @ SEDEL.Source.Syntax.Expr
+                         SEDEL.Source.Syntax.$fAlphaExpr6
+                           `cast`
+                         (Sym (Data.Typeable.Internal.N:Typeable[0]) <*>_N <SEDEL.Source.Syntax.Expr>_N)
+                         p1)
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                      w1)) -}
+9ee154ebf9babf237f7fd1ec58e9846f
+  elam ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, Strictness: <L,U><L,1*U>m3,
+     Unfolding: InlineRule (2, True, False)
+                (\ (b :: GHC.Base.String) (e :: SEDEL.Source.Syntax.Expr) ->
+                 SEDEL.Source.Syntax.Lam (SEDEL.Util.ebind b e)) -}
+00b8f22811881e8391d426126dff3f94
+  elam2 ::
+    (GHC.Base.String, SEDEL.Source.Syntax.SType)
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, Strictness: <S,1*U(U,U)><L,1*U>m14, Inline: [0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: (GHC.Base.String, SEDEL.Source.Syntax.SType))
+                   (w1 :: SEDEL.Source.Syntax.Expr) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case SEDEL.Util.$welam2 ww1 ww2 w1 of ww3 { Unit# ww4 ->
+                 SEDEL.Source.Syntax.LamA ww4 } }) -}
+472157d1ceecde9dc81e28606ff7ccd9
+  elet ::
+    GHC.Base.String
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+    -> SEDEL.Source.Syntax.Expr
+  {- Arity: 3, Strictness: <L,U><L,1*U><L,1*U>m4, Inline: [0],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: GHC.Base.String)
+                   (w1 :: SEDEL.Source.Syntax.Expr)
+                   (w2 :: SEDEL.Source.Syntax.Expr) ->
+                 case SEDEL.Util.$welet w w1 w2 of ww { Unit# ww1 ->
+                 SEDEL.Source.Syntax.Letrec ww1 }) -}
+e96e829c3f9a0a58938c3f30b7d7f278
+  evar :: GHC.Base.String -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m1,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: GHC.Base.String) ->
+                 SEDEL.Source.Syntax.Var
+                   (Unbound.Generics.LocallyNameless.Name.string2Name
+                      @ SEDEL.Source.Syntax.Expr
+                      x)) -}
+d75a09775d33cf5b4ccbe28029812e5e
+  mkArr ::
+    SEDEL.Source.Syntax.SType
+    -> [SEDEL.Source.Syntax.SType] -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, HasNoCafRefs,
+     Unfolding: (GHC.Base.foldr
+                   @ SEDEL.Source.Syntax.SType
+                   @ SEDEL.Source.Syntax.SType
+                   SEDEL.Source.Syntax.Arr) -}
+b95c004c25bf030e92541431499b70a4
+  mkForall ::
+    SEDEL.Source.Syntax.SType
+    -> [(SEDEL.Source.Syntax.TyName,
+         Unbound.Generics.LocallyNameless.Embed.Embed
+           SEDEL.Source.Syntax.SType)]
+    -> SEDEL.Source.Syntax.SType
+  {- Arity: 2,
+     Unfolding: (GHC.Base.foldr
+                   @ (SEDEL.Source.Syntax.TyName,
+                      Unbound.Generics.LocallyNameless.Embed.Embed
+                        SEDEL.Source.Syntax.SType)
+                   @ SEDEL.Source.Syntax.SType
+                   SEDEL.Util.mkForall1) -}
+58980125e171d498e429e62cdb76cb5e
+  mkForall1 ::
+    (SEDEL.Source.Syntax.TyName,
+     Unbound.Generics.LocallyNameless.Embed.Embed
+       SEDEL.Source.Syntax.SType)
+    -> SEDEL.Source.Syntax.SType -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, Strictness: <L,U(U,U)><L,1*U>m6, Inline: [0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: (SEDEL.Source.Syntax.TyName,
+                          Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.SType))
+                   (w1 :: SEDEL.Source.Syntax.SType) ->
+                 case SEDEL.Util.$wmkForall w w1 of ww { Unit# ww1 ->
+                 SEDEL.Source.Syntax.DForall ww1 }) -}
+7d0e28f4d59f01e3e0de2eace1ab81da
+  mkRecds ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.Expr)]
+    -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: [(SEDEL.Source.Syntax.Label,
+                            SEDEL.Source.Syntax.Expr)]) ->
+                 case ds of wild {
+                   [] -> SEDEL.Source.Syntax.Top
+                   : ds1 r
+                   -> case ds1 of wild1 { (,) l e ->
+                      SEDEL.Util.mkRecds_go r (SEDEL.Source.Syntax.DRec l e) } }) -}
+ec06f52013173c2568b355a5dc6c6643
+  mkRecdsT ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.SType)]
+    -> SEDEL.Source.Syntax.SType
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: (\ (ds :: [(SEDEL.Source.Syntax.Label,
+                            SEDEL.Source.Syntax.SType)]) ->
+                 case ds of wild {
+                   [] -> SEDEL.Source.Syntax.TopT
+                   : ds1 r
+                   -> case ds1 of wild1 { (,) l e ->
+                      SEDEL.Util.mkRecdsT_go r (SEDEL.Source.Syntax.SRecT l e) } }) -}
+81a09ac7e693c440a331fe992f1636af
+  mkRecdsT_go ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.SType)]
+    -> SEDEL.Source.Syntax.SType -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,U> -}
+5c0fe175d48c90139163b9e895770ef4
+  mkRecds_go ::
+    [(SEDEL.Source.Syntax.Label, SEDEL.Source.Syntax.Expr)]
+    -> SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><S,1*U> -}
+5a7da27ea52b25e11d288ea7fc060c59
+  tforall ::
+    (GHC.Base.String, SEDEL.Source.Syntax.SType)
+    -> SEDEL.Source.Syntax.SType -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, Strictness: <S,1*U(U,U)><L,1*U>m6, Inline: [0],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: (GHC.Base.String, SEDEL.Source.Syntax.SType))
+                   (w1 :: SEDEL.Source.Syntax.SType) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case SEDEL.Util.$wtforall ww1 ww2 w1 of ww3 { Unit# ww4 ->
+                 SEDEL.Source.Syntax.DForall ww4 } }) -}
+9cb53985a630d52941ac814a4816df94
+  translate ::
+    Unbound.Generics.LocallyNameless.Name.Name a
+    -> Unbound.Generics.LocallyNameless.Name.Name b
+  {- Arity: 1, HasNoCafRefs, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a @ b (ds :: Unbound.Generics.LocallyNameless.Name.Name a) ->
+                 case ds of wild {
+                   Unbound.Generics.LocallyNameless.Name.Fn x y
+                   -> Unbound.Generics.LocallyNameless.Name.Fn @ b x y
+                   Unbound.Generics.LocallyNameless.Name.Bn x y
+                   -> Unbound.Generics.LocallyNameless.Name.Bn @ b x y }) -}
+023f0555008660df75d305fd9985be55
+  tvar :: GHC.Base.String -> SEDEL.Source.Syntax.SType
+  {- Arity: 1, HasNoCafRefs, Strictness: <L,U>m5,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: GHC.Base.String) ->
+                 SEDEL.Source.Syntax.TVar
+                   (Unbound.Generics.LocallyNameless.Name.string2Name
+                      @ SEDEL.Source.Syntax.SType
+                      x)) -}
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+

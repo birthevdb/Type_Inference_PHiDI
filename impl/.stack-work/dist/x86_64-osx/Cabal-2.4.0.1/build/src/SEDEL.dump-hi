@@ -1,0 +1,876 @@
+
+==================== FINAL INTERFACE ====================
+2019-04-01 09:39:38.869115 UTC
+
+interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL 8063
+  interface hash: ae63e0018c26fc65ae8ffd61f35611f0
+  ABI hash: 88bf2a572987f23a2cd1c216b209c08d
+  export-list hash: 5f44819d915d675c30a5c8b746b67000
+  orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
+  flag hash: a09b2f362873166c71093154157143c4
+  opt_hash: 6faf2de08de32d19db9870899d88e59a
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  plugin_hash: ad164012d6b1e14942349d58b1132007
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.driver
+  SEDEL.evalFile
+  SEDEL.readAndEval
+  SEDEL.render
+module dependencies: SEDEL.Common SEDEL.Environment
+                     SEDEL.Parser.Parser SEDEL.PrettyPrint SEDEL.Source.Desugar
+                     SEDEL.Source.Inference SEDEL.Source.Syntax SEDEL.Target.Eval
+                     SEDEL.Target.Syntax SEDEL.Util
+package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
+                      base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
+                      bytestring-0.10.8.2 case-insensitive-1.2.0.11 comonad-5.0.4
+                      containers-0.6.0.1 deepseq-1.4.4.0 distributive-0.6
+                      exceptions-0.10.0 ghc-boot-th-8.6.3 ghc-prim-0.5.3 hashable-1.2.7.0
+                      integer-gmp-1.0.2.0 integer-logarithms-1.0.2.2 megaparsec-7.0.4
+                      mtl-2.2.2 parser-combinators-1.0.1 pretty-1.1.3.6
+                      prettyprinter-1.2.1 primitive-0.6.4.0 profunctors-5.3
+                      protolude-0.2.3 scientific-0.3.6.2 stm-2.5.0.0 tagged-0.8.6
+                      template-haskell-2.14.0.0 text-1.2.3.1 transformers-0.5.5.0
+                      unbound-generics-0.4.0
+orphans: sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.PrettyPrint
+         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+         transformers-0.5.5.0:Control.Monad.Trans.Error
+         stm-2.5.0.0:Control.Monad.STM
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.6.0:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show base-4.12.0.0:GHC.Float
+         base-4.12.0.0:GHC.Base
+family instance modules: base-4.12.0.0:Control.Applicative
+                         base-4.12.0.0:Data.Complex base-4.12.0.0:Data.Functor.Compose
+                         base-4.12.0.0:Data.Functor.Const
+                         base-4.12.0.0:Data.Functor.Identity
+                         base-4.12.0.0:Data.Functor.Product base-4.12.0.0:Data.Functor.Sum
+                         base-4.12.0.0:Data.Monoid base-4.12.0.0:Data.Semigroup
+                         base-4.12.0.0:Data.Semigroup.Internal base-4.12.0.0:Data.Version
+                         base-4.12.0.0:Data.Void base-4.12.0.0:GHC.Exts
+                         base-4.12.0.0:GHC.Generics base-4.12.0.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.6.0.1:Data.IntMap.Internal
+                         containers-0.6.0.1:Data.IntSet.Internal
+                         containers-0.6.0.1:Data.Map.Internal
+                         containers-0.6.0.1:Data.Sequence.Internal
+                         containers-0.6.0.1:Data.Set.Internal containers-0.6.0.1:Data.Tree
+                         ghc-boot-th-8.6.3:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.6.3:GHC.LanguageExtensions.Type
+                         megaparsec-7.0.4:Text.Megaparsec.Error
+                         megaparsec-7.0.4:Text.Megaparsec.Pos
+                         megaparsec-7.0.4:Text.Megaparsec.State
+                         megaparsec-7.0.4:Text.Megaparsec.Stream
+                         pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
+                         pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
+                         prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
+                         primitive-0.6.4.0:Control.Monad.Primitive
+                         primitive-0.6.4.0:Data.Primitive.Array
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Target.Syntax
+                         tagged-0.8.6:Data.Tagged
+                         template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Ignore
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.12.0.0:Control.Exception 9037ab3ff61dd8119bebad992e069fdd
+import  -/  base-4.12.0.0:Control.Exception.Base db78b15f30645b3d13d0d4e45713d93a
+import  -/  base-4.12.0.0:Data.Either 946a3435d06773e1dbcad1ba5dc18a2c
+import  -/  base-4.12.0.0:Debug.Trace 6e89d30f3850c77c707392fc46e9b589
+import  -/  base-4.12.0.0:GHC.Base cc906f98291a1b830546e99a96674547
+import  -/  base-4.12.0.0:GHC.Exception.Type 5ef1ba37cab5eae77ed746c8e9d4d934
+import  -/  base-4.12.0.0:GHC.IO edc9355d7dbab399fd5d385cd5bb457d
+import  -/  ghc-prim-0.5.3:GHC.Classes e0d9c979f6368701f34fa421754d2cce
+import  -/  ghc-prim-0.5.3:GHC.Types 57064c9f957b09bc2e360061ad5cae0b
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc 37bebc045f3a0cb8e8977c181970ecaf
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal 12d379fe6b8bbcab8bffc2d86df0e72f
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Symbols.Ascii 91602a77e9f9b3606b529aea701ac155
+import  -/  protolude-0.2.3:Protolude f69a0445642f255f4ede68732259560a
+import  -/  protolude-0.2.3:Protolude.Conv 162d943c5a66c61b39726d799a95bcc1
+import  -/  SEDEL.Environment ed88f2a0dd8c2a9eca4b994034abfc4f
+  exports: e9e749407a9acf1de6b985e3dfe9ebfc
+  Ctx 96aefa82a59ddf2385c9534999718e9f
+  emptyCtx 1b165f707c0c08085042ce43f568b2d1
+  runTcMonad 2ecb29d13b046ec20f981830698fa9f2
+import  -/  SEDEL.Parser.Parser 21e5b1211cf84d44261adc3dc2c27fbd
+  exports: db0a5b571d2207b9c8a1686c5bb8040b
+  parseModule a558d1972ddbb4f92fbe0b8bcac98046
+import  -/  SEDEL.PrettyPrint f1989f434297afaffeb0400ac83369d8
+  exports: fc8e469d5c6860b5918a12f67da268d9
+  FDoc 1e788f59dec27773220cefea739ec59d
+  pprint b1c89e02bc179b33c976cabe8ccabe5c
+import  -/  SEDEL.Source.Inference 707d2c085848cc300a8df3a26af98c21
+  exports: 43774e5dacf85e4cda6aa9b964bc2098
+  tcModule 594bd9149eab79e8fb42881719413b98
+import  -/  SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
+  exports: d4d2fd645eff9adcf509b28019caf96b
+  Module 7a2313ab6449bd182db161ae191980ad
+  Scheme 76520494bd75ab62670e86072668ba13
+import  -/  SEDEL.Target.Eval 5abc9cc0435022005551c3f733d2accd
+  exports: f850cb10bac4a9b30b429752cecbce0d
+  evaluate 817df55c9f521f468e2620c2f6c1bfe0
+import  -/  text-1.2.3.1:Data.Text 2c90ba06bbfb1ec3d4a10366de64b74a
+import  -/  text-1.2.3.1:Data.Text.IO b5f213a2b9ff64a74e29691d2bea1c1c
+import  -/  text-1.2.3.1:Data.Text.Internal f35f3ca76dd689967d20c61a04b86010
+fbb7e33017735b806fcfb3995b6902b0
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module SEDEL.$trModule3 SEDEL.$trModule1) -}
+5f0a857dc4b159c626829be1878ff7ba
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.$trModule2) -}
+cb1501752f17da8fd7c5e37882b195a9
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL"#) -}
+d40cbff749f6297a153c1e9031c593c1
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.$trModule4) -}
+cb775b138cb5d054334e3f8c3d7a0b12
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
+6f12f3cc75fa1c6f9e0ab2cfc7ace30e
+  $wouter ::
+    GHC.Prim.MutableByteArray# GHC.Prim.RealWorld
+    -> GHC.Prim.Int#
+    -> [GHC.Types.Char]
+    -> GHC.Prim.Int#
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          Data.Text.Internal.Text #)
+  {- Arity: 5, Strictness: <L,U><S,U><S,1*U><S,U><S,U>,
+     Inline: [2] -}
+254ca827e9565d6057569b112ed330a5
+  $wrender ::
+    SEDEL.Source.Syntax.Scheme
+    -> Data.Text.Internal.Text
+    -> (# Data.Text.Prettyprint.Doc.Internal.Doc
+            SEDEL.PrettyPrint.FAnn,
+          Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn #)
+  {- Arity: 2, Strictness: <L,1*U><L,1*U(U,U,U)>, Inline: [2],
+     Unfolding: (\ (ww :: SEDEL.Source.Syntax.Scheme)
+                   (ww1 :: Data.Text.Internal.Text) ->
+                 (# SEDEL.render5,
+                    Data.Text.Prettyprint.Doc.Internal.Cat
+                      @ SEDEL.PrettyPrint.FAnn
+                      (Data.Text.Prettyprint.Doc.Internal.line @ SEDEL.PrettyPrint.FAnn)
+                      (Data.Text.Prettyprint.Doc.Internal.Cat
+                         @ SEDEL.PrettyPrint.FAnn
+                         (Data.Text.Prettyprint.Doc.Internal.Cat
+                            @ SEDEL.PrettyPrint.FAnn
+                            (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon
+                               @ SEDEL.PrettyPrint.FAnn)
+                            (Data.Text.Prettyprint.Doc.Internal.Cat
+                               @ SEDEL.PrettyPrint.FAnn
+                               (Data.Text.Prettyprint.Doc.Internal.line1 @ SEDEL.PrettyPrint.FAnn)
+                               ((SEDEL.PrettyPrint.$w$cppr8
+                                   @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                                        Data.Functor.Identity.Identity)
+                                   (SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>=
+                                      @ (Data.Set.Internal.Set
+                                           Unbound.Generics.LocallyNameless.Name.AnyName))
+                                     `cast`
+                                   (forall (a :: <*>_N) (b :: <*>_N).
+                                    Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                                    ->_R (<a>_R
+                                          ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                                   SEDEL.driver5
+                                     `cast`
+                                   (forall (a :: <*>_N).
+                                    <a>_R
+                                    ->_R (<Data.Set.Internal.Set
+                                             Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                          ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                                        <a>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                            <*>_N
+                                                                            <Data.Set.Internal.Set
+                                                                               Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                            <Data.Functor.Identity.Identity>_R
+                                                                            <a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                                   SEDEL.driver3
+                                     `cast`
+                                   (forall (a :: <*>_N).
+                                    <Data.Typeable.Internal.Typeable a>_R
+                                    ->_R <Unbound.Generics.LocallyNameless.Name.Name a>_R
+                                    ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                  <*>_N
+                                                  <Data.Set.Internal.Set
+                                                     Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                  <Data.Functor.Identity.Identity>_R
+                                                  <Unbound.Generics.LocallyNameless.Name.Name
+                                                     a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Unbound.Generics.LocallyNameless.Name.Name
+                                                                                                                                                               a>_N)
+                                   (Unbound.Generics.LocallyNameless.LFresh.$w$cavoid
+                                      @ Data.Functor.Identity.Identity)
+                                   ww)
+                                  `cast`
+                                (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0] <Data.Functor.Identity.Identity>_N <SEDEL.PrettyPrint.FDoc>_N ; Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                                                                                                           <*>_N
+                                                                                                                                                           <Data.Set.Internal.Set
+                                                                                                                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                                                                                                           <Data.Functor.Identity.Identity>_R
+                                                                                                                                                           <SEDEL.PrettyPrint.FDoc>_N)
+                                  (Data.Set.Internal.Tip
+                                     @ Unbound.Generics.LocallyNameless.Name.AnyName))
+                                 `cast`
+                               (Data.Functor.Identity.N:Identity[0] <SEDEL.PrettyPrint.FDoc>_R)))
+                         (Data.Text.Prettyprint.Doc.Internal.Cat
+                            @ SEDEL.PrettyPrint.FAnn
+                            (Data.Text.Prettyprint.Doc.Internal.line @ SEDEL.PrettyPrint.FAnn)
+                            (Data.Text.Prettyprint.Doc.Internal.Cat
+                               @ SEDEL.PrettyPrint.FAnn
+                               (Data.Text.Prettyprint.Doc.Internal.line @ SEDEL.PrettyPrint.FAnn)
+                               (Data.Text.Prettyprint.Doc.Internal.Cat
+                                  @ SEDEL.PrettyPrint.FAnn
+                                  SEDEL.render3
+                                  (Data.Text.Prettyprint.Doc.Internal.Cat
+                                     @ SEDEL.PrettyPrint.FAnn
+                                     (Data.Text.Prettyprint.Doc.Internal.line
+                                        @ SEDEL.PrettyPrint.FAnn)
+                                     (Data.Text.Prettyprint.Doc.Internal.Cat
+                                        @ SEDEL.PrettyPrint.FAnn
+                                        SEDEL.render1
+                                        (Data.Text.Prettyprint.Doc.Internal.Cat
+                                           @ SEDEL.PrettyPrint.FAnn
+                                           (Data.Text.Prettyprint.Doc.Internal.line1
+                                              @ SEDEL.PrettyPrint.FAnn)
+                                           (Data.Text.Prettyprint.Doc.Internal.$fPrettyText_$cpretty1
+                                              @ SEDEL.PrettyPrint.FAnn
+                                              ww1)))))))) #)) -}
+c9f74c97767c11e3db44d5fec0687327
+  type Result =
+    Data.Either.Either
+      SEDEL.PrettyPrint.FDoc
+      (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)
+f523e1cbccc6fe7f2a991464bc8e1d6e
+  driver ::
+    SEDEL.Environment.Ctx
+    -> SEDEL.Source.Syntax.Module -> GHC.Types.IO SEDEL.Result
+  {- Arity: 3, Strictness: <L,U><L,U(U,U(U(U,A,U,U,A,A)))><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.driver1
+                  `cast`
+                (<SEDEL.Environment.Ctx>_R
+                 ->_R <SEDEL.Source.Syntax.Module>_R
+                 ->_R Sym (GHC.Types.N:IO[0] <SEDEL.Result>_R)) -}
+cdd7e3238edfbaf1d9dbf9c201e25728
+  driver1 ::
+    SEDEL.Environment.Ctx
+    -> SEDEL.Source.Syntax.Module
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, SEDEL.Result #)
+  {- Arity: 3, Strictness: <L,U><L,U(U,U(U(U,A,U,U,A,A)))><S,U>,
+     Unfolding: (\ (ctx :: SEDEL.Environment.Ctx)
+                   (abt :: SEDEL.Source.Syntax.Module)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case (Debug.Trace.trace
+                         @ (GHC.Types.IO
+                              (Data.Either.Either
+                                 SEDEL.Environment.Err
+                                 (SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr)))
+                         SEDEL.driver6
+                         (\ (eta :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                          case (((SEDEL.Source.Inference.tcModule abt)
+                                   `cast`
+                                 (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0] <Control.Monad.Trans.Reader.ReaderT
+                                                                                         SEDEL.Environment.Ctx
+                                                                                         (Control.Monad.Trans.Except.ExceptT
+                                                                                            SEDEL.Environment.Err
+                                                                                            GHC.Types.IO)>_N <(SEDEL.Source.Syntax.Scheme,
+                                                                                                               SEDEL.Target.Syntax.UExpr)>_N ; Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                                                                                   <GHC.Integer.Type.Integer>_N
+                                                                                                                                                   <Control.Monad.Trans.Reader.ReaderT
+                                                                                                                                                      SEDEL.Environment.Ctx
+                                                                                                                                                      (Control.Monad.Trans.Except.ExceptT
+                                                                                                                                                         SEDEL.Environment.Err
+                                                                                                                                                         GHC.Types.IO)>_R
+                                                                                                                                                   <(SEDEL.Source.Syntax.Scheme,
+                                                                                                                                                     SEDEL.Target.Syntax.UExpr)>_N)
+                                   Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                                  `cast`
+                                (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                     <*>_N
+                                     <SEDEL.Environment.Ctx>_R
+                                     <Control.Monad.Trans.Except.ExceptT
+                                        SEDEL.Environment.Err GHC.Types.IO>_R
+                                     <((SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr),
+                                       GHC.Integer.Type.Integer)>_N)
+                                  ctx)
+                                 `cast`
+                               (Control.Monad.Trans.Except.N:ExceptT[0]
+                                    <SEDEL.Environment.Err>_N
+                                    <GHC.Types.IO>_R
+                                    <((SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr),
+                                      GHC.Integer.Type.Integer)>_N ; GHC.Types.N:IO[0]
+                                                                         <Data.Either.Either
+                                                                            SEDEL.Environment.Err
+                                                                            ((SEDEL.Source.Syntax.Scheme,
+                                                                              SEDEL.Target.Syntax.UExpr),
+                                                                             GHC.Integer.Type.Integer)>_R)
+                                 eta of ds1 { (#,#) ipv ipv1 ->
+                          case ipv1 of wild {
+                            Data.Either.Left e1
+                            -> (# ipv,
+                                  Data.Either.Left
+                                    @ SEDEL.Environment.Err
+                                    @ (SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr)
+                                    e1 #)
+                            Data.Either.Right x
+                            -> (# ipv,
+                                  Data.Either.Right
+                                    @ SEDEL.Environment.Err
+                                    @ (SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr)
+                                    (case x of wild1 { (,) a1 ds2 -> a1 }) #) } })
+                           `cast`
+                         (Sym (GHC.Types.N:IO[0]
+                                   <Data.Either.Either
+                                      SEDEL.Environment.Err
+                                      (SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr)>_R)))
+                        `cast`
+                      (GHC.Types.N:IO[0]
+                           <Data.Either.Either
+                              SEDEL.Environment.Err
+                              (SEDEL.Source.Syntax.Scheme, SEDEL.Target.Syntax.UExpr)>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left er
+                   -> (# ipv,
+                         Data.Either.Left
+                           @ SEDEL.PrettyPrint.FDoc
+                           @ (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)
+                           (case er of ww11 { SEDEL.Environment.Err ww12 ww13 ->
+                            case ww12 of wild1 {
+                              [] -> ww13
+                              : ds ds2
+                              -> case ds of wild2 { SEDEL.Environment.SourceLocation a $dFPretty p term ->
+                                 Data.Text.Prettyprint.Doc.Internal.vsep1
+                                   @ SEDEL.PrettyPrint.FAnn
+                                   (GHC.Types.:
+                                      @ (Data.Text.Prettyprint.Doc.Internal.Doc
+                                           SEDEL.PrettyPrint.FAnn)
+                                      (case p of wild3 { Text.Megaparsec.Pos.SourcePos ds3 dt dt1 ->
+                                       Data.Text.Prettyprint.Doc.Internal.Cat
+                                         @ SEDEL.PrettyPrint.FAnn
+                                         (Data.Text.Prettyprint.Doc.Internal.$w$cpretty5
+                                            @ SEDEL.PrettyPrint.FAnn
+                                            dt)
+                                         (Data.Text.Prettyprint.Doc.Internal.Cat
+                                            @ SEDEL.PrettyPrint.FAnn
+                                            (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon
+                                               @ SEDEL.PrettyPrint.FAnn)
+                                            (Data.Text.Prettyprint.Doc.Internal.Cat
+                                               @ SEDEL.PrettyPrint.FAnn
+                                               (Data.Text.Prettyprint.Doc.Internal.$w$cpretty5
+                                                  @ SEDEL.PrettyPrint.FAnn
+                                                  dt1)
+                                               (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon
+                                                  @ SEDEL.PrettyPrint.FAnn))) })
+                                      (GHC.Types.:
+                                         @ (Data.Text.Prettyprint.Doc.Internal.Doc
+                                              SEDEL.PrettyPrint.FAnn)
+                                         ww13
+                                         (GHC.Types.:
+                                            @ (Data.Text.Prettyprint.Doc.Internal.Doc
+                                                 SEDEL.PrettyPrint.FAnn)
+                                            SEDEL.Environment.$fFPrettyErr1
+                                            (GHC.Types.:
+                                               @ (Data.Text.Prettyprint.Doc.Internal.Doc
+                                                    SEDEL.PrettyPrint.FAnn)
+                                               (($dFPretty
+                                                   `cast`
+                                                 (SEDEL.PrettyPrint.N:FPretty[0] <a>_N)
+                                                   @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                                                        Data.Functor.Identity.Identity)
+                                                   SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
+                                                   SEDEL.driver2
+                                                   term)
+                                                  `cast`
+                                                (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0] <Data.Functor.Identity.Identity>_N <SEDEL.PrettyPrint.FDoc>_N ; Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                                                                                                                           <*>_N
+                                                                                                                                                                           <Data.Set.Internal.Set
+                                                                                                                                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                                                                                                                           <Data.Functor.Identity.Identity>_R
+                                                                                                                                                                           <SEDEL.PrettyPrint.FDoc>_N)
+                                                  (Data.Set.Internal.Tip
+                                                     @ Unbound.Generics.LocallyNameless.Name.AnyName))
+                                                 `cast`
+                                               (Data.Functor.Identity.N:Identity[0]
+                                                    <SEDEL.PrettyPrint.FDoc>_R)
+                                               (GHC.Types.[]
+                                                  @ (Data.Text.Prettyprint.Doc.Internal.Doc
+                                                       SEDEL.PrettyPrint.FAnn)))))) } } }) #)
+                   Data.Either.Right ds
+                   -> case ds of wild1 { (,) typ tar ->
+                      case ((SEDEL.Target.Eval.eval
+                               (Data.Map.Internal.Tip
+                                  @ SEDEL.Target.Syntax.UName
+                                  @ SEDEL.Target.Eval.Thunk)
+                               tar)
+                              `cast`
+                            (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0] <Control.Monad.Trans.Except.ExceptT
+                                                                                    GHC.Base.String
+                                                                                    GHC.Types.IO>_N <SEDEL.Target.Eval.Value>_N ; Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                                                                      <GHC.Integer.Type.Integer>_N
+                                                                                                                                      <Control.Monad.Trans.Except.ExceptT
+                                                                                                                                         GHC.Base.String
+                                                                                                                                         GHC.Types.IO>_R
+                                                                                                                                      <SEDEL.Target.Eval.Value>_N)
+                              Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                             `cast`
+                           (Control.Monad.Trans.Except.N:ExceptT[0]
+                                <[GHC.Types.Char]>_N
+                                <GHC.Types.IO>_R
+                                <(SEDEL.Target.Eval.Value,
+                                  GHC.Integer.Type.Integer)>_N ; GHC.Types.N:IO[0]
+                                                                     <Data.Either.Either
+                                                                        [GHC.Types.Char]
+                                                                        (SEDEL.Target.Eval.Value,
+                                                                         GHC.Integer.Type.Integer)>_R)
+                             ipv of ds2 { (#,#) ipv2 ipv3 ->
+                      case ipv3 of wild2 {
+                        Data.Either.Left e1
+                        -> (# ipv2,
+                              Data.Either.Left
+                                @ (Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn)
+                                @ (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)
+                                (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                                   @ SEDEL.PrettyPrint.FAnn
+                                   e1) #)
+                        Data.Either.Right x
+                        -> (# ipv2,
+                              Data.Either.Right
+                                @ SEDEL.PrettyPrint.FDoc
+                                @ (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)
+                                (typ,
+                                 case x of wild3 { (,) a1 ds3 ->
+                                 case SEDEL.Target.Eval.$fShowValue_$cshow a1 of dt { DEFAULT ->
+                                 case GHC.Magic.runRW#
+                                        @ ('GHC.Types.TupleRep
+                                             '[ 'GHC.Types.TupleRep '[], 'GHC.Types.LiftedRep])
+                                        @ (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                             Data.Text.Internal.Text #)
+                                        (\ (s1 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                                         case GHC.Prim.newByteArray#
+                                                @ GHC.Prim.RealWorld
+                                                10#
+                                                s1 of ds4 { (#,#) ipv4 ipv5 ->
+                                         SEDEL.$wouter
+                                           ipv5
+                                           4#
+                                           dt
+                                           0#
+                                           ipv4 }) of ds4 { (#,#) ipv4 ipv5 ->
+                                 ipv5 } } }) #) } } } } }) -}
+bfce48da88167b33e1b9c96cdc0e3fac
+  driver2 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- Strictness: m,
+     Unfolding: (Unbound.Generics.LocallyNameless.LFresh.C:LFresh
+                   @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                        Data.Functor.Identity.Identity)
+                   SEDEL.driver4
+                   SEDEL.driver3
+                     `cast`
+                   (forall (a :: <*>_N).
+                    <Data.Typeable.Internal.Typeable a>_R
+                    ->_R <Unbound.Generics.LocallyNameless.Name.Name a>_R
+                    ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                  <*>_N
+                                  <Data.Set.Internal.Set
+                                     Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                  <Data.Functor.Identity.Identity>_R
+                                  <Unbound.Generics.LocallyNameless.Name.Name
+                                     a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Unbound.Generics.LocallyNameless.Name.Name
+                                                                                                                                               a>_N)
+                   (Unbound.Generics.LocallyNameless.LFresh.$w$cavoid
+                      @ Data.Functor.Identity.Identity)
+                   (Data.Functor.Identity.$fApplicativeIdentity3
+                      @ (Data.Set.Internal.Set
+                           Unbound.Generics.LocallyNameless.Name.AnyName))
+                     `cast`
+                   ((<Data.Set.Internal.Set
+                        Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                     ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                   <Data.Set.Internal.Set
+                                      Unbound.Generics.LocallyNameless.Name.AnyName>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                                                     <*>_N
+                                                                                                     <Data.Set.Internal.Set
+                                                                                                        Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                                                     <Data.Functor.Identity.Identity>_R
+                                                                                                     <Data.Set.Internal.Set
+                                                                                                        Unbound.Generics.LocallyNameless.Name.AnyName>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Data.Set.Internal.Set
+                                                                                                                                                                                                                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_N))) -}
+a637e67ecd97fcb5592e3b2204a5f0e1
+  driver3 ::
+    Data.Typeable.Internal.Typeable a =>
+    Unbound.Generics.LocallyNameless.Name.Name a
+    -> Data.Set.Internal.Set
+         Unbound.Generics.LocallyNameless.Name.AnyName
+    -> Data.Functor.Identity.Identity
+         (Unbound.Generics.LocallyNameless.Name.Name a)
+  {- Arity: 3, Strictness: <L,U><L,1*U><S,U>,
+     Unfolding: (\ @ a
+                   (w1 :: Data.Typeable.Internal.Typeable a)
+                   (w2 :: Unbound.Generics.LocallyNameless.Name.Name a)[OneShot]
+                   (w3 :: Data.Set.Internal.Set
+                            Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                 let {
+                   s :: GHC.Base.String
+                   = case w2 of wild {
+                       Unbound.Generics.LocallyNameless.Name.Fn s1 ds1 -> s1
+                       Unbound.Generics.LocallyNameless.Name.Bn ds1 ds2
+                       -> Unbound.Generics.LocallyNameless.Name.name2String1 }
+                 } in
+                 letrec {
+                   go2 :: GHC.Integer.Type.Integer
+                          -> Data.Functor.Identity.Identity
+                               (Unbound.Generics.LocallyNameless.Name.Name a)
+                     <join 1> {- Arity: 1, Strictness: <S,1*U> -}
+                   = \ (x :: GHC.Integer.Type.Integer) ->
+                     case x of x1 { DEFAULT ->
+                     let {
+                       x2 :: Unbound.Generics.LocallyNameless.Name.Name a
+                       = Unbound.Generics.LocallyNameless.Name.Fn @ a s x1
+                     } in
+                     case Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT_go3
+                            (Unbound.Generics.LocallyNameless.Name.AnyName @ a w1 x2)
+                            w3 of wild {
+                       GHC.Types.False
+                       -> x2
+                            `cast`
+                          (Sym (Data.Functor.Identity.N:Identity[0]
+                                    <Unbound.Generics.LocallyNameless.Name.Name a>_R))
+                       GHC.Types.True
+                       -> go2
+                            (GHC.Integer.Type.plusInteger
+                               x1
+                               Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT3) } }
+                 } in
+                 go2 Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT2) -}
+e696ca7a823780be1c74bd22aec78566
+  driver4 ::
+    GHC.Base.Monad
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- Strictness: m,
+     Unfolding: (GHC.Base.C:Monad
+                   @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                        Data.Functor.Identity.Identity)
+                   SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
+                   (SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>=
+                      @ (Data.Set.Internal.Set
+                           Unbound.Generics.LocallyNameless.Name.AnyName))
+                     `cast`
+                   (forall (a :: <*>_N) (b :: <*>_N).
+                    Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                    ->_R (<a>_R
+                          ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                   (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*>
+                      @ (Data.Set.Internal.Set
+                           Unbound.Generics.LocallyNameless.Name.AnyName))
+                     `cast`
+                   (forall (a :: <*>_N) (b :: <*>_N).
+                    Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                   SEDEL.driver5
+                     `cast`
+                   (forall (a :: <*>_N).
+                    <a>_R
+                    ->_R (<Data.Set.Internal.Set
+                             Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                          ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                        <a>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                            <*>_N
+                                                            <Data.Set.Internal.Set
+                                                               Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                            <Data.Functor.Identity.Identity>_R
+                                                            <a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                   (SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$cfail
+                      @ (Data.Set.Internal.Set
+                           Unbound.Generics.LocallyNameless.Name.AnyName))
+                     `cast`
+                   (forall (a :: <*>_N).
+                    <[GHC.Types.Char]>_R
+                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N)) -}
+936c6ed658acd15c2abc13a1f2182374
+  driver5 ::
+    a
+    -> Data.Set.Internal.Set
+         Unbound.Generics.LocallyNameless.Name.AnyName
+    -> a
+  {- Arity: 2, HasNoCafRefs, Strictness: <S,1*U><L,A>,
+     Unfolding: (\ @ a
+                   (eta :: a)
+                   (ds :: Data.Set.Internal.Set
+                            Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                 eta) -}
+70ee65d56c80107f49d6d32d6c3883c9
+  driver6 :: [GHC.Types.Char]
+  {- Unfolding: (GHC.CString.unpackCString# SEDEL.driver7) -}
+441d3dababf738e8a15b6063dfbb5c4d
+  driver7 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("1"#) -}
+c8c8abef3c2cec04720b865ac6e6c61e
+  evalFile ::
+    GHC.IO.FilePath
+    -> GHC.Types.IO
+         ((SEDEL.PrettyPrint.FDoc, GHC.Maybe.Maybe SEDEL.PrettyPrint.FDoc),
+          GHC.Types.Bool)
+  {- Arity: 2, Strictness: <L,U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.evalFile1
+                  `cast`
+                (<GHC.IO.FilePath>_R
+                 ->_R Sym (GHC.Types.N:IO[0]
+                               <((SEDEL.PrettyPrint.FDoc, GHC.Maybe.Maybe SEDEL.PrettyPrint.FDoc),
+                                 GHC.Types.Bool)>_R)) -}
+824ac5834320bd024f856b94b9781168
+  evalFile1 ::
+    GHC.IO.FilePath
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          ((SEDEL.PrettyPrint.FDoc, GHC.Maybe.Maybe SEDEL.PrettyPrint.FDoc),
+           GHC.Types.Bool) #)
+  {- Arity: 2, Strictness: <L,U><S,U> -}
+5528d3c3704fc1901dc1a1e96b331ff5
+  readAndEval ::
+    GHC.IO.FilePath -> GHC.Types.IO SEDEL.PrettyPrint.FDoc
+  {- Arity: 2, Strictness: <L,U><S,U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.readAndEval1
+                  `cast`
+                (<GHC.IO.FilePath>_R
+                 ->_R Sym (GHC.Types.N:IO[0] <SEDEL.PrettyPrint.FDoc>_R)) -}
+4d6f1160ac66aa2fdcd1c946f97ac447
+  readAndEval1 ::
+    GHC.IO.FilePath
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, SEDEL.PrettyPrint.FDoc #)
+  {- Arity: 2, Strictness: <L,U><S,U>,
+     Unfolding: (\ (path :: GHC.IO.FilePath)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case GHC.Prim.catch#
+                        @ (Data.Either.Either
+                             GHC.Exception.Type.SomeException Data.Text.Internal.Text)
+                        @ GHC.Exception.Type.SomeException
+                        (\ (s1 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                         case GHC.IO.Handle.FD.openFile1
+                                path
+                                GHC.IO.IOMode.ReadMode
+                                s1 of ds1 { (#,#) ipv ipv1 ->
+                         case Data.Text.IO.getContents2 ipv1 ipv of ds2 { (#,#) ipv2 ipv3 ->
+                         (# ipv2,
+                            Data.Either.Right
+                              @ GHC.Exception.Type.SomeException
+                              @ Data.Text.Internal.Text
+                              ipv3 #) } })
+                        SEDEL.readAndEval6
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 case ipv1 of wild {
+                   Data.Either.Left err
+                   -> (# ipv,
+                         Data.Text.Prettyprint.Doc.Internal.Cat
+                           @ SEDEL.PrettyPrint.FAnn
+                           SEDEL.readAndEval4
+                           (Data.Text.Prettyprint.Doc.Internal.Cat
+                              @ SEDEL.PrettyPrint.FAnn
+                              (Data.Text.Prettyprint.Doc.Internal.line1 @ SEDEL.PrettyPrint.FAnn)
+                              (case err of wild1 { GHC.Exception.Type.SomeException e $dException e1 ->
+                               case GHC.Show.showsPrec
+                                      @ e
+                                      (GHC.Exception.Type.$p2Exception @ e $dException)
+                                      GHC.Exception.Type.$fExceptionArithException1
+                                      e1
+                                      (GHC.Types.[] @ GHC.Types.Char) of dt { DEFAULT ->
+                               case GHC.Magic.runRW#
+                                      @ ('GHC.Types.TupleRep
+                                           '[ 'GHC.Types.TupleRep '[], 'GHC.Types.LiftedRep])
+                                      @ (# GHC.Prim.State# GHC.Prim.RealWorld,
+                                           Data.Text.Internal.Text #)
+                                      (\ (s1 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                                       case GHC.Prim.newByteArray#
+                                              @ GHC.Prim.RealWorld
+                                              10#
+                                              s1 of ds2 { (#,#) ipv2 ipv3 ->
+                                       SEDEL.$wouter
+                                         ipv3
+                                         4#
+                                         dt
+                                         0#
+                                         ipv2 }) of ds2 { (#,#) ipv2 ipv3 ->
+                               case ipv3 of ww { Data.Text.Internal.Text ww1 ww2 ww3 ->
+                               Data.Text.Prettyprint.Doc.Internal.$w$cpretty
+                                 @ SEDEL.PrettyPrint.FAnn
+                                 ww1
+                                 ww2
+                                 ww3 } } } })) #)
+                   Data.Either.Right contents
+                   -> case SEDEL.Parser.Parser.parseModule
+                             (case contents of wild1 { Data.Text.Internal.Text dt dt1 dt2 ->
+                              let {
+                                end :: GHC.Prim.Int# = GHC.Prim.+# dt1 dt2
+                              } in
+                              letrec {
+                                $wunfold :: GHC.Prim.Int# -> [GHC.Types.Char]
+                                  {- Arity: 1, Strictness: <S,U>, Inline: [2] -}
+                                = \ (ww :: GHC.Prim.Int#) ->
+                                  case GHC.Prim.>=# ww end of lwild {
+                                    DEFAULT
+                                    -> case GHC.Prim.indexWord16Array# dt ww of r# { DEFAULT ->
+                                       case GHC.Prim.geWord# r# 55296## of lwild1 {
+                                         DEFAULT
+                                         -> GHC.Types.:
+                                              @ GHC.Types.Char
+                                              (GHC.Types.C# (GHC.Prim.chr# (GHC.Prim.word2Int# r#)))
+                                              ($wunfold (GHC.Prim.+# ww 1#))
+                                         1#
+                                         -> case GHC.Prim.leWord# r# 56319## of lwild2 {
+                                              DEFAULT
+                                              -> GHC.Types.:
+                                                   @ GHC.Types.Char
+                                                   (GHC.Types.C#
+                                                      (GHC.Prim.chr# (GHC.Prim.word2Int# r#)))
+                                                   ($wunfold (GHC.Prim.+# ww 1#))
+                                              1#
+                                              -> case GHC.Prim.indexWord16Array#
+                                                        dt
+                                                        (GHC.Prim.+# ww 1#) of r#1 { DEFAULT ->
+                                                 GHC.Types.:
+                                                   @ GHC.Types.Char
+                                                   (GHC.Types.C#
+                                                      (GHC.Prim.chr#
+                                                         (GHC.Prim.+#
+                                                            9216#
+                                                            (GHC.Prim.+#
+                                                               (GHC.Prim.uncheckedIShiftL#
+                                                                  (GHC.Prim.-#
+                                                                     (GHC.Prim.word2Int# r#)
+                                                                     55296#)
+                                                                  10#)
+                                                               (GHC.Prim.word2Int# r#1)))))
+                                                   ($wunfold (GHC.Prim.+# ww 2#)) } } } }
+                                    1# -> GHC.Types.[] @ GHC.Types.Char }
+                              } in
+                              $wunfold dt1 }) of wild1 {
+                        Data.Either.Left err
+                        -> (# ipv,
+                              Data.Text.Prettyprint.Doc.Internal.Cat
+                                @ SEDEL.PrettyPrint.FAnn
+                                SEDEL.readAndEval2
+                                (Data.Text.Prettyprint.Doc.Internal.Cat
+                                   @ SEDEL.PrettyPrint.FAnn
+                                   (Data.Text.Prettyprint.Doc.Internal.line1
+                                      @ SEDEL.PrettyPrint.FAnn)
+                                   (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                                      @ SEDEL.PrettyPrint.FAnn
+                                      err)) #)
+                        Data.Either.Right abt
+                        -> case SEDEL.driver1
+                                  SEDEL.Environment.emptyCtx
+                                  abt
+                                  ipv of ds2 { (#,#) ipv2 ipv3 ->
+                           case ipv3 of wild2 {
+                             Data.Either.Left err -> (# ipv2, err #)
+                             Data.Either.Right r -> (# ipv2, SEDEL.render r #) } } } } }) -}
+f4fe76cdc694bec654d36e1f855dce38
+  readAndEval2 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.readAndEval3)) -}
+dcd120d31c6078f75bd42c8db0bcdfa6
+  readAndEval3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Syntax error"#) -}
+c9ba41bcab49e3fd55a0665e71e6a604
+  readAndEval4 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.readAndEval5)) -}
+259c8b1d2d2064cbfc46b3eea63231d5
+  readAndEval5 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Load file error"#) -}
+46374ff3fa02340f6edc506e6d7c960e
+  readAndEval6 ::
+    GHC.Exception.Type.SomeException
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          Data.Either.Either
+            GHC.Exception.Type.SomeException Data.Text.Internal.Text #)
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><S,U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (e1 :: GHC.Exception.Type.SomeException)[OneShot]
+                   (eta1 :: GHC.Prim.State# GHC.Prim.RealWorld)[OneShot] ->
+                 (# eta1,
+                    Data.Either.Left
+                      @ GHC.Exception.Type.SomeException
+                      @ Data.Text.Internal.Text
+                      e1 #)) -}
+788e76747bfc7a9eba389cdc235d83ab
+  render ::
+    (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)
+    -> SEDEL.PrettyPrint.FDoc
+  {- Arity: 1, Strictness: <S,1*U(1*U,1*U(U,U,U))>m7, Inline: [2],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: (SEDEL.Source.Syntax.Scheme, Data.Text.Internal.Text)) ->
+                 case w of ww { (,) ww1 ww2 ->
+                 case SEDEL.$wrender ww1 ww2 of ww3 { (#,#) ww4 ww5 ->
+                 Data.Text.Prettyprint.Doc.Internal.Cat
+                   @ SEDEL.PrettyPrint.FAnn
+                   ww4
+                   ww5 } }) -}
+cbc3a536fe8a9b253a9a53fcd41e170a
+  render1 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.render2)) -}
+d2e939900e21a8a732b44f7d3da5a7c5
+  render2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("=>"#) -}
+ef8ca712da570b431defc23618db8a58
+  render3 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.render4)) -}
+b83687ce5e99d23e16a83d3ca162a139
+  render4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Evaluation result"#) -}
+f29b93a58d7be55b9f60e13616b66775
+  render5 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.render6)) -}
+726df14482e926bc934d33eb97c12c3f
+  render6 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("Typing result"#) -}
+trusted: none
+require own pkg trusted: False
+module header:
+  Nothing
+declaration docs:
+arg docs:
+

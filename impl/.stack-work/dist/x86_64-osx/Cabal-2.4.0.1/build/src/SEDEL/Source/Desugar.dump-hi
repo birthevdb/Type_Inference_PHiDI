@@ -1,0 +1,1315 @@
+
+==================== FINAL INTERFACE ====================
+2019-03-27 11:19:57.387545 UTC
+
+interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Desugar 8063
+  interface hash: 3048ceb159a4cd95372fc70da71e4707
+  ABI hash: 87453ac21760408db5fa9aada47619ea
+  export-list hash: bdb0b33881432c72ca9d571a98eb3419
+  orphan hash: 0a2b1cec5d48f2ec7bcd8f853d2fde8f
+  flag hash: 382277a91afac9cbee37a74a49298e8d
+  opt_hash: 6faf2de08de32d19db9870899d88e59a
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  plugin_hash: ad164012d6b1e14942349d58b1132007
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.Source.Desugar.desugar
+  SEDEL.Source.Desugar.desugarExpr
+  SEDEL.Source.Desugar.desugarTmBind
+  SEDEL.Source.Desugar.expandType
+  SEDEL.Source.Desugar.normalizeTmDecl
+module dependencies: SEDEL.Common SEDEL.Environment
+                     SEDEL.PrettyPrint SEDEL.Source.Syntax
+package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
+                      base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.6.0.1
+                      deepseq-1.4.4.0 distributive-0.6 exceptions-0.10.0
+                      ghc-boot-th-8.6.3 ghc-prim-0.5.3 hashable-1.2.7.0
+                      integer-gmp-1.0.2.0 megaparsec-7.0.4 mtl-2.2.2
+                      parser-combinators-1.0.1 pretty-1.1.3.6 prettyprinter-1.2.1
+                      profunctors-5.3 protolude-0.2.3 stm-2.5.0.0 tagged-0.8.6
+                      template-haskell-2.14.0.0 text-1.2.3.1 transformers-0.5.5.0
+                      unbound-generics-0.4.0
+orphans: sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.PrettyPrint
+         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+         transformers-0.5.5.0:Control.Monad.Trans.Error
+         stm-2.5.0.0:Control.Monad.STM
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.6.0:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show base-4.12.0.0:GHC.Float
+         base-4.12.0.0:GHC.Base
+family instance modules: base-4.12.0.0:Control.Applicative
+                         base-4.12.0.0:Data.Complex base-4.12.0.0:Data.Functor.Compose
+                         base-4.12.0.0:Data.Functor.Const
+                         base-4.12.0.0:Data.Functor.Identity
+                         base-4.12.0.0:Data.Functor.Product base-4.12.0.0:Data.Functor.Sum
+                         base-4.12.0.0:Data.Monoid base-4.12.0.0:Data.Semigroup
+                         base-4.12.0.0:Data.Semigroup.Internal base-4.12.0.0:Data.Version
+                         base-4.12.0.0:Data.Void base-4.12.0.0:GHC.Exts
+                         base-4.12.0.0:GHC.Generics base-4.12.0.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.6.0.1:Data.IntMap.Internal
+                         containers-0.6.0.1:Data.IntSet.Internal
+                         containers-0.6.0.1:Data.Map.Internal
+                         containers-0.6.0.1:Data.Sequence.Internal
+                         containers-0.6.0.1:Data.Set.Internal containers-0.6.0.1:Data.Tree
+                         ghc-boot-th-8.6.3:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.6.3:GHC.LanguageExtensions.Type
+                         megaparsec-7.0.4:Text.Megaparsec.Error
+                         megaparsec-7.0.4:Text.Megaparsec.Pos
+                         megaparsec-7.0.4:Text.Megaparsec.State
+                         megaparsec-7.0.4:Text.Megaparsec.Stream
+                         pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
+                         pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
+                         prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
+                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+                         tagged-0.8.6:Data.Tagged
+                         template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Ignore
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.12.0.0:Data.Foldable 00188ddf89c975fee76bdfad479443c1
+import  -/  base-4.12.0.0:Data.Maybe 1e8e1362415df45376dffd98f8a47766
+import  -/  base-4.12.0.0:GHC.Base cc906f98291a1b830546e99a96674547
+import  -/  protolude-0.2.3:Protolude f69a0445642f255f4ede68732259560a
+import  -/  SEDEL.Environment ed88f2a0dd8c2a9eca4b994034abfc4f
+  exports: e9e749407a9acf1de6b985e3dfe9ebfc
+  Ctx 96aefa82a59ddf2385c9534999718e9f
+  lookupTVarSynMaybe 31230f0bb0f3c8150771a7971a075869
+import  -/  SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
+  exports: d4d2fd645eff9adcf509b28019caf96b
+  And 858cda1fbe6f64a52489f771e0708139
+  App 2c964fefc28aabf42ed9dbe40c3accd3
+  Arr 22416be279c31386e9cc95e9c9b2de68
+  BoolT 9eb5ff7582ee586b5677d133bc3c5a82
+  BotT e9fc1220c215208a25f3ef509fa1d4c0
+  DForall 3b7d6b5afb57e716755254c1449edcb0
+  DRec 67d90dc5830827b93ce062be4b2fee0f
+  DRec' 4cfdae78935e00e853289c18a1ad3519
+  DefDecl 496120e2ede708432a09ee90bbbf5564
+  Expr 76520494bd75ab62670e86072668ba13
+  If 004baac8f2ab270853994d5c063473ee
+  Join a4919cbd9c43f86a7e132f12d2cdc38f
+  Lam 89716123ec809e2cc8bdc155ae4f4668
+  Let eef6e727cd3f41679ad959a78238d920
+  Meet b52f57d57eb5f073ea5cb7b7cef99237
+  Merge bfed41bbda08db4fffae7c43cde3fe30
+  NumT adf11e6708e5e8a7ec46f283d84a97ad
+  Pos e1abba9e1a944fd21252fe9a5857484c
+  PrimOp 75d0f502551fe7e315ae75fc195bd1b1
+  Proj 6a5a97deaf11de74c15ccfb48a027d1d
+  RawName f6d0ff72210b4bcdad47c42335adfd75
+  SDecl 6a20fc9eb35596ae2460813625392c86
+  SRecT 9b864ff12762d70109c77b1f5eea4c3a
+  SType a5fd2e9b5e852c36afadad4c1a615a65
+  SType 76520494bd75ab62670e86072668ba13
+  Scheme 76520494bd75ab62670e86072668ba13
+  TUni 9eb22e5d95f0de04502f16ea4eb97bf9
+  TVar 3e45bba34d2b60ad4b6a831b8a2e52f8
+  TmBind 76520494bd75ab62670e86072668ba13
+  TmName 76520494bd75ab62670e86072668ba13
+  TopT 1b95963f14ca91731abc40c7b31bb3cf
+  TyName 76520494bd75ab62670e86072668ba13
+  bindName 76520494bd75ab62670e86072668ba13
+  bindParams 76520494bd75ab62670e86072668ba13
+  bindRhs 76520494bd75ab62670e86072668ba13
+  bindRhsTyAscription 76520494bd75ab62670e86072668ba13
+  bindTyParams 76520494bd75ab62670e86072668ba13
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless 36704d4dbfb3fb22f46cde363ae796f2
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed f74cff3aea20e9a2f5e6bfc539a9689b
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Fresh e0f8d49fe8e0f78dfcabb34436892778
+import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Operations d0c219408974b95413509bf76023577c
+a79db7774302c43cd0265377330e7f11
+  $s$fAlpha(,)_$s$fAlphaEmbed ::
+    Unbound.Generics.LocallyNameless.Alpha.Alpha
+      (Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme)
+  {- Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                       SEDEL.Source.Syntax.Scheme)
+                  SEDEL.Source.Desugar.$s$fAlpha(,)_$s$fShowEmbed
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme)
+                     (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme) ->
+                   SEDEL.Source.Syntax.$fAlphaScheme_$caeq'
+                     (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                      Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                        Unbound.Generics.LocallyNameless.Alpha.Term
+                        ds3 })
+                     ds
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)
+                     ds1
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R))
+                  (Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cfvAny'
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fAlphaScheme)
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (b :: Unbound.Generics.LocallyNameless.Alpha.NamePatFind)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed6
+                          @ SEDEL.Source.Syntax.Scheme
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaScheme_$cclose
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           b
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (b :: Unbound.Generics.LocallyNameless.Alpha.NthPatFind)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed5
+                          @ SEDEL.Source.Syntax.Scheme
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaScheme_$copen
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           b
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case (SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Data.Semigroup.Internal.N:All[0]) of wild {
+                     GHC.Types.False
+                     -> (GHC.Maybe.Nothing
+                           @ [Unbound.Generics.LocallyNameless.Name.AnyName])
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                  <Unbound.Generics.LocallyNameless.Name.AnyName>_R))
+                     GHC.Types.True
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed4
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                  <Unbound.Generics.LocallyNameless.Name.AnyName>_R)) })
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   GHC.Types.False)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Data.Semigroup.Internal.N:All[0]))
+                  SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                    `cast`
+                  (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                            <SEDEL.Source.Syntax.Scheme>_R)
+                   ->_R Data.Semigroup.Internal.N:All[0])
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   Data.Either.Left
+                     @ GHC.Integer.Type.Integer
+                     @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Alpha.N:NthPatFind[0]))
+                  (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   Unbound.Generics.LocallyNameless.Alpha.$fAlpha()2)
+                    `cast`
+                  (<Unbound.Generics.LocallyNameless.Embed.Embed
+                      SEDEL.Source.Syntax.Scheme>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (perm :: Unbound.Generics.PermM.Perm
+                                Unbound.Generics.LocallyNameless.Name.AnyName)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                   case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term -> ds
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> (SEDEL.Source.Syntax.$fAlphaExpr_$cswaps'
+                           (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                              Unbound.Generics.LocallyNameless.Alpha.Term
+                              ds2)
+                           perm
+                           ds
+                             `cast`
+                           (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R))
+                          `cast`
+                        (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                  <SEDEL.Source.Syntax.Scheme>_R)) } })
+                  (\ @ m :: * -> *
+                     @ b
+                     ($dLFresh :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                   Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed2
+                     @ b
+                     @ m
+                     @ SEDEL.Source.Syntax.Scheme)
+                  (\ @ m :: * -> *
+                     ($dFresh :: Unbound.Generics.LocallyNameless.Fresh.Fresh m)
+                     (eta :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (eta1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                                SEDEL.Source.Syntax.Scheme) ->
+                   case eta of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                   case ds1 of wild1 {
+                     Unbound.Generics.LocallyNameless.Alpha.Term
+                     -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed1
+                          @ SEDEL.Source.Syntax.Scheme
+                          @ m
+                     Unbound.Generics.LocallyNameless.Alpha.Pat
+                     -> GHC.Base.return
+                          @ m
+                          (Unbound.Generics.LocallyNameless.Fresh.$p1Fresh @ m $dFresh)
+                          @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme,
+                             Unbound.Generics.PermM.Perm
+                               Unbound.Generics.LocallyNameless.Name.AnyName)
+                          (eta1,
+                           (Data.Map.Internal.Tip
+                              @ Unbound.Generics.LocallyNameless.Name.AnyName
+                              @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                             `cast`
+                           (Sym (Unbound.Generics.PermM.N:Perm[0]
+                                     <Unbound.Generics.LocallyNameless.Name.AnyName>_N))) } })
+                  (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                     (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme)
+                     (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                               SEDEL.Source.Syntax.Scheme) ->
+                   SEDEL.Source.Syntax.$fAlphaScheme_$cacompare'
+                     (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                      Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                        Unbound.Generics.LocallyNameless.Alpha.Term
+                        ds3 })
+                     ds
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)
+                     ds1
+                       `cast`
+                     (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                          <SEDEL.Source.Syntax.Scheme>_R)) -}
+27bdad429b9ecc6d452c65c2be2e2f28
+  $s$fAlpha(,)_$s$fShowEmbed ::
+    GHC.Show.Show
+      (Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme)
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                       SEDEL.Source.Syntax.Scheme)
+                  (Unbound.Generics.LocallyNameless.Embed.$fShowEmbed_$cshowsPrec
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fShowScheme)
+                  (\ (x :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                   GHC.CString.unpackAppendCString#
+                     Unbound.Generics.LocallyNameless.Embed.$fShowEmbed3
+                     (SEDEL.Source.Syntax.$fShowScheme_$cshowsPrec
+                        Unbound.Generics.LocallyNameless.Embed.$fShowEmbed2
+                        x `cast`
+                        (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                             <SEDEL.Source.Syntax.Scheme>_R)
+                        Unbound.Generics.LocallyNameless.Embed.$fShowEmbed4))
+                  (Unbound.Generics.LocallyNameless.Embed.$fShowEmbed_$cshowList
+                     @ SEDEL.Source.Syntax.Scheme
+                     SEDEL.Source.Syntax.$fShowScheme) -}
+6279d3461bad26f8bc4c0794af6a964c
+  $s$fAlphaEmbed_$cacompare' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> GHC.Types.Ordering
+  {- Arity: 3, Strictness: <L,1*U(A,U)><S,1*U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme)
+                   (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                 SEDEL.Source.Syntax.$fAlphaScheme_$cacompare'
+                   (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                      Unbound.Generics.LocallyNameless.Alpha.Term
+                      ds3 })
+                   ds
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)
+                   ds1
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)) -}
+9f75ec172dc3b166db4eefe63a711151
+  $s$fAlphaEmbed_$caeq' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> GHC.Types.Bool
+  {- Arity: 3, Strictness: <L,1*U(A,U)><S,1*U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme)
+                   (ds1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme) ->
+                 SEDEL.Source.Syntax.$fAlphaScheme_$caeq'
+                   (case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds2 ds3 ->
+                    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                      Unbound.Generics.LocallyNameless.Alpha.Term
+                      ds3 })
+                   ds
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)
+                   ds1
+                     `cast`
+                   (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                        <SEDEL.Source.Syntax.Scheme>_R)) -}
+c575a93548f422ce07d15ccd00ddc512
+  $s$fAlphaEmbed_$cclose ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Alpha.NamePatFind
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (b :: Unbound.Generics.LocallyNameless.Alpha.NamePatFind)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed6
+                        @ SEDEL.Source.Syntax.Scheme
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaScheme_$cclose
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         b
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+c8d2db078d58b3f582ea4b89c703df52
+  $s$fAlphaEmbed_$cfreshen' ::
+    Unbound.Generics.LocallyNameless.Fresh.Fresh m =>
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> m (Unbound.Generics.LocallyNameless.Embed.Embed
+            SEDEL.Source.Syntax.Scheme,
+          Unbound.Generics.PermM.Perm
+            Unbound.Generics.LocallyNameless.Name.AnyName)
+  {- Arity: 3,
+     Strictness: <S(S(LLLC(S)L)L),1*U(1*U(A,A,A,1*C1(U),A),A)><S(SL),1*U(U,A)><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ m :: * -> *
+                   ($dFresh :: Unbound.Generics.LocallyNameless.Fresh.Fresh m)
+                   (eta :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (eta1 :: Unbound.Generics.LocallyNameless.Embed.Embed
+                              SEDEL.Source.Syntax.Scheme) ->
+                 case eta of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed1
+                        @ SEDEL.Source.Syntax.Scheme
+                        @ m
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.Fresh.$p1Fresh @ m $dFresh)
+                        @ (Unbound.Generics.LocallyNameless.Embed.Embed
+                             SEDEL.Source.Syntax.Scheme,
+                           Unbound.Generics.PermM.Perm
+                             Unbound.Generics.LocallyNameless.Name.AnyName)
+                        (eta1,
+                         (Data.Map.Internal.Tip
+                            @ Unbound.Generics.LocallyNameless.Name.AnyName
+                            @ Unbound.Generics.LocallyNameless.Name.AnyName)
+                           `cast`
+                         (Sym (Unbound.Generics.PermM.N:Perm[0]
+                                   <Unbound.Generics.LocallyNameless.Name.AnyName>_N))) } }) -}
+3779d869700129a32fa054487d740e08
+  $s$fAlphaEmbed_$cisPat ::
+    Unbound.Generics.LocallyNameless.Embed.Embed
+      SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Alpha.DisjointSet
+         Unbound.Generics.LocallyNameless.Name.AnyName
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case (SEDEL.Source.Syntax.$fAlphaScheme_$cisTerm
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Data.Semigroup.Internal.N:All[0]) of wild {
+                   GHC.Types.False
+                   -> (GHC.Maybe.Nothing
+                         @ [Unbound.Generics.LocallyNameless.Name.AnyName])
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                <Unbound.Generics.LocallyNameless.Name.AnyName>_R))
+                   GHC.Types.True
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed4
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Alpha.N:DisjointSet[0]
+                                <Unbound.Generics.LocallyNameless.Name.AnyName>_R)) }) -}
+921e4e0fa5d9fcd75129e2d1dfb6fc8a
+  $s$fAlphaEmbed_$copen ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.LocallyNameless.Alpha.NthPatFind
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (b :: Unbound.Generics.LocallyNameless.Alpha.NthPatFind)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term
+                   -> Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed5
+                        @ SEDEL.Source.Syntax.Scheme
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaScheme_$copen
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         b
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+e73d840ed8d76ff922eacec93580d399
+  $s$fAlphaEmbed_$cswaps' ::
+    Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+    -> Unbound.Generics.PermM.Perm
+         Unbound.Generics.LocallyNameless.Name.AnyName
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+    -> Unbound.Generics.LocallyNameless.Embed.Embed
+         SEDEL.Source.Syntax.Scheme
+  {- Arity: 3, Strictness: <S(SS),1*U(U,U)><L,U><S,1*U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ (ctx :: Unbound.Generics.LocallyNameless.Alpha.AlphaCtx)
+                   (perm :: Unbound.Generics.PermM.Perm
+                              Unbound.Generics.LocallyNameless.Name.AnyName)
+                   (ds :: Unbound.Generics.LocallyNameless.Embed.Embed
+                            SEDEL.Source.Syntax.Scheme) ->
+                 case ctx of wild { Unbound.Generics.LocallyNameless.Alpha.AlphaCtx ds1 ds2 ->
+                 case ds1 of wild1 {
+                   Unbound.Generics.LocallyNameless.Alpha.Term -> ds
+                   Unbound.Generics.LocallyNameless.Alpha.Pat
+                   -> (SEDEL.Source.Syntax.$fAlphaExpr_$cswaps'
+                         (Unbound.Generics.LocallyNameless.Alpha.AlphaCtx
+                            Unbound.Generics.LocallyNameless.Alpha.Term
+                            ds2)
+                         perm
+                         ds
+                           `cast`
+                         (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                              <SEDEL.Source.Syntax.Scheme>_R))
+                        `cast`
+                      (Sym (Unbound.Generics.LocallyNameless.Embed.N:Embed[0]
+                                <SEDEL.Source.Syntax.Scheme>_R)) } }) -}
+bc9ce6fbb2cb7ee65597130f43fcdac2
+  $s$fApplicativeFreshMT ::
+    GHC.Base.Applicative
+      (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+         Data.Functor.Identity.Identity)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+                       Data.Functor.Identity.Identity)
+                  SEDEL.Source.Desugar.$s$fApplicativeFreshMT_$s$fFunctorFreshMT
+                  (\ @ a (eta :: a) (eta1 :: GHC.Integer.Type.Integer) ->
+                   (eta, eta1))
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <a>_R
+                   ->_R (<GHC.Integer.Type.Integer>_R
+                         ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                       <(a,
+                                         GHC.Integer.Type.Integer)>_R)) ; (Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                    <GHC.Integer.Type.Integer>_N
+                                                                                    <Data.Functor.Identity.Identity>_R
+                                                                                    <a>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                  (Unbound.Generics.LocallyNameless.Fresh.$fApplicativeFreshMT4
+                     @ Data.Functor.Identity.Identity
+                     Data.Functor.Identity.$fMonadIdentity)
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a
+                                                                                                                 -> b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                 <GHC.Integer.Type.Integer>_N
+                                 <Data.Functor.Identity.Identity>_R
+                                 <b>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (\ @ a
+                     @ b
+                     @ c
+                     (eta :: a -> b -> c)
+                     (eta1 :: Control.Monad.Trans.State.Lazy.StateT
+                                GHC.Integer.Type.Integer Data.Functor.Identity.Identity a)
+                     (eta2 :: Control.Monad.Trans.State.Lazy.StateT
+                                GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                     (eta3 :: GHC.Integer.Type.Integer) ->
+                   Control.Monad.Trans.State.Lazy.$w$cliftA2
+                     @ Data.Functor.Identity.Identity
+                     @ GHC.Integer.Type.Integer
+                     Data.Functor.Identity.$fFunctorIdentity
+                     Data.Functor.Identity.$fMonadIdentity_$c>>=
+                     Data.Functor.Identity.$fApplicativeIdentity3
+                       `cast`
+                     (forall (a1 :: <*>_N).
+                      <a1>_R ->_R Sym (Data.Functor.Identity.N:Identity[0] <a1>_R))
+                     @ a
+                     @ b
+                     @ c
+                     eta
+                     eta1
+                     eta2
+                     eta3)
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N) (c :: <*>_N).
+                   <a -> b -> c>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                 <GHC.Integer.Type.Integer>_N
+                                 <Data.Functor.Identity.Identity>_R
+                                 <c>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <c>_N)
+                  (\ @ a
+                     @ b
+                     (eta :: Control.Monad.Trans.State.Lazy.StateT
+                               GHC.Integer.Type.Integer Data.Functor.Identity.Identity a)
+                     (eta1 :: Control.Monad.Trans.State.Lazy.StateT
+                                GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                     (eta2 :: GHC.Integer.Type.Integer) ->
+                   eta1
+                     `cast`
+                   (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                        <GHC.Integer.Type.Integer>_N
+                        <Data.Functor.Identity.Identity>_R
+                        <b>_N)
+                     (case (eta
+                              `cast`
+                            (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                 <GHC.Integer.Type.Integer>_N
+                                 <Data.Functor.Identity.Identity>_R
+                                 <a>_N)
+                              eta2)
+                             `cast`
+                           (Data.Functor.Identity.N:Identity[0]
+                                <(a, GHC.Integer.Type.Integer)>_R) of wild { (,) a1 s' ->
+                      s' }))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                 <GHC.Integer.Type.Integer>_N
+                                 <Data.Functor.Identity.Identity>_R
+                                 <b>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (\ @ a
+                     @ b
+                     (eta :: Control.Monad.Trans.State.Lazy.StateT
+                               GHC.Integer.Type.Integer Data.Functor.Identity.Identity a)
+                     (eta1 :: Control.Monad.Trans.State.Lazy.StateT
+                                GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                     (eta2 :: GHC.Integer.Type.Integer) ->
+                   Control.Monad.Trans.State.Lazy.$w$cliftA2
+                     @ Data.Functor.Identity.Identity
+                     @ GHC.Integer.Type.Integer
+                     Data.Functor.Identity.$fFunctorIdentity
+                     Data.Functor.Identity.$fMonadIdentity_$c>>=
+                     Data.Functor.Identity.$fApplicativeIdentity3
+                       `cast`
+                     (forall (a1 :: <*>_N).
+                      <a1>_R ->_R Sym (Data.Functor.Identity.N:Identity[0] <a1>_R))
+                     @ a
+                     @ b
+                     @ a
+                     (GHC.Base.const @ a @ b)
+                     eta
+                     eta1
+                     eta2)
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                 <GHC.Integer.Type.Integer>_N
+                                 <Data.Functor.Identity.Identity>_R
+                                 <a>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
+4360ca8d175163ec31e8cde063944410
+  $s$fApplicativeFreshMT2 ::
+    Control.Monad.Trans.State.Lazy.StateT
+      GHC.Integer.Type.Integer Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.State.Lazy.StateT
+         GHC.Integer.Type.Integer Data.Functor.Identity.Identity b
+    -> GHC.Integer.Type.Integer
+    -> Data.Functor.Identity.Identity (b, GHC.Integer.Type.Integer)
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U(A,1*U))><C(S),1*C1(U(U,U))><L,U>,
+     Unfolding: InlineRule (3, True, False)
+                (\ @ a
+                   @ b
+                   (eta :: Control.Monad.Trans.State.Lazy.StateT
+                             GHC.Integer.Type.Integer Data.Functor.Identity.Identity a)
+                   (eta1 :: Control.Monad.Trans.State.Lazy.StateT
+                              GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                   (eta2 :: GHC.Integer.Type.Integer) ->
+                 eta1
+                   `cast`
+                 (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                      <GHC.Integer.Type.Integer>_N
+                      <Data.Functor.Identity.Identity>_R
+                      <b>_N)
+                   (case (eta
+                            `cast`
+                          (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <GHC.Integer.Type.Integer>_N
+                               <Data.Functor.Identity.Identity>_R
+                               <a>_N)
+                            eta2)
+                           `cast`
+                         (Data.Functor.Identity.N:Identity[0]
+                              <(a, GHC.Integer.Type.Integer)>_R) of wild { (,) a1 s' ->
+                    s' })) -}
+96951babd19304d6e05d8e94e5a776ec
+  $s$fApplicativeFreshMT3 ::
+    (a -> b -> c)
+    -> Control.Monad.Trans.State.Lazy.StateT
+         GHC.Integer.Type.Integer Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.State.Lazy.StateT
+         GHC.Integer.Type.Integer Data.Functor.Identity.Identity b
+    -> GHC.Integer.Type.Integer
+    -> Data.Functor.Identity.Identity (c, GHC.Integer.Type.Integer)
+  {- Arity: 4, HasNoCafRefs,
+     Strictness: <L,1*C1(C1(U))><L,1*C1(U(1*U,1*U))><L,1*C1(U(1*U,1*U))><L,U>m,
+     Unfolding: InlineRule (4, True, False)
+                (\ @ a
+                   @ b
+                   @ c
+                   (eta :: a -> b -> c)
+                   (eta1 :: Control.Monad.Trans.State.Lazy.StateT
+                              GHC.Integer.Type.Integer Data.Functor.Identity.Identity a)
+                   (eta2 :: Control.Monad.Trans.State.Lazy.StateT
+                              GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                   (eta3 :: GHC.Integer.Type.Integer) ->
+                 Control.Monad.Trans.State.Lazy.$w$cliftA2
+                   @ Data.Functor.Identity.Identity
+                   @ GHC.Integer.Type.Integer
+                   Data.Functor.Identity.$fFunctorIdentity
+                   Data.Functor.Identity.$fMonadIdentity_$c>>=
+                   Data.Functor.Identity.$fApplicativeIdentity3
+                     `cast`
+                   (forall (a1 :: <*>_N).
+                    <a1>_R ->_R Sym (Data.Functor.Identity.N:Identity[0] <a1>_R))
+                   @ a
+                   @ b
+                   @ c
+                   eta
+                   eta1
+                   eta2
+                   eta3) -}
+cc11415009d6a20c69676402e7fe9f77
+  $s$fApplicativeFreshMT_$s$fFunctorFreshMT ::
+    GHC.Base.Functor
+      (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+         Data.Functor.Identity.Identity)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+                       Data.Functor.Identity.Identity)
+                  (SEDEL.Source.Desugar.$s$fApplicativeFreshMT_$s$fFunctorStateT_$cfmap
+                     @ GHC.Integer.Type.Integer)
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   <a -> b>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (\ @ a
+                     @ b
+                     (x :: a)
+                     (eta :: Control.Monad.Trans.State.Lazy.StateT
+                               GHC.Integer.Type.Integer Data.Functor.Identity.Identity b)
+                     (eta1 :: GHC.Integer.Type.Integer) ->
+                   (x,
+                    case (eta
+                            `cast`
+                          (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <GHC.Integer.Type.Integer>_N
+                               <Data.Functor.Identity.Identity>_R
+                               <b>_N)
+                            eta1)
+                           `cast`
+                         (Data.Functor.Identity.N:Identity[0]
+                              <(b, GHC.Integer.Type.Integer)>_R) of wild { (,) a1 s' ->
+                    s' }))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   <a>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R (<GHC.Integer.Type.Integer>_R
+                         ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                       <(a,
+                                         GHC.Integer.Type.Integer)>_R)) ; (Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                    <GHC.Integer.Type.Integer>_N
+                                                                                    <Data.Functor.Identity.Identity>_R
+                                                                                    <a>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N)) -}
+5ba59e4daffbb8417411a2dab750e13e
+  $s$fApplicativeFreshMT_$s$fFunctorStateT_$cfmap ::
+    (a -> b)
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U)><L,1*C1(U(1*U,1*U))><L,U>m,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ s
+                   @ a
+                   @ b
+                   (f :: a -> b)
+                   (m1 :: Control.Monad.Trans.State.Lazy.StateT
+                            s Data.Functor.Identity.Identity a)
+                   (s1 :: s) ->
+                 let {
+                   ds :: Data.Functor.Identity.Identity (a, s)
+                   = m1
+                       `cast`
+                     (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                          <s>_N <Data.Functor.Identity.Identity>_R <a>_N)
+                       s1
+                 } in
+                 (f (case ds
+                            `cast`
+                          (Data.Functor.Identity.N:Identity[0]
+                               <(a, s)>_R) of wild { (,) a1 s' ->
+                     a1 }),
+                  case ds
+                         `cast`
+                       (Data.Functor.Identity.N:Identity[0]
+                            <(a, s)>_R) of wild { (,) a1 s' ->
+                  s' })
+                   `cast`
+                 (Sym (Data.Functor.Identity.N:Identity[0] <(b, s)>_R)))
+                  `cast`
+                (forall (s :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <a -> b>_R
+                 ->_R <Control.Monad.Trans.State.Lazy.StateT
+                         s Data.Functor.Identity.Identity a>_R
+                 ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <s>_N <Data.Functor.Identity.Identity>_R <b>_N)) -}
+874f699fabd0546418a5b6c0d546bba8
+  $s$fFreshFreshMT1 ::
+    GHC.Base.Monad
+      (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+         Data.Functor.Identity.Identity)
+  {- Strictness: m,
+     Unfolding: (GHC.Base.C:Monad
+                   @ (Unbound.Generics.LocallyNameless.Fresh.FreshMT
+                        Data.Functor.Identity.Identity)
+                   SEDEL.Source.Desugar.$s$fApplicativeFreshMT
+                   (SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$c>>=
+                      @ GHC.Integer.Type.Integer)
+                     `cast`
+                   (forall (a :: <*>_N) (b :: <*>_N).
+                    Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                    ->_R (<a>_R
+                          ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                    ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                   (SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$c>>
+                      @ GHC.Integer.Type.Integer)
+                     `cast`
+                   (forall (a :: <*>_N) (b :: <*>_N).
+                    Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                    ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                    ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                   SEDEL.Source.Desugar.$s$fFreshFreshMT2
+                     `cast`
+                   (forall (a :: <*>_N).
+                    <a>_R
+                    ->_R (<GHC.Integer.Type.Integer>_R
+                          ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                        <(a,
+                                          GHC.Integer.Type.Integer)>_R)) ; (Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                                                                                     <GHC.Integer.Type.Integer>_N
+                                                                                     <Data.Functor.Identity.Identity>_R
+                                                                                     <a>_N) ; Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                   (SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$cfail
+                      @ GHC.Integer.Type.Integer)
+                     `cast`
+                   (forall (a :: <*>_N).
+                    <[GHC.Types.Char]>_R
+                    ->_R Sym (Unbound.Generics.LocallyNameless.Fresh.N:FreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N)) -}
+ebe7a17627a83250346ae20278f6e4f0
+  $s$fFreshFreshMT2 ::
+    a -> GHC.Integer.Type.Integer -> (a, GHC.Integer.Type.Integer)
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U><L,U>m,
+     Unfolding: InlineRule (2, True, True)
+                (\ @ a (eta :: a) (eta1 :: GHC.Integer.Type.Integer) ->
+                 (eta, eta1)) -}
+1181723e60fba5281e4951e718827339
+  $s$fFreshFreshMT_$s$fMonadStateT_$c>> ::
+    Control.Monad.Trans.State.Lazy.StateT
+      s Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity b
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U(A,1*U))><C(S),1*C1(U(U,U))><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ s
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.State.Lazy.StateT
+                            s Data.Functor.Identity.Identity a)
+                   (k :: Control.Monad.Trans.State.Lazy.StateT
+                           s Data.Functor.Identity.Identity b)
+                   (s1 :: s) ->
+                 k `cast`
+                 (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                      <s>_N <Data.Functor.Identity.Identity>_R <b>_N)
+                   (case (m1
+                            `cast`
+                          (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <s>_N <Data.Functor.Identity.Identity>_R <a>_N)
+                            s1)
+                           `cast`
+                         (Data.Functor.Identity.N:Identity[0]
+                              <(a, s)>_R) of wild { (,) a1 s' ->
+                    s' }))
+                  `cast`
+                (forall (s :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.State.Lazy.StateT
+                    s Data.Functor.Identity.Identity a>_R
+                 ->_R <Control.Monad.Trans.State.Lazy.StateT
+                         s Data.Functor.Identity.Identity b>_R
+                 ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <s>_N <Data.Functor.Identity.Identity>_R <b>_N)) -}
+ed0b1454bc0f9c6c71a6229e36b358d4
+  $s$fFreshFreshMT_$s$fMonadStateT_$c>>= ::
+    Control.Monad.Trans.State.Lazy.StateT
+      s Data.Functor.Identity.Identity a
+    -> (a
+        -> Control.Monad.Trans.State.Lazy.StateT
+             s Data.Functor.Identity.Identity b)
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U(1*U,1*U))><C(C(S)),1*C1(C1(U(U,U)))><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ s
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.State.Lazy.StateT
+                            s Data.Functor.Identity.Identity a)
+                   (k :: a
+                         -> Control.Monad.Trans.State.Lazy.StateT
+                              s Data.Functor.Identity.Identity b)
+                   (s1 :: s) ->
+                 let {
+                   ds :: Data.Functor.Identity.Identity (a, s)
+                   = m1
+                       `cast`
+                     (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                          <s>_N <Data.Functor.Identity.Identity>_R <a>_N)
+                       s1
+                 } in
+                 (k (case ds
+                            `cast`
+                          (Data.Functor.Identity.N:Identity[0]
+                               <(a, s)>_R) of wild { (,) a1 s' ->
+                     a1 }))
+                   `cast`
+                 (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                      <s>_N <Data.Functor.Identity.Identity>_R <b>_N)
+                   (case ds
+                           `cast`
+                         (Data.Functor.Identity.N:Identity[0]
+                              <(a, s)>_R) of wild { (,) a1 s' ->
+                    s' }))
+                  `cast`
+                (forall (s :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.State.Lazy.StateT
+                    s Data.Functor.Identity.Identity a>_R
+                 ->_R <a
+                       -> Control.Monad.Trans.State.Lazy.StateT
+                            s Data.Functor.Identity.Identity b>_R
+                 ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <s>_N <Data.Functor.Identity.Identity>_R <b>_N)) -}
+d35a2a1bd2f2f226b483ad0c9f341585
+  $s$fFreshFreshMT_$s$fMonadStateT_$cfail ::
+    GHC.Base.String
+    -> Control.Monad.Trans.State.Lazy.StateT
+         s Data.Functor.Identity.Identity a
+  {- Arity: 2, Strictness: <B,U><B,A>x, Inline: (sat-args=1),
+     Unfolding: InlineRule (1, False, True)
+                (\ @ s @ a (str :: GHC.Base.String) (ds :: s) ->
+                 GHC.Err.errorWithoutStackTrace
+                   @ 'GHC.Types.LiftedRep
+                   @ (Data.Functor.Identity.Identity (a, s))
+                   str)
+                  `cast`
+                (forall (s :: <*>_N) (a :: <*>_N).
+                 <GHC.Base.String>_R
+                 ->_R Sym (Control.Monad.Trans.State.Lazy.N:StateT[0]
+                               <s>_N <Data.Functor.Identity.Identity>_R <a>_N)) -}
+dae5263761242f769ba0920ab2dff906
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.Source.Desugar.$trModule3
+                   SEDEL.Source.Desugar.$trModule1) -}
+3e28e306d9851382b2663f54f57f6b3e
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Source.Desugar.$trModule2) -}
+425e07594d9d43c9e6383c4dc0cd016f
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.Source.Desugar"#) -}
+2559b7cb7352da5e63e9eb61e9c4b5cd
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.Source.Desugar.$trModule4) -}
+92f56118093b6812b8e666691f75d02e
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
+b77cb2996e24dc5303c21a05de8fc124
+  $w$sgo ::
+    SEDEL.Source.Syntax.Expr
+    -> GHC.Integer.Type.Integer
+    -> (# SEDEL.Source.Syntax.Expr, GHC.Integer.Type.Integer #)
+  {- Arity: 2, Strictness: <S,1*U><L,U>, Inline: [2] -}
+f2c799f21a2d6f3d60b66c268b17f174
+  $wgo ::
+    SEDEL.Environment.Ctx
+    -> SEDEL.Source.Syntax.SType
+    -> GHC.Integer.Type.Integer
+    -> (# SEDEL.Source.Syntax.SType, GHC.Integer.Type.Integer #)
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,U(A,U,A,A)><S,1*U><L,U>,
+     Inline: [2] -}
+720c170a81ffca73c5bccf62d208d768
+  $wnormalizeTmDecl ::
+    SEDEL.Source.Syntax.TmBind
+    -> (# SEDEL.Source.Syntax.RawName, SEDEL.Source.Syntax.Expr #)
+  {- Arity: 1, Strictness: <L,U(1*U,A,1*U,U,A,A)>, Inline: [2],
+     Unfolding: (\ (w :: SEDEL.Source.Syntax.TmBind) ->
+                 (# SEDEL.Source.Syntax.bindName w,
+                    case w of wild { SEDEL.Source.Syntax.TmBind ds1 ds2 ds3 ds4 ds5 ds6 ->
+                    letrec {
+                      go :: [(SEDEL.Source.Syntax.TmName,
+                              GHC.Maybe.Maybe SEDEL.Source.Syntax.Scheme)]
+                            -> SEDEL.Source.Syntax.Expr
+                        {- Arity: 1, Strictness: <S,1*U> -}
+                      = \ (ds :: [(SEDEL.Source.Syntax.TmName,
+                                   GHC.Maybe.Maybe SEDEL.Source.Syntax.Scheme)]) ->
+                        case ds of wild1 {
+                          [] -> ds4
+                          : y ys
+                          -> case y of wild2 { (,) n t ->
+                             SEDEL.Source.Syntax.Lam
+                               (Unbound.Generics.LocallyNameless.Bind.B
+                                  @ SEDEL.Source.Syntax.TmName
+                                  @ SEDEL.Source.Syntax.Expr
+                                  n
+                                  (SEDEL.Source.Syntax.$fAlphaExpr_$cclose
+                                     Unbound.Generics.LocallyNameless.Alpha.initialCtx
+                                     (Unbound.Generics.LocallyNameless.Alpha.$fAlphaName4
+                                        @ SEDEL.Source.Syntax.Expr
+                                        SEDEL.Source.Syntax.$fAlphaExpr_v1
+                                        n)
+                                       `cast`
+                                     (Sym (Unbound.Generics.LocallyNameless.Alpha.N:NamePatFind[0]))
+                                     (go ys))) } }
+                    } in
+                    go ds3 } #)) -}
+a8076c309111dc9b3f970ae315c86de8
+  desugar ::
+    [SEDEL.Source.Syntax.SDecl] -> [SEDEL.Source.Syntax.SDecl]
+  {- Arity: 1,
+     Unfolding: (GHC.Base.map
+                   @ SEDEL.Source.Syntax.SDecl
+                   @ SEDEL.Source.Syntax.SDecl
+                   SEDEL.Source.Desugar.desugar1) -}
+e636e89a15ce588235e937a8350b4465
+  desugar1 :: SEDEL.Source.Syntax.SDecl -> SEDEL.Source.Syntax.SDecl
+  {- Arity: 1, Strictness: <S,1*U(1*U(U,U,U,1*U,U,U))>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (ds :: SEDEL.Source.Syntax.SDecl) ->
+                 case ds of wild { SEDEL.Source.Syntax.DefDecl decl ->
+                 SEDEL.Source.Syntax.DefDecl
+                   (SEDEL.Source.Desugar.desugarTmBind decl) }) -}
+5d7be69f58643e7fd19aa32cb955a83c
+  desugarExpr :: SEDEL.Source.Syntax.Expr -> SEDEL.Source.Syntax.Expr
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (0, True, True)
+                SEDEL.Source.Desugar.desugarTmBind1
+                  `cast`
+                (<SEDEL.Source.Syntax.Expr>_R
+                 ->_R Data.Functor.Identity.N:Identity[0]
+                          <SEDEL.Source.Syntax.Expr>_R) -}
+a5dce0a809ac52d65ca8d939f606aadf
+  desugarTmBind ::
+    SEDEL.Source.Syntax.TmBind -> SEDEL.Source.Syntax.TmBind
+  {- Arity: 1, Strictness: <S,1*U(U,U,U,1*U,U,U)>m,
+     Unfolding: InlineRule (1, True, False)
+                (\ (b :: SEDEL.Source.Syntax.TmBind) ->
+                 case b of wild { SEDEL.Source.Syntax.TmBind ds ds1 ds2 ds3 ds4 ds5 ->
+                 SEDEL.Source.Syntax.TmBind
+                   ds
+                   ds1
+                   ds2
+                   (SEDEL.Source.Desugar.desugarTmBind1 ds3)
+                     `cast`
+                   (Data.Functor.Identity.N:Identity[0] <SEDEL.Source.Syntax.Expr>_R)
+                   ds4
+                   ds5 }) -}
+cc3bb8675095e12f07795300ecdef90b
+  desugarTmBind1 ::
+    SEDEL.Source.Syntax.Expr
+    -> Data.Functor.Identity.Identity SEDEL.Source.Syntax.Expr
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ (x :: SEDEL.Source.Syntax.Expr) ->
+                 case (SEDEL.Source.Desugar.desugarTmBind2
+                         x
+                         Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                        `cast`
+                      (Data.Functor.Identity.N:Identity[0]
+                           <(SEDEL.Source.Syntax.Expr,
+                             GHC.Integer.Type.Integer)>_R) of wild { (,) a1 ds1 ->
+                 a1
+                   `cast`
+                 (Sym (Data.Functor.Identity.N:Identity[0]
+                           <SEDEL.Source.Syntax.Expr>_R)) }) -}
+112599f2f9647c9f1852c29574e5a3f0
+  desugarTmBind2 ::
+    SEDEL.Source.Syntax.Expr
+    -> GHC.Integer.Type.Integer
+    -> Data.Functor.Identity.Identity
+         (SEDEL.Source.Syntax.Expr, GHC.Integer.Type.Integer)
+  {- Arity: 2, Strictness: <S,1*U><L,U>m, Inline: [2],
+     Unfolding: InlineRule (2, True, False)
+                (\ (w :: SEDEL.Source.Syntax.Expr)
+                   (w1 :: GHC.Integer.Type.Integer) ->
+                 case SEDEL.Source.Desugar.$w$sgo w w1 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2)
+                   `cast`
+                 (Sym (Data.Functor.Identity.N:Identity[0]
+                           <(SEDEL.Source.Syntax.Expr, GHC.Integer.Type.Integer)>_R)) }) -}
+642d3b32ad0dce6c740f49e3064c9dee
+  expandType ::
+    SEDEL.Environment.Ctx
+    -> SEDEL.Source.Syntax.SType -> SEDEL.Source.Syntax.SType
+  {- Arity: 2, HasNoCafRefs, Strictness: <L,U(A,U,A,A)><S,1*U>,
+     Unfolding: InlineRule (2, True, False)
+                (\ (ctx :: SEDEL.Environment.Ctx)
+                   (ty :: SEDEL.Source.Syntax.SType) ->
+                 case (SEDEL.Source.Desugar.expandType1
+                         ctx
+                         ty
+                         Unbound.Generics.LocallyNameless.Fresh.runFreshM1)
+                        `cast`
+                      (Data.Functor.Identity.N:Identity[0]
+                           <(SEDEL.Source.Syntax.SType,
+                             GHC.Integer.Type.Integer)>_R) of wild { (,) a1 ds1 ->
+                 a1 }) -}
+a0885fcad96e4ef25ad4c7d8aeb55122
+  expandType1 ::
+    SEDEL.Environment.Ctx
+    -> SEDEL.Source.Syntax.SType
+    -> GHC.Integer.Type.Integer
+    -> Data.Functor.Identity.Identity
+         (SEDEL.Source.Syntax.SType, GHC.Integer.Type.Integer)
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,U(A,U,A,A)><S,1*U><L,U>m,
+     Inline: [2],
+     Unfolding: InlineRule (3, True, False)
+                (\ (w :: SEDEL.Environment.Ctx)
+                   (w1 :: SEDEL.Source.Syntax.SType)
+                   (w2 :: GHC.Integer.Type.Integer) ->
+                 case SEDEL.Source.Desugar.$wgo w w1 w2 of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2)
+                   `cast`
+                 (Sym (Data.Functor.Identity.N:Identity[0]
+                           <(SEDEL.Source.Syntax.SType, GHC.Integer.Type.Integer)>_R)) }) -}
+aa59f6fa4972287f160738550f4bb102
+  normalizeTmDecl ::
+    SEDEL.Source.Syntax.TmBind
+    -> (SEDEL.Source.Syntax.RawName, SEDEL.Source.Syntax.Expr)
+  {- Arity: 1, Strictness: <L,U(U,A,U,U,A,A)>m, Inline: [2],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: SEDEL.Source.Syntax.TmBind) ->
+                 case SEDEL.Source.Desugar.$wnormalizeTmDecl
+                        w of ww { (#,#) ww1 ww2 ->
+                 (ww1, ww2) }) -}
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed @ Scheme" [orphan] forall (v :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                          SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed @ SEDEL.Source.Syntax.Scheme
+                                                      v
+  = SEDEL.Source.Desugar.$s$fAlpha(,)_$s$fAlphaEmbed
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$cacompare' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                            SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cacompare' @ SEDEL.Source.Syntax.Scheme
+                                                                  $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$cacompare'
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$caeq' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                       SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$caeq' @ SEDEL.Source.Syntax.Scheme
+                                                             $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$caeq'
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$cclose @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                        SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cclose @ SEDEL.Source.Syntax.Scheme
+                                                              $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$cclose
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$cfreshen' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                           SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cfreshen' @ SEDEL.Source.Syntax.Scheme
+                                                                 $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$cfreshen'
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$cisPat @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                        SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cisPat @ SEDEL.Source.Syntax.Scheme
+                                                              $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$cisPat
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$copen @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                       SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$copen @ SEDEL.Source.Syntax.Scheme
+                                                             $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$copen
+"SPEC/SEDEL.Source.Desugar $fAlphaEmbed_$cswaps' @ Scheme" [orphan] forall ($dAlpha :: Unbound.Generics.LocallyNameless.Alpha.Alpha
+                                                                                         SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fAlphaEmbed_$cswaps' @ SEDEL.Source.Syntax.Scheme
+                                                               $dAlpha
+  = SEDEL.Source.Desugar.$s$fAlphaEmbed_$cswaps'
+"SPEC/SEDEL.Source.Desugar $fApplicativeFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Monad
+                                                                                    Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.Fresh.$fApplicativeFreshMT @ Data.Functor.Identity.Identity
+                                                              v
+  = SEDEL.Source.Desugar.$s$fApplicativeFreshMT
+"SPEC/SEDEL.Source.Desugar $fApplicativeFreshMT2 @ Identity" [orphan] forall ($dMonad :: GHC.Base.Monad
+                                                                                           Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.Fresh.$fApplicativeFreshMT2 @ Data.Functor.Identity.Identity
+                                                               $dMonad
+  = SEDEL.Source.Desugar.$s$fApplicativeFreshMT2
+"SPEC/SEDEL.Source.Desugar $fApplicativeFreshMT3 @ Identity" [orphan] forall ($dMonad :: GHC.Base.Monad
+                                                                                           Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.Fresh.$fApplicativeFreshMT3 @ Data.Functor.Identity.Identity
+                                                               $dMonad
+  = SEDEL.Source.Desugar.$s$fApplicativeFreshMT3
+"SPEC/SEDEL.Source.Desugar $fFunctorFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Functor
+                                                                                Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.Fresh.$fFunctorFreshMT @ Data.Functor.Identity.Identity
+                                                          v
+  = SEDEL.Source.Desugar.$s$fApplicativeFreshMT_$s$fFunctorFreshMT
+"SPEC/SEDEL.Source.Desugar $fFunctorStateT_$cfmap @ Identity _" [orphan] forall @ s
+                                                                                ($dFunctor :: GHC.Base.Functor
+                                                                                                Data.Functor.Identity.Identity)
+  Control.Monad.Trans.State.Lazy.$fFunctorStateT_$cfmap @ Data.Functor.Identity.Identity
+                                                        @ s
+                                                        $dFunctor
+  = SEDEL.Source.Desugar.$s$fApplicativeFreshMT_$s$fFunctorStateT_$cfmap
+      @ s
+"SPEC/SEDEL.Source.Desugar $fMonadStateT_$c>> @ Identity _" [orphan] forall @ s
+                                                                            ($dMonad :: GHC.Base.Monad
+                                                                                          Data.Functor.Identity.Identity)
+  Control.Monad.Trans.State.Lazy.$fMonadStateT_$c>> @ Data.Functor.Identity.Identity
+                                                    @ s
+                                                    $dMonad
+  = SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$c>> @ s
+"SPEC/SEDEL.Source.Desugar $fMonadStateT_$c>>= @ Identity _" [orphan] forall @ s
+                                                                             ($dMonad :: GHC.Base.Monad
+                                                                                           Data.Functor.Identity.Identity)
+  Control.Monad.Trans.State.Lazy.$fMonadStateT_$c>>= @ Data.Functor.Identity.Identity
+                                                     @ s
+                                                     $dMonad
+  = SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$c>>= @ s
+"SPEC/SEDEL.Source.Desugar $fMonadStateT_$cfail @ Identity _" [orphan] forall @ s
+                                                                              ($dMonad :: GHC.Base.Monad
+                                                                                            Data.Functor.Identity.Identity)
+  Control.Monad.Trans.State.Lazy.$fMonadStateT_$cfail @ Data.Functor.Identity.Identity
+                                                      @ s
+                                                      $dMonad
+  = SEDEL.Source.Desugar.$s$fFreshFreshMT_$s$fMonadStateT_$cfail @ s
+"SPEC/SEDEL.Source.Desugar $fShowEmbed @ Scheme" [orphan] forall (v :: GHC.Show.Show
+                                                                         SEDEL.Source.Syntax.Scheme)
+  Unbound.Generics.LocallyNameless.Embed.$fShowEmbed @ SEDEL.Source.Syntax.Scheme
+                                                     v
+  = SEDEL.Source.Desugar.$s$fAlpha(,)_$s$fShowEmbed
+trusted: none
+require own pkg trusted: False
+module header:
+  Nothing
+declaration docs:
+arg docs:
+

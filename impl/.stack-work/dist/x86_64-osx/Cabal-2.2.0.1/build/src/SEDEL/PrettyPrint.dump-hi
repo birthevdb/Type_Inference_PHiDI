@@ -1,0 +1,1407 @@
+
+==================== FINAL INTERFACE ====================
+2019-02-26 08:26:45.088065 UTC
+
+interface sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.PrettyPrint [orphan module] 8044
+  interface hash: 10ced2829671930fb6d2cfcf8da96a9e
+  ABI hash: 49a6e7b74cbc1b9f5143d39fe1ec859b
+  export-list hash: 19ba40565495f539d4becea748f89418
+  orphan hash: 42bce69e37f0a010a157a636ef2d36cd
+  flag hash: f191ccd4597414e3096974fc73427eba
+  opt_hash: 14e536840aca4e889cad654e6f9b79c1
+  hpc_hash: 93b885adfe0da089cdf634904fd59f71
+  sig of: Nothing
+  used TH splices: False
+  where
+exports:
+  SEDEL.PrettyPrint.pprint
+  SEDEL.PrettyPrint.D{SEDEL.PrettyPrint.DD SEDEL.PrettyPrint.DS}
+  SEDEL.PrettyPrint.FDoc
+  SEDEL.PrettyPrint.FPretty{SEDEL.PrettyPrint.ppr}
+module dependencies: SEDEL.Common SEDEL.Source.Syntax
+package dependencies: StateVar-1.1.1.1 array-0.5.2.0 async-2.2.1
+                      base-4.11.1.0 base-orphans-0.7 bifunctors-5.5.3 binary-0.8.5.1
+                      bytestring-0.10.8.2 comonad-5.0.4 containers-0.5.11.0
+                      contravariant-1.4.1 deepseq-1.4.3.0 distributive-0.5.3
+                      exceptions-0.10.0 ghc-boot-th-8.4.4 ghc-prim-0.5.2.0
+                      hashable-1.2.7.0 integer-gmp-1.0.2.0 megaparsec-6.5.0 mtl-2.2.2
+                      parser-combinators-1.0.0 pretty-1.1.3.6 prettyprinter-1.2.1
+                      profunctors-5.2.2 protolude-0.2.2 stm-2.4.5.1 tagged-0.8.5
+                      template-haskell-2.13.0.0 text-1.2.3.1 transformers-0.5.5.0
+                      unbound-generics-0.3.4
+orphans: sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Source.Syntax
+         transformers-0.5.5.0:Control.Monad.Trans.Error
+         stm-2.4.5.1:Control.Monad.STM
+         hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
+         text-1.2.3.1:Data.Text binary-0.8.5.1:Data.Binary.Generic
+         bytestring-0.10.8.2:Data.ByteString.Builder
+         text-1.2.3.1:Data.Text.Show base-4.11.1.0:GHC.Float
+         base-4.11.1.0:GHC.Base
+family instance modules: base-4.11.1.0:Control.Applicative
+                         base-4.11.1.0:Data.Complex base-4.11.1.0:Data.Functor.Compose
+                         base-4.11.1.0:Data.Functor.Const
+                         base-4.11.1.0:Data.Functor.Identity
+                         base-4.11.1.0:Data.Functor.Product base-4.11.1.0:Data.Functor.Sum
+                         base-4.11.1.0:Data.Monoid base-4.11.1.0:Data.Semigroup
+                         base-4.11.1.0:Data.Semigroup.Internal base-4.11.1.0:Data.Version
+                         base-4.11.1.0:Data.Void base-4.11.1.0:GHC.Exts
+                         base-4.11.1.0:GHC.Generics base-4.11.1.0:GHC.IO.Exception
+                         bifunctors-5.5.3:Data.Bifunctor.Biff
+                         bifunctors-5.5.3:Data.Bifunctor.Clown
+                         bifunctors-5.5.3:Data.Bifunctor.Joker
+                         bifunctors-5.5.3:Data.Bifunctor.Product
+                         bifunctors-5.5.3:Data.Bifunctor.Sum
+                         bifunctors-5.5.3:Data.Bifunctor.Tannen
+                         containers-0.5.11.0:Data.IntMap.Internal
+                         containers-0.5.11.0:Data.IntSet.Internal
+                         containers-0.5.11.0:Data.Map.Internal
+                         containers-0.5.11.0:Data.Sequence.Internal
+                         containers-0.5.11.0:Data.Set.Internal containers-0.5.11.0:Data.Tree
+                         ghc-boot-th-8.4.4:GHC.ForeignSrcLang.Type
+                         ghc-boot-th-8.4.4:GHC.LanguageExtensions.Type
+                         megaparsec-6.5.0:Text.Megaparsec.Error
+                         megaparsec-6.5.0:Text.Megaparsec.Pos
+                         megaparsec-6.5.0:Text.Megaparsec.State
+                         megaparsec-6.5.0:Text.Megaparsec.Stream
+                         pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
+                         pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
+                         prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Common
+                         sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP:SEDEL.Source.Syntax
+                         tagged-0.8.5:Data.Tagged
+                         template-haskell-2.13.0.0:Language.Haskell.TH.Syntax
+                         text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Bind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Embed
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Name
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rebind
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Rec
+                         unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Shift
+import  -/  base-4.11.1.0:Data.Functor f522c3501272159820fd6f242510732f
+import  -/  base-4.11.1.0:Data.List 83dc843e47bfc0c5af51e19c6f3476d5
+import  -/  base-4.11.1.0:Data.Maybe 409c3da2b142470b68be39ce1d97a9f7
+import  -/  base-4.11.1.0:Data.OldList 1b35aa3c6805ff7c8887a35a866fe006
+import  -/  base-4.11.1.0:Data.Traversable 7ad4edb9184ea1ae8e73f6b94f115c8c
+import  -/  base-4.11.1.0:Data.Tuple 3af66f3ac61ed95ba8a3a3f68ebc5003
+import  -/  base-4.11.1.0:GHC.Base 604111500e81281298777e721c75643b
+import  -/  base-4.11.1.0:GHC.List 1e4357702d8d00cded0703bd293e50e8
+import  -/  megaparsec-6.5.0:Text.Megaparsec dad9a4aeb1f0e270a9bf949fd5479956
+import  -/  megaparsec-6.5.0:Text.Megaparsec.Pos 76cd1fedff8946eefd2fe94baaeadf5f
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc 04e8924fa6b26857d25f7e89f331b3ec
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal 4dbff1ffd6a8a023b5e8586c0275223e
+import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Symbols.Ascii e965189d3854891aaef2f95b81655ee5
+import  -/  protolude-0.2.2:Protolude ec8c9f1921240ba85c2826100dc947ec
+import  -/  SEDEL.Common 09f7298ba1fa8793b51809d87ff74b30
+  exports: f3e61cff89cd8529684da86ece3c0a45
+  Add f76724fbd233848d4db2c584e4631f16
+  Arith f7fe6387143aa84e6738506b1f896774
+  ArithOp 19f47e167b8dfddf756bf38a846d86d9
+  Comp 0ffc1eb707b1a3c7f47f038984f944d4
+  CompOp dc701aca4dfada75ca67fa7ddb9d8bb4
+  Div 5fd929bef9218e818e86b377cd706532
+  Equ e4cd480182774a7cd54e42cd1bd95792
+  Gt 827e090e1848b2483b441b5ae8dda41f
+  LAnd 2a02726bea66e7f6bcc2c4daf1c230a0
+  LOr 38f88815b1af7eb3bb3e454f371f5719
+  Logical b7768423591bd03d2d1824ef255c4024
+  LogicalOp fe47a72b4616008c3531d46e868c0f3f
+  Lt 4862d2bfe8b870372712c133a96a9261
+  Mul 5a7981aeaabbe827210610c003316ecd
+  Neq 6164569898ae6e177eb1207ff284aeb5
+  Operation 19f47e167b8dfddf756bf38a846d86d9
+  Sub 3f911cb4cdf8b0982017c37c2cbcc026
+import  -/  SEDEL.Source.Syntax 0548d3668eda4620fc3ff3e6cf2368fb
+  exports: 6168fc739a7e41a0b25e4ca6cc08e10c
+  Acc 74ebf2ad9ea6b84a3d630c1999b0183f
+  And d67643cb17880b1abddc6abf91d4f8a5
+  App ba2b2df00e3d440fb7ee2e97fad450c2
+  Arr 397e828962dfd176efed92f2c56bc256
+  BoolT b4482118f31960df2ddce6c8690c9ecd
+  BoolV 005d6c0408741f530dfe1a3c5dcceda9
+  BotT a3a7b862a4bceb4a662ac6984df90188
+  DForall 2b7a02b818deac1f73f2f3a86bff1b86
+  DRec 2513c98ff2386be4280e3e970adb31bb
+  Expr e82999745a2326527e020a915d2988cd
+  If 2ecc6f234beebffd69578a89390cb75d
+  KArrow bf4cdb79b90cf8cc5c1e53593a73d89d
+  Kind e82999745a2326527e020a915d2988cd
+  Lam d55f0f183a033abcc4314ddffdc9d233
+  LamA 384c9fe854b392e7c0e51c021088a74c
+  Letrec c5ec78127f48cd6d07be6d328051b53c
+  LitV eb60ab0602473dbfe5de4a7a55c9326b
+  Merge 4cd641e29b94c82fdea109d702d90942
+  NumT 3904495283f24212d1d2fea38e0c7b6b
+  Pos 6ffb775a97b8719becb153b1aad8bcb5
+  PrimOp 4dd191b54fb6a326270c86d18b2a3192
+  SRecT b2e8745a356f68d4ee38e06d46be62f9
+  SType e82999745a2326527e020a915d2988cd
+  Star 91d4a7c25ef46a369bec0ba8c24d5fbe
+  TVar 8a2dafe14d3e9f11f76bcae45d3021c4
+  Top 414867fb90328e5b1b256a7cc866e8b5
+  TopT 37aa61935fae500ca4d2904f9fa8d48b
+  Var 54737d5977b92619bc58e6ac2bf3ec0b
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless 8dd357a9d9fbbcf23f41fb39ba00f4e4
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Embed a6d67338db1f14cf42fb5b5b69a561d5
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.LFresh c67909f8966bd08786e91039013e8bc0
+import  -/  unbound-generics-0.3.4:Unbound.Generics.LocallyNameless.Operations 86bd0dbc8cb450c4ba4e75dad5d99714
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyArithOp :: SEDEL.PrettyPrint.FPretty SEDEL.Common.ArithOp
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyArithOp_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.Common.ArithOp>_N)) -}
+43a02c1a25f0489c7eeaa3b7a5dcd1c5
+  $fFPrettyArithOp1 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyArithOp2)) -}
+c9b32f2122abe2a640e788f5ba3d5ef0
+  $fFPrettyArithOp2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("/"#) -}
+08dcf63a5e6477cb03247dc50a6a1df9
+  $fFPrettyArithOp3 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyArithOp4)) -}
+d51bab15f618d2e436b8a4d48508ce7a
+  $fFPrettyArithOp4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("*"#) -}
+3d828077cce1607c9337002ca1792be7
+  $fFPrettyArithOp5 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyArithOp6)) -}
+f92a8b1b3800c185bea342f74b73db88
+  $fFPrettyArithOp6 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("-"#) -}
+1efaedeaa1e9745a54425c51c9f28ab4
+  $fFPrettyArithOp7 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyArithOp8)) -}
+a7d094a717b17d4e69e2c7b768f976a1
+  $fFPrettyArithOp8 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("+"#) -}
+b51ab2a5c96a1a787d4306d607941b5f
+  $fFPrettyArithOp_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Common.ArithOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Common.ArithOp) ->
+                 SEDEL.PrettyPrint.$w$cppr @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyCompOp :: SEDEL.PrettyPrint.FPretty SEDEL.Common.CompOp
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyCompOp_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.Common.CompOp>_N)) -}
+a6a3a32a97722b1a369b89e2dc5afd1e
+  $fFPrettyCompOp1 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp2)) -}
+3b8db8f7ecb806845c5ac44d9451713a
+  $fFPrettyCompOp2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("!="#) -}
+c9b5f78e52cf79e5f318620501a27b76
+  $fFPrettyCompOp3 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp4)) -}
+7a01e39113a5bad3dce07ab2714fb780
+  $fFPrettyCompOp4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("=="#) -}
+9326e46960795f2bd81b0fb18b45af8b
+  $fFPrettyCompOp5 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp6)) -}
+3c8995628fe5560b71405778e1438dae
+  $fFPrettyCompOp6 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: (">"#) -}
+096df95e8f9fcb9e46479e2b432a9255
+  $fFPrettyCompOp7 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp8)) -}
+af6d7a10ab20d1d7e3bca67715aa1818
+  $fFPrettyCompOp8 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("<"#) -}
+3e8618c537ad88d75c7073805b96a827
+  $fFPrettyCompOp_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Common.CompOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Common.CompOp) ->
+                 SEDEL.PrettyPrint.$w$cppr1 @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyD :: SEDEL.PrettyPrint.FPretty SEDEL.PrettyPrint.D
+  DFunId
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,A><L,U(U(U,U,U,U,U),U,U,U)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyD_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.PrettyPrint.D>_N)) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyD_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.PrettyPrint.D -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,A><L,U(U(U,U,U,U,U),U,U,U)><S,1*U>, Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.PrettyPrint.D) ->
+                 SEDEL.PrettyPrint.$w$cppr2 @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyExpr :: SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Expr
+  DFunId
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyExpr_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Source.Syntax.Expr>_N)) -}
+6a001c003e2da2941a3e9caf0bd059f6
+  $fFPrettyExpr_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Source.Syntax.Expr -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [0],
+     Unfolding: InlineRule (2, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                 SEDEL.PrettyPrint.$w$cppr3 @ m w1) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyKind :: SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Kind
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyKind_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Source.Syntax.Kind>_N)) -}
+b65420001ecc212ac3b6086fb7944118
+  $fFPrettyKind_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Source.Syntax.Kind -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Source.Syntax.Kind) ->
+                 SEDEL.PrettyPrint.$w$cppr4 @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyLogicalOp ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Common.LogicalOp
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyLogicalOp_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Common.LogicalOp>_N)) -}
+651dbf673dc1a476fbd1c554ce1db4ed
+  $fFPrettyLogicalOp1 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyLogicalOp2)) -}
+7cc1f9a7d55f0d9e8cdc6ba7af4b6c0f
+  $fFPrettyLogicalOp2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("||"#) -}
+2026f7a7af0a78b72d6e8152cd8d5642
+  $fFPrettyLogicalOp3 ::
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+  {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
+                   @ SEDEL.PrettyPrint.FAnn
+                   (GHC.CString.unpackCString#
+                      SEDEL.PrettyPrint.$fFPrettyLogicalOp4)) -}
+1c591413f23601ac98c299f89693637a
+  $fFPrettyLogicalOp4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("&&"#) -}
+e24575fb04b34c43facb94acdcbee117
+  $fFPrettyLogicalOp_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Common.LogicalOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Common.LogicalOp) ->
+                 SEDEL.PrettyPrint.$w$cppr5 @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettyOperation ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Common.Operation
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyOperation_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Common.Operation>_N)) -}
+35815a9f1058a9f5f13c6b440282819c
+  $fFPrettyOperation_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Common.Operation -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Common.Operation) ->
+                 SEDEL.PrettyPrint.$w$cppr6 @ m w1 w2) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPrettySType ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.SType
+  DFunId
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettySType_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Source.Syntax.SType>_N)) -}
+44c2329efea87ee1b4f6d605e789c82b
+  $fFPrettySType_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Source.Syntax.SType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [0],
+     Unfolding: InlineRule (2, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                 SEDEL.PrettyPrint.$w$cppr7 @ m w1) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPretty[] :: SEDEL.PrettyPrint.FPretty [SEDEL.PrettyPrint.D]
+  DFunId
+  {- Arity: 3,
+     Strictness: <S(S(C(C(S))L)LLLLL),1*U(1*U(1*C1(C1(U)),A),A,A,A,A,A)><L,U(U(U(U,U,U,U,U,U),U,U,U,U),U,U,U)><L,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPretty[]_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0] <[SEDEL.PrettyPrint.D]>_N)) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $fFPretty[]_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    [SEDEL.PrettyPrint.D] -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <S(S(C(C(S))L)LLLLL),1*U(1*U(1*C1(C1(U)),A),A,A,A,A,A)><L,U(U(U(U,U,U,U,U,U),U,U,U,U),U,U,U)><L,1*U>,
+     Unfolding: (\ @ m :: * -> *
+                   ($dApplicative :: GHC.Base.Applicative m)
+                   ($dLFresh :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (eta :: [SEDEL.PrettyPrint.D]) ->
+                 GHC.Base.fmap
+                   @ m
+                   (GHC.Base.$p1Applicative @ m $dApplicative)
+                   @ [Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn]
+                   @ (Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn)
+                   (Data.Text.Prettyprint.Doc.Internal.sep @ SEDEL.PrettyPrint.FAnn)
+                   (let {
+                      $dMonad :: GHC.Base.Monad m
+                      = Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m $dLFresh
+                    } in
+                    let {
+                      $dApplicative1 :: GHC.Base.Applicative m
+                      = GHC.Base.$p1Monad @ m $dMonad
+                    } in
+                    let {
+                      z :: m [SEDEL.PrettyPrint.FDoc]
+                      = GHC.Base.pure
+                          @ m
+                          $dApplicative1
+                          @ [SEDEL.PrettyPrint.FDoc]
+                          (GHC.Types.[] @ SEDEL.PrettyPrint.FDoc)
+                    } in
+                    letrec {
+                      go :: [SEDEL.PrettyPrint.D] -> m [SEDEL.PrettyPrint.FDoc]
+                        {- Arity: 1, Strictness: <S,1*U> -}
+                      = \ (ds :: [SEDEL.PrettyPrint.D]) ->
+                        case ds of wild {
+                          [] -> z
+                          : y ys
+                          -> GHC.Base.liftA2
+                               @ m
+                               $dApplicative1
+                               @ SEDEL.PrettyPrint.FDoc
+                               @ [SEDEL.PrettyPrint.FDoc]
+                               @ [SEDEL.PrettyPrint.FDoc]
+                               (GHC.Types.: @ SEDEL.PrettyPrint.FDoc)
+                               (SEDEL.PrettyPrint.$w$cppr2 @ m $dLFresh y)
+                               (go ys) }
+                    } in
+                    go eta)) -}
+c2cfd67fc1958381c2140005b8b59841
+  $fPrettySourcePos ::
+    Data.Text.Prettyprint.Doc.Internal.Pretty
+      Text.Megaparsec.Pos.SourcePos
+  DFunId
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ Text.Megaparsec.Pos.SourcePos
+                  SEDEL.PrettyPrint.$fPrettySourcePos_$cpretty
+                  SEDEL.PrettyPrint.$fPrettySourcePos_$cprettyList -}
+ecbaa00b48899504e5f6666d0935ce07
+  $fPrettySourcePos_$cpretty ::
+    Text.Megaparsec.Pos.SourcePos
+    -> Data.Text.Prettyprint.Doc.Internal.Doc ann
+  {- Arity: 1, Strictness: <S,1*U(A,U,U)>m7,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ ann (ds :: Text.Megaparsec.Pos.SourcePos) ->
+                 case ds of wild { Text.Megaparsec.Pos.SourcePos ds1 dt dt1 ->
+                 Data.Text.Prettyprint.Doc.Internal.Cat
+                   @ ann
+                   (Data.Text.Prettyprint.Doc.Internal.$w$cpretty5 @ ann dt)
+                   (Data.Text.Prettyprint.Doc.Internal.Cat
+                      @ ann
+                      (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon @ ann)
+                      (Data.Text.Prettyprint.Doc.Internal.Cat
+                         @ ann
+                         (Data.Text.Prettyprint.Doc.Internal.$w$cpretty5 @ ann dt1)
+                         (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon @ ann))) }) -}
+33c5b7a02adca67d8e26dce7ec116a05
+  $fPrettySourcePos_$cprettyList ::
+    [Text.Megaparsec.Pos.SourcePos]
+    -> Data.Text.Prettyprint.Doc.Internal.Doc ann
+  {- Arity: 1, Strictness: <S,1*U>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ ann (x6 :: [Text.Megaparsec.Pos.SourcePos]) ->
+                 Data.Text.Prettyprint.Doc.Internal.list
+                   @ ann
+                   (GHC.Base.build
+                      @ (Data.Text.Prettyprint.Doc.Internal.Doc ann)
+                      (\ @ b1
+                         (c :: Data.Text.Prettyprint.Doc.Internal.Doc ann
+                               -> b1 -> b1)[OneShot]
+                         (n :: b1)[OneShot] ->
+                       GHC.Base.foldr
+                         @ Text.Megaparsec.Pos.SourcePos
+                         @ b1
+                         (GHC.Base.mapFB
+                            @ (Data.Text.Prettyprint.Doc.Internal.Doc ann)
+                            @ b1
+                            @ Text.Megaparsec.Pos.SourcePos
+                            c
+                            (SEDEL.PrettyPrint.$fPrettySourcePos_$cpretty @ ann))
+                         n
+                         x6))) -}
+ad87c4927e1b050d0c3da46de04637d4
+  $s$fApplicativeLFreshMT ::
+    GHC.Base.Applicative
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                       Data.Functor.Identity.Identity)
+                  SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorLFreshMT
+                  (\ @ a
+                     (x6 :: a)
+                     (ds :: Data.Set.Internal.Set
+                              Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                   x6)
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <a>_R
+                   ->_R (<Data.Set.Internal.Set
+                            Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                         ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                       <a>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                           <*>_N
+                                                           <Data.Set.Internal.Set
+                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                           <Data.Functor.Identity.Identity>_R
+                                                           <a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*>
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a
+                                                                                                                   -> b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (\ @ a @ b @ c ->
+                   Control.Monad.Trans.Reader.$fApplicativeReaderT_$cliftA2
+                     @ Data.Functor.Identity.Identity
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName)
+                     Data.Functor.Identity.$fApplicativeIdentity
+                     @ a
+                     @ b
+                     @ c)
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N) (c :: <*>_N).
+                   <a -> b -> c>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <c>_N)
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*>
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
+e255d5f30815e81e79053a9289727db6
+  $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*> ::
+    Control.Monad.Trans.Reader.ReaderT
+      r Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,A><C(S),1*C1(U)><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, True)
+                (\ @ r
+                   @ a
+                   @ b
+                   (u :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity a)
+                   (v :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity b)
+                   (r1 :: r) ->
+                 v `cast`
+                 (Control.Monad.Trans.Reader.N:ReaderT[0]
+                      <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)
+                   r1)
+                  `cast`
+                (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Reader.ReaderT
+                    r Data.Functor.Identity.Identity a>_R
+                 ->_R <Control.Monad.Trans.Reader.ReaderT
+                         r Data.Functor.Identity.Identity b>_R
+                 ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                               <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
+01875ba6414f40470bcd4a18cefdb065
+  $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<* ::
+    Control.Monad.Trans.Reader.ReaderT
+      r Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity a
+  {- Arity: 3, HasNoCafRefs, Strictness: <C(S),1*C1(U)><L,A><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, True)
+                (\ @ r
+                   @ a
+                   @ b
+                   (u :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity a)
+                   (v :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity b)
+                   (r1 :: r) ->
+                 u `cast`
+                 (Control.Monad.Trans.Reader.N:ReaderT[0]
+                      <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N)
+                   r1)
+                  `cast`
+                (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Reader.ReaderT
+                    r Data.Functor.Identity.Identity a>_R
+                 ->_R <Control.Monad.Trans.Reader.ReaderT
+                         r Data.Functor.Identity.Identity b>_R
+                 ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                               <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N)) -}
+3bf05cda4caaaf9e79bbb444b0cb2b64
+  $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*> ::
+    Control.Monad.Trans.Reader.ReaderT
+      r Data.Functor.Identity.Identity (a -> b)
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(C(S)),1*C1(C1(U))><L,1*C1(U)><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ r
+                   @ a
+                   @ b
+                   (f :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity (a -> b))
+                   (v :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity a)
+                   (r1 :: r) ->
+                 (f `cast`
+                  (Control.Monad.Trans.Reader.N:ReaderT[0]
+                       <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a -> b>_N)
+                    r1)
+                   `cast`
+                 (Data.Functor.Identity.N:Identity[0]
+                      (Sym (Data.Functor.Identity.N:Identity[0] <a>_R)
+                       ->_R Sym (Data.Functor.Identity.N:Identity[0] <b>_R)))
+                   (v `cast`
+                    (Control.Monad.Trans.Reader.N:ReaderT[0]
+                         <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N)
+                      r1))
+                  `cast`
+                (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Reader.ReaderT
+                    r Data.Functor.Identity.Identity (a -> b)>_R
+                 ->_R <Control.Monad.Trans.Reader.ReaderT
+                         r Data.Functor.Identity.Identity a>_R
+                 ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                               <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
+eaea28fd66867c262f480a030e5c6ded
+  $s$fApplicativeLFreshMT_$s$fFunctorLFreshMT ::
+    GHC.Base.Functor
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                       Data.Functor.Identity.Identity)
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorReaderT_$cfmap
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   <a -> b>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorReaderT_$c<$
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   <a>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
+bed8b0456f592e637df9d356b1f54fac
+  $s$fApplicativeLFreshMT_$s$fFunctorReaderT_$c<$ ::
+    a
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity a
+  {- Arity: 3, HasNoCafRefs, Strictness: <S,1*U><L,A><L,A>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, True)
+                (\ @ r
+                   @ a
+                   @ b
+                   (x6 :: a)
+                   (v :: Control.Monad.Trans.Reader.ReaderT
+                           r Data.Functor.Identity.Identity b)
+                   (x7 :: r) ->
+                 x6)
+                  `cast`
+                (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <a>_R
+                 ->_R <Control.Monad.Trans.Reader.ReaderT
+                         r Data.Functor.Identity.Identity b>_R
+                 ->_R (<r>_R
+                       ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                     <a>_R)) ; Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                        <*>_N
+                                                        <r>_R
+                                                        <Data.Functor.Identity.Identity>_R
+                                                        <a>_N)) -}
+b433009932c4596cd81cdb532e1e5ef7
+  $s$fApplicativeLFreshMT_$s$fFunctorReaderT_$cfmap ::
+    (a -> b)
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity a
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,C(U)>,
+     Inline: (sat-args=1),
+     Unfolding: InlineRule (1, False, True)
+                (\ @ r @ a @ b (f :: a -> b) ->
+                 Control.Monad.Trans.Reader.mapReaderT
+                   @ *
+                   @ *
+                   @ Data.Functor.Identity.Identity
+                   @ a
+                   @ Data.Functor.Identity.Identity
+                   @ b
+                   @ r
+                   f `cast`
+                   (Sym (Data.Functor.Identity.N:Identity[0] <a>_R)
+                    ->_R Sym (Data.Functor.Identity.N:Identity[0] <b>_R))) -}
+1ba6c9847ad77e99d0e36c4338ed93b3
+  $s$fLFreshLFreshMT ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                       Data.Functor.Identity.Identity)
+                  SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadLFreshMT
+                  (Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT1
+                     @ Data.Functor.Identity.Identity
+                     Data.Functor.Identity.$fMonadIdentity)
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <Data.Typeable.Internal.Typeable a>_R
+                   ->_R <Unbound.Generics.LocallyNameless.Name.Name a>_R
+                   ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                 <*>_N
+                                 <Data.Set.Internal.Set
+                                    Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                 <Data.Functor.Identity.Identity>_R
+                                 <Unbound.Generics.LocallyNameless.Name.Name
+                                    a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Unbound.Generics.LocallyNameless.Name.Name
+                                                                                                                                              a>_N)
+                  (Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT_$cavoid
+                     @ Data.Functor.Identity.Identity
+                     Data.Functor.Identity.$fMonadIdentity)
+                  (Data.Functor.Identity.$fApplicativeIdentity3
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  ((<Data.Set.Internal.Set
+                       Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                    ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                  <Data.Set.Internal.Set
+                                     Unbound.Generics.LocallyNameless.Name.AnyName>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                                                    <*>_N
+                                                                                                    <Data.Set.Internal.Set
+                                                                                                       Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                                                    <Data.Functor.Identity.Identity>_R
+                                                                                                    <Data.Set.Internal.Set
+                                                                                                       Unbound.Generics.LocallyNameless.Name.AnyName>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Data.Set.Internal.Set
+                                                                                                                                                                                                                                                             Unbound.Generics.LocallyNameless.Name.AnyName>_N)) -}
+ecb1123bdf129baa3e775a3f18300411
+  $s$fLFreshLFreshMT_$cavoid ::
+    [Unbound.Generics.LocallyNameless.Name.AnyName]
+    -> Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity a
+    -> Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity a
+  {- Arity: 1, Strictness: <L,1*U>, Inline: [0],
+     Unfolding: InlineRule (1, True, True)
+                (Unbound.Generics.LocallyNameless.LFresh.$w$cavoid
+                   @ Data.Functor.Identity.Identity) -}
+686e28de289394a237e90ec061181cff
+  $s$fLFreshLFreshMT_$s$fMonadLFreshMT ::
+    GHC.Base.Monad
+      (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+         Data.Functor.Identity.Identity)
+  {- Strictness: m, Inline: CONLIKE,
+     Unfolding: DFun:.
+                  @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                       Data.Functor.Identity.Identity)
+                  SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
+                  (SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>=
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R (<a>_R
+                         ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*>
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N) (b :: <*>_N).
+                   Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N)
+                  (\ @ a
+                     (eta :: a)
+                     (ds :: Data.Set.Internal.Set
+                              Unbound.Generics.LocallyNameless.Name.AnyName) ->
+                   eta)
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <a>_R
+                   ->_R (<Data.Set.Internal.Set
+                            Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                         ->_R Sym (Data.Functor.Identity.N:Identity[0]
+                                       <a>_R)) ; (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                           <*>_N
+                                                           <Data.Set.Internal.Set
+                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                           <Data.Functor.Identity.Identity>_R
+                                                           <a>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N))
+                  (SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$cfail
+                     @ (Data.Set.Internal.Set
+                          Unbound.Generics.LocallyNameless.Name.AnyName))
+                    `cast`
+                  (forall (a :: <*>_N).
+                   <[GHC.Types.Char]>_R
+                   ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
+caa52acd6dc920e5a9c9b9bd75b4f433
+  $s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>= ::
+    Control.Monad.Trans.Reader.ReaderT
+      r Data.Functor.Identity.Identity a
+    -> (a
+        -> Control.Monad.Trans.Reader.ReaderT
+             r Data.Functor.Identity.Identity b)
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity b
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <L,1*C1(U)><C(C(S)),1*C1(C1(U))><L,U>,
+     Inline: (sat-args=2),
+     Unfolding: InlineRule (2, False, False)
+                (\ @ r
+                   @ a
+                   @ b
+                   (m1 :: Control.Monad.Trans.Reader.ReaderT
+                            r Data.Functor.Identity.Identity a)
+                   (k :: a
+                         -> Control.Monad.Trans.Reader.ReaderT
+                              r Data.Functor.Identity.Identity b)
+                   (r1 :: r) ->
+                 (k (m1
+                       `cast`
+                     (Control.Monad.Trans.Reader.N:ReaderT[0]
+                          <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N)
+                       r1)
+                      `cast`
+                    (Data.Functor.Identity.N:Identity[0] <a>_R))
+                   `cast`
+                 (Control.Monad.Trans.Reader.N:ReaderT[0]
+                      <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)
+                   r1)
+                  `cast`
+                (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
+                 <Control.Monad.Trans.Reader.ReaderT
+                    r Data.Functor.Identity.Identity a>_R
+                 ->_R <a
+                       -> Control.Monad.Trans.Reader.ReaderT
+                            r Data.Functor.Identity.Identity b>_R
+                 ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                               <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
+fe06f75b77105d4fa61489d803b18223
+  $s$fLFreshLFreshMT_$s$fMonadReaderT_$cfail ::
+    GHC.Base.String
+    -> Control.Monad.Trans.Reader.ReaderT
+         r Data.Functor.Identity.Identity a
+  {- Arity: 2, Strictness: <B,U><B,A>x, Inline: (sat-args=1),
+     Unfolding: InlineRule (1, False, False)
+                (\ @ r @ a (msg :: GHC.Base.String) ->
+                 let {
+                   m1 :: Data.Functor.Identity.Identity a {- Strictness: x -}
+                   = GHC.Err.errorWithoutStackTrace
+                       @ 'GHC.Types.LiftedRep
+                       @ (Data.Functor.Identity.Identity a)
+                       msg
+                 } in
+                 (\ (ds :: r) -> m1)
+                   `cast`
+                 (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
+                           <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N))) -}
+20c088861ec4cf33ef57c973101d19b5
+  $tc'DD :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   9883612912652733431##
+                   12831477865706115363##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tc'DD2
+                   1#
+                   SEDEL.PrettyPrint.$tc'DD1) -}
+aa7814829221b20c8e3b451f4fe786c4
+  $tc'DD1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+d43f2353b6e8b04dba4a116dec5742b8
+  $tc'DD2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'DD3) -}
+96fe67890d86285fa16430725b27a314
+  $tc'DD3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'DD"#) -}
+541096262f20b28ab239ff560202a6a7
+  $tc'DS :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   6475732309125219165##
+                   18201115770308017097##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tc'DS2
+                   0#
+                   SEDEL.PrettyPrint.$tc'DS1) -}
+ddfcefc9bebfb78ada883c2ad89250bc
+  $tc'DS1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+bb035884d9e6b75462624fae6ad789a3
+  $tc'DS2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'DS3) -}
+9352b2568d12936438d9a91e7f9e2996
+  $tc'DS3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'DS"#) -}
+9aeed72403af2c2e3f2c9981253abc3c
+  $tc'FAnn :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   3751633409350284991##
+                   8880790714233115679##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tc'FAnn2
+                   0#
+                   SEDEL.PrettyPrint.$tc'FAnn1) -}
+f0eaa7ccac7487f0d68467c347daff46
+  $tc'FAnn1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m1, Inline: [~] -}
+ec8cf68a5f04c7e52b0fd8e2d71cf62e
+  $tc'FAnn2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'FAnn3) -}
+42948eb5fd1afc62bbf29a50f4965190
+  $tc'FAnn3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("'FAnn"#) -}
+dbbc2940978365fbcd1e89ba14e5f740
+  $tcD :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   1735747332757533378##
+                   3286694579131585511##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tcD1
+                   0#
+                   GHC.Types.krep$*) -}
+c30e7ba0b8bb0806cb08e0d50fb7e311
+  $tcD1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcD2) -}
+6c4009a38c5115242206b8492090792e
+  $tcD2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("D"#) -}
+6386bf7dee97c25ac0a8ba3d7e43ee34
+  $tcFAnn :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2276576386950555165##
+                   13154805422815051818##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tcFAnn1
+                   0#
+                   GHC.Types.krep$*) -}
+eed2321ce7547c1d3eb5e7dd82d2ae4a
+  $tcFAnn1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcFAnn2) -}
+95f6ba6f8d255530a4750f2d61b41531
+  $tcFAnn2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("FAnn"#) -}
+c4039c5d16ced0ce7d01078f191d9f5d
+  $tcFPretty :: GHC.Types.TyCon
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.TyCon
+                   2581008139201935454##
+                   3869879552326931741##
+                   SEDEL.PrettyPrint.$trModule
+                   SEDEL.PrettyPrint.$tcFPretty2
+                   0#
+                   SEDEL.PrettyPrint.$tcFPretty1) -}
+e1102a4e1e9331803d00ccb33284272a
+  $tcFPretty1 :: GHC.Types.KindRep
+  {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
+ee38b259dec10598c2fee9dbff374024
+  $tcFPretty2 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcFPretty3) -}
+ec4cda9ca9e47a4f37e7db8035aa7c62
+  $tcFPretty3 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("FPretty"#) -}
+65146e17d37b6ffd52133c9d2a20e30a
+  $trModule :: GHC.Types.Module
+  {- HasNoCafRefs, Strictness: m,
+     Unfolding: (GHC.Types.Module
+                   SEDEL.PrettyPrint.$trModule3
+                   SEDEL.PrettyPrint.$trModule1) -}
+adf85fae4fcc916f126e718aa9b2e4ac
+  $trModule1 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$trModule2) -}
+bf801065c4d86fcf24b8e34a1d29fe00
+  $trModule2 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("SEDEL.PrettyPrint"#) -}
+c1421317b643ef81cb6788b279757e45
+  $trModule3 :: GHC.Types.TrName
+  {- HasNoCafRefs, Strictness: m1,
+     Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$trModule4) -}
+5abcc582ead25ab53c5c149e0f504f01
+  $trModule4 :: GHC.Prim.Addr#
+  {- HasNoCafRefs,
+     Unfolding: ("sedel-0.1.0.0-BGuUapfeRSQ3zXo3bqhidP"#) -}
+7241b6ba7fa66b2b355a5d43ce270e16
+  $w$cppr ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Common.ArithOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.Common.ArithOp) ->
+                 case w1 of wild {
+                   SEDEL.Common.Add
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyArithOp7
+                   SEDEL.Common.Sub
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyArithOp5
+                   SEDEL.Common.Mul
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyArithOp3
+                   SEDEL.Common.Div
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyArithOp1 }) -}
+bcc47416d3e01141d78f2d6dcb6f0b9d
+  $w$cppr1 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Common.CompOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.Common.CompOp) ->
+                 case w1 of wild {
+                   SEDEL.Common.Lt
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyCompOp7
+                   SEDEL.Common.Gt
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyCompOp5
+                   SEDEL.Common.Equ
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyCompOp3
+                   SEDEL.Common.Neq
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyCompOp1 }) -}
+47e3f8fd9d3b528400a8d505db89f651
+  $w$cppr2 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.PrettyPrint.D -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <L,U(U(U,U,U,U,U),U,U,U)><S,1*U>, Inline: [0],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.PrettyPrint.D) ->
+                 case w1 of wild {
+                   SEDEL.PrettyPrint.DS s
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        s
+                   SEDEL.PrettyPrint.DD a $dFPretty d
+                   -> $dFPretty `cast` (SEDEL.PrettyPrint.N:FPretty[0] <a>_N)
+                        @ m
+                        (GHC.Base.$p1Monad
+                           @ m
+                           (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w))
+                        w
+                        d }) -}
+03873dc1930424bb4b6a9f07f0c70b4b
+  $w$cppr3 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Source.Syntax.Expr -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 1,
+     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [0] -}
+0dd6c699e07a04d2c8834e41ed8e525c
+  $w$cppr4 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Source.Syntax.Kind -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: [0] -}
+b5c7127a6aa4c8f38c5a304d528d6eb1
+  $w$cppr5 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Common.LogicalOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.Common.LogicalOp) ->
+                 case w1 of wild {
+                   SEDEL.Common.LAnd
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyLogicalOp3
+                   SEDEL.Common.LOr
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyLogicalOp1 }) -}
+b424683fbfb9601fe1bf77b0040cb614
+  $w$cppr6 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Common.Operation -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(S(LLLC(S)L)LLL),1*U(1*U(A,A,A,1*C1(U),A),A,A,A)><S,1*U>,
+     Inline: [0],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.Common.Operation) ->
+                 case w1 of wild {
+                   SEDEL.Common.Arith a -> SEDEL.PrettyPrint.$w$cppr @ m w a
+                   SEDEL.Common.Comp a -> SEDEL.PrettyPrint.$w$cppr1 @ m w a
+                   SEDEL.Common.Logical a -> SEDEL.PrettyPrint.$w$cppr5 @ m w a }) -}
+0f809211a8e362d1832812df9e908a10
+  $w$cppr7 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Source.Syntax.SType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 1,
+     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [0] -}
+47e3f8fd9d3b528400a8d505db89f651
+  data D
+    = DS SEDEL.PrettyPrint.FDoc
+    | forall a. SEDEL.PrettyPrint.FPretty a => DD a
+8aa58fce3212455a638db72d44518c8b
+  data FAnn = FAnn
+ab8ab7aa25d70732bf916014464558a6
+  type FDoc =
+    Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
+47e3f8fd9d3b528400a8d505db89f651
+  class FPretty p where
+    ppr :: (GHC.Base.Applicative m,
+            Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+           p -> m SEDEL.PrettyPrint.FDoc
+    {-# MINIMAL ppr #-}
+49a1ae40012cb52312ba8f259909743d
+  pprint ::
+    SEDEL.PrettyPrint.FPretty a => a -> SEDEL.PrettyPrint.FDoc
+  {- Arity: 1, Strictness: <L,1*C1(C1(C(U)))>,
+     Unfolding: InlineRule (1, True, False)
+                (\ @ a ($dFPretty :: SEDEL.PrettyPrint.FPretty a) ->
+                 let {
+                   g :: a
+                        -> Unbound.Generics.LocallyNameless.LFresh.LFreshM
+                             SEDEL.PrettyPrint.FDoc
+                   = $dFPretty `cast` (SEDEL.PrettyPrint.N:FPretty[0] <a>_N)
+                       @ (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
+                            Data.Functor.Identity.Identity)
+                       SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
+                       SEDEL.PrettyPrint.$s$fLFreshLFreshMT
+                 } in
+                 (\ (x6 :: a) ->
+                  (g x6)
+                    `cast`
+                  (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0] <Data.Functor.Identity.Identity>_N <SEDEL.PrettyPrint.FDoc>_N ; Control.Monad.Trans.Reader.N:ReaderT[0]
+                                                                                                                                             <*>_N
+                                                                                                                                             <Data.Set.Internal.Set
+                                                                                                                                                Unbound.Generics.LocallyNameless.Name.AnyName>_R
+                                                                                                                                             <Data.Functor.Identity.Identity>_R
+                                                                                                                                             <SEDEL.PrettyPrint.FDoc>_N)
+                    (Data.Set.Internal.Tip
+                       @ Unbound.Generics.LocallyNameless.Name.AnyName))
+                   `cast`
+                 (<a>_R
+                  ->_R Data.Functor.Identity.N:Identity[0]
+                           <SEDEL.PrettyPrint.FDoc>_R)) -}
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.ArithOp]
+  = SEDEL.PrettyPrint.$fFPrettyArithOp
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.CompOp]
+  = SEDEL.PrettyPrint.$fFPrettyCompOp
+instance SEDEL.PrettyPrint.FPretty [SEDEL.PrettyPrint.D]
+  = SEDEL.PrettyPrint.$fFPrettyD
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Expr]
+  = SEDEL.PrettyPrint.$fFPrettyExpr
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Kind]
+  = SEDEL.PrettyPrint.$fFPrettyKind
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.LogicalOp]
+  = SEDEL.PrettyPrint.$fFPrettyLogicalOp
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.Operation]
+  = SEDEL.PrettyPrint.$fFPrettyOperation
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.SType]
+  = SEDEL.PrettyPrint.$fFPrettySType
+instance SEDEL.PrettyPrint.FPretty [[]]
+  = SEDEL.PrettyPrint.$fFPretty[]
+instance [orphan] Data.Text.Prettyprint.Doc.Internal.Pretty [Text.Megaparsec.Pos.SourcePos]
+  = SEDEL.PrettyPrint.$fPrettySourcePos
+"SPEC/SEDEL.PrettyPrint $fApplicativeLFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Applicative
+                                                                                  Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.LFresh.$fApplicativeLFreshMT @ Data.Functor.Identity.Identity
+                                                                v
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
+"SPEC/SEDEL.PrettyPrint $fApplicativeReaderT_$c*> @ Identity _" [orphan] forall @ r
+                                                                                ($dApplicative :: GHC.Base.Applicative
+                                                                                                    Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fApplicativeReaderT_$c*> @ Data.Functor.Identity.Identity
+                                                       @ r
+                                                       $dApplicative
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*>
+      @ r
+"SPEC/SEDEL.PrettyPrint $fApplicativeReaderT_$c<* @ Identity _" [orphan] forall @ r
+                                                                                ($dApplicative :: GHC.Base.Applicative
+                                                                                                    Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fApplicativeReaderT_$c<* @ Data.Functor.Identity.Identity
+                                                       @ r
+                                                       $dApplicative
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*
+      @ r
+"SPEC/SEDEL.PrettyPrint $fApplicativeReaderT_$c<*> @ Identity _" [orphan] forall @ r
+                                                                                 ($dApplicative :: GHC.Base.Applicative
+                                                                                                     Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fApplicativeReaderT_$c<*> @ Data.Functor.Identity.Identity
+                                                        @ r
+                                                        $dApplicative
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*>
+      @ r
+"SPEC/SEDEL.PrettyPrint $fFunctorLFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Functor
+                                                                              Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.LFresh.$fFunctorLFreshMT @ Data.Functor.Identity.Identity
+                                                            v
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorLFreshMT
+"SPEC/SEDEL.PrettyPrint $fFunctorReaderT_$c<$ @ Identity _" [orphan] forall @ r
+                                                                            ($dFunctor :: GHC.Base.Functor
+                                                                                            Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fFunctorReaderT_$c<$ @ Data.Functor.Identity.Identity
+                                                   @ r
+                                                   $dFunctor
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorReaderT_$c<$
+      @ r
+"SPEC/SEDEL.PrettyPrint $fFunctorReaderT_$cfmap @ Identity _" [orphan] forall @ r
+                                                                              ($dFunctor :: GHC.Base.Functor
+                                                                                              Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fFunctorReaderT_$cfmap @ Data.Functor.Identity.Identity
+                                                     @ r
+                                                     $dFunctor
+  = SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorReaderT_$cfmap
+      @ r
+"SPEC/SEDEL.PrettyPrint $fLFreshLFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Monad
+                                                                             Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT @ Data.Functor.Identity.Identity
+                                                           v
+  = SEDEL.PrettyPrint.$s$fLFreshLFreshMT
+"SPEC/SEDEL.PrettyPrint $fLFreshLFreshMT_$cavoid @ Identity" [orphan] [0] forall (w :: GHC.Base.Monad
+                                                                                         Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.LFresh.$fLFreshLFreshMT_$cavoid @ Data.Functor.Identity.Identity
+                                                                   w
+  = SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$cavoid
+"SPEC/SEDEL.PrettyPrint $fMonadLFreshMT @ Identity" [orphan] forall (v :: GHC.Base.Monad
+                                                                            Data.Functor.Identity.Identity)
+  Unbound.Generics.LocallyNameless.LFresh.$fMonadLFreshMT @ Data.Functor.Identity.Identity
+                                                          v
+  = SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadLFreshMT
+"SPEC/SEDEL.PrettyPrint $fMonadReaderT_$c>>= @ Identity _" [orphan] forall @ r
+                                                                           ($dMonad :: GHC.Base.Monad
+                                                                                         Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fMonadReaderT_$c>>= @ Data.Functor.Identity.Identity
+                                                  @ r
+                                                  $dMonad
+  = SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>= @ r
+"SPEC/SEDEL.PrettyPrint $fMonadReaderT_$cfail @ Identity _" [orphan] forall @ r
+                                                                            ($dMonad :: GHC.Base.Monad
+                                                                                          Data.Functor.Identity.Identity)
+  Control.Monad.Trans.Reader.$fMonadReaderT_$cfail @ Data.Functor.Identity.Identity
+                                                   @ r
+                                                   $dMonad
+  = SEDEL.PrettyPrint.$s$fLFreshLFreshMT_$s$fMonadReaderT_$cfail @ r
+vectorised variables:
+vectorised tycons:
+vectorised reused tycons:
+parallel variables:
+parallel tycons:
+trusted: none
+require own pkg trusted: False
+
