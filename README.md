@@ -36,8 +36,9 @@ test_soundness
 stack ghci
 test_completeness
 ```
-* Testing principality (not finished)
+* Testing principality
 ```
 stack ghci
 test_principality
 ```
+Testing this property is future work.
