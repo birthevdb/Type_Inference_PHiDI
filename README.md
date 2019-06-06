@@ -16,9 +16,9 @@ stack ghci
 ```
 stack ghci
 main 
-> main = `true ,, 3`
+> main = true ,, 3
 Fi+ term:         Merge (BoolV True) (LitV 3.0)
-Source type:   SType (And BoolT NumT)
+Source type:      SType (And BoolT NumT)
 Fi+ type:         And BoolT NumT
 Typing result
 : (Bool & Double)
