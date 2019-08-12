@@ -45,4 +45,4 @@ Testing this property is future work.
 
 ## Code
 
-The code for testing properties can be found in [Test.hs](impl/src/Test.hs).
+The code for testing properties can be found in [Test.hs](impl/src/SEDEL/Test.hs).
