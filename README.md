@@ -15,7 +15,7 @@ stack ghci
 * Main program
 ```
 stack ghci
-main 
+main
 > main = true ,, 3
 Fi+ term:         Merge (BoolV True) (LitV 3.0)
 Source type:      SType (And BoolT NumT)
@@ -42,3 +42,7 @@ stack ghci
 test_principality
 ```
 Testing this property is future work.
+
+## Code
+
+The code for testing properties can be found in [Test.hs](impl/src/Test.hs).

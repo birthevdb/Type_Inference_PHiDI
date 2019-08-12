@@ -430,9 +430,6 @@
     <entry file="file://$PROJECT_DIR$/src/SEDEL/Source/.history">
       <provider selected="true" editor-type-id="text-editor" />
     </entry>
-    <entry file="file://$PROJECT_DIR$/test/Spec.hs">
-      <provider selected="true" editor-type-id="text-editor" />
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/SEDEL/PrettyPrint.hs">
       <provider selected="true" editor-type-id="text-editor">
         <state relative-caret-position="2085">
