@@ -1,11 +1,11 @@
 
 ==================== FINAL INTERFACE ====================
-2019-04-01 09:39:41.129505 UTC
+2019-08-12 12:25:13.867595 UTC
 
 interface main:Main 8063
-  interface hash: 1e4477c0e80d2b2432500380db47adce
-  ABI hash: 007f6ac5d68f55e4f8f96185c27849bd
-  export-list hash: aec7a976995a0fff59ad4662cdbd24ef
+  interface hash: fce9386a634ff94cb8dd83fd41802f0b
+  ABI hash: 618700772a72cb6b3845a228f5367ba5
+  export-list hash: c7c7804b28e9a599755fd42b33453823
   orphan hash: 6148d2ab01d4dcb129af9b8d5a08ebc8
   flag hash: 435e77fc9d63106d6174bcc040fb9e4d
   opt_hash: 6faf2de08de32d19db9870899d88e59a
@@ -28,7 +28,6 @@ exports:
   Main.initState
   Main.load
   Main.main
-  Main.main1
   Main.makeOutput
   Main.options
   Main.optionsWithHelp
@@ -65,6 +64,7 @@ orphans: time-1.8.0.2:Data.Time.Format.Parse
          time-1.8.0.2:Data.Time.LocalTime.Internal.LocalTime
          time-1.8.0.2:Data.Time.Calendar.Gregorian
          sedel-0.1.0.0:SEDEL.PrettyPrint sedel-0.1.0.0:SEDEL.Source.Syntax
+         sedel-0.1.0.0:SEDEL.Intermediate.Syntax
          transformers-0.5.5.0:Control.Monad.Trans.Error
          stm-2.5.0.0:Control.Monad.STM
          hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
@@ -103,6 +103,7 @@ family instance modules: base-4.12.0.0:Control.Applicative
                          prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
                          primitive-0.6.4.0:Control.Monad.Primitive
                          primitive-0.6.4.0:Data.Primitive.Array sedel-0.1.0.0:SEDEL.Common
+                         sedel-0.1.0.0:SEDEL.Intermediate.Syntax
                          sedel-0.1.0.0:SEDEL.Source.Syntax sedel-0.1.0.0:SEDEL.Target.Syntax
                          tagged-0.8.6:Data.Tagged
                          template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
@@ -144,12 +145,12 @@ import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc 37bebc045f3a0cb8e8977c
 import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal 12d379fe6b8bbcab8bffc2d86df0e72f
 import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Render.Text 4f22c5f22b192809e25c9af7ad35be0f
 import  -/  repline-0.2.0.0:System.Console.Repline 3271b43c7e9d82c2f4e44c22dfdd3761
-import  -/  sedel-0.1.0.0:SEDEL 88bf2a572987f23a2cd1c216b209c08d
-import  -/  sedel-0.1.0.0:SEDEL.Environment ed88f2a0dd8c2a9eca4b994034abfc4f
-import  -/  sedel-0.1.0.0:SEDEL.Parser.Parser 21e5b1211cf84d44261adc3dc2c27fbd
-import  -/  sedel-0.1.0.0:SEDEL.PrettyPrint f1989f434297afaffeb0400ac83369d8
-import  -/  sedel-0.1.0.0:SEDEL.Source.Desugar 87453ac21760408db5fa9aada47619ea
-import  -/  sedel-0.1.0.0:SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
+import  -/  sedel-0.1.0.0:SEDEL e2b193bb4262b9911ca10af55f2d9d89
+import  -/  sedel-0.1.0.0:SEDEL.Environment d8bc650b7b97515a31f95e90c47efbdd
+import  -/  sedel-0.1.0.0:SEDEL.Parser.Parser bb8a79a4e3aa257f41acb8b8d9d9f338
+import  -/  sedel-0.1.0.0:SEDEL.PrettyPrint a34bffe1a10b43afb675c089919de4ed
+import  -/  sedel-0.1.0.0:SEDEL.Source.Desugar 20ed66810c076b1d7e17421ae8bfcfeb
+import  -/  sedel-0.1.0.0:SEDEL.Source.Syntax ec83a0da1c10765115fe4a9f09c754b0
 import  -/  text-1.2.3.1:Data.Text.IO b5f213a2b9ff64a74e29691d2bea1c1c
 import  -/  transformers-0.5.5.0:Control.Monad.Trans.Class f3e62b8b4b5be304a48413d1f1e4625e
 import  -/  transformers-0.5.5.0:Control.Monad.Trans.State.Strict dc3aa06753af6eaf145e63a588e1e40b
@@ -719,7 +720,7 @@ a95780108119ef35fa41b4020a638c52
                  <GHC.Base.String>_R
                  ->_R Sym (Control.Monad.Trans.State.Strict.N:StateT[0]
                                <s>_N <GHC.Types.IO>_R <a>_N)) -}
-679c1721a86258c94eaa81f33857cc45
+760bcdb39d0a9a0ec2d0bb8c47487b99
   $scompleteFilename ::
     System.Console.Haskeline.Completion.CompletionFunc
       (Control.Monad.Trans.State.Strict.StateT
@@ -951,7 +952,7 @@ d026be77cb9ced20e35a61514e0458aa
                       GHC.Types.False -> r
                       GHC.Types.True
                       -> GHC.Types.: @ [GHC.Types.Char] Main.comp1 r })) -}
-9a9f1f15adaaa663eb42b2ece8588e20
+dba63234bc87e149946a6d6f2ebe5d60
   $wlvl ::
     GHC.Base.String
     -> Control.Monad.Trans.State.Strict.StateT
@@ -965,7 +966,7 @@ d026be77cb9ced20e35a61514e0458aa
                         Main.ReplState GHC.Types.IO)
                    (Main.$s$fMonadExceptionStateT_$s$fMonadStateT_$c>>=
                       @ Main.ReplState)
-                   Main.main12
+                   Main.main7
                      `cast`
                    (forall (a :: <*>_N).
                     <a>_R
@@ -978,7 +979,7 @@ d026be77cb9ced20e35a61514e0458aa
                                                                           <a>_N))
                    System.Console.Repline.listCompleter3
                    System.Console.Repline.listCompleter1
-                   Main.main11
+                   Main.main6
                    ww) -}
 fb3a2fe0ee0d310292406a3bb49b5eba
   data Flag
@@ -987,15 +988,15 @@ fb3a2fe0ee0d310292406a3bb49b5eba
     | Run
     | Input GHC.Base.String
     | Output GHC.Base.String
-6ea6b9f718c9ec1122d68fd1c75344b2
+f83fab070c3ec267fc35824d11a5cfce
   type Repl a =
     System.Console.Repline.HaskelineT
       (Control.Monad.Trans.State.Strict.StateT
          Main.ReplState GHC.Types.IO)
       a
-8c4b561d86a4a66ba2b846e9c22bb1c2
+ccd39dde92530575e52a575a4c03dc37
   data ReplState
-    = ReplState {replCtx :: SEDEL.Environment.Ctx,
+    = ReplState {replCtx :: SEDEL.Environment.SCtx,
                  verbose :: GHC.Types.Bool}
 c021fee44f0d03237eefe08a5520d68e
   comp :: GHC.Base.Monad m => System.Console.Repline.WordCompleter m
@@ -1036,7 +1037,7 @@ ba3790b6de9e06f83e9401afcc14ae5f
 0cc796d25b9a3b0c893c58ccda0ab721
   comp9 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: (":reset"#) -}
-ac565088ccca000be58984d060b3b536
+7caa3369f7d5a52128cdf8095ae54252
   comp_$scomp ::
     System.Console.Repline.WordCompleter
       (Control.Monad.Trans.State.Strict.StateT
@@ -1101,7 +1102,7 @@ ac565088ccca000be58984d060b3b536
                                                                    <Main.ReplState>_N
                                                                    <GHC.Types.IO>_R
                                                                    <[[GHC.Types.Char]]>_N))) -}
-30531ce82a77147f445938576a1421a7
+94ce09bce22066765819d02a3c19ab61
   debug :: [GHC.Base.String] -> Main.Repl ()
   {- Arity: 8,
      Strictness: <L,A><L,A><L,A><L,A><L,A><L,A><L,1*U(1*U,A)><S,U>,
@@ -1199,7 +1200,7 @@ ac565088ccca000be58984d060b3b536
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-a203a773441c23fd89c4ba6039cd80ba
+5ba7cf6e7629f04358991aaee356a1d2
   debug1 ::
     [GHC.Base.String]
     -> System.Console.Haskeline.Term.RunTerm
@@ -1261,7 +1262,7 @@ a203a773441c23fd89c4ba6039cd80ba
                    (GHC.Types.[]
                       @ (GHC.Base.String,
                          System.Console.Haskeline.Completion.CompletionFunc m))) -}
-d252be145eb0d3fddd1f9aa437084804
+0deee28c3250fa875e6cb1eede90c6ef
   defaultMatcher1 ::
     ([GHC.Types.Char],
      System.Console.Haskeline.Completion.CompletionFunc
@@ -1269,7 +1270,7 @@ d252be145eb0d3fddd1f9aa437084804
           Main.ReplState GHC.Types.IO))
   {- Strictness: m,
      Unfolding: ((Main.comp1, Main.$scompleteFilename)) -}
-6218fc4f853673d075d2d2c3b4565fbc
+18094f6524d056e57d5fb5be6b24a997
   defaultMatcher_$sdefaultMatcher ::
     [(GHC.Base.String,
       System.Console.Haskeline.Completion.CompletionFunc
@@ -1287,7 +1288,7 @@ d252be145eb0d3fddd1f9aa437084804
                          System.Console.Haskeline.Completion.CompletionFunc
                            (Control.Monad.Trans.State.Strict.StateT
                               Main.ReplState GHC.Types.IO)))) -}
-436d96b75d3a0d21024739d0ecedcc91
+e91503432ade43a53e1db865d1e47bf1
   exec :: GHC.Base.String -> Main.Repl ()
   {- Arity: 1, Strictness: <L,U> -}
 8e84dd6fffa39394a17e701816423d2a
@@ -1560,7 +1561,7 @@ aeb4f9531fefd8edea5d4562de8064b8
 3ad1f8e502e4eb066b105449b738f22e
   flags9 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString# Main.flags10) -}
-5646e73a5f878f6fbba1c5050bd10771
+0074a567d27b1fdf3030d7fe0aa1cb93
   getCtx :: Main.Repl Main.ReplState
   {- Arity: 7, HasNoCafRefs,
      Strictness: <L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
@@ -1764,7 +1765,7 @@ aeb4f9531fefd8edea5d4562de8064b8
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                            GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               Main.ReplState
                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                                               GHC.Types.IO>_N) <Main.ReplState>_N)))) -}
-9e413e071efc2319813e20bd7041ea97
+06f172baf52cdafbe181babaed882acf
   getCtx1 ::
     System.Console.Haskeline.Term.RunTerm
     -> GHC.IORef.IORef System.Console.Haskeline.History.History
@@ -1792,7 +1793,7 @@ aeb4f9531fefd8edea5d4562de8064b8
                    (eta7 :: Main.ReplState)
                    (eta8 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
                  (# eta8, (eta7, eta7) #)) -}
-66350534130b5ad1017d7ae61754c32d
+82a28fa1ea94a515dbaa8b63715d1286
   help :: [GHC.Base.String] -> Main.Repl ()
   {- Arity: 8, Strictness: <L,A>,
      Unfolding: InlineRule (0, True, True)
@@ -1889,7 +1890,7 @@ aeb4f9531fefd8edea5d4562de8064b8
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-318585a37be524031abe041ee1dd9a15
+6d5bc4b15b17c94813f670fc88c856c8
   help1 ::
     [GHC.Base.String]
     -> System.Console.Haskeline.Term.RunTerm
@@ -1906,7 +1907,7 @@ aeb4f9531fefd8edea5d4562de8064b8
   {- Arity: 8, Strictness: <L,A>,
      Unfolding: InlineRule (1, True, True)
                 (\ (ds :: [GHC.Base.String]) -> Main.help2) -}
-4deb41b90f8f7998bf71deae640ab43a
+cef3b48e60a29f4da472c7b8d0c3bc1b
   help2 ::
     System.Console.Haskeline.Term.RunTerm
     -> GHC.IORef.IORef System.Console.Haskeline.History.History
@@ -1957,7 +1958,7 @@ cffa206afd388f4f0e3fe9705b0380e4
 da0a1bd508138d6f48ea22ccdf2e94ab
   help_x :: GHC.Base.String
   {- Unfolding: (Data.OldList.unlines Main.help3) -}
-91b74fb90810668153c63bbf5660364c
+8727c821efeafab5de25302a37c19d78
   ini :: Main.Repl ()
   {- Arity: 7, Strictness: <L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
      Unfolding: InlineRule (0, True, True)
@@ -2053,7 +2054,7 @@ da0a1bd508138d6f48ea22ccdf2e94ab
                                                                                                                                                                                                                             GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                Main.ReplState
                                                                                                                                                                                                                                                                                                GHC.Types.IO>_N) <()>_N)) -}
-cc5200ca718ff471ab523b06e82d1d91
+300ed081973bb3264b7b3485df4042c9
   ini1 ::
     System.Console.Haskeline.Term.RunTerm
     -> GHC.IORef.IORef System.Console.Haskeline.History.History
@@ -2098,13 +2099,19 @@ fbf85eb16f645688185beb1f6b5751b1
 fef730846d4c4b7835ea8f6a27c8b24f
   ini4 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: (", :? for help"#) -}
-7c853cf3a04bfcc1aba95206816f5a8e
+99edc905854d0b08ae089c8066c87b8a
   initState :: Main.ReplState
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (Main.ReplState
-                   SEDEL.Environment.emptyCtx
+                   (SEDEL.Environment.emptyCtx
+                      @ SEDEL.Source.Syntax.TmName
+                      @ SEDEL.Source.Syntax.CtxType
+                      @ SEDEL.Source.Syntax.TyName
+                      @ SEDEL.Source.Syntax.Kind
+                      @ SEDEL.Source.Syntax.SType
+                      @ SEDEL.Source.Syntax.Expr)
                    GHC.Types.False) -}
-1e8893da3de034a330a5c5d653b45e71
+80b216d8129886ba48e69b7ad2b968c0
   load :: [GHC.Base.String] -> Main.Repl ()
   {- Arity: 8,
      Strictness: <L,1*U><L,U><L,U><L,U><L,U><L,U><L,U><S,U>,
@@ -2202,7 +2209,7 @@ fef730846d4c4b7835ea8f6a27c8b24f
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-2bff2898e87be848e04b9ba2d5ad6fe9
+97dff01ea6c6eb63958be7586a31104b
   load1 ::
     [GHC.Base.String]
     -> System.Console.Haskeline.Term.RunTerm
@@ -2376,7 +2383,7 @@ fef730846d4c4b7835ea8f6a27c8b24f
                         `cast`
                       (GHC.Types.N:IO[0] <((), Main.ReplState)>_R)
                         ipv } }) -}
-bced227b2be3a01427d5d984b66dc6dc
+1a2e4ed8dcb323db9920017d087ec9f9
   load2 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
@@ -2413,220 +2420,13 @@ e1cb0952da155d5b87ac2f152da70355
                       @ GHC.Exception.Type.SomeException
                       @ GHC.Base.String
                       e1 #)) -}
-912adec0f73eff9059d9cc1b6a58c287
+9d8a63cb4b1d6ea42fb5f1a73f89c30f
   main :: GHC.Types.IO ()
-  {- Arity: 1,
-     Unfolding: (GHC.IO.Handle.Text.hPutStr'
-                   GHC.IO.Handle.FD.stdout
-                   Main.main2
-                   GHC.Types.True) -}
-16917aed0cf7215fecae20cc1637b792
-  main1 :: GHC.Types.IO ()
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
-                Main.main6 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
-cb3032cc76f05571cae8c4b715ddb54e
-  main10 ::
-    System.Console.Haskeline.Completion.CompletionFunc
-      (Control.Monad.Trans.State.Strict.StateT
-         Main.ReplState GHC.Types.IO)
-  {- Arity: 1, Strictness: <S,1*U(1*U,A)>, Inline: [2],
-     Unfolding: InlineRule (1, True, False)
-                (\ (w :: (GHC.Base.String, GHC.Base.String)) ->
-                 case w of ww { (,) ww1 ww2 -> Main.$wlvl ww1 }) -}
-09271da3537c132133241188bc8d7e99
-  main11 ::
-    GHC.Base.String
-    -> GHC.Base.String
-    -> Control.Monad.Trans.State.Strict.StateT
-         Main.ReplState
-         GHC.Types.IO
-         [System.Console.Haskeline.Completion.Completion]
-  {- Arity: 2, Strictness: <L,A><L,U>,
-     Unfolding: (\ (ds :: GHC.Base.String)[OneShot]
-                   (eta :: GHC.Base.String)[OneShot] ->
-                 let {
-                   m1 :: Control.Monad.Trans.State.Strict.StateT
-                           Main.ReplState GHC.Types.IO [GHC.Base.String]
-                   = Main.comp_$scomp eta
-                 } in
-                 (\ (s1 :: Main.ReplState)
-                    (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                  case (m1
-                          `cast`
-                        (Control.Monad.Trans.State.Strict.N:StateT[0]
-                             <Main.ReplState>_N <GHC.Types.IO>_R <[GHC.Base.String]>_N)
-                          s1)
-                         `cast`
-                       (GHC.Types.N:IO[0] <([GHC.Base.String], Main.ReplState)>_R)
-                         s of ds1 { (#,#) ipv ipv1 ->
-                  case ipv1 of wild { (,) a1 s' ->
-                  (# ipv,
-                     (GHC.Base.map
-                        @ [GHC.Types.Char]
-                        @ System.Console.Haskeline.Completion.Completion
-                        System.Console.Haskeline.Completion.simpleCompletion
-                        a1,
-                      s') #) } })
-                   `cast`
-                 ((<Main.ReplState>_R
-                   ->_R Sym (GHC.Types.N:IO[0]
-                                 <([System.Console.Haskeline.Completion.Completion],
-                                   Main.ReplState)>_R)) ; Sym (Control.Monad.Trans.State.Strict.N:StateT[0]
-                                                                   <Main.ReplState>_N
-                                                                   <GHC.Types.IO>_R
-                                                                   <[System.Console.Haskeline.Completion.Completion]>_N))) -}
-50a103269591b42ca85fe36075943ea7
-  main12 ::
-    a
-    -> Main.ReplState
-    -> GHC.Prim.State# GHC.Prim.RealWorld
-    -> (# GHC.Prim.State# GHC.Prim.RealWorld, (a, Main.ReplState) #)
-  {- Arity: 3, HasNoCafRefs, Strictness: <L,U><L,U><S,U>,
-     Unfolding: (\ @ a
-                   (eta :: a)
-                   (eta1 :: Main.ReplState)
-                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                 (# s, (eta, eta1) #)) -}
-c0633faf35a6ed661828c70f061f7a91
-  main13 :: GHC.Maybe.Maybe GHC.Types.Char
-  {- HasNoCafRefs, Strictness: m2,
-     Unfolding: (GHC.Maybe.Just @ GHC.Types.Char Main.main14) -}
-d83f668ab8aab74b6938fe4c3842f1af
-  main14 :: GHC.Types.Char
-  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.C# ':'#) -}
-aac3d838a7c96f27506544b15ddcf1bc
-  main15 ::
-    System.Console.Haskeline.Term.RunTerm
-    -> GHC.IORef.IORef System.Console.Haskeline.History.History
-    -> GHC.IORef.IORef
-         System.Console.Haskeline.Command.KillRing.KillRing
-    -> System.Console.Haskeline.Prefs.Prefs
-    -> System.Console.Haskeline.InputT.Settings
-         (Control.Monad.Trans.State.Strict.StateT
-            Main.ReplState GHC.Types.IO)
-    -> Main.ReplState
-    -> GHC.Prim.State# GHC.Prim.RealWorld
-    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
-          (GHC.Base.String, Main.ReplState) #)
-  {- Arity: 7, Strictness: <L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
-     Unfolding: InlineRule (7, True, False)
-                (\ (ds :: System.Console.Haskeline.Term.RunTerm)
-                   (eta1 :: GHC.IORef.IORef System.Console.Haskeline.History.History)
-                   (eta2 :: GHC.IORef.IORef
-                              System.Console.Haskeline.Command.KillRing.KillRing)
-                   (eta3 :: System.Console.Haskeline.Prefs.Prefs)
-                   (eta4 :: System.Console.Haskeline.InputT.Settings
-                              (Control.Monad.Trans.State.Strict.StateT
-                                 Main.ReplState GHC.Types.IO))
-                   (eta :: Main.ReplState)
-                   (eta7 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                 (# eta7, (Main.main1_a1, eta) #)) -}
-6df6f34b508e0bb5e80f330711a728c5
-  main16 :: GHC.Prim.Addr#
-  {- HasNoCafRefs, Unfolding: ("> "#) -}
-6bba9ad5f14c8404d4316ea56d93746e
-  main17 ::
-    (System.Console.Haskeline.MonadException.RunIO
-       (Control.Monad.Trans.State.Strict.StateT
-          Main.ReplState GHC.Types.IO)
-     -> GHC.Types.IO
-          (Control.Monad.Trans.State.Strict.StateT
-             Main.ReplState GHC.Types.IO a))
-    -> Main.ReplState
-    -> GHC.Prim.State# GHC.Prim.RealWorld
-    -> (# GHC.Prim.State# GHC.Prim.RealWorld, (a, Main.ReplState) #)
-  {- Arity: 3, HasNoCafRefs,
-     Strictness: <C(C(S(SC(C(S))))),1*C1(C1(U(U,1*C1(C1(U(U,U))))))><L,U><S,U>,
-     Unfolding: (\ @ a
-                   (w1 :: System.Console.Haskeline.MonadException.RunIO
-                            (Control.Monad.Trans.State.Strict.StateT
-                               Main.ReplState GHC.Types.IO)
-                          -> GHC.Types.IO
-                               (Control.Monad.Trans.State.Strict.StateT
-                                  Main.ReplState GHC.Types.IO a))
-                   (w2 :: Main.ReplState)
-                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                 case (w1
-                         (\ @ b
-                            (x :: Control.Monad.Trans.State.Strict.StateT
-                                    Main.ReplState GHC.Types.IO b)
-                            (s2 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                          case (x `cast`
-                                (Control.Monad.Trans.State.Strict.N:StateT[0]
-                                     <Main.ReplState>_N <GHC.Types.IO>_R <b>_N)
-                                  w2)
-                                 `cast`
-                               (Nth:2
-                                    (<GHC.Types.IO (b, Main.ReplState)>_R
-                                     ->_R GHC.Types.N:IO[0]
-                                              <GHC.Types.IO
-                                                 (b, Main.ReplState)>_R) ; GHC.Types.N:IO[0]
-                                                                               <(b,
-                                                                                 Main.ReplState)>_R)
-                                 s2 of ds1 { (#,#) ipv ipv1 ->
-                          (# ipv,
-                             (\ (ds2 :: Main.ReplState)
-                                (eta :: GHC.Prim.State# GHC.Prim.RealWorld) ->
-                              (# eta, ipv1 #))
-                               `cast`
-                             ((<Main.ReplState>_R
-                               ->_R Sym (GHC.Types.N:IO[0]
-                                             <(b,
-                                               Main.ReplState)>_R)) ; Sym (Control.Monad.Trans.State.Strict.N:StateT[0]
-                                                                               <Main.ReplState>_N
-                                                                               <GHC.Types.IO>_R
-                                                                               <b>_N)) #) })
-                           `cast`
-                         ((forall (b :: <*>_N).
-                           <Control.Monad.Trans.State.Strict.StateT
-                              Main.ReplState GHC.Types.IO b>_R
-                           ->_R Sym (GHC.Types.N:IO[0]
-                                         <Control.Monad.Trans.State.Strict.StateT
-                                            Main.ReplState
-                                            GHC.Types.IO
-                                            b>_R)) ; Sym (System.Console.Haskeline.MonadException.N:RunIO[0]
-                                                              <Control.Monad.Trans.State.Strict.StateT
-                                                                 Main.ReplState GHC.Types.IO>_R)))
-                        `cast`
-                      (GHC.Types.N:IO[0]
-                           <Control.Monad.Trans.State.Strict.StateT
-                              Main.ReplState GHC.Types.IO a>_R)
-                        s of ds1 { (#,#) ipv ipv1 ->
-                 (ipv1
-                    `cast`
-                  (Control.Monad.Trans.State.Strict.N:StateT[0]
-                       <Main.ReplState>_N <GHC.Types.IO>_R <a>_N)
-                    w2)
-                   `cast`
-                 (GHC.Types.N:IO[0] <(a, Main.ReplState)>_R)
-                   ipv }) -}
-ecd0ee7b96efeebd0ffcfd445569e3b4
-  main1_a1 :: GHC.Base.String
-  {- Unfolding: (GHC.CString.unpackCString# Main.main16) -}
-6c67974f3a70f6ae6de54cf98f989d90
-  main2 :: [GHC.Types.Char]
-  {- Strictness: m2,
-     Unfolding: (GHC.Types.:
-                   @ GHC.Types.Char
-                   GHC.Show.$fShow(,)3
-                   Main.main3) -}
-888a6db502e54b8819d3f8309ecc0c99
-  main3 :: GHC.Base.String
-  {- Unfolding: (GHC.Show.showLitString
-                   (GHC.CString.unpackCString# Main.main4)
-                   GHC.Show.$fShow[]1) -}
-c0844ccefd43b18cf9134df636c30a86
-  main4 :: GHC.Prim.Addr#
-  {- HasNoCafRefs, Unfolding: ("1"#) -}
-400ca30114393ff1d69bf1ac960a4fa4
-  main5 ::
-    GHC.Prim.State# GHC.Prim.RealWorld
-    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
-  {- Arity: 1,
-     Unfolding: (GHC.TopHandler.runMainIO1 @ () Main.main) -}
-1f5442534cf52695625ccfe93795dccb
-  main6 ::
+                Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R)) -}
+ae6112f78bb9b3835a3a05987876bc92
+  main1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
   {- Arity: 1, Strictness: <S,U>,
@@ -2645,7 +2445,7 @@ c0844ccefd43b18cf9134df636c30a86
                         s of ds1 { (#,#) ipv ipv1 ->
                  case ipv1 of wild {
                    []
-                   -> Main.main8
+                   -> Main.main3
                         @ ()
                         Main.ini1
                           `cast`
@@ -2740,15 +2540,129 @@ c0844ccefd43b18cf9134df636c30a86
                                                                                                                                                                                                                                                                                                        Main.ReplState
                                                                                                                                                                                                                                                                                                        GHC.Types.IO>_N) <()>_N))
                         ipv
-                   : ds2 ds3 -> Main.main7 wild ipv } }) -}
-683598825c5d929896864d04c035212a
-  main7 ::
+                   : ds2 ds3 -> Main.main2 wild ipv } }) -}
+8d9c09b4cead7f536feabbe4da222c84
+  main10 ::
+    System.Console.Haskeline.Term.RunTerm
+    -> GHC.IORef.IORef System.Console.Haskeline.History.History
+    -> GHC.IORef.IORef
+         System.Console.Haskeline.Command.KillRing.KillRing
+    -> System.Console.Haskeline.Prefs.Prefs
+    -> System.Console.Haskeline.InputT.Settings
+         (Control.Monad.Trans.State.Strict.StateT
+            Main.ReplState GHC.Types.IO)
+    -> Main.ReplState
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld,
+          (GHC.Base.String, Main.ReplState) #)
+  {- Arity: 7, Strictness: <L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
+     Unfolding: InlineRule (7, True, False)
+                (\ (ds :: System.Console.Haskeline.Term.RunTerm)
+                   (eta1 :: GHC.IORef.IORef System.Console.Haskeline.History.History)
+                   (eta2 :: GHC.IORef.IORef
+                              System.Console.Haskeline.Command.KillRing.KillRing)
+                   (eta3 :: System.Console.Haskeline.Prefs.Prefs)
+                   (eta4 :: System.Console.Haskeline.InputT.Settings
+                              (Control.Monad.Trans.State.Strict.StateT
+                                 Main.ReplState GHC.Types.IO))
+                   (eta :: Main.ReplState)
+                   (eta7 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 (# eta7, (Main.main_a1, eta) #)) -}
+66f27e6a208c8b6141e255e6121dec1c
+  main11 :: GHC.Prim.Addr#
+  {- HasNoCafRefs, Unfolding: ("> "#) -}
+c44f2ceb950dd64ab23ee5c56f5731a9
+  main12 ::
+    (System.Console.Haskeline.MonadException.RunIO
+       (Control.Monad.Trans.State.Strict.StateT
+          Main.ReplState GHC.Types.IO)
+     -> GHC.Types.IO
+          (Control.Monad.Trans.State.Strict.StateT
+             Main.ReplState GHC.Types.IO a))
+    -> Main.ReplState
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, (a, Main.ReplState) #)
+  {- Arity: 3, HasNoCafRefs,
+     Strictness: <C(C(S(SC(C(S))))),1*C1(C1(U(U,1*C1(C1(U(U,U))))))><L,U><S,U>,
+     Unfolding: (\ @ a
+                   (w1 :: System.Console.Haskeline.MonadException.RunIO
+                            (Control.Monad.Trans.State.Strict.StateT
+                               Main.ReplState GHC.Types.IO)
+                          -> GHC.Types.IO
+                               (Control.Monad.Trans.State.Strict.StateT
+                                  Main.ReplState GHC.Types.IO a))
+                   (w2 :: Main.ReplState)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 case (w1
+                         (\ @ b
+                            (x :: Control.Monad.Trans.State.Strict.StateT
+                                    Main.ReplState GHC.Types.IO b)
+                            (s2 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                          case (x `cast`
+                                (Control.Monad.Trans.State.Strict.N:StateT[0]
+                                     <Main.ReplState>_N <GHC.Types.IO>_R <b>_N)
+                                  w2)
+                                 `cast`
+                               (Nth:2
+                                    (<GHC.Types.IO (b, Main.ReplState)>_R
+                                     ->_R GHC.Types.N:IO[0]
+                                              <GHC.Types.IO
+                                                 (b, Main.ReplState)>_R) ; GHC.Types.N:IO[0]
+                                                                               <(b,
+                                                                                 Main.ReplState)>_R)
+                                 s2 of ds1 { (#,#) ipv ipv1 ->
+                          (# ipv,
+                             (\ (ds2 :: Main.ReplState)
+                                (eta :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                              (# eta, ipv1 #))
+                               `cast`
+                             ((<Main.ReplState>_R
+                               ->_R Sym (GHC.Types.N:IO[0]
+                                             <(b,
+                                               Main.ReplState)>_R)) ; Sym (Control.Monad.Trans.State.Strict.N:StateT[0]
+                                                                               <Main.ReplState>_N
+                                                                               <GHC.Types.IO>_R
+                                                                               <b>_N)) #) })
+                           `cast`
+                         ((forall (b :: <*>_N).
+                           <Control.Monad.Trans.State.Strict.StateT
+                              Main.ReplState GHC.Types.IO b>_R
+                           ->_R Sym (GHC.Types.N:IO[0]
+                                         <Control.Monad.Trans.State.Strict.StateT
+                                            Main.ReplState
+                                            GHC.Types.IO
+                                            b>_R)) ; Sym (System.Console.Haskeline.MonadException.N:RunIO[0]
+                                                              <Control.Monad.Trans.State.Strict.StateT
+                                                                 Main.ReplState GHC.Types.IO>_R)))
+                        `cast`
+                      (GHC.Types.N:IO[0]
+                           <Control.Monad.Trans.State.Strict.StateT
+                              Main.ReplState GHC.Types.IO a>_R)
+                        s of ds1 { (#,#) ipv ipv1 ->
+                 (ipv1
+                    `cast`
+                  (Control.Monad.Trans.State.Strict.N:StateT[0]
+                       <Main.ReplState>_N <GHC.Types.IO>_R <a>_N)
+                    w2)
+                   `cast`
+                 (GHC.Types.N:IO[0] <(a, Main.ReplState)>_R)
+                   ipv }) -}
+5f4b59a52104080384eea78d4188202e
+  main13 ::
+    GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
+  {- Arity: 1,
+     Unfolding: (GHC.TopHandler.runMainIO1
+                   @ ()
+                   Main.main1 `cast` (Sym (GHC.Types.N:IO[0] <()>_R))) -}
+4c9672dd0f0ad189f744262a4f9581fd
+  main2 ::
     [GHC.Base.String]
     -> GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
   {- Arity: 2, Strictness: <S,1*U><S,U> -}
-7fb037398d70e4a678dfe9bcbdbe0c5a
-  main8 ::
+90effb8218dca3dee7f572b747f40d89
+  main3 ::
     Main.Repl a
     -> GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, () #)
@@ -2761,7 +2675,7 @@ c0844ccefd43b18cf9134df636c30a86
                                Main.ReplState GHC.Types.IO)
                           @ a
                           (Main.$s$fMonadExceptionStateT_$s$fMonadIOStateT @ Main.ReplState)
-                          Main.main17
+                          Main.main12
                             `cast`
                           (forall (a1 :: <*>_N).
                            <System.Console.Haskeline.MonadException.RunIO
@@ -2777,7 +2691,7 @@ c0844ccefd43b18cf9134df636c30a86
                                                                                  <Main.ReplState>_N
                                                                                  <GHC.Types.IO>_R
                                                                                  <a1>_N))
-                          Main.main15
+                          Main.main10
                             `cast`
                           ((<System.Console.Haskeline.Term.RunTerm>_R
                             ->_R (<GHC.IORef.IORef System.Console.Haskeline.History.History>_R
@@ -2871,8 +2785,8 @@ c0844ccefd43b18cf9134df636c30a86
                                                                                                                                                                                                                                                                                                                                                                                        GHC.Types.IO>_N) <GHC.Base.String>_N))
                           Main.exec
                           Main.options
-                          Main.main13
-                          Main.main9
+                          Main.main8
+                          Main.main4
                           pre)
                          `cast`
                        (Control.Monad.Trans.State.Strict.N:StateT[0]
@@ -2882,8 +2796,8 @@ c0844ccefd43b18cf9134df636c30a86
                       (GHC.Types.N:IO[0] <((), Main.ReplState)>_R)
                         s of ds1 { (#,#) ipv ipv1 ->
                  case ipv1 of wild { (,) a1 ds2 -> (# ipv, a1 #) } }) -}
-d6f686c7fb95ad95c6b9c669a0883e1b
-  main9 ::
+ab36842d7c6b83f4fc9dea19e49078fc
+  main4 ::
     System.Console.Repline.CompleterStyle
       (Control.Monad.Trans.State.Strict.StateT
          Main.ReplState GHC.Types.IO)
@@ -2891,8 +2805,81 @@ d6f686c7fb95ad95c6b9c669a0883e1b
      Unfolding: (System.Console.Repline.Prefix
                    @ (Control.Monad.Trans.State.Strict.StateT
                         Main.ReplState GHC.Types.IO)
-                   Main.main10
+                   Main.main5
                    Main.defaultMatcher_$sdefaultMatcher) -}
+8d8223818fbd9fdbe6be12580be965b1
+  main5 ::
+    System.Console.Haskeline.Completion.CompletionFunc
+      (Control.Monad.Trans.State.Strict.StateT
+         Main.ReplState GHC.Types.IO)
+  {- Arity: 1, Strictness: <S,1*U(1*U,A)>, Inline: [2],
+     Unfolding: InlineRule (1, True, False)
+                (\ (w :: (GHC.Base.String, GHC.Base.String)) ->
+                 case w of ww { (,) ww1 ww2 -> Main.$wlvl ww1 }) -}
+2c064984e9858386ee35c62276d89236
+  main6 ::
+    GHC.Base.String
+    -> GHC.Base.String
+    -> Control.Monad.Trans.State.Strict.StateT
+         Main.ReplState
+         GHC.Types.IO
+         [System.Console.Haskeline.Completion.Completion]
+  {- Arity: 2, Strictness: <L,A><L,U>,
+     Unfolding: (\ (ds :: GHC.Base.String)[OneShot]
+                   (eta :: GHC.Base.String)[OneShot] ->
+                 let {
+                   m1 :: Control.Monad.Trans.State.Strict.StateT
+                           Main.ReplState GHC.Types.IO [GHC.Base.String]
+                   = Main.comp_$scomp eta
+                 } in
+                 (\ (s1 :: Main.ReplState)
+                    (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                  case (m1
+                          `cast`
+                        (Control.Monad.Trans.State.Strict.N:StateT[0]
+                             <Main.ReplState>_N <GHC.Types.IO>_R <[GHC.Base.String]>_N)
+                          s1)
+                         `cast`
+                       (GHC.Types.N:IO[0] <([GHC.Base.String], Main.ReplState)>_R)
+                         s of ds1 { (#,#) ipv ipv1 ->
+                  case ipv1 of wild { (,) a1 s' ->
+                  (# ipv,
+                     (GHC.Base.map
+                        @ [GHC.Types.Char]
+                        @ System.Console.Haskeline.Completion.Completion
+                        System.Console.Haskeline.Completion.simpleCompletion
+                        a1,
+                      s') #) } })
+                   `cast`
+                 ((<Main.ReplState>_R
+                   ->_R Sym (GHC.Types.N:IO[0]
+                                 <([System.Console.Haskeline.Completion.Completion],
+                                   Main.ReplState)>_R)) ; Sym (Control.Monad.Trans.State.Strict.N:StateT[0]
+                                                                   <Main.ReplState>_N
+                                                                   <GHC.Types.IO>_R
+                                                                   <[System.Console.Haskeline.Completion.Completion]>_N))) -}
+b4003bcdf895bad9af79e19732d35088
+  main7 ::
+    a
+    -> Main.ReplState
+    -> GHC.Prim.State# GHC.Prim.RealWorld
+    -> (# GHC.Prim.State# GHC.Prim.RealWorld, (a, Main.ReplState) #)
+  {- Arity: 3, HasNoCafRefs, Strictness: <L,U><L,U><S,U>,
+     Unfolding: (\ @ a
+                   (eta :: a)
+                   (eta1 :: Main.ReplState)
+                   (s :: GHC.Prim.State# GHC.Prim.RealWorld) ->
+                 (# s, (eta, eta1) #)) -}
+954408f014a2ad37e1519bfcc9e94ad2
+  main8 :: GHC.Maybe.Maybe GHC.Types.Char
+  {- HasNoCafRefs, Strictness: m2,
+     Unfolding: (GHC.Maybe.Just @ GHC.Types.Char Main.main9) -}
+e40a2a1e0fcc80b1454b39da9caeb84d
+  main9 :: GHC.Types.Char
+  {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.C# ':'#) -}
+b4e4161e1be0265723f40f95f77f53b4
+  main_a1 :: GHC.Base.String
+  {- Unfolding: (GHC.CString.unpackCString# Main.main11) -}
 9847d7e61dceda5e7f15abda6b87945e
   makeOutput :: GHC.Maybe.Maybe GHC.Base.String -> Main.Flag
   {- Arity: 1, HasNoCafRefs, Strictness: <L,1*U>m5,
@@ -2902,7 +2889,7 @@ d6f686c7fb95ad95c6b9c669a0883e1b
                    (case ms of wild {
                       GHC.Maybe.Nothing -> GHC.Types.[] @ GHC.Types.Char
                       GHC.Maybe.Just v -> v })) -}
-52bad718496baa907b17ca5e94fa1c5c
+b9ec2b26a4419fc55db0b5d4f709b7f5
   options :: [(GHC.Base.String, [GHC.Base.String] -> Main.Repl ())]
   {- Unfolding: (GHC.Base.map
                    @ (GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
@@ -2910,7 +2897,7 @@ d6f686c7fb95ad95c6b9c669a0883e1b
                    @ (GHC.Base.String, [GHC.Base.String] -> Main.Repl ())
                    Main.options1
                    Main.optionsWithHelp) -}
-4e78df626d4c02463a1a58ff3b3b7beb
+f1b8e0075715e21783dc9a22d01673c9
   options1 ::
     (GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
      GHC.Base.String)
@@ -2919,7 +2906,7 @@ d6f686c7fb95ad95c6b9c669a0883e1b
      Unfolding: (\ (ds :: (GHC.Base.String,
                            [GHC.Base.String] -> Main.Repl (), GHC.Base.String)) ->
                  case ds of wild { (,,) a b ds1 -> (a, b) }) -}
-234dfffa753239ed08dd1bd5b2b6b841
+0039bf4d6741b9eb4c9fa020c75b5022
   optionsWithHelp ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -2929,7 +2916,7 @@ d6f686c7fb95ad95c6b9c669a0883e1b
                       GHC.Base.String)
                    Main.optionsWithHelp36
                    Main.optionsWithHelp1) -}
-e0b66ae7071935d032dffd160bd1aca1
+a3670cae35d80f7b7fd643d140e15e1f
   optionsWithHelp1 ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -2942,7 +2929,7 @@ e0b66ae7071935d032dffd160bd1aca1
 661d8d889ac586057f0ec08f9b26c9a5
   optionsWithHelp10 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("debug"#) -}
-f1b45cbce6adb6b39bbd844781dd6698
+d789f415c192b323ec22b55e72c89cdf
   optionsWithHelp11 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3049,7 +3036,7 @@ f1b45cbce6adb6b39bbd844781dd6698
 f47bf89ad9c371175621e75e64b73bfc
   optionsWithHelp13 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("Reset configuration"#) -}
-05d7b4828f7eb6d061d771c909747631
+978d4351aa176f44e33de530a2a71911
   optionsWithHelp14 ::
     [GHC.Base.String]
     -> System.Console.Haskeline.Term.RunTerm
@@ -3066,7 +3053,7 @@ f47bf89ad9c371175621e75e64b73bfc
   {- Arity: 8, Strictness: <L,A>,
      Unfolding: InlineRule (1, True, True)
                 (\ (ds :: [GHC.Base.String]) -> Main.optionsWithHelp15) -}
-065d847c4d384080fe973d7fae687d0f
+7e3ba0785f3f494b23c28490cf84938d
   optionsWithHelp15 ::
     System.Console.Haskeline.Term.RunTerm
     -> GHC.IORef.IORef System.Console.Haskeline.History.History
@@ -3113,7 +3100,7 @@ c307baf636fc328cd07acb8c775131d9
 d382b23a2cd473e554d128a25658e694
   optionsWithHelp19 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("reset"#) -}
-8b73666fdca485595db275c2b132b61b
+e1f804837c693faafd939f6bb43a33c6
   optionsWithHelp2 ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -3123,7 +3110,7 @@ d382b23a2cd473e554d128a25658e694
                       GHC.Base.String)
                    Main.optionsWithHelp25
                    Main.optionsWithHelp3) -}
-831d7679e91882b59a6c3df2010b9c39
+d060e4dcc8987860c23bc7492bbac621
   optionsWithHelp20 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3237,7 +3224,7 @@ d382b23a2cd473e554d128a25658e694
 20698d2893e2f8c9bea975d5936f4c44
   optionsWithHelp24 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("load"#) -}
-2a21d11391894daebf0aa166a5b30ec1
+3e4aee32bda9e5883c07096d3cc99a1a
   optionsWithHelp25 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3344,7 +3331,7 @@ d382b23a2cd473e554d128a25658e694
 0900902fb146a6601ed2b74a54ae81ab
   optionsWithHelp27 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("Quit interactive"#) -}
-ab6bc913bc868433b256ee102ad9e88b
+5da61f126946a97a1c24aef2e2de897c
   optionsWithHelp28 ::
     a
     -> System.Console.Haskeline.Term.RunTerm
@@ -3380,7 +3367,7 @@ ab6bc913bc868433b256ee102ad9e88b
   optionsWithHelp29 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Main.optionsWithHelp30) -}
-cf7911829b9674ad1be7c0c881cdf3dc
+808b12cdbf5f8c15284e8660c7d0b77c
   optionsWithHelp3 ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -3393,7 +3380,7 @@ cf7911829b9674ad1be7c0c881cdf3dc
 416f0924aced19d8d8d05aeba506a3ef
   optionsWithHelp30 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("quit"#) -}
-13dcde37eb8d596e63d817d1a119fc9a
+c98f2f20f34d42ba41f1a13ed0c1e47d
   optionsWithHelp31 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3507,7 +3494,7 @@ d04ceae7dfd89933d9ccf1e4de5ab1c9
 59155bc2331bd1ef8fcb7a5788b8bf6f
   optionsWithHelp35 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("?"#) -}
-a67d20a8010d4c1075f8e92952136da7
+1654f272a9c424a4f44c034570ec6da4
   optionsWithHelp36 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3614,7 +3601,7 @@ a67d20a8010d4c1075f8e92952136da7
 695ad3bf69e548d4831aa251aefadd34
   optionsWithHelp38 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("Show this text"#) -}
-2dbeaf09eeef67be7013aa01201e7b9d
+7e3c2ad0c17c1fe34ce56e6e259b501a
   optionsWithHelp4 ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -3624,7 +3611,7 @@ a67d20a8010d4c1075f8e92952136da7
                       GHC.Base.String)
                    Main.optionsWithHelp11
                    Main.optionsWithHelp5) -}
-f3e7edad3afacc9365e4e3fba0cfa676
+213a824a51d374ed3a98d962debf59a1
   optionsWithHelp5 ::
     [(GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
       GHC.Base.String)]
@@ -3636,7 +3623,7 @@ f3e7edad3afacc9365e4e3fba0cfa676
                    (GHC.Types.[]
                       @ (GHC.Base.String, [GHC.Base.String] -> Main.Repl (),
                          GHC.Base.String))) -}
-6206e9badcff6961493383d7d783e0b7
+60d518421cb6ce3ad94dbc6589e35527
   optionsWithHelp6 ::
     ([GHC.Types.Char], [GHC.Base.String] -> Main.Repl (),
      [GHC.Types.Char])
@@ -3746,14 +3733,14 @@ fb9651cc63b7e7c7912ac676d8f17ffe
   optionsWithHelp9 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Main.optionsWithHelp10) -}
-4a775ed86cadb01136542205ffb46469
+311b28bebc52c5ed24c3123da12e4cfc
   parseArgs :: [GHC.Base.String] -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <S,1*U><S,U>,
      Unfolding: InlineRule (0, True, True)
-                Main.main7
+                Main.main2
                   `cast`
                 (<[GHC.Base.String]>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
-1fc47122dce1080271a2b1b61d631d20
+bfbb97f20bbb7f9058e8de8205c08e57
   ppMsg :: SEDEL.PrettyPrint.FDoc -> Main.Repl ()
   {- Arity: 8, Strictness: <L,U><L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
      Unfolding: InlineRule (0, True, True)
@@ -3850,7 +3837,7 @@ fb9651cc63b7e7c7912ac676d8f17ffe
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-76910686ebfc9e4168b28421bcb5b2c7
+63465ea6b2fcd3a213b2bec712796ca4
   ppMsg1 ::
     SEDEL.PrettyPrint.FDoc
     -> System.Console.Haskeline.Term.RunTerm
@@ -3905,7 +3892,7 @@ d9090c76453bf0c1f52b154423af18d4
                 Main.load4
                   `cast`
                 (Sym (Data.Text.Prettyprint.Doc.Internal.N:LayoutOptions[0])) -}
-fc9202444faee5eddcbeee91a1b0401d
+bcac7f8c657ee5b96de7f30aee1a30b9
   putCtx :: Main.ReplState -> Main.Repl ()
   {- Arity: 8, HasNoCafRefs,
      Strictness: <L,U><L,A><L,A><L,A><L,A><L,A><L,A><S,U>,
@@ -4003,7 +3990,7 @@ fc9202444faee5eddcbeee91a1b0401d
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-d596f452ce9becfc75c1a64e1b46db78
+d6eb5389d17b08af93f049f430c73983
   putCtx1 ::
     Main.ReplState
     -> System.Console.Haskeline.Term.RunTerm
@@ -4032,7 +4019,7 @@ d596f452ce9becfc75c1a64e1b46db78
                    (eta5 :: Main.ReplState)
                    (eta6 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
                  (# eta6, (GHC.Tuple.(), x) #)) -}
-7fcaedc8bc5bf8cc6f408fc63c56f18e
+1a6dd6847ed9034e84278e99478c5679
   putMsg :: GHC.Base.String -> Main.Repl ()
   {- Arity: 8,
      Strictness: <L,1*U><L,A><L,A><L,A><L,A><L,A><L,U><S,U>,
@@ -4130,7 +4117,7 @@ d596f452ce9becfc75c1a64e1b46db78
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-cd37a04c29fafb33266b3f850dfe30ce
+9d2fddc1985178fec8b57529f6a5a821
   putMsg1 ::
     GHC.Base.String
     -> System.Console.Haskeline.Term.RunTerm
@@ -4166,7 +4153,7 @@ cd37a04c29fafb33266b3f850dfe30ce
                       (GHC.Types.N:IO[0] <()>_R)
                         eta6 of ds1 { (#,#) ipv ipv1 ->
                  (# ipv, (ipv1, eta5) #) }) -}
-fdc66b3c0ae3c724ce3b3f797374a0ef
+8efc16234d0243ec303d5ad5d26bb213
   quit :: a -> Main.Repl ()
   {- Arity: 8, Strictness: <B,A><B,A><B,A><B,A><B,A><B,A><B,A><B,U>b,
      Unfolding: InlineRule (0, True, True)
@@ -4264,7 +4251,7 @@ fdc66b3c0ae3c724ce3b3f797374a0ef
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-f99c240efcfa96f2ad1bd209e3517a3d
+89b05aacf4b3c28140ef7ab2ccb33357
   readTry ::
     GHC.Types.IO GHC.Base.String
     -> Main.Repl
@@ -4382,7 +4369,7 @@ f99c240efcfa96f2ad1bd209e3517a3d
                                                                                                                                                                                                                                                                                                                                                                                               GHC.Types.IO>_N) <Data.Either.Either
                                                                                                                                                                                                                                                                                                                                                                                                                   GHC.Exception.Type.SomeException
                                                                                                                                                                                                                                                                                                                                                                                                                   GHC.Base.String>_N)) -}
-89f7df55840be2348869dc91b689d7cb
+463c68b0c8798e4c183837c965888dc8
   readTry1 ::
     GHC.Types.IO GHC.Base.String
     -> System.Console.Haskeline.Term.RunTerm
@@ -4428,15 +4415,15 @@ f99c240efcfa96f2ad1bd209e3517a3d
                         Main.load7
                         eta6 of ds1 { (#,#) ipv ipv1 ->
                  (# ipv, (ipv1, eta5) #) }) -}
-8c4b561d86a4a66ba2b846e9c22bb1c2
-  replCtx :: Main.ReplState -> SEDEL.Environment.Ctx
+ccd39dde92530575e52a575a4c03dc37
+  replCtx :: Main.ReplState -> SEDEL.Environment.SCtx
   RecSel Left Main.ReplState
   {- Arity: 1, HasNoCafRefs,
      Strictness: <S(SL),1*U(1*U(U,U,U,U),A)>m,
      Unfolding: InlineRule (1, True, False)
                 (\ (ds :: Main.ReplState) ->
                  case ds of wild { Main.ReplState ds1 ds2 -> ds1 }) -}
-b3e94cf4433affcd36eb6a808a6f33b5
+702fcef7abcd98481c7e229168dbb0ec
   reset :: [GHC.Base.String] -> Main.Repl ()
   {- Arity: 8, Strictness: <L,A>,
      Unfolding: InlineRule (0, True, True)
@@ -4533,7 +4520,7 @@ b3e94cf4433affcd36eb6a808a6f33b5
                                                                                                                                                                                                                                  GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                     Main.ReplState
                                                                                                                                                                                                                                                                                                     GHC.Types.IO>_N) <()>_N)) -}
-0e70f35212341984d27973b6b2e3f900
+0a8a0b3d0c838bd36c8a018523984b6f
   resetCtx :: Main.Repl ()
   {- Arity: 7, HasNoCafRefs,
      Strictness: <L,A><L,A><L,A><L,A><L,A><L,A><S,U>,
@@ -4630,7 +4617,7 @@ b3e94cf4433affcd36eb6a808a6f33b5
                                                                                                                                                                                                                             GHC.Types.IO>_R) ; Sym (System.Console.Repline.N:HaskelineT[0]) <Control.Monad.Trans.State.Strict.StateT
                                                                                                                                                                                                                                                                                                Main.ReplState
                                                                                                                                                                                                                                                                                                GHC.Types.IO>_N) <()>_N)) -}
-9768338f62eeeeef620938365d54c963
+9c9922c976be02d0c9865903436cfd45
   resetCtx1 ::
     System.Console.Haskeline.Term.RunTerm
     -> GHC.IORef.IORef System.Console.Haskeline.History.History
@@ -4657,15 +4644,15 @@ b3e94cf4433affcd36eb6a808a6f33b5
                    (eta4 :: Main.ReplState)
                    (eta5 :: GHC.Prim.State# GHC.Prim.RealWorld) ->
                  (# eta5, Main.resetCtx2 #)) -}
-751bce5d9c77657696df2c1a6f9e5505
+a9ad464e80c245056271976e9cbfbaba
   resetCtx2 :: ((), Main.ReplState)
   {- HasNoCafRefs, Strictness: m,
      Unfolding: ((GHC.Tuple.(), Main.initState)) -}
-01612671c47dd11efc00249f309cbbc0
+060da2c379744765db982f2ed069a54a
   shell :: Main.Repl a -> GHC.Types.IO ()
   {- Arity: 2, Strictness: <L,C(C(C(C(C(U)))))><S,U>,
      Unfolding: InlineRule (0, True, True)
-                Main.main8
+                Main.main3
                   `cast`
                 (forall (a :: <*>_N).
                  <Main.Repl a>_R ->_R Sym (GHC.Types.N:IO[0] <()>_R)) -}
@@ -4675,7 +4662,7 @@ e76897b0b930e51e1ec3474d85ae046d
 c96818c1d00d8ff122a2e620a8d5ba61
   verStr1 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("SEDEL, version 0.1"#) -}
-8c4b561d86a4a66ba2b846e9c22bb1c2
+ccd39dde92530575e52a575a4c03dc37
   verbose :: Main.ReplState -> GHC.Types.Bool
   RecSel Left Main.ReplState
   {- Arity: 1, HasNoCafRefs, Strictness: <S(LS),1*U(A,1*U)>,

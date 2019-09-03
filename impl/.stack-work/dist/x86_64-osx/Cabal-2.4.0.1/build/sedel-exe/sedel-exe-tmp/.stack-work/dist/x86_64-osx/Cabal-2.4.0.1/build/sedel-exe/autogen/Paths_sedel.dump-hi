@@ -1,10 +1,10 @@
 
 ==================== FINAL INTERFACE ====================
-2019-02-26 11:10:53.715323 UTC
+2019-08-12 12:25:14.362505 UTC
 
 interface main:Paths_sedel 8063
-  interface hash: b506c6f3715876275f3bc8011c59eb73
-  ABI hash: 15e2e782b9d300d8a199bbc79bfdc491
+  interface hash: b9a5bf474fb800534a156b319c4ec83b
+  ABI hash: a09fe4d6ab810f0e09c76d7180297131
   export-list hash: 38171c3bb1b51b7728bc6fde2150b90f
   orphan hash: 693e9af84d3dfcc71e640e005bdc5e2e
   flag hash: 08312242a9611ffb0ed1cd7d4f13374f
@@ -41,7 +41,7 @@ import  -/  base-4.12.0.0:Prelude 5c01365ec01f83bd405ac01cbb9a8d76
 import  -/  base-4.12.0.0:System.Environment 2204870ad586be67c274aa49ce9ae53a
 import  -/  ghc-prim-0.5.3:GHC.Types 57064c9f957b09bc2e360061ad5cae0b
 addDependentFile "/Users/birthevandenberg/.stack/programs/x86_64-osx/ghc-8.6.3/lib/ghc-8.6.3/include/ghcversion.h" c925484e8d952821bd47b962826e23d7
-addDependentFile ".stack-work/dist/x86_64-osx/Cabal-2.4.0.1/build/sedel-exe/autogen/cabal_macros.h" b63dc7c2b634737205d10e0d9d53c727
+addDependentFile ".stack-work/dist/x86_64-osx/Cabal-2.4.0.1/build/sedel-exe/autogen/cabal_macros.h" d604365856c9e0de6cacfe9489f4a8cf
 b5ec56f42306246f514d3bc909750d1b
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
@@ -62,14 +62,14 @@ d61b6abdd6a70ea639dcab1b1eb48f4a
 9d051ec49080d38cb7fa2f003b2f8e20
   $trModule4 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("main"#) -}
-9d30c3a9e472ac3128595cb017c38d3f
+d76919a80607654bb01c4b5d3a805373
   getBinDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getBinDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-9e32ccbe58981727744d29c992c9e8c3
+fce8fa5d0352fe80e8c32e1234b06bc3
   getBinDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -81,7 +81,7 @@ d61b6abdd6a70ea639dcab1b1eb48f4a
                    Paths_sedel.getBinDir5
                    Paths_sedel.getBinDir2
                    eta) -}
-1d985cc6da434af0996bddea7ef65abe
+10395dba6de57743e4061560a0dff0e8
   getBinDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -106,14 +106,14 @@ d61b6abdd6a70ea639dcab1b1eb48f4a
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getBinDir3 #) } }) -}
-eeea5bccd7b3723cde3c1f1377ab065f
+b43e9fd1e8b8d1ac437ef756f50ac8c3
   getBinDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getBinDir4) -}
-08cea3e32d9ce6790a8741d0f7efaae6
+4c8cc489edefd8c20998494fa4b0ea4d
   getBinDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/bin"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/bin"#) -}
 8c9732bc22200e88a1b25ac96b5f8b45
   getBinDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld
@@ -146,14 +146,14 @@ f30649c9567088090bacfa296bc8da31
 b6c620eb37b9f3b470c9666b9cb7bfe8
   getBinDir7 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("sedel_bindir"#) -}
-0ad9812c57e61f6e9016cf1345dbaf46
+a73b42f73b05b0c2732a90d94ddd2160
   getDataDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getDataDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-c05161836bd6caab8791ce95a04f3b52
+0386ce449c2586e3bf61e97eb800dcd7
   getDataDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -165,7 +165,7 @@ c05161836bd6caab8791ce95a04f3b52
                    Paths_sedel.getDataDir5
                    Paths_sedel.getDataDir2
                    eta) -}
-103109e0aeba972172410bd3dedf603b
+cc644dfd887a08c296e848bb3e453999
   getDataDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -190,14 +190,14 @@ c05161836bd6caab8791ce95a04f3b52
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getDataDir3 #) } }) -}
-b2c548ef4d17d2cd0494ce095591dad2
+8239d4a4cc952bc4cc2b93a973e647bc
   getDataDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getDataDir4) -}
-e0112a9f863fffab12a081a2ee328e5f
+39d421710234c2f29a7f72b74075e776
   getDataDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/share/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/share/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"#) -}
 cc4621dccc2778d2fedc6ea402e06843
   getDataDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld
@@ -230,7 +230,7 @@ fffaf0f27d21dcc9776b28b9711858c1
 59d653cf7785c3a2a9eb44cb361c9453
   getDataDir7 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("sedel_datadir"#) -}
-2d7c2ccd4b9b6a52d0ec0a955d40e873
+2dee16a04fc93bb3efb219f9f9dbef56
   getDataFileName :: GHC.IO.FilePath -> GHC.Types.IO GHC.IO.FilePath
   {- Arity: 2, Strictness: <L,U><S,U>,
      Unfolding: InlineRule (0, True, True)
@@ -238,7 +238,7 @@ fffaf0f27d21dcc9776b28b9711858c1
                   `cast`
                 (<GHC.IO.FilePath>_R
                  ->_R Sym (GHC.Types.N:IO[0] <GHC.IO.FilePath>_R)) -}
-5c0b01002283f8f0d0bad009170467ba
+da1d708b1983c43037c8940ece21b61f
   getDataFileName1 ::
     GHC.IO.FilePath
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -262,14 +262,14 @@ fffaf0f27d21dcc9776b28b9711858c1
 0c38a6d61c4ba06707a6100dc482cbfe
   getDataFileName2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("/"#) -}
-8b5819b35f30b4ea5063dbc652fc0fe8
+1f5d76809e03f47aff7775bc13e50f25
   getDynLibDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getDynLibDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-2b94565f1a9c273bc57e0f1d2c83638d
+90fdb35613a99c0bbe0f3263ef81be98
   getDynLibDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -281,7 +281,7 @@ fffaf0f27d21dcc9776b28b9711858c1
                    Paths_sedel.getDynLibDir5
                    Paths_sedel.getDynLibDir2
                    eta) -}
-87fd28d3123dbb25849d41d253175bfa
+6d515285b5f1dc2582bb88c7b3bdfc08
   getDynLibDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -306,14 +306,14 @@ fffaf0f27d21dcc9776b28b9711858c1
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getDynLibDir3 #) } }) -}
-d6ea83f62939a3a0dd04f91cc393bc77
+e7a43eda393e0a6bd3cd2c7a00f7a86c
   getDynLibDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getDynLibDir4) -}
-defa795965697e632db40631fbdd3a99
+292f1ef6e5a248667483e82e2a223027
   getDynLibDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3"#) -}
 9721dec7c23ea614e8777c223f6ed147
   getDynLibDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld
@@ -346,14 +346,14 @@ defa795965697e632db40631fbdd3a99
 e08bb351031a9528919d38f955dd5179
   getDynLibDir7 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("sedel_dynlibdir"#) -}
-c27ce8b2b6645b027e9dbbc4e18ec112
+92098b72f7286fc4b7564ae72ff1bb23
   getLibDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getLibDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-3774d2b966cd17e20a7e1e0984e0060d
+af9f9181d2381fa96ba940b70e8d081e
   getLibDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -365,7 +365,7 @@ c27ce8b2b6645b027e9dbbc4e18ec112
                    Paths_sedel.getLibDir5
                    Paths_sedel.getLibDir2
                    eta) -}
-530be605d5fb2de0a84b1b6c709a2601
+72443d96d596cd2cbe10baeb7cd5792a
   getLibDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -390,14 +390,14 @@ c27ce8b2b6645b027e9dbbc4e18ec112
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getLibDir3 #) } }) -}
-8023e5334bb0a2875a96eb8af9dc29b3
+4765e2f77d00b06e2f827fb6a1f80f62
   getLibDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getLibDir4) -}
-7de4fe377d1874891647ca8fd4f92568
+e607fbe37e14c051e92097d5ee7d0a54
   getLibDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0-DvdAUmMTUFRDr0E11dASxI-sedel-exe"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0-IRllC4NIMA44tfmA4qGGtC-sedel-exe"#) -}
 cb5b92aec6e4269489b911038daa1f56
   getLibDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld
@@ -430,14 +430,14 @@ cb5b92aec6e4269489b911038daa1f56
 70c19db45bb5ea9d718344007a3f58d7
   getLibDir7 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("sedel_libdir"#) -}
-b3dca624f0025ee349e25b8576cd9d1b
+c9b1e20b68c7a5e13e9237ff6ed4e306
   getLibexecDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getLibexecDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-d07bb118990f7c795a6badc2c6135cd1
+73831c877ee6020fcd562d9c3a535e12
   getLibexecDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -449,7 +449,7 @@ d07bb118990f7c795a6badc2c6135cd1
                    Paths_sedel.getLibexecDir5
                    Paths_sedel.getLibexecDir2
                    eta) -}
-45ad580a1c871cce377c0b0394275e81
+73bb8f2a1301b68ce2dba752db74ed52
   getLibexecDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -474,14 +474,14 @@ d07bb118990f7c795a6badc2c6135cd1
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getLibexecDir3 #) } }) -}
-89ecced3c714f97948b5825976d75acf
+4dc1a09fe4bb0c7ca0344e5c171dafe2
   getLibexecDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getLibexecDir4) -}
-09b71361a67a6fb932ec6d1ce69ede9d
+ba488116a68ffb1a24fe27f05bc3af7e
   getLibexecDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/libexec/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/libexec/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"#) -}
 cf6017bf620f19ebbc69faa8575a2a96
   getLibexecDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld
@@ -514,14 +514,14 @@ cf6017bf620f19ebbc69faa8575a2a96
 12a7d9a51f18d0663917e714dcc3b530
   getLibexecDir7 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("sedel_libexecdir"#) -}
-4cbc4f372d32c30b20dc1d915f6fc9c3
+29a7476885c89ebdf719894a414a8caf
   getSysconfDir :: GHC.Types.IO GHC.IO.FilePath
   {- Arity: 1, Strictness: <S,U>,
      Unfolding: InlineRule (0, True, True)
                 Paths_sedel.getSysconfDir1
                   `cast`
                 (Sym (GHC.Types.N:IO[0] <GHC.Base.String>_R)) -}
-66ad8f2906edb865afdebb93ce6c14a2
+1065db747ba1f30d0ed9e297067a47f5
   getSysconfDir1 ::
     GHC.Prim.State# GHC.Prim.RealWorld
     -> (# GHC.Prim.State# GHC.Prim.RealWorld, GHC.Base.String #)
@@ -533,7 +533,7 @@ cf6017bf620f19ebbc69faa8575a2a96
                    Paths_sedel.getSysconfDir5
                    Paths_sedel.getSysconfDir2
                    eta) -}
-c26f1d5e607b417f61c0e9a69533ee30
+04392659edb1794362873bd2cb771bf7
   getSysconfDir2 ::
     GHC.Exception.Type.SomeException
     -> GHC.Prim.State# GHC.Prim.RealWorld
@@ -558,14 +558,14 @@ c26f1d5e607b417f61c0e9a69533ee30
                         wild
                         eta
                    GHC.Types.True -> (# eta, Paths_sedel.getSysconfDir3 #) } }) -}
-45587ceff7079ac4197c8a6261120977
+959a7a75b99ebb223e929694bd632afe
   getSysconfDir3 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    Paths_sedel.getSysconfDir4) -}
-3e094e2bd1457df65212c3ec8df5535d
+5a7abf109f552de4f4fc976592063dc5
   getSysconfDir4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/Git/Thesis/Implementation/impl/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/etc"#) -}
+     Unfolding: ("/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/etc"#) -}
 31d4550edea395aad72f9d2ffa83c946
   getSysconfDir5 ::
     GHC.Prim.State# GHC.Prim.RealWorld

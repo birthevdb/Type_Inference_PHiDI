@@ -1,12 +1,12 @@
 
 ==================== FINAL INTERFACE ====================
-2019-03-27 11:20:02.067838 UTC
+2019-08-12 12:24:38.831102 UTC
 
-interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Parser.Parser 8063
-  interface hash: 1644ea0dcdfa2648d0862d8c501ff333
-  ABI hash: 21e5b1211cf84d44261adc3dc2c27fbd
-  export-list hash: db0a5b571d2207b9c8a1686c5bb8040b
-  orphan hash: 8dfdcfbb469af6eec55c3cec4b767466
+interface sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Parser.Parser 8063
+  interface hash: 6fdd479a64d9ad70bac0d845db7d0c6e
+  ABI hash: bb8a79a4e3aa257f41acb8b8d9d9f338
+  export-list hash: 19143f0b44416c3c324979ec480ac12f
+  orphan hash: 6daea9d28871cefd200dfc641051ad7a
   flag hash: 16a70dcce31f6ef91de5271d59b4cb56
   opt_hash: 6faf2de08de32d19db9870899d88e59a
   hpc_hash: 93b885adfe0da089cdf634904fd59f71
@@ -16,8 +16,8 @@ interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Parser.Parser 8063
   where
 exports:
   SEDEL.Parser.Parser.parseModule
-module dependencies: SEDEL.Common SEDEL.Source.Syntax
-                     SEDEL.Target.Syntax SEDEL.Util
+module dependencies: SEDEL.Common SEDEL.Intermediate.Syntax
+                     SEDEL.Source.Syntax SEDEL.Util
 package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
                       base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
                       bytestring-0.10.8.2 case-insensitive-1.2.0.11 comonad-5.0.4
@@ -29,7 +29,8 @@ package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
                       protolude-0.2.3 scientific-0.3.6.2 stm-2.5.0.0 tagged-0.8.6
                       template-haskell-2.14.0.0 text-1.2.3.1 transformers-0.5.5.0
                       unbound-generics-0.4.0
-orphans: sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+orphans: sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Source.Syntax
+         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Intermediate.Syntax
          hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
          text-1.2.3.1:Data.Text binary-0.8.6.0:Data.Binary.Generic
          bytestring-0.10.8.2:Data.ByteString.Builder
@@ -67,9 +68,9 @@ family instance modules: base-4.12.0.0:Control.Applicative
                          prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
                          primitive-0.6.4.0:Control.Monad.Primitive
                          primitive-0.6.4.0:Data.Primitive.Array
-                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
-                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
-                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Target.Syntax
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Common
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Intermediate.Syntax
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Source.Syntax
                          tagged-0.8.6:Data.Tagged
                          template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
                          text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
@@ -102,66 +103,64 @@ import  -/  parser-combinators-1.0.1:Control.Applicative.Combinators 70d67a1f60f
 import  -/  parser-combinators-1.0.1:Control.Monad.Combinators 96f00cb3b58d741f70bc77187e641e82
 import  -/  parser-combinators-1.0.1:Control.Monad.Combinators.Expr e01439513ffce752a745749fbf29ccf3
 import  -/  scientific-0.3.6.2:Data.Scientific 62c85054f4a7aab32f64fcf46ce53efb
-import  -/  SEDEL.Common dd957746dc264eb9e0f081197e6a170a
-  exports: 2f8960fc3866b3ed3935cca8fdf4af32
-  Add 7b5689630bb805d45c2d9b7c91a94aa7
-  Arith ba6e6ee2769ab90fc6f8bfe05c457547
-  Comp 95be31892a65ce02162c0359b2fd7836
-  Div 9d90e9fa046956310d732e8eb846ddaa
-  Equ be009671f59de591c88946764f695cd4
-  Gt be31fcc4422ad1046b7cadef42d4a00a
-  LAnd 76e1d65d2c4efb84dfc892b6876887fc
-  LOr 3d9fb39352f5a35a5a2f3fb33be00346
-  Logical 5f88c0dcda3f0bb8a2151f64e886bf39
-  Lt d3b4077c262575c1c54e4e55843feca5
-  Mul dbcecb52257f0e0de6cdb3f840d576b0
-  Neq 2a26dcc2307ec55211eb17750235a9c5
-  Sub 10f07d4be3387d45df0fd4398e7b0df1
-import  -/  SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
-  exports: d4d2fd645eff9adcf509b28019caf96b
-  And 858cda1fbe6f64a52489f771e0708139
-  App 2c964fefc28aabf42ed9dbe40c3accd3
-  Arr 22416be279c31386e9cc95e9c9b2de68
-  BoolT 9eb5ff7582ee586b5677d133bc3c5a82
-  BoolV d7377f24937105ba95ef7593def4f4bf
-  BotT e9fc1220c215208a25f3ef509fa1d4c0
-  DefDecl 496120e2ede708432a09ee90bbbf5564
-  Expr 76520494bd75ab62670e86072668ba13
-  If 004baac8f2ab270853994d5c063473ee
-  Kind 76520494bd75ab62670e86072668ba13
-  Label fc63c6ec9c84d81eb04bc3ecb5e488a0
-  LitV bd5053bd7f79e6c004652065acad3370
-  Merge bfed41bbda08db4fffae7c43cde3fe30
-  Module a47f0c051364b204dc99726dd2bf638b
-  Module 7a2313ab6449bd182db161ae191980ad
-  NumT adf11e6708e5e8a7ec46f283d84a97ad
-  Pos e1abba9e1a944fd21252fe9a5857484c
-  PrimOp 75d0f502551fe7e315ae75fc195bd1b1
-  Proj 6a5a97deaf11de74c15ccfb48a027d1d
-  SDecl 6a20fc9eb35596ae2460813625392c86
-  SType a5fd2e9b5e852c36afadad4c1a615a65
-  SType 76520494bd75ab62670e86072668ba13
-  Scheme 76520494bd75ab62670e86072668ba13
-  Star fd95d747935c5574b8df46154b9b35c7
-  TmBind 7a84d8e4258307cedac55dc7394971f1
-  TmBind 76520494bd75ab62670e86072668ba13
-  Top 072bc63b13d03508f9113d1a45bc6153
-  TopT 1b95963f14ca91731abc40c7b31bb3cf
-  TyName 76520494bd75ab62670e86072668ba13
-  TypeBind cc28fa5bde9da9a8ce02c1d05dde235b
-  TypeBind 76520494bd75ab62670e86072668ba13
-import  -/  SEDEL.Util b3c10612bfd95487b72fc93520437345
-  exports: 3deb26de07e49528c70b6f9f7e5d21d6
-  elam c63b9f2a7822b309396db11a4804c102
-  elet 6886d73ac46ecde14c189190dbc2459b
-  evar fb5cd28449c7bf61d6760be3fcc07dad
-  mkRecds' f083deea0dd1968ea891861ba66e0bbd
-  mkRecdsT 1b4d8bbcba019d8db8a6132784ba9bfa
-  tforall 3facec132ad986c8b6858c73f5a216b6
-  tvar b859690d5afd464a63318a68f823a7a3
+import  -/  SEDEL.Common ca6f88eb795bfe7d09e23d21fb3eb87f
+  exports: 576471b9a47b800d5ba3919671488556
+  Add 776209293c66bfbb867e64fd01ec5524
+  Arith 477cbffa1e7281d92b0f71e3720dc821
+  Comp 348f8575ea4d65185d0a29b6b8a92535
+  Div 038c227c045fd71eab722d2d4ecf42f4
+  Equ 67fac86250d28575acf5a4936b4d65f2
+  Gt 09d0b76e11a0a36a8ec9bbc51138f538
+  LAnd 61b95ad1d220eda80a50c7e39a9a6ef6
+  LOr 5c15e5469fc495263fe77dda9252bfb5
+  Logical 5837ab3db90e339a87f10215bf5c0d98
+  Lt ec4763cf594c42d458ce6a69ab350bdf
+  Mul 8b6e84ede92e2ad36aa9f079a7b05e08
+  Neq a72a14e8f114dd3e7b3cb975e2df8af3
+  Sub 622974ee4a8131461dc7a2973ecbc9b1
+import  -/  SEDEL.Source.Syntax ec83a0da1c10765115fe4a9f09c754b0
+  exports: 9689242b0decab272007a11f45b72d7d
+  And 0283b9e7440c4a3e47a1281e02970dde
+  App c363422f50778c82e96747329eb9877e
+  Arr df83e91aec2f80dc9d042375099bb771
+  BoolT 21df8d7d01d510390fe4d585a4a596cd
+  BoolV a99acac4209ebf13e71934080c423400
+  BotT 77bd90a3bcfd29395ef1007b8a6a4ee6
+  DefDecl 0bcb0cf0edd018dbef851783eba7cbb7
+  Expr 350069ed8c9e308e7d171878eb06250d
+  If 8adb062a80541f4537caeee81d7bc725
+  Kind 350069ed8c9e308e7d171878eb06250d
+  Label e739a3e6552cb99dfb25d8219b847fb6
+  LitV 0126dc7c0aca06604ce1c1866a4ca27b
+  Merge 8618c4cff7c45435653614618dd77223
+  Module 63b12c7a9614f89d76a5f1c8e3979c8f
+  Module d782678268308b8c889017b135bdd9f9
+  NumT 539f9e6436bb2f46e0e1ed9aac813b1c
+  Pos caef810378ba48ca7966a52d7584d18f
+  PrimOp 459db753a665a5d3d985408f034250f5
+  Proj c9b17242d24bcebd4dda5844c7db7905
+  SDecl d4da484abb8cfac2766f73e28f180df7
+  SType 2633b8b7955e013a3831a0582461061f
+  SType 350069ed8c9e308e7d171878eb06250d
+  Scheme 350069ed8c9e308e7d171878eb06250d
+  Star 360a731d5e4cf3a645e5f82bd30238ed
+  TmBind 7add3ab09967080e09d768102a5d4bdc
+  TmBind 350069ed8c9e308e7d171878eb06250d
+  Top 98e3b66dfbd16b59d9fe44f403ad750d
+  TopT fa9c823349a4c24a48445d1081f1a548
+  TyName 350069ed8c9e308e7d171878eb06250d
+import  -/  SEDEL.Util c1534bfc592d5431439a65f47bff8b46
+  exports: a4b496c924b84e318819b4bae94d6d7e
+  elam 7734d63f56abb72b44df14cc1ddc2275
+  elet 339fb1ed0fdebd5716b459b2b46b9975
+  evar b2ddeb8e728a2aa666df72cfddc63f44
+  mkRecds' 49ad7ae5616fce3262548cd8f93b782a
+  mkRecdsT b15b65aa321edd4181439becbbb77336
+  tforall c8063ee542e104cfc60908c38e432437
+  tvar 2dbd4aa2b55add103905987d5c3da293
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless 36704d4dbfb3fb22f46cde363ae796f2
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name 81d6e7baa0bd0880e550478df477614a
-55550246d7dfc09afe974871f9662ed3
+bf09d4c9084e97430dc610a49f932eb5
   $s$fAlternativeParsecT ::
     GHC.Base.Alternative
       (Text.Megaparsec.Internal.ParsecT
@@ -202,7 +201,7 @@ import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Name 81d6e7b
                       Data.Void.Void [GHC.Types.Char] m a>_R
                    ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                  <Data.Void.Void>_N <[GHC.Types.Char]>_N <m>_R <[a]>_R)) -}
-abda69bd49b797dd53ac888dfdf79087
+cfc480f95d8b032dad08565eca667c50
   $s$fAlternativeParsecT1 ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void [GHC.Types.Char] m a
@@ -263,7 +262,7 @@ abda69bd49b797dd53ac888dfdf79087
                    w4
                    w5
                    w6) -}
-a6eb601e18b252c4367ec2de74e0d564
+83da6d84c41e95834a3d27128be3e4c0
   $s$fAlternativeParsecT3 ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void [GHC.Types.Char] m a
@@ -325,7 +324,7 @@ a6eb601e18b252c4367ec2de74e0d564
                    w5
                    w6
                    w7) -}
-2f95f9f1bf70d1753a7291d837dd95e1
+992fab3f10ea78c77c8bc9790e4c658e
   $s$fAlternativeParsecT_$s$fApplicativeParsecT ::
     GHC.Base.Applicative
       (Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m)
@@ -373,7 +372,7 @@ a6eb601e18b252c4367ec2de74e0d564
                    ->_R <Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m b>_R
                    ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                  <e>_N <[GHC.Types.Char]>_N <m>_R <a>_R)) -}
-2b9cad79e49fb146158ff4cab2442def
+b5a03f624f0489ea3fb25ff8db9ae6ac
   $s$fAlternativeParsecT_$spAp ::
     Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m (a -> b)
     -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a
@@ -503,7 +502,7 @@ a6eb601e18b252c4367ec2de74e0d564
                  ->_R <Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <b>_R)) -}
-d50ef7686b04873d7d5043f8bbcca866
+603b7f373338de7d8c9c4aa0ea023616
   $s$fAlternativeParsecT_$spPlus ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void [GHC.Types.Char] m a
@@ -774,7 +773,7 @@ d50ef7686b04873d7d5043f8bbcca866
                          Data.Void.Void [GHC.Types.Char] m a>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <Data.Void.Void>_N <[GHC.Types.Char]>_N <m>_R <a>_R)) -}
-4319a44b6558d8e462bab6df6656916c
+975af2f298f28c0b6c16828dd9fbbe64
   $s$fAlternativeParsecT_$sunion ::
     Data.Set.Internal.Set
       (Text.Megaparsec.Error.ErrorFancy Data.Void.Void)
@@ -783,7 +782,7 @@ d50ef7686b04873d7d5043f8bbcca866
     -> Data.Set.Internal.Set
          (Text.Megaparsec.Error.ErrorFancy Data.Void.Void)
   {- Arity: 2, Strictness: <S,1*U><S,1*U>, Inline: [~] -}
-fea4bdcc0937aba3ce53b525c7db70d2
+e2097dbdc529df423d30ae131a6a505c
   $s$fAlternativeParsecT_$sunion1 ::
     Data.Set.Internal.Set
       (Text.Megaparsec.Error.ErrorItem
@@ -795,7 +794,7 @@ fea4bdcc0937aba3ce53b525c7db70d2
          (Text.Megaparsec.Error.ErrorItem
             (Text.Megaparsec.Stream.Token [GHC.Types.Char]))
   {- Arity: 2, Strictness: <S,1*U><S,1*U>, Inline: [~] -}
-c28e997fed760fb688d2cecfb39ccf52
+4f31b8f9ea3e0b81a3a960c8af3ed595
   $s$fAlternativeParsecT_$swithHints ::
     Text.Megaparsec.Internal.Hints
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -865,7 +864,7 @@ c28e997fed760fb688d2cecfb39ccf52
                                  @ (Text.Megaparsec.Error.ErrorItem
                                       (Text.Megaparsec.Stream.Token [GHC.Types.Char])))))
                    Text.Megaparsec.Error.FancyError ipv ipv1 -> c wild }) -}
-998fec5bbea66b624305feac50ce6141
+05768270b3c423962530f58a423a183f
   $s$fEqErrorFancy ::
     GHC.Classes.Eq (Text.Megaparsec.Error.ErrorFancy Data.Void.Void)
   {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
@@ -875,7 +874,7 @@ c28e997fed760fb688d2cecfb39ccf52
                      @ Data.Void.Void
                      Data.Void.$fEqVoid)
                   SEDEL.Parser.Parser.$s$fEqErrorFancy_$s$fEqErrorFancy_$c/= -}
-b2d5df8c6b63d520712944a80390ee9d
+191e0044635421c914732dbd9cd6f768
   $s$fEqErrorFancy_$s$fEqErrorFancy_$c/= ::
     Text.Megaparsec.Error.ErrorFancy Data.Void.Void
     -> Text.Megaparsec.Error.ErrorFancy Data.Void.Void
@@ -892,7 +891,7 @@ b2d5df8c6b63d520712944a80390ee9d
                         y of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-b2033e77390237c9e4cfe2be6f307ff0
+70f62b83aaa39045d6f5954a91dab6e0
   $s$fEqErrorItem ::
     GHC.Classes.Eq
       (Text.Megaparsec.Error.ErrorItem
@@ -907,7 +906,7 @@ b2033e77390237c9e4cfe2be6f307ff0
                        `cast`
                      (GHC.Classes.Eq (Sym (Text.Megaparsec.Stream.D:R:Token[][0])))_R)
                   SEDEL.Parser.Parser.$s$fEqErrorItem_$s$fEqErrorItem_$c/= -}
-80e4d23b173f0c5ab06d15834a804333
+c1f2fd12f3f391668be2b8bf3a113b1b
   $s$fEqErrorItem_$s$fEqErrorItem_$c/= ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -929,7 +928,7 @@ b2033e77390237c9e4cfe2be6f307ff0
                         y of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-d0658f1e89efe0f3636a588ef7e1ec02
+8e06671a29df3e0d73090f518f5dc492
   $s$fMonadParsecT ::
     GHC.Base.Monad
       (Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m)
@@ -946,7 +945,7 @@ d0658f1e89efe0f3636a588ef7e1ec02
                   (\ @ a ->
                    Text.Megaparsec.Internal.pPure @ a @ e @ [GHC.Types.Char] @ m)
                   (Text.Megaparsec.Internal.pFail @ e @ [GHC.Types.Char] @ m) -}
-ba070664cffa2598ca5ad8d2f3747e2f
+fbae91e921fcd81c40c8abf98fe951b8
   $s$fMonadParsecT_$s$fMonadParsecT_$c>> ::
     Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a
     -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m b
@@ -1043,7 +1042,7 @@ ba070664cffa2598ca5ad8d2f3747e2f
                  ->_R <Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m b>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <b>_R)) -}
-6f084aa49a3ce97cf6cfb83dc24300dd
+1e582ce66f20de7cbcb738491bccab99
   $s$fMonadParsecT_$spBind ::
     Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a
     -> (a -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m b)
@@ -1142,7 +1141,7 @@ ba070664cffa2598ca5ad8d2f3747e2f
                        -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m b>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <b>_R)) -}
-e579cf33b1e59e379484def4590e682a
+2cd2d45e61729e8744a11b013ceee745
   $s$fMonadParsecesParsecT ::
     Text.Megaparsec.Class.MonadParsec
       Data.Void.Void
@@ -1312,7 +1311,7 @@ e579cf33b1e59e379484def4590e682a
                      @ [GHC.Types.Char]
                      @ Data.Void.Void
                      @ m) -}
-155cdf73bba13c4258c8b3b8e4a632a9
+3394aaee24891e3da080d83ae58c6f81
   $s$fMonadParsecesParsecT_$s$fMonadPlusParsecT ::
     GHC.Base.MonadPlus
       (Text.Megaparsec.Internal.ParsecT
@@ -1328,7 +1327,7 @@ e579cf33b1e59e379484def4590e682a
                      @ [GHC.Types.Char]
                      @ m)
                   (SEDEL.Parser.Parser.$s$fAlternativeParsecT_$spPlus @ m) -}
-76ec4be2c5bb845ca52c92aea322136d
+e498cacefec89536a6464589167392d0
   $s$fMonadParsecesParsecT_$spNotFollowedBy ::
     Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a
     -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m ()
@@ -1444,7 +1443,7 @@ e579cf33b1e59e379484def4590e682a
                  <Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <()>_R)) -}
-7e1a3be5d1d36007bbd357f7f5fb0f20
+f673d4ed00e8bc3aaa0d5a7917c49ea3
   $s$fMonadParsecesParsecT_$spObserving ::
     Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a
     -> Text.Megaparsec.Internal.ParsecT
@@ -1576,7 +1575,7 @@ e579cf33b1e59e379484def4590e682a
                                <m>_R
                                <Data.Either.Either
                                   (Text.Megaparsec.Error.ParseError [GHC.Types.Char] e) a>_R)) -}
-55478f0623b2c76953ce7edc70ac4277
+e9a1a94964d6d5c5f743b7c92c88ec28
   $s$fMonadParsecesParsecT_$spTakeP ::
     GHC.Maybe.Maybe GHC.Base.String
     -> GHC.Types.Int
@@ -1708,7 +1707,7 @@ e579cf33b1e59e379484def4590e682a
                                <[GHC.Types.Char]>_N
                                <m>_R
                                <Text.Megaparsec.Stream.Tokens [GHC.Types.Char]>_R)) -}
-780dcc8523c2950f41b35818a296aa8a
+57e41c665825f4b6f2d20e9d6780e55b
   $s$fMonadParsecesParsecT_$spTakeWhile1P ::
     GHC.Maybe.Maybe GHC.Base.String
     -> (Text.Megaparsec.Stream.Token [GHC.Types.Char]
@@ -1893,7 +1892,7 @@ e579cf33b1e59e379484def4590e682a
                                <[GHC.Types.Char]>_N
                                <m>_R
                                <Text.Megaparsec.Stream.Tokens [GHC.Types.Char]>_R)) -}
-79fa54c81fd2a187ee56425d462c5119
+bf33770df2a3bf613976722ad7240b4c
   $s$fMonadParsecesParsecT_$spTakeWhileP ::
     GHC.Maybe.Maybe GHC.Base.String
     -> (Text.Megaparsec.Stream.Token [GHC.Types.Char]
@@ -2043,7 +2042,7 @@ e579cf33b1e59e379484def4590e682a
                                <[GHC.Types.Char]>_N
                                <m>_R
                                <Text.Megaparsec.Stream.Tokens [GHC.Types.Char]>_R)) -}
-d4843df9a7c2ece856cfa423319fec49
+e382e988b390599951b93550477b73fb
   $s$fMonadParsecesParsecT_$spToken ::
     (Text.Megaparsec.Stream.Token [GHC.Types.Char]
      -> GHC.Maybe.Maybe a)
@@ -2142,7 +2141,7 @@ d4843df9a7c2ece856cfa423319fec49
                             (Text.Megaparsec.Stream.Token [GHC.Types.Char]))>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <a>_R)) -}
-d9a41fd74203efd65fa90cf97c3536f9
+a3dda35e8fd995518f632a341b13a841
   $s$fMonadParsecesParsecT_$spTokens ::
     (Text.Megaparsec.Stream.Tokens [GHC.Types.Char]
      -> Text.Megaparsec.Stream.Tokens [GHC.Types.Char]
@@ -2308,7 +2307,7 @@ d9a41fd74203efd65fa90cf97c3536f9
                                <[GHC.Types.Char]>_N
                                <m>_R
                                <Text.Megaparsec.Stream.Tokens [GHC.Types.Char]>_R)) -}
-4e0ba0b3dc88f48388b2a9add3f6ccb1
+9712d7b1dcd5d2487182516cb3d77b67
   $s$fMonadParsecesParsecT_$spWithRecovery ::
     (Text.Megaparsec.Error.ParseError [GHC.Types.Char] e
      -> Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a)
@@ -2568,7 +2567,7 @@ d9a41fd74203efd65fa90cf97c3536f9
                  ->_R <Text.Megaparsec.Internal.ParsecT e [GHC.Types.Char] m a>_R
                  ->_R Sym (Text.Megaparsec.Internal.N:ParsecT[0]
                                <e>_N <[GHC.Types.Char]>_N <m>_R <a>_R)) -}
-72b24f47e5d69ce6184b6d4e1a293423
+64978119dcd6c5f8bc0f8e0aaf10eceb
   $s$fOrdErrorFancy ::
     GHC.Classes.Ord (Text.Megaparsec.Error.ErrorFancy Data.Void.Void)
   {- HasNoCafRefs, Strictness: m, Inline: CONLIKE,
@@ -2622,7 +2621,7 @@ d9a41fd74203efd65fa90cf97c3536f9
                           y
                           x22 of wild {
                      GHC.Types.False -> x22 GHC.Types.True -> y }) -}
-4c89d504812ad799f151feb638143267
+677ee7cb17ffe89a844b582d21815a66
   $s$fOrdErrorFancy_$c<= ::
     Text.Megaparsec.Error.ErrorFancy Data.Void.Void
     -> Text.Megaparsec.Error.ErrorFancy Data.Void.Void
@@ -2638,7 +2637,7 @@ d9a41fd74203efd65fa90cf97c3536f9
                         a of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-2d3dfcdfb321615d66cf03ffb846737a
+e709a965c2c7983d7fe83b459d73d7ae
   $s$fOrdErrorFancy_$c>= ::
     Text.Megaparsec.Error.ErrorFancy Data.Void.Void
     -> Text.Megaparsec.Error.ErrorFancy Data.Void.Void
@@ -2654,7 +2653,7 @@ d9a41fd74203efd65fa90cf97c3536f9
                         b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-a6ac37daf221688068be17cd3bb894d8
+e6efd8194217857ed78396eaf46bf16e
   $s$fOrdErrorFancy_$cmax ::
     Text.Megaparsec.Error.ErrorFancy Data.Void.Void
     -> Text.Megaparsec.Error.ErrorFancy Data.Void.Void
@@ -2669,7 +2668,7 @@ a6ac37daf221688068be17cd3bb894d8
                         y
                         x22 of wild {
                    GHC.Types.False -> y GHC.Types.True -> x22 }) -}
-5eaa27821db1234f60b9516aa3650e39
+97ae96f1a7827d6181a112932027e55b
   $s$fOrdErrorFancy_$cmin ::
     Text.Megaparsec.Error.ErrorFancy Data.Void.Void
     -> Text.Megaparsec.Error.ErrorFancy Data.Void.Void
@@ -2684,7 +2683,7 @@ a6ac37daf221688068be17cd3bb894d8
                         y
                         x22 of wild {
                    GHC.Types.False -> x22 GHC.Types.True -> y }) -}
-769ba9ac900a8905c79c8421a7db0a0e
+d3d3daf0d3109f4ffecb4496f8b62fce
   $s$fOrdErrorItem ::
     GHC.Classes.Ord
       (Text.Megaparsec.Error.ErrorItem
@@ -2765,7 +2764,7 @@ a6ac37daf221688068be17cd3bb894d8
                           y
                           x22 of wild {
                      GHC.Types.False -> x22 GHC.Types.True -> y }) -}
-be242c9a75dd1c7ac8d1db7a75109ddf
+f85ce4bbc531f0a50d2e9afb46d19a7a
   $s$fOrdErrorItem_$c<= ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -2787,7 +2786,7 @@ be242c9a75dd1c7ac8d1db7a75109ddf
                         a of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-3a8f2c5513606f765ffc6bac1989560b
+0ff924c0cecda10cfa2ea11117930f6f
   $s$fOrdErrorItem_$c>= ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -2809,7 +2808,7 @@ be242c9a75dd1c7ac8d1db7a75109ddf
                         b of wild {
                    GHC.Types.False -> GHC.Types.True
                    GHC.Types.True -> GHC.Types.False }) -}
-1322724583ecd0d2773266ba31c25f08
+194d78af3e59c2494dcaa0fd3dbcf610
   $s$fOrdErrorItem_$cmax ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -2831,7 +2830,7 @@ be242c9a75dd1c7ac8d1db7a75109ddf
                         y
                         x22 of wild {
                    GHC.Types.False -> y GHC.Types.True -> x22 }) -}
-d758aa4d69f99983aab378d4934bc15b
+09418f6dd0df061301c7fe07361da1d9
   $s$fOrdErrorItem_$cmin ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -2853,7 +2852,7 @@ d758aa4d69f99983aab378d4934bc15b
                         y
                         x22 of wild {
                    GHC.Types.False -> x22 GHC.Types.True -> y }) -}
-88b86309944e4e8fc6c66f1820f8ad41
+99fdbc6a11930aa58ab8a4052ea070f0
   $saddPrecLevel ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void GHC.Base.String Data.Functor.Identity.Identity a
@@ -2864,19 +2863,19 @@ d758aa4d69f99983aab378d4934bc15b
     -> Text.Megaparsec.Internal.ParsecT
          Data.Void.Void GHC.Base.String Data.Functor.Identity.Identity a
   {- Arity: 2, Strictness: <L,C(C1(C1(C1(C1(U)))))><L,1*U> -}
-8ec1e6026a3739042810dfd5e101b890
+8711477bd43e81a6aeb5251389411b03
   $sinsertR_go3 ::
     GHC.Classes.Ord a1 =>
     a1 -> a1 -> Data.Set.Internal.Set a1 -> Data.Set.Internal.Set a1
   {- Arity: 4,
      Strictness: <L,U(A,C(C1(U)),A,A,A,A,A,A)><L,U><S,1*U><S,1*U> -}
-fddb67bfa80a47e6db204b39e4d8c0a8
+575b124356e95c4470e30bd4b89b14a8
   $sinsert_go3 ::
     GHC.Classes.Ord a1 =>
     a1 -> a1 -> Data.Set.Internal.Set a1 -> Data.Set.Internal.Set a1
   {- Arity: 4,
      Strictness: <L,U(A,C(C1(U)),A,A,A,A,A,A)><L,U><S,1*U><S,1*U> -}
-115ae3082dcba3456b426bfc1752d543
+5410fd183b8f98fc79fe9767d549ab22
   $spInfixL ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void
@@ -2891,7 +2890,7 @@ fddb67bfa80a47e6db204b39e4d8c0a8
   {- Arity: 8,
      Strictness: <C(C(C(C(C(S))))),C(C1(C1(C1(C1(U)))))><L,C(C1(C1(C1(C1(U)))))><L,U><L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
      Inline: [~] -}
-f90c26722d429048cc536f025c7740d2
+6395756f516a28110762bd42680224b3
   $spInfixR ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void
@@ -2906,14 +2905,14 @@ f90c26722d429048cc536f025c7740d2
   {- Arity: 8,
      Strictness: <C(C(C(C(C(S))))),C(C1(C1(C1(C1(U)))))><L,C(C1(C1(C1(C1(U)))))><L,U><L,U><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))><L,U>,
      Inline: [~] -}
-64b79f2e280156acd9cf32847e0597d3
+fba2a1a581011efbe8ac9f990146fabf
   $sskipBlockComment ::
     Text.Megaparsec.Stream.Tokens [GHC.Types.Char]
     -> Text.Megaparsec.Stream.Tokens [GHC.Types.Char]
     -> Text.Megaparsec.Internal.ParsecT
          Data.Void.Void GHC.Base.String Data.Functor.Identity.Identity ()
   {- Arity: 2, Strictness: <L,U><L,U> -}
-4a8669d63fabf0e2c2f7bbad3f9dbbb3
+8c3e71ba18846e0601451d0f8b26e83d
   $swhen1 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (()
@@ -2968,28 +2967,28 @@ f90c26722d429048cc536f025c7740d2
                      `cast`
                    (Sym (Text.Megaparsec.Internal.N:Hints[0]
                              <Text.Megaparsec.Stream.Token [GHC.Types.Char]>_N))) -}
-e194d9ecd698117bca4862ec892fa8b5
+be6b667b7bb4edbcaef2526faa0ded3e
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.Module
                    SEDEL.Parser.Parser.$trModule3
                    SEDEL.Parser.Parser.$trModule1) -}
-7be98f02e3c451d1a67c5ab57e6cec7b
+dc1ce5de5a7e6a3c5ad9e36b0638d341
   $trModule1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.Parser.Parser.$trModule2) -}
-895b075c102978380423ded067f6ecf2
+a042ee096ec763a7f8831a66948ba01c
   $trModule2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("SEDEL.Parser.Parser"#) -}
-ae2b5f93cc1160ec146e31fb55a3936c
+5192296c132e431bc8c3f1353a1a84eb
   $trModule3 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.Parser.Parser.$trModule4) -}
-f39acfff653b4c2185ed9a963cb4844f
+1321ccafaf4310cf5ceaddb1b78a8998
   $trModule4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
-7fd0fb868a7689001aba2982c51cf49f
+     Unfolding: ("sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ"#) -}
+0eba0d36f11d67d3449f08356c261910
   $w$sscientific ::
     [GHC.Types.Char]
     -> GHC.Prim.Int#
@@ -3007,7 +3006,7 @@ f39acfff653b4c2185ed9a963cb4844f
   {- Arity: 5,
      Strictness: <S,U><L,U><L,U><L,C(C1(C1(U)))><L,1*C1(C1(U))>,
      Inline: [2] -}
-e1191e070075e5d136c82e978e426ad4
+057e4be1203fe8e71388d15b99ede550
   $w$sskipLineComment ::
     Text.Megaparsec.Stream.Tokens [GHC.Types.Char]
     -> forall b1.
@@ -3032,7 +3031,7 @@ e1191e070075e5d136c82e978e426ad4
   {- Arity: 7,
      Strictness: <S,U><L,U><L,U><L,U><L,1*C1(C1(C1(U)))><L,1*C1(C1(C1(U)))><L,1*C1(C1(U))>,
      Inline: [2] -}
-4ea7f01e9921b92e5f50fd812ddc4dc4
+20ee07a4819c1d4e6ea722022a3b008c
   $w$sspace ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void GHC.Base.String Data.Functor.Identity.Identity ()
@@ -3059,7 +3058,7 @@ e1191e070075e5d136c82e978e426ad4
   {- Arity: 7,
      Strictness: <C(C(C(C(C(S))))),C(C1(C1(C1(C1(U)))))><L,C(C1(C1(C1(C1(U)))))><L,C(C1(C1(C1(C1(U)))))><L,U(U,U,U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))>,
      Inline: [2] -}
-d301870d92f70a4b11e5ee1f13972318
+412f0fed4202d05c3263ed0547d7faaa
   $wgo ::
     ([SEDEL.Source.Syntax.SDecl] -> [SEDEL.Source.Syntax.SDecl])
     -> forall b.
@@ -3082,7 +3081,7 @@ d301870d92f70a4b11e5ee1f13972318
   {- Arity: 5,
      Strictness: <L,C(U)><L,U(U,U,U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))>,
      Inline: [2] -}
-7f9c361b0cc1b899cab641fe0452ca88
+5e5111357c90fe0725821c5219544aa8
   $wk ::
     [SEDEL.Source.Syntax.SDecl]
     -> forall b.
@@ -3105,7 +3104,7 @@ d301870d92f70a4b11e5ee1f13972318
   {- Arity: 5,
      Strictness: <L,U><L,U(U,U,U)><L,C(C1(C1(U)))><L,U><L,C(C1(C1(U)))>,
      Inline: [2] -}
-624b27dd745fd79e25375a52e08a0cf4
+10eb2038326b5a0edf010c8fcb718ea4
   $wlvl ::
     [GHC.Types.Char]
     -> GHC.Prim.Int#
@@ -3167,7 +3166,7 @@ d301870d92f70a4b11e5ee1f13972318
                                     t `cast` (Sub (Sym (Text.Megaparsec.Stream.D:R:Token[][0]))))))
                            SEDEL.Parser.Parser.parseModule6)
                         (Text.Megaparsec.State.State @ [GHC.Types.Char] wild ww1 ww2) }) -}
-7c0cd9f60268c075f78cc988f3e87186
+b428990d4e8834faaf9c53131b9cc4a2
   $wprog ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (SEDEL.Source.Syntax.Module
@@ -3245,7 +3244,7 @@ d301870d92f70a4b11e5ee1f13972318
                          @ b1
                          hs
                          w3))) -}
-430422d62663a990c7a5f87e328d2c37
+5bed25728a675b4e2603a3db2267e6a4
   $wsc ::
     [GHC.Types.Char]
     -> GHC.Prim.Int#
@@ -3318,10 +3317,10 @@ d301870d92f70a4b11e5ee1f13972318
                           `cast`
                         (Sym (Text.Megaparsec.Internal.N:Hints[0]
                                   <Text.Megaparsec.Stream.Token [GHC.Types.Char]>_N)) } }) -}
-d3f243cd56cd5fb56aff9a99bb830c0b
+beec63f848473aab0fe2fbdbe584efc8
   type Parser =
     Text.Megaparsec.Parsec Data.Void.Void GHC.Base.String :: * -> *
-a558d1972ddbb4f92fbe0b8bcac98046
+859fecf6da80165842f75b773a664851
   parseModule ::
     GHC.Base.String
     -> Data.Either.Either GHC.Base.String SEDEL.Source.Syntax.Module
@@ -3437,7 +3436,7 @@ a558d1972ddbb4f92fbe0b8bcac98046
                              `cast`
                            (Sym (Text.Megaparsec.Pos.N:Pos[0]))
                            (GHC.Types.[] @ GHC.Types.Char)) } }) -}
-c76b17694ed72c8a704d969137dd5e9a
+ecfe4b65d9b745e8ae1d3a645a68e3ef
   parseModule1 ::
     Text.Megaparsec.Error.ParseError GHC.Base.String Data.Void.Void
     -> Text.Megaparsec.State.State GHC.Base.String
@@ -3458,7 +3457,7 @@ c76b17694ed72c8a704d969137dd5e9a
                       @ Data.Void.Void
                       @ SEDEL.Source.Syntax.Module
                       err)) -}
-e52d6bd3adbac7eff04ced073aacf98a
+871a9c5c05a7c9e1ece157dc9a767150
   parseModule10 ::
     Text.Megaparsec.Internal.ParsecT
       Data.Void.Void GHC.Base.String Data.Functor.Identity.Identity ()
@@ -3469,21 +3468,21 @@ e52d6bd3adbac7eff04ced073aacf98a
                    SEDEL.Parser.Parser.parseModule11
                      `cast`
                    (Sub (Sym (Text.Megaparsec.Stream.D:R:Tokens[][0])))) -}
-7c229ac3f040ba702eda6beceb75d5ab
+bba7132763ef21a4b6d54e2bbf200699
   parseModule11 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    SEDEL.Parser.Parser.parseModule12) -}
-018d1495d0feb22b87fa042a6f1acde4
+3c668b2aee434e32864d55e58e29b258
   parseModule12 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("-}"#) -}
-5cbe19917d72e7b175b336696491e553
+8d6648172ed36129f4f0128cbdfcaf10
   parseModule13 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    SEDEL.Parser.Parser.parseModule14) -}
-74400d22bd7642dd6cc111b8983bc000
+7c9dcd316765832881c3b89d8fb1cf64
   parseModule14 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("{-"#) -}
-5d3afe9e92f6bb1e4b068deda70230fd
+737caf8b5c202155dd43cb1824bd6ecd
   parseModule15 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (()
@@ -3539,14 +3538,14 @@ e52d6bd3adbac7eff04ced073aacf98a
                    w1
                    w3
                    w4 }) -}
-16f942885be7aa2f0ee515b82150304d
+a1ad04462761248bd72b4ce8c884249d
   parseModule16 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    SEDEL.Parser.Parser.parseModule17) -}
-aea025ea2b3137e6a6c689deaf6c3837
+8e1cdcc8391fb0be5bd12cf9ec43b698
   parseModule17 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("--"#) -}
-eedca340096486ac87758668317f810c
+186b9ee816247b5cb18fa412e909a4ed
   parseModule18 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (()
@@ -3594,7 +3593,7 @@ eedca340096486ac87758668317f810c
                           -> Data.Functor.Identity.Identity b1) ->
                  case w of ww { Text.Megaparsec.State.State ww1 ww2 ww3 ->
                  SEDEL.Parser.Parser.$wsc @ b1 ww1 ww2 ww3 w1 w4 }) -}
-a5439d91d734e99dee37de4f5d79f8bf
+43992b2ae702217c92519d93182fca35
   parseModule19 ::
     [Data.Set.Internal.Set
        (Text.Megaparsec.Error.ErrorItem
@@ -3609,7 +3608,7 @@ a5439d91d734e99dee37de4f5d79f8bf
                       @ (Data.Set.Internal.Set
                            (Text.Megaparsec.Error.ErrorItem
                               (Text.Megaparsec.Stream.Token [GHC.Types.Char]))))) -}
-98c124ff09938ce30ff88497c2c2bb9e
+9a45774652c5b188ccc774caf36c3c3f
   parseModule2 ::
     SEDEL.Source.Syntax.Module
     -> Text.Megaparsec.State.State GHC.Base.String
@@ -3633,7 +3632,7 @@ a5439d91d734e99dee37de4f5d79f8bf
                       @ Data.Void.Void
                       @ SEDEL.Source.Syntax.Module
                       a1)) -}
-06d92d697997bf99ea08e7c2d8078da0
+4450f404c86a94028597e98b4ebc867a
   parseModule20 ::
     Data.Set.Internal.Set
       (Text.Megaparsec.Error.ErrorItem
@@ -3650,7 +3649,7 @@ a5439d91d734e99dee37de4f5d79f8bf
                    (Data.Set.Internal.Tip
                       @ (Text.Megaparsec.Error.ErrorItem
                            (Text.Megaparsec.Stream.Token [GHC.Types.Char])))) -}
-4341b636138898230cd10be6a1fa7151
+b0caf0501b835fb4594177a44b7ee868
   parseModule21 ::
     Text.Megaparsec.Error.ErrorItem
       (Text.Megaparsec.Stream.Token [GHC.Types.Char])
@@ -3658,24 +3657,24 @@ a5439d91d734e99dee37de4f5d79f8bf
      Unfolding: (Text.Megaparsec.Error.Label
                    @ (Text.Megaparsec.Stream.Token [GHC.Types.Char])
                    SEDEL.Parser.Parser.parseModule22) -}
-be671540b6582e3a846060001bba8dcb
+ce6d8b30ed8f57a001f9cf5bec2d951f
   parseModule22 :: GHC.Base.NonEmpty GHC.Types.Char
   {- Strictness: m,
      Unfolding: (GHC.Base.:|
                    @ GHC.Types.Char
                    SEDEL.Parser.Parser.parseModule25
                    SEDEL.Parser.Parser.parseModule23) -}
-52740d59b833f0b5269666df93cd6f37
+03e526d48f7a1f428898e2a117499f4a
   parseModule23 :: [GHC.Types.Char]
   {- Unfolding: (GHC.CString.unpackCString#
                    SEDEL.Parser.Parser.parseModule24) -}
-413a649df8caf6b0609fe396ad855d0a
+0d7bf3bcb2a30538fe1df54f13f957ed
   parseModule24 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("hite space"#) -}
-b26c957c422a698ba22881591f0411b8
+b79a4a1bc7be9dbb09820e814b17fbce
   parseModule25 :: GHC.Types.Char
   {- HasNoCafRefs, Strictness: m, Unfolding: (GHC.Types.C# 'w'#) -}
-b710bd47c3b83a7928336f85cc30299c
+bfef57959a1f1cf65e279a433c4d583f
   parseModule3 ::
     Text.Megaparsec.Error.ParseError GHC.Base.String Data.Void.Void
     -> Text.Megaparsec.State.State GHC.Base.String
@@ -3696,7 +3695,7 @@ b710bd47c3b83a7928336f85cc30299c
                       @ Data.Void.Void
                       @ SEDEL.Source.Syntax.Module
                       err)) -}
-337ce085a869bb09a3a599f934bdebf1
+15cde05326be05ab9e437dcb0a50aa95
   parseModule4 ::
     SEDEL.Source.Syntax.Module
     -> Text.Megaparsec.State.State GHC.Base.String
@@ -3720,7 +3719,7 @@ b710bd47c3b83a7928336f85cc30299c
                       @ Data.Void.Void
                       @ SEDEL.Source.Syntax.Module
                       a1)) -}
-c0f73a2416f0bd96e1e9606265dd55df
+faef75fe8887b8fff2a459f5c509a833
   parseModule5 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (()
@@ -3768,7 +3767,7 @@ c0f73a2416f0bd96e1e9606265dd55df
                           -> Data.Functor.Identity.Identity b) ->
                  case w of ww { Text.Megaparsec.State.State ww1 ww2 ww3 ->
                  SEDEL.Parser.Parser.$wlvl @ b ww1 ww2 ww3 w3 w4 }) -}
-afb4289efd38d6c6a3d128f2e895b532
+04d8512829d99c4f2ab589626811d38f
   parseModule6 ::
     Data.Set.Internal.Set
       (Text.Megaparsec.Error.ErrorItem
@@ -3786,7 +3785,7 @@ afb4289efd38d6c6a3d128f2e895b532
                    (Data.Set.Internal.Tip
                       @ (Text.Megaparsec.Error.ErrorItem
                            (Text.Megaparsec.Stream.Token [GHC.Types.Char])))) -}
-34373580547281579dcba6c37181c2ee
+66e75ac88d06d6a070baef79a5f4246a
   parseModule7 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (SEDEL.Source.Syntax.Module
@@ -3830,7 +3829,7 @@ afb4289efd38d6c6a3d128f2e895b532
                              <[GHC.Types.Char]>_N
                              <Data.Functor.Identity.Identity>_R
                              <SEDEL.Source.Syntax.Module>_R))) -}
-d45258f8a817aeb405b5f3495a08f7e9
+4d6131061eff678cd92f7c33bba8661e
   parseModule8 ::
     Text.Megaparsec.State.State [GHC.Types.Char]
     -> (SEDEL.Source.Syntax.Module
@@ -3877,7 +3876,7 @@ d45258f8a817aeb405b5f3495a08f7e9
                           -> Text.Megaparsec.State.State [GHC.Types.Char]
                           -> Data.Functor.Identity.Identity b1) ->
                  SEDEL.Parser.Parser.$wprog @ b1 w w1 w2 w3) -}
-715c79f158fbf54366a327663cb11253
+ad394799d525ff122018e4ab5578fc64
   parseModule9 ::
     Text.Megaparsec.State.State GHC.Base.String
     -> (()
@@ -3940,7 +3939,7 @@ d45258f8a817aeb405b5f3495a08f7e9
                    w1
                    w2
                    w3) -}
-de5d1704c881e19bab1b3a3cf9a032e3
+66840531204e3c99781e940f520c14f9
   parseModule_s2 :: Text.Megaparsec.Pos.SourcePos
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (Text.Megaparsec.Pos.SourcePos

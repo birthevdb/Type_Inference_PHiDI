@@ -1,12 +1,12 @@
 
 ==================== FINAL INTERFACE ====================
-2019-03-27 11:18:52.035226 UTC
+2019-08-12 12:24:16.559227 UTC
 
-interface sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.PrettyPrint [orphan module] 8063
-  interface hash: 91b9f978ddf912ccb3cae00bf515a355
-  ABI hash: f1989f434297afaffeb0400ac83369d8
-  export-list hash: fc8e469d5c6860b5918a12f67da268d9
-  orphan hash: 0693775dc5dd91eda7a8b0e4fa599457
+interface sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.PrettyPrint [orphan module] 8063
+  interface hash: 1ea7c3e94ea4d1c1411f0618bd7d6212
+  ABI hash: a34bffe1a10b43afb675c089919de4ed
+  export-list hash: 143f4b15e4a5a88e60030586dbaf2fd5
+  orphan hash: 3af1ec8eec739a171cf2f0ad02b43177
   flag hash: bbf1d09a6f244c80e539913bf0a7bed3
   opt_hash: 6faf2de08de32d19db9870899d88e59a
   hpc_hash: 93b885adfe0da089cdf634904fd59f71
@@ -19,7 +19,8 @@ exports:
   SEDEL.PrettyPrint.D{SEDEL.PrettyPrint.DD SEDEL.PrettyPrint.DS}
   SEDEL.PrettyPrint.FDoc
   SEDEL.PrettyPrint.FPretty{SEDEL.PrettyPrint.ppr}
-module dependencies: SEDEL.Common SEDEL.Source.Syntax
+module dependencies: SEDEL.Common SEDEL.Intermediate.Syntax
+                     SEDEL.Source.Syntax
 package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
                       base-orphans-0.8 bifunctors-5.5.3 binary-0.8.6.0
                       bytestring-0.10.8.2 comonad-5.0.4 containers-0.6.0.1
@@ -30,7 +31,8 @@ package dependencies: array-0.5.3.0 async-2.2.1 base-4.12.0.0
                       profunctors-5.3 protolude-0.2.3 stm-2.5.0.0 tagged-0.8.6
                       template-haskell-2.14.0.0 text-1.2.3.1 transformers-0.5.5.0
                       unbound-generics-0.4.0
-orphans: sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+orphans: sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Source.Syntax
+         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Intermediate.Syntax
          transformers-0.5.5.0:Control.Monad.Trans.Error
          stm-2.5.0.0:Control.Monad.STM
          hashable-1.2.7.0:Data.Hashable.Generic text-1.2.3.1:Data.Text.Lazy
@@ -67,8 +69,9 @@ family instance modules: base-4.12.0.0:Control.Applicative
                          pretty-1.1.3.6:Text.PrettyPrint.Annotated.HughesPJ
                          pretty-1.1.3.6:Text.PrettyPrint.HughesPJ
                          prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal
-                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Common
-                         sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc:SEDEL.Source.Syntax
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Common
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Intermediate.Syntax
+                         sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ:SEDEL.Source.Syntax
                          tagged-0.8.6:Data.Tagged
                          template-haskell-2.14.0.0:Language.Haskell.TH.Syntax
                          text-1.2.3.1:Data.Text text-1.2.3.1:Data.Text.Lazy
@@ -81,6 +84,7 @@ family instance modules: base-4.12.0.0:Control.Applicative
                          unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Shift
 import  -/  base-4.12.0.0:Data.Functor 22aac80fdb6c7b7f60b4aaab86afee64
 import  -/  base-4.12.0.0:Data.List ce2c69da408fdc014383cede9e1f9adf
+import  -/  base-4.12.0.0:Data.Maybe 1e8e1362415df45376dffd98f8a47766
 import  -/  base-4.12.0.0:Data.OldList c2cab40fed7d27b5e717779f9a3c09ea
 import  -/  base-4.12.0.0:Data.Traversable 257e9f3b6739f5bfbaaf0ac0abb0ddc5
 import  -/  base-4.12.0.0:Data.Tuple c92a835d04b6c075a7031d4e28e53c71
@@ -92,65 +96,108 @@ import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc 37bebc045f3a0cb8e8977c
 import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Internal 12d379fe6b8bbcab8bffc2d86df0e72f
 import  -/  prettyprinter-1.2.1:Data.Text.Prettyprint.Doc.Symbols.Ascii 91602a77e9f9b3606b529aea701ac155
 import  -/  protolude-0.2.3:Protolude f69a0445642f255f4ede68732259560a
-import  -/  SEDEL.Common dd957746dc264eb9e0f081197e6a170a
-  exports: 2f8960fc3866b3ed3935cca8fdf4af32
-  Add 7b5689630bb805d45c2d9b7c91a94aa7
-  Arith ba6e6ee2769ab90fc6f8bfe05c457547
-  ArithOp 0aaa00a153eb626e5d21bd1750de97e0
-  Comp 95be31892a65ce02162c0359b2fd7836
-  CompOp bd4dc882484487a657a98a54325b8d8c
-  Div 9d90e9fa046956310d732e8eb846ddaa
-  Equ be009671f59de591c88946764f695cd4
-  Gt be31fcc4422ad1046b7cadef42d4a00a
-  LAnd 76e1d65d2c4efb84dfc892b6876887fc
-  LOr 3d9fb39352f5a35a5a2f3fb33be00346
-  Logical 5f88c0dcda3f0bb8a2151f64e886bf39
-  LogicalOp 5c34a69eb46fb1dc1aa1cd93ac73660a
-  Lt d3b4077c262575c1c54e4e55843feca5
-  Mul dbcecb52257f0e0de6cdb3f840d576b0
-  Neq 2a26dcc2307ec55211eb17750235a9c5
-  Operation 0aaa00a153eb626e5d21bd1750de97e0
-  Sub 10f07d4be3387d45df0fd4398e7b0df1
-import  -/  SEDEL.Source.Syntax 2df5c51304ce3d5073c843cca574c67e
-  exports: d4d2fd645eff9adcf509b28019caf96b
-  And 858cda1fbe6f64a52489f771e0708139
-  App 2c964fefc28aabf42ed9dbe40c3accd3
-  Arr 22416be279c31386e9cc95e9c9b2de68
-  BoolT 9eb5ff7582ee586b5677d133bc3c5a82
-  BoolV d7377f24937105ba95ef7593def4f4bf
-  BotT e9fc1220c215208a25f3ef509fa1d4c0
-  DForall 3b7d6b5afb57e716755254c1449edcb0
-  DRec 67d90dc5830827b93ce062be4b2fee0f
-  DRec' 4cfdae78935e00e853289c18a1ad3519
-  Expr 76520494bd75ab62670e86072668ba13
-  If 004baac8f2ab270853994d5c063473ee
-  Join a4919cbd9c43f86a7e132f12d2cdc38f
-  KArrow ab6b07ec960f55f29ed70160815055d1
-  Kind 76520494bd75ab62670e86072668ba13
-  Lam 89716123ec809e2cc8bdc155ae4f4668
-  Let eef6e727cd3f41679ad959a78238d920
-  LitV bd5053bd7f79e6c004652065acad3370
-  Meet b52f57d57eb5f073ea5cb7b7cef99237
-  Merge bfed41bbda08db4fffae7c43cde3fe30
-  NumT adf11e6708e5e8a7ec46f283d84a97ad
-  Pos e1abba9e1a944fd21252fe9a5857484c
-  PrimOp 75d0f502551fe7e315ae75fc195bd1b1
-  Proj 6a5a97deaf11de74c15ccfb48a027d1d
-  SRecT 9b864ff12762d70109c77b1f5eea4c3a
-  SType a5fd2e9b5e852c36afadad4c1a615a65
-  SType 76520494bd75ab62670e86072668ba13
-  Scheme 76520494bd75ab62670e86072668ba13
-  Star fd95d747935c5574b8df46154b9b35c7
-  TUni 9eb22e5d95f0de04502f16ea4eb97bf9
-  TVar 3e45bba34d2b60ad4b6a831b8a2e52f8
-  Top 072bc63b13d03508f9113d1a45bc6153
-  TopT 1b95963f14ca91731abc40c7b31bb3cf
-  Var 6d082d2f0a5af10d8ab316bafa598eed
+import  -/  SEDEL.Common ca6f88eb795bfe7d09e23d21fb3eb87f
+  exports: 576471b9a47b800d5ba3919671488556
+  Add 776209293c66bfbb867e64fd01ec5524
+  Arith 477cbffa1e7281d92b0f71e3720dc821
+  ArithOp 2a0c91384ff6cefd07c7d1887666077f
+  Comp 348f8575ea4d65185d0a29b6b8a92535
+  CompOp daa3f54736e3f81d2c049bbf6395f88d
+  Div 038c227c045fd71eab722d2d4ecf42f4
+  Equ 67fac86250d28575acf5a4936b4d65f2
+  Gt 09d0b76e11a0a36a8ec9bbc51138f538
+  LAnd 61b95ad1d220eda80a50c7e39a9a6ef6
+  LOr 5c15e5469fc495263fe77dda9252bfb5
+  Logical 5837ab3db90e339a87f10215bf5c0d98
+  LogicalOp d876d99f20cce7257c46364013f67fae
+  Lt ec4763cf594c42d458ce6a69ab350bdf
+  Mul 8b6e84ede92e2ad36aa9f079a7b05e08
+  Neq a72a14e8f114dd3e7b3cb975e2df8af3
+  Operation 2a0c91384ff6cefd07c7d1887666077f
+  Sub 622974ee4a8131461dc7a2973ecbc9b1
+import  -/  SEDEL.Intermediate.Syntax f958fad6e88fb88eb220133854cd0fcf
+  exports: 205c54e0e633701a9c7db27d9e71b968
+  Acc 50449da8b79b6403275760f7c0f05ece
+  And 15e1ded2f3bbcadc4162e4e119116ac9
+  Anno 3b8b799c79e61b639c9369f6ac2bf4a7
+  App ff2525441e5744c6dea8924ba85c5a89
+  Arr 67bf5e54ab670aa4667f502840078175
+  BoolT 10944865bc1859b72c3ba7f72dd63352
+  BoolV 4e5f762e3449257dcbb3a6502f310b3c
+  Bot 34d4918473f5638a6014941164b5887c
+  BotT f96e7b92a373f30b30ed7c95531b198e
+  DForall 6c1938680f5feebfa496fd3397ed5f1a
+  DLam 223568e4f79a45b36c353b67b444df5d
+  DRec' 195b7777b4066207efa79fa4c302ae9e
+  FExpr bfd7da9f3e523c5cb9c209b4524af79c
+  FType bfd7da9f3e523c5cb9c209b4524af79c
+  If 726850f641f43936ed8a48922dec3845
+  KArrow 745259a78431f98ec54a340182ccf909
+  Kind 75dced522dd6f4b8712252c258eff413
+  Lam 791c9dff8a0786da361ef25db8d8b8df
+  LamA 14e691aa41f51a6791a7fb524a19dd47
+  Letrec 19373a9fddf613155330e1de49c97a1d
+  LitV 96c0449095baa9dc5fda4fc089c789b8
+  Merge cf7e9ccafa838993db0db179148b5c9b
+  NumT ccfcdffde64466a60dbb3dddbad25fae
+  OpAbs 3d0162f4719435365b2a7c3d6a4c681b
+  OpApp 149705c7531f3d1c949e153714b028a2
+  Pos 56e7d56eddb105a3d7f1db50a1f1411e
+  PrimOp e099b50bc31f3b0384a9ac0ceff59e5d
+  Rec aed03fd874984984aa1bdab4a623bbd6
+  Remove 9ecf3cc3609521576db3213519e5bf82
+  SRecT f1108eca326ecc8b5cca8b18388ffffc
+  Star fa8ba77579e6cdb1b751fc046f3dc428
+  TApp 2643e03238f98b08f49fc556fb26e0dd
+  TVar 28a05eb0107d74d23292c869b32cb560
+  Top fde26466ae2af9fe577da69bde44781b
+  TopT 468057410ade7257fcfc41c369faaefb
+  Var 731cc8c46e98b27624ba7cb24de70db3
+import  -/  SEDEL.Source.Syntax ec83a0da1c10765115fe4a9f09c754b0
+  exports: 9689242b0decab272007a11f45b72d7d
+  And 0283b9e7440c4a3e47a1281e02970dde
+  App c363422f50778c82e96747329eb9877e
+  Arr df83e91aec2f80dc9d042375099bb771
+  BoolT 21df8d7d01d510390fe4d585a4a596cd
+  BoolV a99acac4209ebf13e71934080c423400
+  BotT 77bd90a3bcfd29395ef1007b8a6a4ee6
+  DForall 0b90eb4f4665e714927dfbf10c3a2bda
+  DRec' 7cbb27fc4ed6a9f26ea9ac20bbfb9298
+  Expr 350069ed8c9e308e7d171878eb06250d
+  If 8adb062a80541f4537caeee81d7bc725
+  Join fd0576a7fff161cbb30df37e3fc17cf8
+  KArrow d282eee0930a130f02081653aba641ad
+  Kind 350069ed8c9e308e7d171878eb06250d
+  Lam 63512428e48d94b955997c9b670e149e
+  Let 01c008f6cf31bc0acec7ee6debf6c39a
+  LitV 0126dc7c0aca06604ce1c1866a4ca27b
+  Meet 06799f30830af46a66c37e86fd796d49
+  Merge 8618c4cff7c45435653614618dd77223
+  NumT 539f9e6436bb2f46e0e1ed9aac813b1c
+  P 38a54183865af29e6bb4dc58fd09aac0
+  PAnd cb1bd11c644393f565803985f1abb20a
+  PArr fe2a99d0131aa33b0f29a163b75d9b28
+  PRecT c1e591e772f6b5a79d9cb0460894b674
+  PType 350069ed8c9e308e7d171878eb06250d
+  Pos caef810378ba48ca7966a52d7584d18f
+  PrimOp 459db753a665a5d3d985408f034250f5
+  Proj c9b17242d24bcebd4dda5844c7db7905
+  Rec f54127b91625470e365ba58cc88fab42
+  SRecT 4b07dd6d7293a4e5e53901cef6634094
+  SType 2633b8b7955e013a3831a0582461061f
+  SType 350069ed8c9e308e7d171878eb06250d
+  Scheme 350069ed8c9e308e7d171878eb06250d
+  Star 360a731d5e4cf3a645e5f82bd30238ed
+  TVar 2d4c55a015b709b4614fff76215f0c95
+  Top 98e3b66dfbd16b59d9fe44f403ad750d
+  TopT fa9c823349a4c24a48445d1081f1a548
+  Uni d569eef21041c954137d696a69bd704e
+  Var 631e2156171f241947a37d09f9c20f3b
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless 36704d4dbfb3fb22f46cde363ae796f2
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Embed f74cff3aea20e9a2f5e6bfc539a9689b
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.LFresh 7a8ae21a433faccc530c0e3a85d0c972
 import  -/  unbound-generics-0.4.0:Unbound.Generics.LocallyNameless.Operations d0c219408974b95413509bf76023577c
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPrettyArithOp :: SEDEL.PrettyPrint.FPretty SEDEL.Common.ArithOp
   DFunId
   {- Arity: 3,
@@ -160,47 +207,47 @@ b3792b8f3b952cae1eba0f731312b4ce
                 SEDEL.PrettyPrint.$fFPrettyArithOp_$cppr
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.Common.ArithOp>_N)) -}
-2c3fd6faa52ceaa30eb2ae0583cae9b8
+b787fa2cba437d2ee2c737769f503156
   $fFPrettyArithOp1 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyArithOp2)) -}
-8fac0bedb60e01f4349f0fe93b8396a1
+5372f43d5c07a76e84f766faf1ceaab9
   $fFPrettyArithOp2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("/"#) -}
-4f3c9b3f57c8d02ade1ff2a2d4834cd5
+d5282cf1bbe7ce7011a3c107d8e4e65d
   $fFPrettyArithOp3 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyArithOp4)) -}
-1368c3fb7139dd91b54129685a99031b
+35394298b4d5075febe1cea9b6b28b87
   $fFPrettyArithOp4 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("*"#) -}
-506d6cc7d3adaea95b8ce9953e3ca3c5
+886efcb744924282e28a1b52e2dbb8c3
   $fFPrettyArithOp5 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyArithOp6)) -}
-7e35281ffe23025ba9c25203c1f4d05e
+97dfc6b63c7c20fd7f36a6155011c8fd
   $fFPrettyArithOp6 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("-"#) -}
-fe1140c47bcf379788249dc43c0de42c
+ddf5e5f60e0f2b5af56a42d091ec065d
   $fFPrettyArithOp7 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyArithOp8)) -}
-32944c8f7a32c262889e66fb9a9d6ed5
+c43b43de93f9afe442cf17e579c7cefa
   $fFPrettyArithOp8 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("+"#) -}
-2ed2ed8697816e00cdad8e63fbcba933
+ade75e534b624e8a1c3ea80b8dd12f62
   $fFPrettyArithOp_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -216,7 +263,7 @@ fe1140c47bcf379788249dc43c0de42c
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
                  SEDEL.PrettyPrint.$w$cppr @ m ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPrettyCompOp :: SEDEL.PrettyPrint.FPretty SEDEL.Common.CompOp
   DFunId
   {- Arity: 3,
@@ -226,43 +273,43 @@ b3792b8f3b952cae1eba0f731312b4ce
                 SEDEL.PrettyPrint.$fFPrettyCompOp_$cppr
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.Common.CompOp>_N)) -}
-022becc9f837c8840242ca056e45b6ee
+e504acb076be7a41e6684edaf2176531
   $fFPrettyCompOp1 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp2)) -}
-7e06822f0c90bbc5bd6b219d9d9cb8ef
+d6a5a26047887ce2f00202c0fc47d4db
   $fFPrettyCompOp2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("!="#) -}
-a981c7bad562788df3ee27eb32e2eebd
+50357f129268acafdef684571d5403b1
   $fFPrettyCompOp3 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp4)) -}
-c256f92bfb7f0e6f9926403bbfea696f
+d10d86749172c9f54bd99e0f0ffba03f
   $fFPrettyCompOp4 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("=="#) -}
-040ad07d9e34a9dc68d64aae4426e33c
+725ae5232f81e6f65460070c8de061bf
   $fFPrettyCompOp5 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp6)) -}
-394afbcbd41623bee1d6e171e7490750
+c9c10d8bc4120e87bf25f84d3ae9d13e
   $fFPrettyCompOp6 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: (">"#) -}
-f5a9f6be49a8a096e50ef055e49e8e65
+e1acfef7792227d64b8f1dfeb90f590f
   $fFPrettyCompOp7 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString# SEDEL.PrettyPrint.$fFPrettyCompOp8)) -}
-3b008c8c7672abcd7133e8826460f825
+5a70424550632231b8218e2760e5f14e
   $fFPrettyCompOp8 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("<"#) -}
-5ebf845a708b5b8f22dcca251b4fb714
+955561165c601c40511ae7be9222bf23
   $fFPrettyCompOp_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -278,7 +325,7 @@ f5a9f6be49a8a096e50ef055e49e8e65
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
                  SEDEL.PrettyPrint.$w$cppr1 @ m ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPrettyD :: SEDEL.PrettyPrint.FPretty SEDEL.PrettyPrint.D
   DFunId
   {- Arity: 3, HasNoCafRefs,
@@ -288,7 +335,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                 SEDEL.PrettyPrint.$fFPrettyD_$cppr
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0] <SEDEL.PrettyPrint.D>_N)) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPrettyD_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -301,7 +348,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                    (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
                    (w2 :: SEDEL.PrettyPrint.D) ->
                  SEDEL.PrettyPrint.$w$cppr2 @ m w1 w2) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPrettyExpr :: SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Expr
   DFunId
   {- Arity: 2,
@@ -312,7 +359,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Source.Syntax.Expr>_N)) -}
-c56221fa5650b1473c7ff3442a9ac4cf
+de1faac3487b0b2e25e5ed6e30fc62a1
   $fFPrettyExpr_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -325,8 +372,59 @@ c56221fa5650b1473c7ff3442a9ac4cf
                    (w :: GHC.Base.Applicative m)
                    (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
                  SEDEL.PrettyPrint.$w$cppr3 @ m w1) -}
-b3792b8f3b952cae1eba0f731312b4ce
-  $fFPrettyKind :: SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Kind
+45fe98a51a442638ccb5054763267604
+  $fFPrettyFExpr ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Intermediate.Syntax.FExpr
+  DFunId
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyFExpr_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Intermediate.Syntax.FExpr>_N)) -}
+26ae2d7ece1b86051adc34b32d356162
+  $fFPrettyFExpr_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Intermediate.Syntax.FExpr -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [2],
+     Unfolding: InlineRule (2, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                 SEDEL.PrettyPrint.$w$cppr4 @ m w1) -}
+45fe98a51a442638ccb5054763267604
+  $fFPrettyFType ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Intermediate.Syntax.FType
+  DFunId
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyFType_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Intermediate.Syntax.FType>_N)) -}
+b8f0c0eb6ffc4af46ce2b2693ff5f658
+  $fFPrettyFType_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Intermediate.Syntax.FType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <L,A><L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [2],
+     Unfolding: InlineRule (2, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m) ->
+                 SEDEL.PrettyPrint.$w$cppr5 @ m w1) -}
+45fe98a51a442638ccb5054763267604
+  $fFPrettyKind ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Intermediate.Syntax.Kind
   DFunId
   {- Arity: 3,
      Strictness: <L,A><S(SLLL),1*U(1*U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
@@ -335,9 +433,21 @@ b3792b8f3b952cae1eba0f731312b4ce
                 SEDEL.PrettyPrint.$fFPrettyKind_$cppr
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Intermediate.Syntax.Kind>_N)) -}
+45fe98a51a442638ccb5054763267604
+  $fFPrettyKind0 ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Kind
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),1*U(1*U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyKind0_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Source.Syntax.Kind>_N)) -}
-afdcd74a9992ac82c87b73b6ac38e5d9
-  $fFPrettyKind_$cppr ::
+a0b7f2e35f0658f146f0fc473f0b959b
+  $fFPrettyKind0_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
     SEDEL.Source.Syntax.Kind -> m SEDEL.PrettyPrint.FDoc
@@ -351,8 +461,24 @@ afdcd74a9992ac82c87b73b6ac38e5d9
                    (w2 :: SEDEL.Source.Syntax.Kind) ->
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
-                 SEDEL.PrettyPrint.$w$cppr4 @ m ww7 ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+                 SEDEL.PrettyPrint.$w$cppr7 @ m ww7 ww9 w2 } }) -}
+5596a616f2d1939e271a25f0a4fe097f
+  $fFPrettyKind_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Intermediate.Syntax.Kind -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),1*U(1*U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: [2],
+     Unfolding: InlineRule (3, True, False)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Intermediate.Syntax.Kind) ->
+                 case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
+                 case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
+                 SEDEL.PrettyPrint.$w$cppr6 @ m ww7 ww9 w2 } }) -}
+45fe98a51a442638ccb5054763267604
   $fFPrettyLogicalOp ::
     SEDEL.PrettyPrint.FPretty SEDEL.Common.LogicalOp
   DFunId
@@ -364,27 +490,27 @@ b3792b8f3b952cae1eba0f731312b4ce
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Common.LogicalOp>_N)) -}
-d0191c1fbca97122f698672fa20473c2
+aeec8668119fb2b44887a67a0adc9114
   $fFPrettyLogicalOp1 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyLogicalOp2)) -}
-f0f7bd03c7617f978464d50dbbb1477a
+1ab81f8da24fd17faec8f162c149c6ae
   $fFPrettyLogicalOp2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("||"#) -}
-d6b7261b2061d18860170d06c365fab5
+950987263c62a5182e39408eea978a40
   $fFPrettyLogicalOp3 ::
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
   {- Unfolding: (Data.Text.Prettyprint.Doc.Internal.$fIsStringDoc_$cfromString
                    @ SEDEL.PrettyPrint.FAnn
                    (GHC.CString.unpackCString#
                       SEDEL.PrettyPrint.$fFPrettyLogicalOp4)) -}
-d90ca62aa4db5c7c8270ffd6113cf1e5
+75c3df20739d7b62d275f161f0be3a00
   $fFPrettyLogicalOp4 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("&&"#) -}
-1836952b7bdf833c44b87ea2f8fe41dd
+5bbae5e0c4e18b48fff9cf1ad829aa2b
   $fFPrettyLogicalOp_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -399,8 +525,8 @@ d90ca62aa4db5c7c8270ffd6113cf1e5
                    (w2 :: SEDEL.Common.LogicalOp) ->
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
-                 SEDEL.PrettyPrint.$w$cppr5 @ m ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+                 SEDEL.PrettyPrint.$w$cppr8 @ m ww9 w2 } }) -}
+45fe98a51a442638ccb5054763267604
   $fFPrettyOperation ::
     SEDEL.PrettyPrint.FPretty SEDEL.Common.Operation
   DFunId
@@ -412,7 +538,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Common.Operation>_N)) -}
-5827926a2141162f098702aa532f31f1
+f085d2b7bc6c47af3760dc9129dd6568
   $fFPrettyOperation_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -427,8 +553,34 @@ b3792b8f3b952cae1eba0f731312b4ce
                    (w2 :: SEDEL.Common.Operation) ->
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
-                 SEDEL.PrettyPrint.$w$cppr6 @ m ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+                 SEDEL.PrettyPrint.$w$cppr9 @ m ww9 w2 } }) -}
+45fe98a51a442638ccb5054763267604
+  $fFPrettyPType ::
+    SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.PType
+  DFunId
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: (sat-args=0),
+     Unfolding: InlineRule (0, False, True)
+                SEDEL.PrettyPrint.$fFPrettyPType_$cppr
+                  `cast`
+                (Sym (SEDEL.PrettyPrint.N:FPretty[0]
+                          <SEDEL.Source.Syntax.PType>_N)) -}
+5971803839adb6f72b9a426d0dcc0c81
+  $fFPrettyPType_$cppr ::
+    (GHC.Base.Applicative m,
+     Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
+    SEDEL.Source.Syntax.PType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3,
+     Strictness: <L,A><S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
+     Inline: [2],
+     Unfolding: InlineRule (3, True, True)
+                (\ @ m :: * -> *
+                   (w :: GHC.Base.Applicative m)
+                   (w1 :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w2 :: SEDEL.Source.Syntax.PType) ->
+                 SEDEL.PrettyPrint.$w$cppr10 @ m w1 w2) -}
+45fe98a51a442638ccb5054763267604
   $fFPrettySType ::
     SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.SType
   DFunId
@@ -440,7 +592,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Source.Syntax.SType>_N)) -}
-cdca44adecff66916efe25396c64796c
+45067d6120efe9516601cf2f1c05a15a
   $fFPrettySType_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -455,8 +607,8 @@ cdca44adecff66916efe25396c64796c
                    (w2 :: SEDEL.Source.Syntax.SType) ->
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
-                 SEDEL.PrettyPrint.$w$cppr7 @ m ww7 ww9 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+                 SEDEL.PrettyPrint.$w$cppr11 @ m ww7 ww9 w2 } }) -}
+45fe98a51a442638ccb5054763267604
   $fFPrettyScheme ::
     SEDEL.PrettyPrint.FPretty SEDEL.Source.Syntax.Scheme
   DFunId
@@ -468,7 +620,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0]
                           <SEDEL.Source.Syntax.Scheme>_N)) -}
-a91aabf96b0f9e608981844bcecad958
+0e36e43f87179a193eb8732a9b01f48e
   $fFPrettyScheme_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -483,8 +635,8 @@ a91aabf96b0f9e608981844bcecad958
                    (w2 :: SEDEL.Source.Syntax.Scheme) ->
                  case w1 of ww { Unbound.Generics.LocallyNameless.LFresh.C:LFresh ww1 ww2 ww3 ww4 ->
                  case ww1 of ww5 { GHC.Base.C:Monad ww6 ww7 ww8 ww9 ww10 ->
-                 SEDEL.PrettyPrint.$w$cppr8 @ m ww7 ww9 ww2 ww3 w2 } }) -}
-b3792b8f3b952cae1eba0f731312b4ce
+                 SEDEL.PrettyPrint.$w$cppr12 @ m ww7 ww9 ww2 ww3 w2 } }) -}
+45fe98a51a442638ccb5054763267604
   $fFPretty[] :: SEDEL.PrettyPrint.FPretty [SEDEL.PrettyPrint.D]
   DFunId
   {- Arity: 3,
@@ -494,7 +646,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                 SEDEL.PrettyPrint.$fFPretty[]_$cppr
                   `cast`
                 (Sym (SEDEL.PrettyPrint.N:FPretty[0] <[SEDEL.PrettyPrint.D]>_N)) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   $fFPretty[]_$cppr ::
     (GHC.Base.Applicative m,
      Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
@@ -509,8 +661,8 @@ b3792b8f3b952cae1eba0f731312b4ce
                    (w2 :: [SEDEL.PrettyPrint.D]) ->
                  case w of ww { GHC.Base.C:Applicative ww1 ww2 ww3 ww4 ww5 ww6 ->
                  case ww1 of ww7 { GHC.Base.C:Functor ww8 ww9 ->
-                 SEDEL.PrettyPrint.$w$cppr9 @ m ww8 w1 w2 } }) -}
-2892c08a8315c72378617c6a897c7fb2
+                 SEDEL.PrettyPrint.$w$cppr13 @ m ww8 w1 w2 } }) -}
+e8274a1d7b216b1aacc86c158edb2dbb
   $fPrettySourcePos ::
     Data.Text.Prettyprint.Doc.Internal.Pretty
       Text.Megaparsec.Pos.SourcePos
@@ -520,7 +672,7 @@ b3792b8f3b952cae1eba0f731312b4ce
                   @ Text.Megaparsec.Pos.SourcePos
                   SEDEL.PrettyPrint.$fPrettySourcePos_$cpretty
                   SEDEL.PrettyPrint.$fPrettySourcePos_$cprettyList -}
-040fdf69f77bc81024486c655eeddbeb
+3ad48e648d4de6690decab57770b0c50
   $fPrettySourcePos_$cpretty ::
     Text.Megaparsec.Pos.SourcePos
     -> Data.Text.Prettyprint.Doc.Internal.Doc ann
@@ -538,13 +690,13 @@ b3792b8f3b952cae1eba0f731312b4ce
                          @ ann
                          (Data.Text.Prettyprint.Doc.Internal.$w$cpretty5 @ ann dt1)
                          (Data.Text.Prettyprint.Doc.Symbols.Ascii.colon @ ann))) }) -}
-a80da18ff6dcc4111a3059790eff5c2a
+6c87b46d3a3a41e17e19d10e2906e374
   $fPrettySourcePos_$cprettyList ::
     [Text.Megaparsec.Pos.SourcePos]
     -> Data.Text.Prettyprint.Doc.Internal.Doc ann
   {- Arity: 1, Strictness: <S,1*U>,
      Unfolding: InlineRule (1, True, False)
-                (\ @ ann (x4 :: [Text.Megaparsec.Pos.SourcePos]) ->
+                (\ @ ann (x8 :: [Text.Megaparsec.Pos.SourcePos]) ->
                  Data.Text.Prettyprint.Doc.Internal.list
                    @ ann
                    (GHC.Base.build
@@ -563,8 +715,8 @@ a80da18ff6dcc4111a3059790eff5c2a
                             c
                             (SEDEL.PrettyPrint.$fPrettySourcePos_$cpretty @ ann))
                          n
-                         x4))) -}
-d39d7ee6ea002e3f67f2b89826819e40
+                         x8))) -}
+ca88cebe7e2106e8f12ea0de67988c28
   $s$fApplicativeLFreshMT ::
     GHC.Base.Applicative
       (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
@@ -575,10 +727,10 @@ d39d7ee6ea002e3f67f2b89826819e40
                        Data.Functor.Identity.Identity)
                   SEDEL.PrettyPrint.$s$fApplicativeLFreshMT_$s$fFunctorLFreshMT
                   (\ @ a
-                     (x4 :: a)
+                     (x8 :: a)
                      (ds :: Data.Set.Internal.Set
                               Unbound.Generics.LocallyNameless.Name.AnyName) ->
-                   x4)
+                   x8)
                     `cast`
                   (forall (a :: <*>_N).
                    <a>_R
@@ -631,7 +783,7 @@ d39d7ee6ea002e3f67f2b89826819e40
                    Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N
                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
-4f18baa2a32e23f26664f794386ce844
+3aa5a2e071643ddfca13b2fb7346026b
   $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c*> ::
     Control.Monad.Trans.Reader.ReaderT
       r Data.Functor.Identity.Identity a
@@ -662,7 +814,7 @@ d39d7ee6ea002e3f67f2b89826819e40
                          r Data.Functor.Identity.Identity b>_R
                  ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
                                <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
-f5565f0a01128b7dee7c8a0c0e69d036
+5010d5f988b3b7a779f8e6151e3b5c07
   $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<* ::
     Control.Monad.Trans.Reader.ReaderT
       r Data.Functor.Identity.Identity a
@@ -693,7 +845,7 @@ f5565f0a01128b7dee7c8a0c0e69d036
                          r Data.Functor.Identity.Identity b>_R
                  ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
                                <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N)) -}
-52b2771cc3af9c244121615bfea23da5
+ccb08390331b610525d37affb33431d5
   $s$fApplicativeLFreshMT_$s$fApplicativeReaderT_$c<*> ::
     Control.Monad.Trans.Reader.ReaderT
       r Data.Functor.Identity.Identity (a -> b)
@@ -733,7 +885,7 @@ f5565f0a01128b7dee7c8a0c0e69d036
                          r Data.Functor.Identity.Identity a>_R
                  ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
                                <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
-24e83ff715553bc0a00bc921439a0bdf
+3860ca613cd67251d2910368b2fe39a0
   $s$fApplicativeLFreshMT_$s$fFunctorLFreshMT ::
     GHC.Base.Functor
       (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
@@ -758,7 +910,7 @@ f5565f0a01128b7dee7c8a0c0e69d036
                    <a>_R
                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <b>_N
                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
-eee3eee4ed86f53ba316790cd81a2313
+26b29729e1d33a383c95b7902571de4d
   $s$fApplicativeLFreshMT_$s$fFunctorReaderT_$c<$ ::
     a
     -> Control.Monad.Trans.Reader.ReaderT
@@ -771,11 +923,11 @@ eee3eee4ed86f53ba316790cd81a2313
                 (\ @ r
                    @ a
                    @ b
-                   (x4 :: a)
+                   (x8 :: a)
                    (v :: Control.Monad.Trans.Reader.ReaderT
                            r Data.Functor.Identity.Identity b)
-                   (x5 :: r) ->
-                 x4)
+                   (x9 :: r) ->
+                 x8)
                   `cast`
                 (forall (r :: <*>_N) (a :: <*>_N) (b :: <*>_N).
                  <a>_R
@@ -788,7 +940,7 @@ eee3eee4ed86f53ba316790cd81a2313
                                                         <r>_R
                                                         <Data.Functor.Identity.Identity>_R
                                                         <a>_N)) -}
-50ca2edeb30846be6c479145ce993fe4
+2ecfdf06643a8e3081ccdc03922fc6d6
   $s$fApplicativeLFreshMT_$s$fFunctorReaderT_$cfmap ::
     (a -> b)
     -> Control.Monad.Trans.Reader.ReaderT
@@ -810,7 +962,7 @@ eee3eee4ed86f53ba316790cd81a2313
                    f `cast`
                    (Sym (Data.Functor.Identity.N:Identity[0] <a>_R)
                     ->_R Sym (Data.Functor.Identity.N:Identity[0] <b>_R))) -}
-e4c682ae5035a5ba9a25dc8fc3bde13e
+c187e72ea47f68d8ec7badb08b2e92e8
   $s$fLFreshLFreshMT ::
     Unbound.Generics.LocallyNameless.LFresh.LFresh
       (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
@@ -854,7 +1006,7 @@ e4c682ae5035a5ba9a25dc8fc3bde13e
                                                                                                     <Data.Set.Internal.Set
                                                                                                        Unbound.Generics.LocallyNameless.Name.AnyName>_N) ; Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <Data.Set.Internal.Set
                                                                                                                                                                                                                                                              Unbound.Generics.LocallyNameless.Name.AnyName>_N)) -}
-e8eaec353aed284c2fcc60619ba192d0
+1e30288758fad2fcef17316266f81586
   $s$fLFreshLFreshMT_$cavoid ::
     [Unbound.Generics.LocallyNameless.Name.AnyName]
     -> Unbound.Generics.LocallyNameless.LFresh.LFreshMT
@@ -865,7 +1017,7 @@ e8eaec353aed284c2fcc60619ba192d0
      Unfolding: InlineRule (1, True, True)
                 (Unbound.Generics.LocallyNameless.LFresh.$w$cavoid
                    @ Data.Functor.Identity.Identity) -}
-7fb693730eb493f3222d6958d73dbf52
+1dac2a0a1717c4e729820bf294263b9b
   $s$fLFreshLFreshMT_$s$fMonadLFreshMT ::
     GHC.Base.Monad
       (Unbound.Generics.LocallyNameless.LFresh.LFreshMT
@@ -916,7 +1068,7 @@ e8eaec353aed284c2fcc60619ba192d0
                   (forall (a :: <*>_N).
                    <[GHC.Types.Char]>_R
                    ->_R Sym (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0]) <Data.Functor.Identity.Identity>_N <a>_N) -}
-ac940bac568525265b7c0de4e619a09c
+615ac92886f7a3afa89224eef9ddeee7
   $s$fLFreshLFreshMT_$s$fMonadReaderT_$c>>= ::
     Control.Monad.Trans.Reader.ReaderT
       r Data.Functor.Identity.Identity a
@@ -958,7 +1110,7 @@ ac940bac568525265b7c0de4e619a09c
                             r Data.Functor.Identity.Identity b>_R
                  ->_R Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
                                <*>_N <r>_R <Data.Functor.Identity.Identity>_R <b>_N)) -}
-380ddffdbcb483431a132ef86703b227
+3843aafaa7f1c27a1c0f5e097f7ac2e0
   $s$fLFreshLFreshMT_$s$fMonadReaderT_$cfail ::
     GHC.Base.String
     -> Control.Monad.Trans.Reader.ReaderT
@@ -977,142 +1129,142 @@ ac940bac568525265b7c0de4e619a09c
                    `cast`
                  (Sym (Control.Monad.Trans.Reader.N:ReaderT[0]
                            <*>_N <r>_R <Data.Functor.Identity.Identity>_R <a>_N))) -}
-a0351ed1f1fdf10c643c7270f910a77e
+88d43953ae1bd31e4431c888c38f1b9f
   $tc'DD :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   1916616660179219491##
-                   8674661021375851973##
+                   5619118070334404964##
+                   6995948140039949269##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tc'DD2
                    1#
                    SEDEL.PrettyPrint.$tc'DD1) -}
-13b2709a4a231ccefd36d466f26934e1
+6f724d9a7d07d3d2f43e33f73cdc0de2
   $tc'DD1 :: GHC.Types.KindRep
   {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
-d3caffac42149085e02b39dcd4e67a02
+f81d871d237775f53360932cf859ab4e
   $tc'DD2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'DD3) -}
-0d5c87b8e3d6c446faf4eadc9ddaa28c
+1a1f0f821b4493f47ed3de7268e14961
   $tc'DD3 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("'DD"#) -}
-774c1d963dd1d9fb31fc34baf4161c9d
+05467931c7fcc234b7606aeda67b66b0
   $tc'DS :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   1615616655558323512##
-                   8217989678923129811##
+                   5452467450576299774##
+                   4415696346798706875##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tc'DS2
                    0#
                    SEDEL.PrettyPrint.$tc'DS1) -}
-2feaea7a22dd1d932eb549c67f732d88
+b236a30515f14c5a3dd9c5ec4d3e2b4d
   $tc'DS1 :: GHC.Types.KindRep
   {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
-5701ba613a8bad4668f452df13bb6760
+e4829f565af753092f6460164b4081dd
   $tc'DS2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'DS3) -}
-8a227fe1bf7eda10e45f389f15214f9d
+ac343a888e427b79368749e30495d1ec
   $tc'DS3 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("'DS"#) -}
-d3ca9d00cecc75632193f948457686ae
+ff4e30653d39e33146b1f1e82bebd516
   $tc'FAnn :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   14005866391062239149##
-                   6097249703418127312##
+                   8681112704443632406##
+                   15842284709280084312##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tc'FAnn2
                    0#
                    SEDEL.PrettyPrint.$tc'FAnn1) -}
-78a34f6c8bf80c50603deb87ebe88632
+608914f5fccefbb5f268553b88ded72c
   $tc'FAnn1 :: GHC.Types.KindRep
   {- HasNoCafRefs, Strictness: m1, Inline: [~] -}
-d6b30bda4e1013e315e713f6f1b6e455
+e3522f3a510f03b9a8ca516b9165d7d8
   $tc'FAnn2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tc'FAnn3) -}
-62d874031751f977d201a5993fda5914
+ed2f09c8b01ad7547ea4921d7b9f7c9a
   $tc'FAnn3 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("'FAnn"#) -}
-67f479e9dc6155e989262671cc50dc42
+281eb348f145af83092c65c4cf7f4c6a
   $tcD :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   77494953105138188##
-                   7697363953726631382##
+                   6608519338305682688##
+                   16016284474023972091##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tcD1
                    0#
                    GHC.Types.krep$*) -}
-4cd6ba76b67c0f32063e56b5bc9e93df
+498640d4cb3530aaf87c7e6039cbaba8
   $tcD1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcD2) -}
-8198079e31944540b143bd943ff9e038
+552612c1be90adc1336cde03ae732b78
   $tcD2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("D"#) -}
-92ad4ccad648e0bc34ad7442c67df9b4
+7a759572b4079bb2123a67f57e3501e1
   $tcFAnn :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   12367278494318958274##
-                   11553843964331259981##
+                   5563452143096493##
+                   15562936218643029527##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tcFAnn1
                    0#
                    GHC.Types.krep$*) -}
-cd3bb6ab244027e1f156d938b90af9c0
+bfecd35a0f0d4916b240aa67e3d38a05
   $tcFAnn1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcFAnn2) -}
-13a433bdd1b40ab595e3d924ac477307
+718ddc1d6a8e11cc983b0bb088abe6e7
   $tcFAnn2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("FAnn"#) -}
-7a47999445d61aa9158c2f0267c3b060
+5f761d4af33c88f4a91204843bfb9fa4
   $tcFPretty :: GHC.Types.TyCon
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.TyCon
-                   13608540993701063418##
-                   7879154438436558074##
+                   9345112073787757210##
+                   7755223649928649806##
                    SEDEL.PrettyPrint.$trModule
                    SEDEL.PrettyPrint.$tcFPretty2
                    0#
                    SEDEL.PrettyPrint.$tcFPretty1) -}
-e307362c0d77aa5af08f20c17eeedb0b
+f3fdf908c23a9bdf890908e0d4394935
   $tcFPretty1 :: GHC.Types.KindRep
   {- HasNoCafRefs, Strictness: m4, Inline: [~] -}
-43ad58df7706a8cc4a4716d6af22e924
+0c1332b3b6033d1b14cb60e9369680ec
   $tcFPretty2 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$tcFPretty3) -}
-9a0cfcdbccd196c9c1408e731978f9e6
+34f7fd5ed3580e4315ccea92a7327148
   $tcFPretty3 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("FPretty"#) -}
-3604fe0ef11473c9bce1059e5b87b3de
+41b42d013db2c49d589dd94546f59978
   $trModule :: GHC.Types.Module
   {- HasNoCafRefs, Strictness: m,
      Unfolding: (GHC.Types.Module
                    SEDEL.PrettyPrint.$trModule3
                    SEDEL.PrettyPrint.$trModule1) -}
-81afeda48101b37a00225133bc84dda8
+7e6bceb758556216cbbabfc0f1c091dd
   $trModule1 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$trModule2) -}
-793b350ff84efd85c88e7b51c4221d5e
+0d1463df4c7ab914af4e349549d40d3a
   $trModule2 :: GHC.Prim.Addr#
   {- HasNoCafRefs, Unfolding: ("SEDEL.PrettyPrint"#) -}
-076bae66c3d0eef66a99ff0f99d2c8e0
+18811847aa1cc4836ac39443dafa9c56
   $trModule3 :: GHC.Types.TrName
   {- HasNoCafRefs, Strictness: m1,
      Unfolding: (GHC.Types.TrNameS SEDEL.PrettyPrint.$trModule4) -}
-263dab5b5d59210bc88a4aede72f6029
+ee9af9bde25df668b5bb1aef2f0bedea
   $trModule4 :: GHC.Prim.Addr#
   {- HasNoCafRefs,
-     Unfolding: ("sedel-0.1.0.0-AhY9khA6pZOExbzZW5SwDc"#) -}
-06d476c8f795e1c8639481bb9b0c8740
+     Unfolding: ("sedel-0.1.0.0-CGdrjkISkKsB7AvhzRMuoJ"#) -}
+ff04a2acd3e2778391001cf7b9232e88
   $w$cppr ::
     (forall a. a -> m a)
     -> SEDEL.Common.ArithOp -> m SEDEL.PrettyPrint.FDoc
@@ -1131,7 +1283,7 @@ e307362c0d77aa5af08f20c17eeedb0b
                    -> ww
                         @ SEDEL.PrettyPrint.FDoc
                         SEDEL.PrettyPrint.$fFPrettyArithOp1 }) -}
-928099388478dfa587af5f65885c8679
+da8ba3ba0307974bf4490e86cf77046b
   $w$cppr1 ::
     (forall a. a -> m a)
     -> SEDEL.Common.CompOp -> m SEDEL.PrettyPrint.FDoc
@@ -1150,84 +1302,23 @@ e307362c0d77aa5af08f20c17eeedb0b
                    -> ww
                         @ SEDEL.PrettyPrint.FDoc
                         SEDEL.PrettyPrint.$fFPrettyCompOp1 }) -}
-b3792b8f3b952cae1eba0f731312b4ce
-  $w$cppr2 ::
+c40b3bb0b2ab192a43022c570da7d1cb
+  $w$cppr10 ::
     Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
-    SEDEL.PrettyPrint.D -> m SEDEL.PrettyPrint.FDoc
-  {- Arity: 2, HasNoCafRefs,
-     Strictness: <L,U(U(U,U,U,U,U),U,U,U)><S,1*U>, Inline: [2],
-     Unfolding: (\ @ m :: * -> *
-                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
-                   (w1 :: SEDEL.PrettyPrint.D) ->
-                 case w1 of wild {
-                   SEDEL.PrettyPrint.DS s
-                   -> GHC.Base.return
-                        @ m
-                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
-                        @ SEDEL.PrettyPrint.FDoc
-                        s
-                   SEDEL.PrettyPrint.DD a $dFPretty d
-                   -> $dFPretty `cast` (SEDEL.PrettyPrint.N:FPretty[0] <a>_N)
-                        @ m
-                        (GHC.Base.$p1Monad
-                           @ m
-                           (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w))
-                        w
-                        d }) -}
-d31e30f84c6dc1101a188207c7121d1a
-  $w$cppr3 ::
-    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
-    SEDEL.Source.Syntax.Expr -> m SEDEL.PrettyPrint.FDoc
-  {- Arity: 1,
-     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+    SEDEL.Source.Syntax.PType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2,
+     Strictness: <S(SLLL),U(U(A,C(C1(U)),A,C(U),A),A,A,A)><S,1*U>,
      Inline: [2] -}
-226b14d1cb40424090665dc61d1a7e66
-  $w$cppr4 ::
-    (forall a b. m a -> (a -> m b) -> m b)
-    -> (forall a. a -> m a)
-    -> SEDEL.Source.Syntax.Kind
-    -> m SEDEL.PrettyPrint.FDoc
-  {- Arity: 3, Strictness: <L,C(C1(U))><L,C(U)><S,1*U>,
-     Inline: [2] -}
-f5fd138242f9825b3e75b24007d4ad51
-  $w$cppr5 ::
-    (forall a. a -> m a)
-    -> SEDEL.Common.LogicalOp -> m SEDEL.PrettyPrint.FDoc
-  {- Arity: 2, Strictness: <C(S),1*C1(U)><S,1*U>, Inline: [2],
-     Unfolding: (\ @ m :: * -> *
-                   (ww :: forall a. a -> m a)
-                   (w :: SEDEL.Common.LogicalOp) ->
-                 case w of wild {
-                   SEDEL.Common.LAnd
-                   -> ww
-                        @ SEDEL.PrettyPrint.FDoc
-                        SEDEL.PrettyPrint.$fFPrettyLogicalOp3
-                   SEDEL.Common.LOr
-                   -> ww
-                        @ SEDEL.PrettyPrint.FDoc
-                        SEDEL.PrettyPrint.$fFPrettyLogicalOp1 }) -}
-555043bd00ef97ca0fae394a6c94ea9d
-  $w$cppr6 ::
-    (forall a. a -> m a)
-    -> SEDEL.Common.Operation -> m SEDEL.PrettyPrint.FDoc
-  {- Arity: 2, Strictness: <C(S),1*C1(U)><S,1*U>, Inline: [2],
-     Unfolding: (\ @ m :: * -> *
-                   (ww :: forall a. a -> m a)
-                   (w :: SEDEL.Common.Operation) ->
-                 case w of wild {
-                   SEDEL.Common.Arith a -> SEDEL.PrettyPrint.$w$cppr @ m ww a
-                   SEDEL.Common.Comp a -> SEDEL.PrettyPrint.$w$cppr1 @ m ww a
-                   SEDEL.Common.Logical a -> SEDEL.PrettyPrint.$w$cppr5 @ m ww a }) -}
-b16ee53d872a7319a7b5bf8ff0ca8bbd
-  $w$cppr7 ::
+1176d3618d25adec683de9d9fb7aba09
+  $w$cppr11 ::
     (forall a b. m a -> (a -> m b) -> m b)
     -> (forall a. a -> m a)
     -> SEDEL.Source.Syntax.SType
     -> m SEDEL.PrettyPrint.FDoc
   {- Arity: 3, Strictness: <L,C(C1(U))><L,C(U)><S,1*U>,
      Inline: [2] -}
-6c5f41217ba7eb66b12e31489cb40f37
-  $w$cppr8 ::
+e72725680b7005e3de60825817fc948e
+  $w$cppr12 ::
     (forall a b. m a -> (a -> m b) -> m b)
     -> (forall a. a -> m a)
     -> (forall a.
@@ -1241,8 +1332,8 @@ b16ee53d872a7319a7b5bf8ff0ca8bbd
   {- Arity: 5,
      Strictness: <L,C(C1(U))><L,C(U)><L,C(C1(U))><L,C(C1(U))><S,1*U>,
      Inline: [2] -}
-b3792b8f3b952cae1eba0f731312b4ce
-  $w$cppr9 ::
+45fe98a51a442638ccb5054763267604
+  $w$cppr13 ::
     (forall a b. (a -> b) -> m a -> m b)
     -> Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
        [SEDEL.PrettyPrint.D]
@@ -1293,22 +1384,112 @@ b3792b8f3b952cae1eba0f731312b4ce
                                (go ys) }
                     } in
                     go w1)) -}
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
+  $w$cppr2 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.PrettyPrint.D -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2, HasNoCafRefs,
+     Strictness: <L,U(U(U,U,U,U,U),U,U,U)><S,1*U>, Inline: [2],
+     Unfolding: (\ @ m :: * -> *
+                   (w :: Unbound.Generics.LocallyNameless.LFresh.LFresh m)
+                   (w1 :: SEDEL.PrettyPrint.D) ->
+                 case w1 of wild {
+                   SEDEL.PrettyPrint.DS s
+                   -> GHC.Base.return
+                        @ m
+                        (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w)
+                        @ SEDEL.PrettyPrint.FDoc
+                        s
+                   SEDEL.PrettyPrint.DD a $dFPretty d
+                   -> $dFPretty `cast` (SEDEL.PrettyPrint.N:FPretty[0] <a>_N)
+                        @ m
+                        (GHC.Base.$p1Monad
+                           @ m
+                           (Unbound.Generics.LocallyNameless.LFresh.$p1LFresh @ m w))
+                        w
+                        d }) -}
+0ee7adbd7be850df684de6ce5952f6e3
+  $w$cppr3 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Source.Syntax.Expr -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 1,
+     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [2] -}
+59e113e98b0b4df25fd0c844c1d174fa
+  $w$cppr4 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Intermediate.Syntax.FExpr -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 1,
+     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [2] -}
+1022edcf8c366fb4de78458f09f17961
+  $w$cppr5 ::
+    Unbound.Generics.LocallyNameless.LFresh.LFresh m =>
+    SEDEL.Intermediate.Syntax.FType -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 1,
+     Strictness: <L,U(U(A,C(C1(U)),A,C(U),A),C(C1(U)),C(C1(U)),A)>,
+     Inline: [2] -}
+bfdcca09e6d85cf8263a351e9afca50f
+  $w$cppr6 ::
+    (forall a b. m a -> (a -> m b) -> m b)
+    -> (forall a. a -> m a)
+    -> SEDEL.Intermediate.Syntax.Kind
+    -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3, Strictness: <L,C(C1(U))><L,C(U)><S,1*U>,
+     Inline: [2] -}
+711dbee41e2ead7904e3ad52bbe1bbf0
+  $w$cppr7 ::
+    (forall a b. m a -> (a -> m b) -> m b)
+    -> (forall a. a -> m a)
+    -> SEDEL.Source.Syntax.Kind
+    -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 3, Strictness: <L,C(C1(U))><L,C(U)><S,1*U>,
+     Inline: [2] -}
+a3de1e8c1588a20899631ad993a448bc
+  $w$cppr8 ::
+    (forall a. a -> m a)
+    -> SEDEL.Common.LogicalOp -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2, Strictness: <C(S),1*C1(U)><S,1*U>, Inline: [2],
+     Unfolding: (\ @ m :: * -> *
+                   (ww :: forall a. a -> m a)
+                   (w :: SEDEL.Common.LogicalOp) ->
+                 case w of wild {
+                   SEDEL.Common.LAnd
+                   -> ww
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyLogicalOp3
+                   SEDEL.Common.LOr
+                   -> ww
+                        @ SEDEL.PrettyPrint.FDoc
+                        SEDEL.PrettyPrint.$fFPrettyLogicalOp1 }) -}
+ceb4f80f22752da3b64a6a553e22a6f4
+  $w$cppr9 ::
+    (forall a. a -> m a)
+    -> SEDEL.Common.Operation -> m SEDEL.PrettyPrint.FDoc
+  {- Arity: 2, Strictness: <C(S),1*C1(U)><S,1*U>, Inline: [2],
+     Unfolding: (\ @ m :: * -> *
+                   (ww :: forall a. a -> m a)
+                   (w :: SEDEL.Common.Operation) ->
+                 case w of wild {
+                   SEDEL.Common.Arith a -> SEDEL.PrettyPrint.$w$cppr @ m ww a
+                   SEDEL.Common.Comp a -> SEDEL.PrettyPrint.$w$cppr1 @ m ww a
+                   SEDEL.Common.Logical a -> SEDEL.PrettyPrint.$w$cppr8 @ m ww a }) -}
+45fe98a51a442638ccb5054763267604
   data D
     = DS SEDEL.PrettyPrint.FDoc
     | forall a. SEDEL.PrettyPrint.FPretty a => DD a
-9526b59e8458efbe0f1cfd0f69107aa0
+0784334a84ae3462e06bee2bc8e6e6ed
   data FAnn = FAnn
-1e788f59dec27773220cefea739ec59d
+2e8709e87e2e57334d6894fd22099a50
   type FDoc =
     Data.Text.Prettyprint.Doc.Internal.Doc SEDEL.PrettyPrint.FAnn
-b3792b8f3b952cae1eba0f731312b4ce
+45fe98a51a442638ccb5054763267604
   class FPretty p where
     ppr :: (GHC.Base.Applicative m,
             Unbound.Generics.LocallyNameless.LFresh.LFresh m) =>
            p -> m SEDEL.PrettyPrint.FDoc
     {-# MINIMAL ppr #-}
-b1c89e02bc179b33c976cabe8ccabe5c
+eba184c0db88b2f2c1bf72b06d0af23e
   pprint ::
     SEDEL.PrettyPrint.FPretty a => a -> SEDEL.PrettyPrint.FDoc
   {- Arity: 1, Strictness: <L,1*C1(C1(C(U)))>,
@@ -1324,8 +1505,8 @@ b1c89e02bc179b33c976cabe8ccabe5c
                        SEDEL.PrettyPrint.$s$fApplicativeLFreshMT
                        SEDEL.PrettyPrint.$s$fLFreshLFreshMT
                  } in
-                 (\ (x4 :: a) ->
-                  (g x4)
+                 (\ (x8 :: a) ->
+                  (g x8)
                     `cast`
                   (Unbound.Generics.LocallyNameless.LFresh.N:LFreshMT[0] <Data.Functor.Identity.Identity>_N <SEDEL.PrettyPrint.FDoc>_N ; Control.Monad.Trans.Reader.N:ReaderT[0]
                                                                                                                                              <*>_N
@@ -1347,12 +1528,20 @@ instance SEDEL.PrettyPrint.FPretty [SEDEL.PrettyPrint.D]
   = SEDEL.PrettyPrint.$fFPrettyD
 instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Expr]
   = SEDEL.PrettyPrint.$fFPrettyExpr
-instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Kind]
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Intermediate.Syntax.FExpr]
+  = SEDEL.PrettyPrint.$fFPrettyFExpr
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Intermediate.Syntax.FType]
+  = SEDEL.PrettyPrint.$fFPrettyFType
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Intermediate.Syntax.Kind]
   = SEDEL.PrettyPrint.$fFPrettyKind
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Kind]
+  = SEDEL.PrettyPrint.$fFPrettyKind0
 instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.LogicalOp]
   = SEDEL.PrettyPrint.$fFPrettyLogicalOp
 instance SEDEL.PrettyPrint.FPretty [SEDEL.Common.Operation]
   = SEDEL.PrettyPrint.$fFPrettyOperation
+instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.PType]
+  = SEDEL.PrettyPrint.$fFPrettyPType
 instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.SType]
   = SEDEL.PrettyPrint.$fFPrettySType
 instance SEDEL.PrettyPrint.FPretty [SEDEL.Source.Syntax.Scheme]

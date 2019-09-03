@@ -22,4 +22,8 @@
 *.out
 *.synctex.gz
 *.pdf
+impl/.cabal-sandbox/
+impl/.stack-work/
+.history
+.stack-work/
 .DS_Store

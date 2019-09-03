@@ -29,12 +29,12 @@ version :: Version
 version = Version [0,1,0,0] []
 bindir, libdir, dynlibdir, datadir, libexecdir, sysconfdir :: FilePath
 
-bindir     = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/bin"
-libdir     = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0-E3cu1PlngeQ2ecOnRQKy5l-sedel-exe"
-dynlibdir  = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3"
-datadir    = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/share/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"
-libexecdir = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/libexec/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"
-sysconfdir = "/Users/birthevandenberg/Documents/Thesis/Algorithm/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/etc"
+bindir     = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/bin"
+libdir     = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0-IRllC4NIMA44tfmA4qGGtC-sedel-exe"
+dynlibdir  = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/lib/x86_64-osx-ghc-8.6.3"
+datadir    = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/share/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"
+libexecdir = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/libexec/x86_64-osx-ghc-8.6.3/sedel-0.1.0.0"
+sysconfdir = "/Users/birthevandenberg/Documents/Thesis/PHiDI/Type_Inference_PHiDI/.stack-work/install/x86_64-osx/lts-13.8/8.6.3/etc"
 
 getBinDir, getLibDir, getDynLibDir, getDataDir, getLibexecDir, getSysconfDir :: IO FilePath
 getBinDir = catchIO (getEnv "sedel_bindir") (\_ -> return bindir)
