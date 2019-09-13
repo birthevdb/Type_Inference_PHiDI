@@ -100,11 +100,11 @@ translPType :: Fresh m => S.PType -> m I.FType
 translPType (P t) = translSType t
 translPType (Uni u) = return $ I.TVar (translate u)
 translPType (Join p1 p2) = do
-  p1' <- DT.trace "translate join" $ translPType p1
+  p1' <- DT.trace "translate join type" $ translPType p1
   p2' <- translPType p2
   return $ I.And p1' p2'
 translPType (Meet p1 p2) = do
-  p1' <- DT.trace "translate meet" $ translPType p1
+  p1' <- DT.trace "translate meet type" $ translPType p1
   p2' <- translPType p2
   return $ I.And p1' p2'
 translPType (PArr p1 p2) = do

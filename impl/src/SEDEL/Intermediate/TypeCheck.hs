@@ -131,7 +131,7 @@ bidirect (App e1 e2) = do
     Arr a1 a2 -> do
       e2' <- tcheck e2 a1
       return (a2, T.UApp e1' e2')
-    x -> errThrow [DS "Term application mismatch"]
+    x -> errThrow [DS "Term application mismatch", DD x]
 
 {- |
 
@@ -279,7 +279,8 @@ bidirect (If e1 e2 e3) = do
   let t3' = expandType ctx t3
   if aeq t2' t3'
     then return (t2, T.UIf e1' e2' e3')
-    else errThrow [DS "If branch type mismatch"]
+    else return (TopT, T.UUnit)
+    -- else errThrow [DS "If branch type mismatch"]
 
 {- |
 

@@ -87,7 +87,7 @@ data SType = NumT
           | SRecT Label SType
           | TopT
           | BotT
-    deriving (Show, Generic)
+    deriving (Generic)
 
 data Scheme = SType SType | DForall (Bind (TyName, Embed SType) Scheme) deriving (Show, Generic)
 
@@ -101,7 +101,7 @@ data PType = P SType
            | PArr PType PType
            | PRecT Label PType
            | PAnd PType PType
-   deriving (Show, Generic)
+   deriving (Generic)
 
 data CtxType = CtxSch Scheme | CtxUni TUni deriving (Show, Generic)
 
@@ -152,6 +152,16 @@ instance Eq SType where
   BotT         == BotT        = True
   _            == _           = False
 
+instance Show SType where
+  show (NumT)  = "Int"
+  show (BoolT) = "Bool"
+  show (Arr  t1 t2)  = "(" ++ (show t1) ++ " -> " ++ (show t2) ++ ")"
+  show (And  t1 t2)  = "(" ++ (show t1) ++ " & " ++ (show t2) ++ ")"
+  show (SRecT l1 t1)  = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
+  show (TVar   u1   )  = "Var " ++ (show u1)
+  show (TopT)  = "⊤"
+  show (BotT)  = "⊥"
+
 instance Eq PType where
   P t1        == P t2        = t1 == t2
   PArr t1 t2  == PArr t3 t4  = (t1 == t3) && (t2 == t4)
@@ -161,6 +171,15 @@ instance Eq PType where
   Join  t1 t2 == Join  t3 t4 = ((t1 == t3) && (t2 == t4)) || ((t1 == t4) && (t2 == t3))
   Meet  t1 t2 == Meet  t3 t4 = ((t1 == t3) && (t2 == t4)) || ((t1 == t4) && (t2 == t3))
   _           == _           = False
+
+instance Show PType where
+  show (P     t1   )  = show t1
+  show (PArr  t1 t2)  = "(" ++ (show t1) ++ " -> " ++ (show t2) ++ ")"
+  show (PAnd  t1 t2)  = "(" ++ (show t1) ++ " & " ++ (show t2) ++ ")"
+  show (PRecT l1 t1)  = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
+  show (Uni   u1   )  = "Uni " ++ (show u1)
+  show (Join  t1 t2)  = "(" ++ (show t1) ++ " ⊔ " ++ (show t2) ++ ")"
+  show (Meet  t1 t2)  = "(" ++ (show t1) ++ " ⊓ " ++ (show t2) ++ ")"
 
 
 instance Pretty (Name a) where
