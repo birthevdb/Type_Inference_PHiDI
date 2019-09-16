@@ -71,14 +71,14 @@ instance FPretty S.Kind where
   ppr (S.KArrow k1 k2) = do
     k1' <- ppr k1
     k2' <- ppr k2
-    return $ k1' <+> "->" <+> k2'
+    return $ k1' <+> "→" <+> k2'
 
 instance FPretty I.Kind where
   ppr I.Star = return $ "star"
   ppr (I.KArrow k1 k2) = do
     k1' <- ppr k1
     k2' <- ppr k2
-    return $ k1' <+> "->" <+> k2'
+    return $ k1' <+> "→" <+> k2'
 
 -- TODO: Fresh variables are generated
 instance FPretty S.Scheme where
@@ -96,7 +96,7 @@ instance FPretty S.SType where
   ppr (S.Arr t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "->" <+> t2')
+    return $ Pretty.parens (t1' <+> "→" <+> t2')
   ppr S.NumT = return $ "Double"
   ppr S.BoolT = return $ "Bool"
   ppr (S.And t1 t2) = do
@@ -125,7 +125,7 @@ instance FPretty S.PType where
   ppr (S.PArr t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "->" <+> t2')
+    return $ Pretty.parens (t1' <+> "→" <+> t2')
   ppr (S.PRecT l t) = do
     t' <- ppr t
     return (Pretty.braces $ Pretty.pretty l <+> Pretty.colon <+> t')
@@ -139,7 +139,7 @@ instance FPretty I.FType where
   ppr (I.Arr t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "->" <+> t2')
+    return $ Pretty.parens (t1' <+> "→" <+> t2')
   ppr I.NumT = return $ "Double"
   ppr I.BoolT = return $ "Bool"
   ppr (I.And t1 t2) = do
@@ -403,7 +403,7 @@ braces docs = enclose "{ " "{ " ", " ", " " }" "}" (fmap duplicate docs)
 
 -- | Pretty-print anonymous functions and function types
 arrows :: [(Doc ann, Doc ann)] -> Doc ann
-arrows = enclose' "" "" " → " "→ "
+arrows = enclose' "" "" " . " ". "
 
 {-| Format an expression that holds a variable number of elements, such as a
     list, record, or union

@@ -12,39 +12,32 @@ import qualified Data.Set as Set
 import           SEDEL.Environment
 import           SEDEL.PrettyPrint
 import           SEDEL.Source.Syntax
-import qualified SEDEL.Target.Syntax as T
 import qualified SEDEL.Intermediate.Syntax as I
-import           SEDEL.Intermediate.TypeCheck as TC
 import           SEDEL.Util
 import           SEDEL.Common
 import           SEDEL.Source.Desugar
 import           SEDEL.Translations
 
-import Debug.Trace as DT
+-- import Debug.Trace as DT
 
 
-tcModule :: Module -> STcMonad (Scheme, T.UExpr)
+tcModule :: Module -> STcMonad (Scheme, I.FExpr)
 tcModule m = do
  let (DefDecl mainE) = mainExpr m
  let  main           = desugarTmBind mainE
  (ty, target)       <- tcM main
  return (ty, target)
  where
-   tcM :: TmBind -> STcMonad (Scheme, T.UExpr)
+   tcM :: TmBind -> STcMonad (Scheme, I.FExpr)
    tcM main = tcTmDecl main >>= \(dbind, (_, e)) -> return $ (snd dbind, e)
 
 
-tcTmDecl :: TmBind -> STcMonad ((TmName, Scheme), (T.UName, T.UExpr))
+tcTmDecl :: TmBind -> STcMonad ((TmName, Scheme), (I.TmName, I.FExpr))
 tcTmDecl decl =
   lookupTmDef (s2n n) >>= \case
     Nothing -> do
       (typ, fTerm)    <- topLevelInfer term
-      let ty           = DT.trace ("Fi+ term:      "   ++ (show fTerm) ++
-                                   "\nSource type:   " ++ (show typ)) $
-                                    bidirect fTerm
-      (typFi, tranFi) <- iTcMtoSTcM $ ty
-      return $ DT.trace ("Fi+ type:      " ++ (show typFi)) $
-                         ((s2n n, typ), (s2n n, tranFi))
+      return ((s2n n, typ), (s2n n, fTerm))
     Just _  -> errThrow [DS $ "Multiple definitions of" <+> Pretty.pretty n]
   where
     (n, term) = normalizeTmDecl decl
