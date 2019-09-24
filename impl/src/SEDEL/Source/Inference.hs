@@ -12,32 +12,36 @@ import qualified Data.Set as Set
 import           SEDEL.Environment
 import           SEDEL.PrettyPrint
 import           SEDEL.Source.Syntax
+import           SEDEL.Source.Subtyping
+import qualified SEDEL.Target.Syntax as T
 import qualified SEDEL.Intermediate.Syntax as I
+import           SEDEL.Intermediate.TypeCheck as TC
 import           SEDEL.Util
 import           SEDEL.Common
 import           SEDEL.Source.Desugar
 import           SEDEL.Translations
 
--- import Debug.Trace as DT
 
-
-tcModule :: Module -> STcMonad (Scheme, I.FExpr)
+tcModule :: Module -> STcMonad (Scheme, I.FExpr, T.UExpr)
 tcModule m = do
  let (DefDecl mainE) = mainExpr m
  let  main           = desugarTmBind mainE
- (ty, target)       <- tcM main
- return (ty, target)
+ (ty, target, val)  <- tcM main
+ return (ty, target, val)
  where
-   tcM :: TmBind -> STcMonad (Scheme, I.FExpr)
-   tcM main = tcTmDecl main >>= \(dbind, (_, e)) -> return $ (snd dbind, e)
+   tcM :: TmBind -> STcMonad (Scheme, I.FExpr, T.UExpr)
+   tcM main = tcTmDecl main >>= \(dbind, (_, e1), (_, e2))
+                            -> return $ (snd dbind, e1, e2)
 
 
-tcTmDecl :: TmBind -> STcMonad ((TmName, Scheme), (I.TmName, I.FExpr))
+tcTmDecl :: TmBind -> STcMonad ((TmName, Scheme), (I.TmName, I.FExpr), (T.UName , T.UExpr))
 tcTmDecl decl =
   lookupTmDef (s2n n) >>= \case
     Nothing -> do
       (typ, fTerm)    <- topLevelInfer term
-      return ((s2n n, typ), (s2n n, fTerm))
+      let ty           = bidirect fTerm
+      (typFi, tranFi) <- iTcMtoSTcM $ ty
+      return $ ((s2n n, typ), (s2n n, fTerm), (s2n n, tranFi))
     Just _  -> errThrow [DS $ "Multiple definitions of" <+> Pretty.pretty n]
   where
     (n, term) = normalizeTmDecl decl
@@ -217,6 +221,24 @@ infer (Let b) = do
   (t', c', d', f2') <- localCtx (extendVarCtx x (CtxSch a')) $ infer e2
   aFi <- translType a'
   return (t', c', d', I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2')))
+
+{- |
+Γ, x : A ⊢ E1 : A ~> e1
+Γ, x : A ⊢ E2 : P ; C ; D ~> e2
+-------------------------------------------------------------
+Γ ⊢ letrec x : A = E1 in E2 : P ; C ; D ~> letrec x : A = e1 in e2
+-}
+infer (Letrec b) = do
+  ((x, Embed a), (e1, e2)) <- unbind b
+  (a', f1') <- localCtx (extendVarCtx x (CtxSch a)) $ topLevelInfer e1
+  (t', c', d', f2') <- localCtx (extendVarCtx x (CtxSch a')) $ infer e2
+  aFi <- translType a'
+  ctx <- askCtx
+  let res = subtype ctx a' a
+  case res of
+    Right c -> return (t', c', d', I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2')))
+    Left er -> errThrow [DS $ "Incorrect inference: " <+> er]
+
 
 {- |
 Γ ⊢ E1 : P1 ; C1 ; D1 ~> e1

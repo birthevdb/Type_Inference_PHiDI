@@ -132,10 +132,16 @@ translExp (S.Lam b) = do
   e' <- translExp e
   return $ I.Lam (bind (translate n) e')
 translExp (S.Let b) = do
-  (n, (e1, e2))<- unbind b
+  (x, (e1, e2)) <- unbind b
   e1' <- translExp e1
   e2' <- translExp e2
-  return $ I.Letrec (bind (translate n, embed Nothing) (e1', e2'))
+  return $ I.Letrec (bind (translate x, embed Nothing) (e1', e2'))
+translExp (S.Letrec b) = do
+  ((x, Embed a), (e1, e2)) <- unbind b
+  e1' <- translExp e1
+  e2' <- translExp e2
+  a'  <- translType a
+  return $ I.Letrec (bind (translate x, embed (Just a')) (e1', e2'))
 translExp (S.Rec l e) = do
   e' <- translExp e
   return $ I.Rec l e'

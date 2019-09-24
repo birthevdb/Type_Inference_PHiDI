@@ -269,6 +269,24 @@ instance FPretty S.Expr where
         return (long, short)
       let d = [Pretty.group (Pretty.flatAlt long short), b']
       return $ enclose' "" "" " in " ("in  ") (fmap duplicate d)
+  ppr (S.Letrec b) =
+    lunbind b $ \((x, Embed t), (e, body)) -> do
+      b' <- ppr body
+      e' <- ppr e
+      t' <- ppr t
+      (long, short) <- do
+        let long =
+                 "letrec " <>
+                 Pretty.align
+                   (Pretty.pretty x <> Pretty.hardline <> ": " <> t' <>
+                    Pretty.hardline <>
+                    "= " <>
+                    e')
+            short =
+                 "letrec " <> Pretty.pretty x <> " : " <> t' <> " = " <> e'
+        return (long, short)
+      let d = [Pretty.group (Pretty.flatAlt long short), b']
+      return $ enclose' "" "" " in " ("in  ") (fmap duplicate d)
   ppr (S.DRec' _) = return $ "fancy records"
   ppr (S.Pos _ e) = ppr e
 

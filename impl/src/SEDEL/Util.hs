@@ -50,6 +50,9 @@ eletr s t e b = I.Letrec (bind (s2n s, embed (Just t)) (e, b))
 elet :: String -> Expr -> Expr -> Expr
 elet s e b = Let (bind (s2n s) (e, b))
 
+eletrec :: String -> Scheme -> Expr -> Expr -> Expr
+eletrec s t e b = Letrec (bind (s2n s, embed t) (e, b))
+
 getFreshUni :: Fresh m => m TUni
 getFreshUni = fresh (Fn "u" 0)
 

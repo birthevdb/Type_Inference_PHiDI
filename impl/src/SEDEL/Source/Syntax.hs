@@ -45,6 +45,7 @@ type TyName = Name SType
 data Expr = Var TmName
           | App Expr Expr
           | Lam (Bind TmName Expr)
+          | Letrec (Bind (TmName, Embed Scheme) (Expr, Expr))
           | Let (Bind TmName (Expr, Expr))
           | Rec Label Expr
           | Proj Expr Label
@@ -151,6 +152,7 @@ instance Eq SType where
   TopT         == TopT        = True
   BotT         == BotT        = True
   _            == _           = False
+
 
 instance Show SType where
   show (NumT)  = "Int"

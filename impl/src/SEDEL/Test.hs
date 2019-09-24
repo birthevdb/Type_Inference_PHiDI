@@ -689,7 +689,7 @@ extractor (DTApp d ty) = extractor d >>= \(e, a1) -> case a1 of
 extractor (DSub d t2) = extractor d >>= \(e, a1) -> case a1 of
     SType t1 -> do
       ctx <- askCtx
-      let _ = subtype ctx t1 t2
+      let _ = subtype ctx (SType t1) (SType t2)
       return (e, SType t2)
     _ -> errThrow [DS "DSub: Type scheme instead of monotype"]
 extractor (DLet x d1 d2) = extractor d1 >>= \(e1, a1) ->
@@ -774,10 +774,10 @@ disjoint _ a BotT = do
 
 disjoint ctx (TVar x) b
   | Just a <- lookupTVarConstraintMaybe ctx x
-  , Right _ <- subtype ctx a b = return ()
+  , Right _ <- subtype ctx (SType a) (SType b) = return ()
 disjoint ctx b (TVar x)
   | Just a <- lookupTVarConstraintMaybe ctx x
-  , Right _ <- subtype ctx a b = return ()
+  , Right _ <- subtype ctx (SType a) (SType b) = return ()
 disjoint _ (TVar x) (TVar y) =
   errThrow
     [ DS $

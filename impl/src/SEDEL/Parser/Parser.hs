@@ -95,6 +95,7 @@ atom :: Parser Expr
 atom =
   choice
     [ pLambda
+    , pLetrec
     , pLet
     , pIf
     , LitV <$> float
@@ -132,6 +133,18 @@ pLet = do
   rword "in"
   e2 <- expr
   return $ elet n e1 e2
+
+pLetrec :: Parser Expr
+pLetrec = do
+  rword "let"
+  n <- lidentifier
+  colon
+  t <- pType
+  symbol "="
+  e1 <- expr
+  rword "in"
+  e2 <- expr
+  return $ eletrec n t e1 e2
 
 pIf :: Parser Expr
 pIf = do

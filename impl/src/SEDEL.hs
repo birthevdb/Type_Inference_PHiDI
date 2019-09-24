@@ -18,8 +18,9 @@ import           SEDEL.Parser.Parser (parseModule)
 import           SEDEL.PrettyPrint
 import           SEDEL.Source.Syntax
 import           SEDEL.Source.Inference
+import           SEDEL.Target.Eval
 
-type Result = Either FDoc (Scheme, FDoc)
+type Result = Either FDoc (Scheme, FDoc, Text)
 
 parseExpectedOutput :: Text -> Maybe Text
 parseExpectedOutput source =
@@ -33,20 +34,19 @@ driver :: SCtx -> Module -> IO Result
 driver ctx abt = do
   res <- runTcMonad ctx (tcModule abt)
   case res of
-    Right (typ, tar) -> do
-      return $ Right (typ, pprint tar)
-      -- r <- evaluate tar
-      -- case r of
-      --   Right eres -> return $ Right (typ, show eres)
-      --   Left er -> return $ Left (Pretty.pretty er)
+    Right (typ, tar, val) -> do
+      r <- evaluate val
+      case r of
+        Right eres -> return $ Right (typ, pprint tar, show eres)
+        Left er -> return $ Left (Pretty.pretty er)
     Left er -> return $ Left (pprint er)
 
 
-render :: (Scheme, FDoc) -> FDoc
-render (ty, res) =
-  "Typing result" <> Pretty.line <> Pretty.colon <+>
-  pprint ty <> Pretty.line <> Pretty.line <> "Elaborated term"
-  <> Pretty.line <> "~~>" <+> res
+render :: (Scheme, FDoc, Text) -> FDoc
+render (ty, res, val) =
+  "Typing result" <> Pretty.line <> Pretty.colon <+> pprint ty <> Pretty.line
+  <> Pretty.line <> "Elaborated term" <> Pretty.line <> "~~>" <+> res <> Pretty.line
+  <> Pretty.line <> "Evaluation result" <> Pretty.line <> "=>" <+> Pretty.pretty val
 
 
 readAndEval :: FilePath -> IO FDoc

@@ -69,38 +69,6 @@ data FExpr = Anno FExpr FType
           | DRec' TmBind
   deriving (Show, Generic)
 
--- instance Show FExpr where
---   show (Anno fe ft) = (show fe) ++ " : " ++ (show ft)
---   show (Var x) = show x
---   show (App fe1 fe2) = "("(show fe1) ++ ") (" ++ (show fe2) ++ ")"
---   show (Lam b) = do
---     (x, e) <- unbind b
---     return $ "λ " ++ (show x) ++ " . " ++ (show e)
---   show (Letrec b) = do
---     ((x, Embed a), (fe1, fe2)) <- unbind b
---     return $ "let " ++ (show x) ++ " = " ++ (show fe1) ++ " in " ++ (show fe2)
---   show (DLam b) = do
---     ((x, ty), fe) <- unbind b
---     return $ "Λ(" ++ (show x) ++ " * " ++ (show ty) ++ ") . " ++ (show fe)
---   show (TApp fe ft) =  (show fe) ++ " " ++ (show ft)
---   show (Rec l fe) = "{" ++ (show l) ++ " : " ++ (show fe) ++ "}"
---   show (Acc fe l) = (show fe) ++ "." ++ (show l)
---   show (Remove FExpr Label (Maybe FType)) =
---   show (Merge fe1 fe2) = (show fe1) ++ " ,, " ++ (show fe2)
---   show (LitV d) = show d
---   show (BoolV b) = show b
---   show (PrimOp op fe1 fe2) = (show fe1) ++ (show op) ++ (show fe2)
---   show (If fe1 fe2 fe3) = "if " ++ (show fe1) ++ " then " ++ (show fe2) ++ " else " ++ (show fe3)
---   show (Top) = "T"
---   -- practical matters for surface language
---   show (Pos pos fe) = "Pos " ++ (show pos) ++ " " ++ (show fe)
---   -- ^ marked source position, for error messages
---   show (LamA (Bind (TmName, Embed FType) FExpr)) =
---   -- ^ Not exposed to users, for internal use
---   show (Bot) = "Bot"
---   -- The following should disappear after desugaring
---   show (DRec' tmbind) = "DRec' " ++ (show tmbind)
-
 type Label = String
 data FType = NumT
           | BoolT

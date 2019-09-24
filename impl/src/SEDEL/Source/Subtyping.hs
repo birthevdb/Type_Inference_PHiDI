@@ -102,21 +102,21 @@ WARN: They must be expanded first
 
 -}
 
-subtype :: SCtx -> SType -> SType -> Either FDoc T.UExpr
+subtype :: SCtx -> Scheme -> Scheme -> Either FDoc T.UExpr
 subtype ctx st tt = runExcept $ runFreshMT go
   where
     go :: (FreshMT (Except FDoc)) T.UExpr
     go = do
-      let (SType a) = expandType ctx (SType st)
-      let (SType b) = expandType ctx (SType tt)
+      let a = expandType ctx st
+      let b = expandType ctx tt
       subtypeS Q.empty a b
-    subtypeS :: Q.Seq L -> SType -> SType -> (FreshMT (Except FDoc)) T.UExpr
+    subtypeS :: Q.Seq L -> Scheme -> Scheme -> (FreshMT (Except FDoc)) T.UExpr
     -- Base cases
-    subtypeS Empty NumT NumT = return coId
-    subtypeS Empty BoolT BoolT = return coId
-    subtypeS Empty BotT BotT = return coId
-    subtypeS fs _ TopT = return $ coTrans (calTop fs) coTop
-    subtypeS Empty (TVar a) (TVar b) =
+    subtypeS Empty (SType NumT) (SType NumT) = return coId
+    subtypeS Empty (SType BoolT) (SType BoolT) = return coId
+    subtypeS Empty (SType BotT) (SType BotT) = return coId
+    subtypeS fs _ (SType TopT) = return $ coTrans (calTop fs) coTop
+    subtypeS Empty (SType (TVar a)) (SType (TVar b)) =
       if a /= b
         then throwError $
              "variables not equal:" <+>
@@ -124,74 +124,89 @@ subtype ctx st tt = runExcept $ runFreshMT go
              "and" <+> Pretty.squotes (Pretty.pretty b)
         else return coId
     -- NumT
-    subtypeS fs (And a1 a2) NumT = do
+    subtypeS fs (SType (And a1 a2)) (SType NumT) = do
       let c1 = do
-            c <- subtypeS fs a1 NumT
+            c <- subtypeS fs (SType a1) (SType NumT)
             return $ coTrans c coProj1
           c2 = do
-            c <- subtypeS fs a2 NumT
+            c <- subtypeS fs (SType a2) (SType NumT)
             return $ coTrans c coProj2
       c1 `catchError` const c2
-    subtypeS (LTy a :<| fs) (Arr a1 a2) NumT = do
-      c1 <- subtypeS Q.empty a a1
-      c2 <- subtypeS fs a2 NumT
+    subtypeS (LTy a :<| fs) (SType (Arr a1 a2)) (SType NumT) = do
+      c1 <- subtypeS Q.empty (SType a) (SType a1)
+      c2 <- subtypeS fs (SType a2) (SType NumT)
       return $ coArr c1 c2
-    subtypeS (LLa l :<| fs) (SRecT l' a) NumT =
+    subtypeS (LLa l :<| fs) (SType (SRecT l' a)) (SType NumT) =
       if l == l'
-        then subtypeS fs a NumT
+        then subtypeS fs (SType a) (SType NumT)
         else throwError $
              "Labels" <+>
              Pretty.squotes (Pretty.pretty l) <+>
              "and" <+> Pretty.squotes (Pretty.pretty l') <+> "mismatch"
-    subtypeS _ BotT NumT = return T.Bot
+    subtypeS (LAll tv a :<| fs) (DForall b) (SType NumT) = do
+        ((tv' , Embed b'),  t) <- unbind b
+        subtypeS Q.empty (SType a) (SType b')
+        subtypeS fs (subst tv' (TVar tv) t) (SType NumT)
+    subtypeS _ (SType BotT) (SType NumT) = return T.Bot
     -- BoolT
-    subtypeS fs (And a1 a2) BoolT = do
+    subtypeS fs (SType (And a1 a2)) (SType BoolT) = do
       let c1 = do
-            c <- subtypeS fs a1 BoolT
+            c <- subtypeS fs (SType a1) (SType BoolT)
             return $ coTrans c coProj1
           c2 = do
-            c <- subtypeS fs a2 BoolT
+            c <- subtypeS fs (SType a2) (SType BoolT)
             return $ coTrans c coProj2
       c1 `catchError` const c2
-    subtypeS (LTy a :<| fs) (Arr a1 a2) BoolT = do
-      c1 <- subtypeS Q.empty a a1
-      c2 <- subtypeS fs a2 BoolT
+    subtypeS (LTy a :<| fs) (SType (Arr a1 a2)) (SType BoolT) = do
+      c1 <- subtypeS Q.empty (SType a) (SType a1)
+      c2 <- subtypeS fs (SType a2) (SType BoolT)
       return $ coArr c1 c2
-    subtypeS (LLa l :<| fs) (SRecT l' a) BoolT =
+    subtypeS (LLa l :<| fs) (SType (SRecT l' a)) (SType BoolT) =
       if l == l'
-        then subtypeS fs a BoolT
+        then subtypeS fs (SType a) (SType BoolT)
         else throwError $
              "Labels" <+>
              Pretty.pretty l <+> "and" <+> Pretty.pretty l' <+> "mismatch"
-    subtypeS _ BotT BoolT = return T.Bot
+    subtypeS (LAll tv a :<| fs) (DForall b) (SType BoolT) = do
+        ((tv' , Embed b'),  t) <- unbind b
+        subtypeS Q.empty (SType a) (SType b')
+        subtypeS fs (subst tv' (TVar tv) t) (SType BoolT)
+    subtypeS _ (SType BotT) (SType BoolT) = return T.Bot
     -- type variable
-    subtypeS fs (And a1 a2) (TVar x) = do
+    subtypeS fs (SType (And a1 a2)) (SType (TVar x)) = do
       let c1 = do
-            c <- subtypeS fs a1 (TVar x)
+            c <- subtypeS fs (SType a1) (SType (TVar x))
             return $ coTrans c coProj1
           c2 = do
-            c <- subtypeS fs a2 (TVar x)
+            c <- subtypeS fs (SType a2) (SType (TVar x))
             return $ coTrans c coProj2
       c1 `catchError` const c2
-    subtypeS (LTy a :<| fs) (Arr a1 a2) (TVar x) = do
-      c1 <- subtypeS Q.empty a a1
-      c2 <- subtypeS fs a2 (TVar x)
+    subtypeS (LTy a :<| fs) (SType (Arr a1 a2)) (SType (TVar x)) = do
+      c1 <- subtypeS Q.empty (SType a) (SType a1)
+      c2 <- subtypeS fs (SType a2) (SType (TVar x))
       return $ coArr c1 c2
-    subtypeS (LLa l :<| fs) (SRecT l' a) (TVar x) =
+    subtypeS (LLa l :<| fs) (SType (SRecT l' a)) (SType (TVar x)) =
       if l == l'
-        then subtypeS fs a (TVar x)
+        then subtypeS fs (SType a) (SType (TVar x))
         else throwError $
              "Labels" <+>
              Pretty.squotes (Pretty.pretty l) <+>
              "and" <+> Pretty.squotes (Pretty.pretty l') <+> "mismatch"
-    subtypeS _ BotT (TVar _) = return T.Bot
+    subtypeS (LAll tv a :<| fs) (DForall b) (SType (TVar x)) = do
+        ((tv' , Embed b'),  t) <- unbind b
+        subtypeS Q.empty (SType a) (SType b')
+        subtypeS fs (subst tv' (TVar tv) t) (SType (TVar x))
+    subtypeS _ (SType BotT) (SType (TVar _)) = return T.Bot
     -- Inductive cases
-    subtypeS fs a (And b1 b2) = do
-      c1 <- subtypeS fs a b1
-      c2 <- subtypeS fs a b2
+    subtypeS fs (SType a) (SType (And b1 b2)) = do
+      c1 <- subtypeS fs (SType a) (SType b1)
+      c2 <- subtypeS fs (SType a) (SType b2)
       return $ coTrans (calAnd fs) (coPair c1 c2)
-    subtypeS fs a (Arr b1 b2) = subtypeS (fs |> LTy b1) a b2
-    subtypeS fs a (SRecT l b) = subtypeS (fs |> LLa l) a b
+    subtypeS fs (SType a) (SType (Arr b1 b2)) = subtypeS (fs |> LTy b1) (SType a) (SType b2)
+    subtypeS fs (SType a) (SType (SRecT l b)) = subtypeS (fs |> LLa l) (SType a) (SType b)
+    subtypeS fs (SType a) (DForall b) = do
+      ((tv, Embed b'), t) <- unbind b
+      subtypeS (fs |> LAll tv b') (SType a) t
     subtypeS _ a b =
       throwError $
       "No subtyping relation between" <+>
