@@ -101,10 +101,17 @@ atom =
     , LitV <$> float
     , topVal
     , evar <$> lidentifier
+    , poly
     , record
     , bconst
     , parens expr
     ]
+
+poly :: Parser Expr
+poly = do
+  symbol "^"
+  xs <- lidentifier
+  return $ evarpoly xs
 
 record :: Parser Expr
 record = braces (mkRecds' <$> sepBy1 tmBind comma)
@@ -127,6 +134,7 @@ pLambda = do
 pLet :: Parser Expr
 pLet = do
   rword "let"
+  symbol "^"
   n <- lidentifier
   symbol "="
   e1 <- expr
@@ -136,7 +144,8 @@ pLet = do
 
 pLetrec :: Parser Expr
 pLetrec = do
-  rword "let"
+  rword "letrec"
+  symbol "^"
   n <- lidentifier
   colon
   t <- pType
@@ -257,8 +266,7 @@ recordparam = do
 
 -- (x : A) or x
 param :: Parser (String, Maybe Scheme)
-param =
-  choice
+param = choice
     [ (lidentifier <|> symbol "_") >>= \n -> return (n, Nothing)
     , parens $ second Just <$> tparam
     ]
@@ -353,6 +361,7 @@ rws =
   , "then"
   , "else"
   , "let"
+  , "letrec"
   , "in"
   , "type"
   , "forall"

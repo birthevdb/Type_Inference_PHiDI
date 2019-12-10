@@ -209,6 +209,7 @@ wrapargi x = case x of
 
 instance FPretty S.Expr where
   ppr (S.Var x) = return $ Pretty.pretty x
+  ppr (S.VarPoly x) = return $ Pretty.pretty x
   ppr (S.App f a) = do
     df <- ppr f
     da <- ppr a
@@ -304,7 +305,7 @@ instance FPretty I.FExpr where
   ppr (I.TApp f a) = do
     f' <- ppr f
     a' <- ppr a
-    return $ wrapfi f f' <+> a'
+    return $ wrapfi f f' <+> ("[" <> a' <> "]")
   ppr (I.Lam bnd) =
     lunbind bnd $ \(x, b) -> do
       b' <- ppr b

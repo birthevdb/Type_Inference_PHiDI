@@ -74,8 +74,8 @@ translType (S.DForall b) = do
 translType (S.SType t) = translSType t
 
 translCtxType :: Fresh m => S.CtxType -> m I.FType
-translCtxType (CtxSch sch) = translType sch
-translCtxType (CtxUni u) = return $ I.TVar (translate u)
+translCtxType (CtxSch gam dis ty) = translPType ty
+-- translCtxType (CtxUni u) = return $ I.TVar (translate u)
 
 translSType :: Fresh m => S.SType -> m I.FType
 translSType S.NumT = return $ I.NumT
@@ -123,6 +123,7 @@ translPType (PRecT l p) = do
 -- Translation function for expressions
 translExp :: Fresh m => S.Expr -> m I.FExpr
 translExp (S.Var n) = return $ I.Var (translate n)
+translExp (S.VarPoly n) = return $ I.Var (translate n)
 translExp (S.App e1 e2) = do
   e1' <- translExp e1
   e2' <- translExp e2

@@ -12,6 +12,9 @@ import Unbound.Generics.LocallyNameless.Name
 evar :: String -> Expr
 evar = Var . s2n
 
+evarpoly :: String -> Expr
+evarpoly = VarPoly . s2n
+
 evarFi :: String -> I.FExpr
 evarFi = I.Var . s2n
 

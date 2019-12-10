@@ -211,5 +211,5 @@ subtype ctx st tt = runExcept $ runFreshMT go
       subtypeS (fs |> LAll tv b') a t
     subtypeS _ a b =
       throwError $
-      "No subtyping relation between" <+>
+      "No intermediate subtyping relation between" <+>
       Pretty.squotes (pprint a) <+> "and" <+> Pretty.squotes (pprint b)

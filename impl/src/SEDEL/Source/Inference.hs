@@ -12,7 +12,6 @@ import qualified Data.Set as Set
 import           SEDEL.Environment
 import           SEDEL.PrettyPrint
 import           SEDEL.Source.Syntax
-import           SEDEL.Source.Subtyping
 import qualified SEDEL.Target.Syntax as T
 import qualified SEDEL.Intermediate.Syntax as I
 import           SEDEL.Intermediate.TypeCheck as TC
@@ -21,6 +20,11 @@ import           SEDEL.Common
 import           SEDEL.Source.Desugar
 import           SEDEL.Translations
 
+import Debug.Trace as DT
+
+---------------------
+-- GENERAL METHODS --
+---------------------
 
 tcModule :: Module -> STcMonad (Scheme, I.FExpr, T.UExpr)
 tcModule m = do
@@ -46,25 +50,15 @@ tcTmDecl decl =
   where
     (n, term) = normalizeTmDecl decl
 
+---------------------
+-- DATA STRUCTURES --
+---------------------
 
 -- | Rule representing 1 subtyping constraint of the form T1 <: T2
 type SubRule = (PType, PType)
 -- | Rule representing 1 disjointness constraint of the form P1 * P2
 type DisRule = (PType, PType)
 
--- | Collection of subtyping constraints
-data SubCons = EmptyC
-             | SeqC SubRule SubCons
-             deriving Show
-
--- | Collection of disjointness constraints (P types)
-data DisCons = EmptyD
-             | SeqD DisRule DisCons
-             deriving Show
--- | Collection of disjointness constraints (S types) of the form (alpha * T)
-data Delta = EmptyDelta
-           | Del (SType, SType) Delta
-           deriving Show
 -- | Queue consisting of labels and/or types
 data Queue = EmptyQ
            | QL Label Queue
@@ -82,350 +76,431 @@ data Polar typ = PosT typ
 -- | Substitutions in the pr function do not include the notion of polarity
 data PrSubs typ = EmptyPrS | Subs TUni typ (PrSubs typ) deriving Show
 
------------------------
--- Γ ⊢ E : A ~> e ~> e
------------------------
+------------------
+-- ⊢ E : A ~> e --
+------------------
 
 topLevelInfer :: Expr -> STcMonad (Scheme, I.FExpr)
 topLevelInfer expr = do
-  -- Infer type, subtyping constraints and disjointness constraints using the
-  -- algorithmic inference rules
-  (ty, sub, dis, fTerm) <- infer expr
-  -- Solve the subtyping constraints using a unification algorithm
-  theta                 <- solve $ initC sub
-  -- Ground the type after flattening it and applying the substitution
-  (principal, theta')   <- ground $ flatten $ substInType theta (PosT ty)
-  -- Solve and simplify the disjointness constraints
-  delta                 <- combine =<< destructD =<< groundD =<< applySubstD theta dis
-  -- Ground the substitution
-  subs                  <- groundS theta EmptyPrS
-  fTerm'                <- substFExpr subs fTerm
-  -- Free variables in annotations and inferred type
-  fvsE                  <- freevarsE fTerm'
-  let fvsP               = freevars principal
-  let fvs                = Set.toList (Set.union fvsP fvsE)
-  -- Construct the final term by abstracting over the free type variables in
-  -- the final type
-  finalFTerm            <- constructFinalTerm delta fvs fTerm'
-  -- Construct the final type by abstracting over the free variables
-  let finalType          = constructFinalType delta fvs principal
-  return (finalType, finalFTerm)
+  (gam, dis, ty, fTerm) <- infer expr
+  (principal, _)        <- ground $ flatten $ ty
+  del                   <- combine =<< groundDestruct dis
+  fTerm'                <- constructFinalTerm del fTerm
+  let ty'                = constructFinalType del principal
+  return (ty', fTerm')
 
--------------------------------
--- Algorithmic inference rules:
--- Γ ⊢ E : P ; C ; D ~> e
--------------------------------
+---------------------------------
+-- ALGORITHMIC INFERENCE RULES --
+-- Π ⊢ E [Γ; ∆] τ ~> e         --
+---------------------------------
 
-infer :: Expr -> STcMonad (PType, SubCons, DisCons, I.FExpr)
+infer :: Expr -> STcMonad (Gam, Dis, PType, I.FExpr)
 
--- Γ ⊢ ⊤ : ⊤ ; • ; • ~> ⊤
-infer Top = return (P TopT, EmptyC, EmptyD, I.Top)
+-- Γ ⊢ ⊤ : [•; •] ⊤ ~> ⊤
+infer Top = return (EmptyG, EmptyDis, P TopT, I.Top)
 
--- Γ ⊢ i : Int ; • ; • ~> i
-infer (LitV n) = return (P NumT, EmptyC, EmptyD, I.LitV n)
+-- Γ ⊢ i : [•; •] Int ~> i
+infer (LitV n) = return (EmptyG, EmptyDis, P NumT, I.LitV n)
 
--- Γ ⊢ b : Bool ; • ; • ~> b
-infer (BoolV b) = return (P BoolT, EmptyC, EmptyD, I.BoolV b)
+-- Γ ⊢ b : [•; •] Bool ~> b
+infer (BoolV b) = return (EmptyG, EmptyDis, P BoolT, I.BoolV b)
 
-{- |
-   (x : ∀ (a * T_2).T) ∈ Γ        u fresh
-------------------------------------------
-Γ ⊢ x : [a -> u] T ; • ; u * T_2 ~> x |u|
+{-
+   Π (x) = [Γ; ∆] τ       ∆ = α * τ'       u fresh
+   ---------------------------------------------------
+   Π ⊢ x : [ [α -> u]Γ; [α -> u]∆] [α -> u]τ ~> x |u|
 
-   (x : u) ∈ Γ
------------------------
-Γ ⊢ x : u ; • ; • ~> x
+-}
+infer (VarPoly x) = do
+  CtxSch gam del ty       <- lookupVarTy x
+  (gam', del', ty', vars) <- findAndSubstVars gam del ty
+  let dis = convertDel del'
+  return (gam', dis, ty', applyVars (I.Var (translate x)) vars)
+
+{-
+  --------------------------------
+  Π ⊢ x : [x : u ; u * ⊤] u ~> x
 -}
 infer (Var x) = do
-  let fterm = I.Var (translate x)
-  lookupVarTy x >>= \var -> case var of
-    CtxUni  u          -> return (Uni u, EmptyC, EmptyD, fterm)
-    CtxSch (SType t)   -> return (P t,   EmptyC, EmptyD, fterm)
-    CtxSch (DForall b) -> do
-      (t', d', vars) <- findAndSubstVars (DForall b)
-      return (t', EmptyC, d', applyVars fterm vars)
+  uFresh  <- getFreshUni
+  let gam  = Gamma x (Uni uFresh) EmptyG
+  let dis  = Disj (Uni uFresh) (P TopT) EmptyDis
+  return (gam, dis, Uni uFresh, I.Var (translate x))
 
-{- |
-  Γ , x : u ⊢ E : P ; C ; D ~> e         u fresh
-  -----------------------------------------------
-  Γ ⊢ \x . E : u -> P ; C ; D ~> \x . e |u -> P|
+{-
+  Π ⊢ E : [Γ; ∆] τ ~> e
+  ----------------------------------------------------------
+  Π ⊢ \x . E : [Γ_x ; ∆ ] Γ(x) -> τ ~> \x . e : |Γ(x) -> τ|
   -}
 infer (Lam b) = do
   (x, e) <- unbind b
-  uFresh <- getFreshUni
-  (t', c', d', f') <- localCtx (extendVarCtx x (CtxUni uFresh)) $ infer e
-  let p' = PArr (Uni uFresh) t'
-  tFi <- translPType p'
-  let fterm = I.Anno (I.Lam (bind (translate x) f')) tFi
-  return (p', c', d', fterm)
+  (gam', dis', t', f') <- infer e
+  let gam = removeFromGam gam' x
+  case lookupGam gam' x of
+    Nothing -> do
+      (st, _)  <- ground $ flatten (PArr (P TopT) t')
+      tFi      <- translSType st
+      let fterm = I.Anno (I.Lam (bind (translate x) f')) tFi
+      return (gam, dis', PArr (P TopT) t', fterm)
+    Just ty -> do
+      (st, _)  <- ground $ flatten $ (PArr ty t')
+      tFi      <- translSType st
+      let fterm = I.Anno (I.Lam (bind (translate x) f')) tFi
+      return (gam, dis', PArr ty t', fterm)
 
-{- |
-Γ ⊢ E1 : P1 ; C1 ; D1 ~> e1
-Γ ⊢ E2 : P2 ; C2 ; D2 ~> e2            u fresh
---------------------------------------------------------
-Γ ⊢ E1 E2 : u ; C1, C2, P1 <: P2 -> u ; D1, D2 ~> e1 e2
+{-
+      Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1                  u fresh
+      Π ⊢ E2 : [Γ2; ∆2] τ2 ~> e2                  θ = solve(τ1 <: τ2 -> u)
+  -------------------------------------------------------------------------------
+  Π ⊢ E1 E2 : [θ(Γ1 ∪ Γ2); θ(∆1 ∪ ∆2 ∪ (u * ⊤))] θ(u) ~> |θ| (e1 : |τ2 -> u| e2)
 -}
 infer (App e1 e2) = do
-  (t1', c1', d1', f1') <- infer e1
-  (t2', c2', d2', f2') <- infer e2
-  uFresh <- getFreshUni
-  let newC = SeqC (t1', PArr t2' (Uni uFresh)) EmptyC
-  let c' = appendC (appendC c1' c2') newC
-  let d' = appendD d1' d2'
-  return (Uni uFresh, c', d', I.App f1' f2')
+  (gam1', dis1', t1', f1') <- infer e1
+  (gam2', dis2', t2', f2') <- infer e2
+  uFresh  <- getFreshUni
+  theta   <- solve $ initC ((t1', PArr t2' (Uni uFresh)))
+  let gam  = substInGam (joinGam gam1' gam2') theta
+  let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  let t    = substInType theta (PosT (Uni uFresh))
+  theta'  <- groundS theta EmptyPrS
+  (st, _) <- ground $ flatten $ (PArr t2' (Uni uFresh))
+  tFi     <- translSType st
+  f       <- substFExpr theta' (I.App (I.Anno f1' tFi) f2')
+  return (gam, dis, t, f)
 
-{- |
-Γ ⊢ E1 : P1 ; C1 ; D1 ~> e1
-Γ ⊢ E2 : P2 ; C2 ; D2 ~> e2             u fresh
------------------------------------------------------------------
-Γ ⊢ E1,,E2 : u ; C1, C2, P1&P2 <: u; D1, D2, P1 * P2 ~> e1 ,, e2
+{-
+    Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1             Π ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
+  ------------------------------------------------------------------
+  Π ⊢ E1 ,, E2 : [Γ1 ∪ Γ2; ∆1 ∪ ∆2 ∪ (τ1 * τ2)] τ1 & τ2 ~> e1 ,, e2
 -}
 infer (Merge e1 e2) = do
-  (t1', c1', d1', f1') <- infer e1
-  (t2', c2', d2', f2') <- infer e2
-  uFresh <- getFreshUni
-  let newC = SeqC (PAnd t1' t2', Uni uFresh) EmptyC
-  let c' = appendC (appendC c1' c2') newC
-  let d' = SeqD (t1', t2') (appendD d1' d2')
-  return (Uni uFresh, c', d', I.Merge f1' f2')
+  (gam1', dis1', t1', f1') <- infer e1
+  (gam2', dis2', t2', f2') <- infer e2
+  let gam = joinGam gam1' gam2'
+  let dis = joinDis (joinDis dis1' dis2') (Disj t1' t2' EmptyDis)
+  return (gam, dis, PAnd t1' t2', I.Merge f1' f2')
 
-{- |
-Γ ⊢ E : P ; C ; D ~> e
--------------------------------------------
-Γ ⊢ {l = E} : {l : P} ; C ; D ~> { l = e }
+{-
+              Π ⊢ E : [Γ; ∆] τ ~> e
+  -------------------------------------------
+  Π ⊢ {l = E} : [Γ; ∆] { l : τ } ~> { l = e }
 -}
 infer (Rec l e) = do
-  (t', c', d', f') <- infer e
-  return (PRecT l t', c', d', I.Rec l f')
+  (gam', dis', t', f') <- infer e
+  return (gam', dis', PRecT l t', I.Rec l f')
 
-{- |
-Γ ⊢ E : P ; C ; D ~> e        u fresh
------------------------------------------
-Γ ⊢ E.l : u ; C, P <: {l : u} ; D ~> e.l
+{-
+  Π ⊢ E : [Γ; ∆] τ ~> e     u fresh    θ = solve(τ <: {l : u})
+  -------------------------------------------------------------
+  Π ⊢ E.l ; [θ(Γ); θ(∆ ∪ (u * ⊤))] θ(τ) ~> |θ|(e:|{l : u}|.l)
 -}
 infer (Proj e l) = do
-  (t', c', d', f') <- infer e
+  (gam', dis', t', f') <- infer e
   uFresh <- getFreshUni
-  let newC = SeqC (t', PRecT l (Uni uFresh)) EmptyC
-  return (Uni uFresh, appendC c' newC, d', I.Acc f' l)
+  theta  <- solve $ initC ((t', PRecT l (Uni uFresh)))
+  let gam = substInGam gam' theta
+  let dis = substInDis (joinDis dis' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  let t   = substInType theta (PosT (Uni uFresh))
+  theta' <- groundS theta EmptyPrS
+  (st, _) <- ground $ flatten $ (PRecT l (Uni uFresh))
+  tFi     <- translSType st
+  f      <- substFExpr theta' (I.Acc (I.Anno f' tFi) l)
+  return (gam, dis, t, f)
 
-{- |
-Γ ⊢ E1 : A ~> e1
-Γ, x : A ⊢ E2 : P ; C ; D ~> e2
--------------------------------------------------------------
-Γ ⊢ let x = E1 in E2 : P ; C ; D ~> let x : A = e1 in e2
+{-
+  Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  Π, ^x : [Γ1; ∆1] τ1 ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
+  ------------------------------------------------------------------
+  Γ ⊢ let ^x = E1 in E2 : [Γ1 ∪ Γ2; ∆1 ∪ ∆2] τ2 ~> let x = e1 in e2
 -}
 infer (Let b) = do
-  (x, (e1, e2)) <- unbind b
-  (a', f1') <- topLevelInfer e1
-  (t', c', d', f2') <- localCtx (extendVarCtx x (CtxSch a')) $ infer e2
-  aFi <- translType a'
-  return (t', c', d', I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2')))
+  (x, (e1, e2))        <- unbind b
+  (gam1, dis1, t1, f1) <- infer e1
+  (principal1, _)      <- ground $ flatten $ t1
+  del1                 <- combine =<< groundDestruct dis1
+  let a1                = constructFinalType del1 principal1
+  (gam2, dis2, t2, f2) <- localCtx (extendVarCtx x (CtxSch gam1 del1 t1)) $ infer e2
+  let gam               = joinGam gam1 gam2
+  let dis               = joinDis dis1 dis2
+  aFi                  <- translType a1
+  f1'                  <- constructFinalTerm del1 f1
+  return (gam, dis, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
 
-{- |
-Γ, x : A ⊢ E1 : A ~> e1
-Γ, x : A ⊢ E2 : P ; C ; D ~> e2
--------------------------------------------------------------
-Γ ⊢ letrec x : A = E1 in E2 : P ; C ; D ~> letrec x : A = e1 in e2
+{-
+  A = [Γ'; ∆'] τ'
+  Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  θ = solve(τ1 <: τ')                   ∆' |= θ(∆1)
+  Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
+  -------------------------------------------------------------------------------
+  Π ⊢ letrec ^x : A = E1 in E2 : [Γ1 ∪ Γ2; ∆1 ∪ ∆2] τ2 ~> let x : |A| = |θ|(e1) in e2
 -}
 infer (Letrec b) = do
   ((x, Embed a), (e1, e2)) <- unbind b
-  (a', f1') <- localCtx (extendVarCtx x (CtxSch a)) $ topLevelInfer e1
-  (t', c', d', f2') <- localCtx (extendVarCtx x (CtxSch a')) $ infer e2
-  aFi <- translType a'
-  ctx <- askCtx
-  let res = subtype ctx a' a
-  case res of
-    Right c -> return (t', c', d', I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2')))
-    Left er -> errThrow [DS $ "Incorrect inference: " <+> er]
+  -- A = [Γ'; ∆'] τ'
+  (CtxSch gam' del' t')    <- convertScheme a
+  -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  (gam1, dis1, t1, f1)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e1
+  -- θ = solve(τ1 <: τ')
+  th                       <- unification [(EmptyQ, (t1, t'))]
+  case th of
+    Just theta -> do
+      -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
+      (gam2, dis2, t2, f2)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
+      -- Γ = Γ1 ∪ Γ2
+      let gam                   = substInGam (joinGam gam1 gam2) theta
+      -- ∆ = ∆1 ∪ ∆2
+      let dis                   = substInDis (joinDis dis1 dis2) theta
+      -- θ(∆1)
+      del1                     <- combine =<< groundDestruct (substInDis dis1 theta)
+      -- check  ∆' |= θ(∆1)
+      entails del' del1
+      -- θ(e1)
+      aFi                      <- translType a
+      theta'                   <- groundS theta EmptyPrS
+      f'                       <- substFExpr theta' f1
+      f1'                      <- constructFinalTerm del1 f'
+      return (gam, dis, t2, I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2)))
+    Nothing    -> errThrow [DS "Letrec not possible"]
 
-
-{- |
-Γ ⊢ E1 : P1 ; C1 ; D1 ~> e1
-Γ ⊢ E2 : P2 ; C2 ; D2 ~> e2
-Γ ⊢ E3 : P3 ; C3 ; D3 ~> e3           u fresh
------------------------------------------------------------------------------------------------------
-Γ ⊢ If E1 E2 E3 : u ; C1, C2, C3, P1 <: Bool, P2 <: u, P3 <: u ; D1, D2, D3 ~> if e1 then e2 else e3
+{-
+  Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  Π ⊢ E2 : [Γ2; ∆2] τ2 ~> e2                u fresh
+  Π ⊢ E3 : [Γ3; ∆3] τ3 ~> e3                θ = solve(τ1 <: Bool, τ2 <: u, τ3 <: u)
+  ---------------------------------------------------------------------------------------------
+  Π ⊢ If E1 E2 E3 : [θ(Γ1 ∪ Γ2 ∪ Γ3); θ(∆1 ∪ ∆2 ∪ ∆3 ∪ (u * ⊤))] θ(u) ~> |θ|(if e1 then e2 else e3)
 -}
 infer (If e1 e2 e3) = do
-  (t1', c1', d1', f1') <- infer e1
-  (t2', c2', d2', f2') <- infer e2
-  (t3', c3', d3', f3') <- infer e3
+  (gam1', dis1', t1', f1') <- infer e1
+  (gam2', dis2', t2', f2') <- infer e2
+  (gam3', dis3', t3', f3') <- infer e3
   uFresh <- getFreshUni
-  let newC = SeqC (t1', P BoolT) (SeqC (t2', Uni uFresh) (SeqC (t3', Uni uFresh) EmptyC))
-  let c' = appendC c1' (appendC c2' (appendC c3' newC))
-  let d' = appendD d1' (appendD d2' d3')
-  return (Uni uFresh, c', d', I.If f1' f2' f3')
+  let cons = (initC (t1', P BoolT)) ++ (initC (t2', Uni uFresh)) ++ (initC (t3', Uni uFresh))
+  theta  <- solve cons
+  let gam = substInGam (joinGam gam1' (joinGam gam2' gam3')) theta
+  let dis = substInDis (joinDis (joinDis dis1' (joinDis dis2' dis3')) (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  let t   = substInType theta (PosT (Uni uFresh))
+  theta' <- groundS theta EmptyPrS
+  f      <- substFExpr theta' (I.If f1' f2' f3')
+  return (gam, dis, t, f)
 
-{- |
-Γ ⊢ E1 : P1 ; C1 ; D1 ~> e1
-Γ ⊢ E2 : P2 ; C2 ; D2 ~> e2        u fresh
-----------------------------------------------------------------------------------------------
-Γ ⊢ PrimOp Op E1 E2 : u ; C1, C2, P1 <: u , u <: P2 ; D1, D2 ~> PrimOp Op e1 e2
+{-
+  Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  Π ⊢ E2 : [Γ2; ∆2] τ2 ~> e2       u fresh       θ = solve(...)
+  ---------------------------------------------------------------------------------
+  Π ⊢ PrimOp Op E1 E2 : [θ(Γ1 ∪ Γ2); θ(∆1 ∪ ∆2 ∪ (u * ⊤))] θ(u) ~> |θ|(PrimOp Op e1 e2)
 -}
 infer (PrimOp op e1 e2) = do
-  (t1', c1', d1', f1') <- infer e1
-  (t2', c2', d2', f2') <- infer e2
+  (gam1', dis1', t1', f1') <- infer e1
+  (gam2', dis2', t2', f2') <- infer e2
   let f' = I.PrimOp op f1' f2'
-  let d' = appendD d1' d2'
   uFresh <- getFreshUni
   case op of
     Arith   _ -> do
-      let newC = SeqC (P NumT, Uni uFresh) (SeqC (t1', P NumT) (SeqC (t2', P NumT) EmptyC))
-      let c' = appendC c1' (appendC c2' newC)
-      return (Uni uFresh, c', d', f')
+      let cons = (initC (P NumT, Uni uFresh)) ++ (initC (t1', P NumT)) ++ (initC (t2', P NumT))
+      theta  <- solve cons
+      let gam = substInGam (joinGam gam1' gam2') theta
+      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t   = substInType theta (PosT (Uni uFresh))
+      theta' <- groundS theta EmptyPrS
+      f      <- substFExpr theta' f'
+      return (gam, dis, t, f)
     Comp    _ -> do
-      let newC = SeqC (P BoolT, Uni uFresh) (SeqC (t1', P NumT) (SeqC (t2', P NumT) EmptyC))
-      let c' = appendC c1' (appendC c2' newC)
-      return (Uni uFresh, c', d', f')
+      let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P NumT)) ++ (initC (t2', P NumT))
+      theta  <- solve cons
+      let gam = substInGam (joinGam gam1' gam2') theta
+      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t   = substInType theta (PosT (Uni uFresh))
+      theta' <- groundS theta EmptyPrS
+      f      <- substFExpr theta' f'
+      return (gam, dis, t, f)
     Logical _ -> do
-      let newC = SeqC (P BoolT, Uni uFresh) (SeqC (t1', P BoolT) (SeqC (t2', P BoolT) EmptyC))
-      let c' = appendC c1' (appendC c2' newC)
-      return (Uni uFresh, c', d', f')
+      let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P BoolT)) ++ (initC (t2', P BoolT))
+      theta  <- solve cons
+      let gam = substInGam (joinGam gam1' gam2') theta
+      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t   = substInType theta (PosT (Uni uFresh))
+      theta' <- groundS theta EmptyPrS
+      f      <- substFExpr theta' f'
+      return (gam, dis, t, f)
 
 infer (Pos p tm) = extendSourceLocation p tm $ infer tm
 
 infer a = errThrow [DS "Infer not implemented:", DD a]
 
--------------------------
--- UNIFICATION ALGORITHM
--------------------------
+--------------------
+-- ENTAILMENT LET --
+--------------------
+
+entails :: Del -> Del -> STcMonad ()
+entails del1 EmptyD = return ()
+entails del1 (Delta uni ty del2) = do
+  ent del1 uni ty
+  entails del1 del2
+  where
+    ent :: Del -> TUni -> SType -> STcMonad ()
+    ent EmptyD u1 a = errThrow [DS "No entailment in letrec."]
+    ent (Delta u1 a _) u2 b | u1 == u2 = unification [(EmptyQ, (P a, P b))] >>= \th -> case th of
+      Nothing -> if (topLike b) then return () else errThrow [DS "No entailment in letrec."]
+      Just x -> return ()
+    ent (Delta u1 a d) u2 b = ent d u2 b
+
+---------------------------
+-- UNIFICATION ALGORITHM --
+---------------------------
 
 -- Initialization function
-initC :: SubCons -> [SubRule]
-initC EmptyC            = []
-initC (SeqC (a1, a2) c) = [(a1, a2)] ++ initC(c)
+initC :: SubRule -> [(Queue, SubRule)]
+initC (a1, a2) = [(EmptyQ, (a1, a2))]
 
+solve :: [(Queue, SubRule)] -> STcMonad (Substitution PType)
+solve [] = return $ EmptyS
+solve cons = unification cons >>= \subs -> case subs of
+  Just sub -> return $ sub
+  Nothing -> errThrow [DS "Destruct subtyping impossible case"]
 
--- Unification algorithm
-solve :: [SubRule] -> STcMonad (Substitution PType)
-solve [] = return EmptyS
-solve (s:lqc) | substWithUni s = do
-  theta1 <- makeSubst s
-  theta2 <- solve $ applySubstC theta1 lqc
-  return $ appendS theta1 theta2
-solve (s:lqc) = do
-  des    <- destructC s
-  solve $ des ++ lqc
+unification :: [(Queue, SubRule)] -> STcMonad (Maybe (Substitution PType))
+unification []                = return $ Just EmptyS
+unification ((EmptyQ, s):lqc) | substWithUni s = do
+    theta1 <- makeSubst s
+    sub    <- unification $ applySubstC theta1 lqc
+    case sub of
+      Just theta2 -> return $ Just (appendS theta1 theta2)
+      Nothing     -> return $ Nothing
 
+unification ((EmptyQ, (P NumT,  P BoolT)):lqc) = return $ Nothing
+unification ((EmptyQ, (P BoolT, P NumT)) :lqc) = return $ Nothing
+unification ((EmptyQ, (P NumT,  P NumT)) :lqc) = unification lqc
+unification ((EmptyQ, (P BoolT, P BoolT)):lqc) = unification lqc
 
--- Destruct the subtyping constraints
-destructC :: SubRule -> STcMonad [SubRule]
-destructC (P NumT,  P NumT)  = return []
-destructC (P BoolT, P BoolT) = return []
-destructC (P BotT,  _)       = return []
-destructC (_,       P TopT)  = return []
+unification ((_,(P BotT, _))     :lqc) = unification lqc
+unification ((_,(_,      P TopT)):lqc) = unification lqc
 
-destructC (Join a1 a2, a)             = return [(a1, a),(a2, a)]
-destructC (a,          Meet a1 a2)    = return [(a, a1),(a, a2)]
-destructC (a1,         P (And a2 a3)) = return [(a1, P a2), (a1, P a3)]
-destructC (a1,         PAnd a2 a3)    = return [(a1, a2), (a1, a3)]
+unification ((q,(Join a1 a2, a))            :lqc) = unification ((q,(a1,a))  :(q,(a2,a))  :lqc)
+unification ((q,(a,          Meet a1 a2))   :lqc) = unification ((q,(a,a1))  :(q,(a,a2))  :lqc)
+unification ((q,(a,          P (And a1 a2))):lqc) = unification ((q,(a,P a1)):(q,(a,P a2)):lqc)
+unification ((q,(a,          PAnd a1 a2))   :lqc) = unification ((q,(a,a1))  :(q,(a,a2))  :lqc)
 
-destructC (P (Arr a1 a2), P (Arr a3 a4)) = return [(P a2, P a4), (P a3, P a1)]
-destructC (PArr a1 a2,    PArr a3 a4)    = return [(a2, a4), (a3, a1)]
-destructC (P (Arr a1 a2), PArr a3 a4)    = return [(P a2, a4), (a3, P a1)]
-destructC (PArr a1 a2,    P (Arr a3 a4)) = return [(a2, P a4), (P a3, a1)]
+unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a1 == a3 =
+  unification ((q,(PArr a1 (PAnd a2 a4),PArr a5 a6)):lqc)
+unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a2 == a4 =
+  unification ((q,(PArr (PAnd a1 a3) a2,PArr a5 a6)):lqc)
 
-destructC (P (SRecT l1 a1), P (SRecT l2 a2)) | l1 == l2 = return [(P a1, P a2)]
-destructC (PRecT l1 a1,     PRecT l2 a2)     | l1 == l2 = return [(a1, a2)]
-destructC (P (SRecT l1 a1), PRecT l2 a2)     | l1 == l2 = return [(P a1, a2)]
-destructC (PRecT l1 a1,     P (SRecT l2 a2)) | l1 == l2 = return [(a1, P a2)]
+unification ((q,(a1, P (SRecT l a2))):lqc) = unification ((QL l      q,(a1,P a2)):lqc)
+unification ((q,(a1, PRecT l a2))    :lqc) = unification ((QL l      q,(a1,a2))  :lqc)
+unification ((q,(a1, P (Arr a2 a3))) :lqc) = unification ((QA (P a2) q,(a1,P a3)):lqc)
+unification ((q,(a1, PArr a2 a3))    :lqc) = unification ((QA a2     q,(a1,a3))  :lqc)
 
+unification ((QA p q,(P (Arr a1 a2), a)):lqc) = unification [(q,(p, P a1))] >>= \sub -> case sub of
+    Just cs -> unification ((q,(p, P a1))  :(q, (P a2, a)):lqc)
+    Nothing -> unification ((q,(P TopT, a)):lqc)
+unification ((QA p q,(PArr a1 a2,    a)):lqc) = unification [(q,(p, a1))]   >>= \sub -> case sub of
+    Just cs -> unification ((q,(p, a1))    :(q, (a2, a)):lqc)
+    Nothing -> unification ((q,(P TopT, a)):lqc)
+unification ((QL l q,(P (SRecT l1 a1), a2)):lqc) | l == l1 = unification ((q,(P a1,a2)):lqc)
+unification ((QL l q,(PRecT l1 a1, a2))    :lqc) | l == l1 = unification ((q,(a1,a2))  :lqc)
 
-destructC (P (And a1 a2), P a3) | a1 == a3 || a2 == a3 = return []
-destructC (PAnd a1 a2,    a3)   | a1 == a3 || a2 == a3 = return []
-destructC (P (And a1 a2), p)    = getFreshUni >>= \u1 ->
-                                  getFreshUni >>= \u2 ->
-                                  return [(P a1, Uni u1), (P a2, Uni u2), (PAnd (Uni u1) (Uni u2), p)]
-destructC (PAnd a1 a2,    p)    = getFreshUni >>= \u1 ->
-                                  getFreshUni >>= \u2 ->
-                                  return [(a1, Uni u1), (a2, Uni u2), (PAnd (Uni u1) (Uni u2), p)]
+unification ((q,(P (And a1 a2), P a3)):lqc) | a1 == a3 || a2 == a3 = unification lqc
+unification ((q,(PAnd a1 a2,    a3))  :lqc) | a1 == a3 || a2 == a3 = unification lqc
+unification ((q,(P (And a1 a2), a3))  :lqc) = getFreshUni >>= \u1 ->
+                                              getFreshUni >>= \u2 ->
+                                              unification ((q,     (P a1,                   Uni u1)):
+                                                           (q,     (P a2,                   Uni u2)):
+                                                           (EmptyQ,(PAnd (Uni u1) (Uni u2), a3)):
+                                                           lqc)
+unification ((q,(PAnd a1 a2,    a3))  :lqc) = getFreshUni >>= \u1 ->
+                                              getFreshUni >>= \u2 ->
+                                              unification ((q,      (a1,                     Uni u1)):
+                                                           (q,      (a2,                     Uni u2)):
+                                                           (EmptyQ, (PAnd (Uni u1) (Uni u2), a3)):
+                                                           lqc)
+unification ((QA p q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PArr p a2)) :lqc)
+unification ((QL l q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PRecT l a2)):lqc)
+unification ((QA p q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
+unification ((QL l q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
 
-destructC s = errThrow [DS $ "Destruct subtyping constraints impossible case."]
-
-------------------
--- SUBSTITUTIONS
------------------
-
--- Check whether a unification variable gets substituted
-substWithUni :: SubRule -> Bool
-substWithUni (Uni u, _) = True
-substWithUni (_, Uni u) = True
--- substWithUni (P (TVar u), _) = True
--- substWithUni (_, P (TVar u)) = True
-substWithUni  _         = False
-
+unification _ = return Nothing
 
 -- Construct a substitution [u- |-> u /\ P] or [u+ |-> u \/ P]
 makeSubst :: SubRule -> STcMonad (Substitution PType)
 makeSubst (Uni u1, Uni u2) = if u1 == u2
                              then return $ EmptyS
                              else return $ NegS u1 (Meet (Uni u1) (Uni u2)) (PosS u2 (Join (Uni u1) (Uni u2)) EmptyS)
-makeSubst (Uni u,  t)      = -- return $ NegS u (Meet (Uni u) t) EmptyS
-                             if occursCheck (NegT (Uni u)) (NegT t)
+makeSubst (Uni u,  t)      = if occursCheck (NegT (Uni u)) (NegT t)
                              then errThrow [DS $ "Occurs check: cannot construct infinite type."]
                              else return $ NegS u (Meet (Uni u) t) EmptyS
-makeSubst (t,       Uni u) = -- return $ PosS u (Join (Uni u) t) EmptyS
-                             if occursCheck (PosT (Uni u)) (PosT t)
+makeSubst (t,       Uni u) = if occursCheck (PosT (Uni u)) (PosT t)
                              then errThrow [DS $ "Occurs check: cannot construct infinite type."]
                              else return $ PosS u (Join (Uni u) t) EmptyS
 makeSubst  _               = errThrow [DS $ "Solve impossible case"]
 
+-------------------
+-- SUBSTITUTIONS --
+-------------------
 
--- OccursCheck returns true if a unification variable of the same
--- polarity occurs on the other side of the constraint.
-occursCheck :: Polar PType -> Polar PType -> Bool
-occursCheck u              (PosT (P st))       = False -- occursS u st
-occursCheck u              (NegT (P st))       = False -- occursS u st
-occursCheck (PosT (Uni u)) (PosT (Uni u1))     = u == u1
-occursCheck (PosT (Uni u)) (NegT (Uni u1))     = False
-occursCheck (NegT (Uni u)) (PosT (Uni u1))     = False
-occursCheck (NegT (Uni u)) (NegT (Uni u1))     = u == u1
-occursCheck u              (PosT (Join p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
-occursCheck u              (NegT (Join p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
-occursCheck u              (PosT (Meet p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
-occursCheck u              (NegT (Meet p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
-occursCheck u              (PosT (PArr p1 p2)) = occursCheck u (NegT p1) || occursCheck u (PosT p2)
-occursCheck u              (NegT (PArr p1 p2)) = occursCheck u (PosT p1) || occursCheck u (NegT p2)
-occursCheck u              (PosT (PAnd p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
-occursCheck u              (NegT (PAnd p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
-occursCheck u              (PosT (PRecT l p))  = occursCheck u (PosT p)
-occursCheck u              (NegT (PRecT l p))  = occursCheck u (NegT p)
-occursCheck _              _                   = False
+-- Concatenate substitutions
+appendS :: Substitution typ -> Substitution typ -> Substitution typ
+appendS  EmptyS        s2 = s2
+appendS (PosS u ty s1) s2 = PosS u ty (appendS s1 s2)
+appendS (NegS u ty s1) s2 = NegS u ty (appendS s1 s2)
 
+-- Concatenate principality substitutions
+appendPr :: PrSubs typ -> PrSubs typ -> PrSubs typ
+appendPr  EmptyPrS     s2 = s2
+appendPr (Subs u t s1) s2 = Subs u t (appendPr s1 s2)
+
+-- Convert a polar substitution (PHiDI) into a non-polar one (Fi+)
+convertSubst :: Substitution PType -> STcMonad (PrSubs I.FType)
+convertSubst EmptyS          = return $ EmptyPrS
+convertSubst (PosS u pty sub) = do
+  fty <- translPType pty
+  sub' <- convertSubst sub
+  return $ Subs u fty sub'
+convertSubst (NegS u pty sub) = do
+  fty <- translPType pty
+  sub' <- convertSubst sub
+  return $ Subs u fty sub'
+
+-- Check whether a unification variable gets substituted
+substWithUni :: SubRule -> Bool
+substWithUni (Uni u, _) = True
+substWithUni (_, Uni u) = True
+substWithUni  _         = False
+
+-- Apply a polar substitution to a term context
+-- Negative type since it is an input
+substInGam :: Gam -> Substitution PType -> Gam
+substInGam EmptyG _ = EmptyG
+substInGam (Gamma x ty gam) sub = Gamma x (substInType sub (NegT ty)) (substInGam gam sub)
+
+-- Apply a polar substitution to disjointness requirements
+-- Positive type since it is an output
+substInDis :: Dis -> Substitution PType -> Dis
+substInDis EmptyDis _ = EmptyDis
+substInDis (Disj pty1 pty2 dis) sub = Disj (substInType sub (PosT pty1)) (substInType sub (PosT pty2)) (substInDis dis sub)
 
 -- Substitute type variables with unification variables in a given type scheme
-findAndSubstVars :: Scheme -> STcMonad (PType, DisCons, [TUni])
-findAndSubstVars (SType t) = return (P t, EmptyD, [])
-findAndSubstVars (DForall b) = do
-  ((alph, Embed t1), a2) <- unbind b
-  u               <- getFreshUni
-  (t, cons, vars) <- findAndSubstVars a2
-  let t'           = replaceTVar alph u t
-  let d'           = SeqD (Uni u, P t1) cons
-  return (t', d', u : vars)
+findAndSubstVars :: Gam -> Del -> PType -> STcMonad (Gam, Del, PType, [TUni])
+findAndSubstVars gam EmptyD ty = return (gam, EmptyD, ty, [])
+findAndSubstVars gam (Delta u st del) ty | gamContains gam u = do
+  (gam', del', ty', vars') <- findAndSubstVars gam del ty
+  return (gam', Delta u st del', ty', u : vars')
+findAndSubstVars gam (Delta u st del) ty = do
+  (gam', del', ty', vars') <- findAndSubstVars gam del ty
+  uFresh <- getFreshUni
+  let newGam = replaceGam u uFresh gam'
+  let newDel = Delta uFresh st del'
+  let newTy  = replaceTVar u uFresh ty'
+  return (newGam, newDel, newTy, uFresh : vars')
 
-
--- Apply a substitution to subtyping constraints
-applySubstC :: (Substitution PType) -> [SubRule] -> [SubRule]
+-- Apply a polar substitution to subtyping constraints
+applySubstC :: (Substitution PType) -> [(Queue, SubRule)] -> [(Queue, SubRule)]
 applySubstC EmptyS lqc                   = lqc
 applySubstC _      []                    = []
-applySubstC s      ((ty1, ty2):lqc) = ((substInType s (PosT ty1),
-                                        substInType s (NegT ty2))
+applySubstC s      ((q, (ty1, ty2)):lqc) = ((q, (substInType s (PosT ty1),
+                                                 substInType s (NegT ty2)))
                                             :(applySubstC s lqc))
 
-
--- Apply a substitution to disjointness constraints
-applySubstD :: Fresh m => (Substitution PType) -> DisCons -> m DisCons
-applySubstD sub  EmptyD                = return $ EmptyD
-applySubstD sub (SeqD (ty1, ty2) cons) = do
-  let t1 =  substInType sub (PosT ty1)
-  let t2 =  substInType sub (PosT ty2)
-  rest   <- applySubstD sub cons
-  return $ SeqD (t1, t2) rest
-
-
--- Apply a substitution to a polar produced type
+-- Apply a polar substitution to a polar type
 substInType :: Substitution PType -> Polar PType -> PType
 substInType EmptyS (PosT ty) = ty
 substInType EmptyS (NegT ty) = ty
@@ -479,8 +554,7 @@ substInType (NegS u ty sub) (PosT (Uni u1)) = case sub of
   EmptyS -> (Uni u1)
   _      -> substInType sub (PosT (Uni u1))
 
-
--- Apply principality substitution to a produced type
+-- Apply a non-polar substitution to a type
 groundSubstInPType :: PrSubs SType -> PType -> PType
 groundSubstInPType EmptyPrS         p           = p
 groundSubstInPType sub             (Join p1 p2) = Join (groundSubstInPType sub p1) (groundSubstInPType sub p2)
@@ -497,7 +571,7 @@ groundSubstInPType (Subs u t subs) (Uni u1)     = if u == u1
 groundSubstInPType sub             (P t)        = P (substInSType sub t)
 
 
--- Apply principality substitution to a PHiDI monotype
+-- Apply a non-polar substitution to a PHiDI monotype
 substInSType :: PrSubs SType -> SType -> SType
 substInSType EmptyPrS t          = t
 substInSType sub     (Arr t1 t2) = Arr (substInSType sub t1) (substInSType sub t2)
@@ -509,7 +583,7 @@ substInSType _        TopT       = TopT
 substInSType _        BotT       = BotT
 substInSType _       (TVar x)    = TVar x
 
--- Substitute in an Fi+ term
+-- Apply a non-polar substitution to an elaborated term (Fi+)
 substFExpr :: PrSubs I.FType -> I.FExpr -> STcMonad I.FExpr
 substFExpr EmptyPrS fe = return $ fe
 substFExpr subs (I.Anno fe ft) = do
@@ -582,7 +656,7 @@ substFExpr subs I.Bot = return I.Bot
 substFExpr subs (I.DRec' tb) = return $ I.DRec' tb
 
 
--- Apply a substitution to an Fi+ type
+-- Apply a non-polar substitution to an elaborated type (Fi+)
 substInFType :: PrSubs I.FType -> I.FType -> STcMonad (I.FType)
 substInFType EmptyPrS ft = return ft
 substInFType subs I.NumT = return I.NumT
@@ -610,11 +684,12 @@ substInFType subs (I.DForall b) = return $ I.DForall b
 substInFType subs (I.OpAbs b) = return $ I.OpAbs b
 substInFType subs (I.OpApp ft1 ft2) = return $ I.OpApp ft1 ft2
 
-----------------
--- PRINCIPALITY
-----------------
+------------------
+-- PRINCIPALITY --
+------------------
 
--- Convert the function to a form u1 v (u2 v (P1 v ...)) for joins, and meets accordingly
+-- Convert a type to a form u1 v (u2 v (P1 v ...)) for joins, and meets accordingly
+-- This flattening is needed in order to subsequently ground the type
 flatten :: PType -> PType
 flatten (P t)        = P t
 flatten (Uni u)      = Uni u
@@ -630,8 +705,6 @@ flatten (Join p1 p2) = case p1' of
     p2' = flatten p2
 flatten (PArr p1 p2) = PArr (flatten p1) (flatten p2)
 flatten (PRecT l p)  = PRecT l (flatten p)
--- TODO: flatten PAnd necessary?
--- flatten (PAnd p1 p2) = PAnd (flatten p1) (flatten p2)
 flatten (PAnd p1 p2) = case p1' of
     Uni  u1       -> PAnd (Uni u1) p2'
     PAnd p3 p4    -> PAnd p3 (flatten (PAnd p4 p2'))
@@ -659,137 +732,175 @@ flatten (Meet p1 p2) = case p1' of
     p1' = flatten p1
     p2' = flatten p2
 
--- Transform the type to its principal type
+-- Ground the type, resulting in a new type and a non-polar substitution
 ground :: PType -> STcMonad (SType, PrSubs SType)
+ground (P (And t1 TopT))        = return (t1, EmptyPrS)
+ground (P (And TopT t2))        = return (t2, EmptyPrS)
 ground (P t)                    = return $ (t, EmptyPrS)
 ground (Uni u)                  = return $ (TVar $ translate u, Subs u (TVar $ translate u) EmptyPrS)
 ground (Meet (Uni u) p)         = do
   (t, theta) <- ground p
-  let x  = translate u
-  let t' = if (occursIn x t) then (And (TVar x) t) else t
+  let x       = translate u
+  let t'      = if (occursIn x t && TVar x /= t) then (And (TVar x) t) else t
   return (t', appendPr theta (Subs u t EmptyPrS))
-ground (Join (Uni u) p)         = ground p >>= \(t, theta) -> return $ (t, appendPr theta (Subs u t EmptyPrS))
 ground (Meet (P (TVar alph)) p) = do
   (t, theta) <- ground p
-  let x  = translate alph
-  let t' = if (occursIn x t) then (And (TVar x) t) else t
+  let x       = translate alph
+  let t'      = if (occursIn x t && TVar x /= t) then (And (TVar x) t) else t
   return (t', theta)
+-- ground (Meet (P TopT) p2) = ground p2
+-- ground (Meet p1 (P TopT)) = ground p1
+ground (Meet p1 p2)             = do
+  (t1, theta1) <- ground p1
+  (t2, theta2) <- ground (groundSubstInPType theta1 p2)
+  case t1 of
+    TopT -> return (t2, appendPr theta2 theta1)
+    _    -> case t2 of
+      TopT -> return (t1, appendPr theta2 theta1)
+      _    -> if (elementOf t1 t2)
+              then return (t2, appendPr theta2 theta1)
+              else return (And t1 t2, appendPr theta2 theta1)
+ground (Join (Uni u) p)         = ground p >>= \(t, theta) -> return $ (t, appendPr theta (Subs u t EmptyPrS))
 ground (Join (P (TVar alph)) p) = ground p >>= \(t, theta) -> return $ (t, theta)
-ground (Join p1 p2) = do
+ground (Join p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2, theta2) <- ground (groundSubstInPType theta1 p2)
   let t'        = if (elementOf t1 t2) then t1 else TopT
   return (t', appendPr theta2 theta1)
-ground (Meet p1 p2) = do
+ground (PAnd p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2, theta2) <- ground (groundSubstInPType theta1 p2)
-  let t'        = if (elementOf t1 t2) then t2 else And t1 t2
-  return (t', appendPr theta2 theta1)
-ground (PAnd p1 p2) = do
-  (t1, theta1) <- ground p1
-  (t2, theta2) <- ground (groundSubstInPType theta1 p2)
-  return (And t1 t2, appendPr theta2 theta1)
-ground (PArr p1 p2) = do
+  case t1 of
+    -- TopT -> return (t2, appendPr theta2 theta1)
+    _    -> case t2 of
+      -- TopT -> return (t1, appendPr theta2 theta1)
+      _    -> return (And t1 t2, appendPr theta2 theta1)
+ground (PArr p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2, theta2) <- ground (groundSubstInPType theta1 p2)
   return (Arr t1 t2, appendPr theta2 theta1)
-ground (PRecT l p) = do
+ground (PRecT l p)              = do
   (t, theta)   <- ground p
   return (SRecT l t, theta)
 
--- Check if a given unification variable occurs in a given type.
-occursIn :: TyName -> SType -> Bool
-occursIn u  NumT       = False
-occursIn u  BoolT      = False
-occursIn u (Arr s1 s2) = (occursIn u s1) || (occursIn u s2)
-occursIn u (And s1 s2) = (occursIn u s1) || (occursIn u s2)
-occursIn u (TVar u1)   = u == u1
-occursIn u (SRecT l s) = occursIn u s
-occursIn u  TopT       = False
-occursIn u  BotT       = False
+-- ground and subsequently destruct disjointness constraints
+groundDestruct :: Dis -> STcMonad Del
+groundDestruct  EmptyDis = return EmptyD
+groundDestruct (Disj p1 p2 d) = do
+  (t1', _) <- ground $ flatten p1
+  (t2', _) <- ground $ flatten p2
+  del      <- destructD t1' t2'
+  d'       <- groundDestruct d
+  return $ joinDel del d'
 
-
--- A type is an element of another type if they are equal or element of
--- one of the intersected types
-elementOf :: SType -> SType -> Bool
-elementOf t1 (And t2 t3) = t1 == (And t2 t3) || (elementOf t1 t2) || (elementOf t1 t3)
-elementOf t1 t2          = t1 == t2
-
-
--- Compute the principal types of the types in the disjointness constraint
-groundD :: DisCons -> STcMonad Delta
-groundD  EmptyD              = return EmptyDelta
-groundD (SeqD (t1, t2) cons) = do
-  c2       <- groundD cons
-  (t1', _) <- ground $ flatten t1
-  (t2', _) <- ground $ flatten t2
-  return $ Del (t1', t2') c2
-
--- Compute the principal substitution
+-- Ground a substitution
 groundS :: Substitution PType -> PrSubs SType -> STcMonad (PrSubs I.FType)
 groundS EmptyS _ = return $ EmptyPrS
 groundS (PosS u p subs) groundSub = do
   (st, groundSub') <- ground $ flatten $ groundSubstInPType groundSub p
-  subs' <- groundS subs (appendPr groundSub' groundSub)
-  ft <- translSType st
+  subs'            <- groundS subs (appendPr groundSub' groundSub)
+  ft               <- translSType st
   return $ Subs u ft subs'
 groundS (NegS u p subs) groundSub = do
   (st, groundSub') <- ground $ flatten $ groundSubstInPType groundSub p
-  subs' <- groundS subs (appendPr groundSub' groundSub)
-  ft <- translSType st
+  subs'            <- groundS subs (appendPr groundSub' groundSub)
+  ft               <- translSType st
   return $ Subs u ft subs'
 
------------------------------
--- DISJOINTNESS CONSTRAINTS
------------------------------
+--------------------------------------------------------------
+-- DISJOINTNESS REQUIREMENTS, TERM CONTEXTS & TYPE CONTEXTS --
+--------------------------------------------------------------
 
--- Destruct the disjointness constraints
-destructD :: Delta -> STcMonad Delta
-destructD EmptyDelta                            = return EmptyDelta
-destructD (Del (TVar alph, t) cons)             = destructD cons >>= \c -> return $ Del (TVar alph, t) c
-destructD (Del (t, TVar alph) cons)             = destructD cons >>= \c -> return $ Del (TVar alph, t) c
-destructD (Del (t1, t2) cons) | topLike t1      = destructD cons
-destructD (Del (t1, t2) cons) | topLike t2      = destructD cons
-destructD (Del (Arr t1 t2, Arr t3 t4) cons)     = destructD (Del (t2, t4) cons)
-destructD (Del (And t1 t2, t3) cons)            = destructD (Del (t1, t3) (Del (t2, t3) cons))
-destructD (Del (t1, And t2 t3) cons)            = destructD (Del (t1, t2) (Del (t1, t3) cons))
-destructD (Del (SRecT l1 t1, SRecT l2 t2) cons) | l1 == l2 = destructD (Del (t1, t2) cons)
-destructD (Del (SRecT l1 t1, SRecT l2 t2) cons) | l1 /= l2 = destructD cons
-destructD (Del (NumT, Arr t1 t2) cons)          = destructD cons
-destructD (Del (Arr t1 t2, NumT) cons)          = destructD cons
-destructD (Del (NumT, SRecT l t) cons)          = destructD cons
-destructD (Del (SRecT l t, NumT) cons)          = destructD cons
-destructD (Del (Arr t1 t2, SRecT l t) cons)     = destructD cons
-destructD (Del (SRecT l t, Arr t1 t2) cons)     = destructD cons
-destructD (Del (BoolT, Arr t1 t2) cons)         = destructD cons
-destructD (Del (Arr t1 t2, BoolT) cons)         = destructD cons
-destructD (Del (BoolT, SRecT l t) cons)         = destructD cons
-destructD (Del (SRecT l t, BoolT) cons)         = destructD cons
-destructD (Del (BoolT, NumT) cons)              = destructD cons
-destructD (Del (NumT, BoolT) cons)              = destructD cons
-destructD  _                                    = errThrow [DS $ "Destruct disjointness constraint impossible case"]
+-- lookup term variable in term context
+lookupGam :: Gam -> TmName -> Maybe PType
+lookupGam EmptyG            _  = Nothing
+lookupGam (Gamma x1 ty gam) x2 | x1 == x2 = case lookupGam gam x2 of
+  Nothing -> Just ty
+  Just ty' -> Just (Meet ty ty')
+lookupGam (Gamma _  _  gam) x  = lookupGam gam x
+
+gamContains :: Gam -> TUni -> Bool
+gamContains EmptyG _ = False
+gamContains (Gamma x ty gam) u = occursInP u ty || gamContains gam u
+
+-- replace type variables in gamma
+replaceGam :: TUni -> TUni -> Gam -> Gam
+replaceGam _ _ EmptyG = EmptyG
+replaceGam alph u (Gamma x ty gam) = Gamma x (replaceTVar alph u ty) (replaceGam alph u gam)
+
+-- remove the given term variable from the term context
+removeFromGam :: Gam -> TmName -> Gam
+removeFromGam EmptyG _ = EmptyG
+removeFromGam (Gamma x ty gam) y | x == y = removeFromGam gam y
+removeFromGam (Gamma x ty gam) y = Gamma x ty (removeFromGam gam y)
+
+-- Look up disjointness requirement in type context
+lookupDel :: Del -> TUni -> (Maybe SType, Del)
+lookupDel  EmptyD           _  = (Nothing, EmptyD)
+lookupDel (Delta u1 ty del)   u2 | u1 == u2 = (Just ty, del)
+lookupDel (Delta u1 ty del) u  = let (t, d) = lookupDel del u in (t, Delta u1 ty d)
+
+-- combine two term contexts into one
+joinGam :: Gam -> Gam -> Gam
+joinGam EmptyG            gam    = gam
+joinGam gam               EmptyG = gam
+joinGam (Gamma x ty gam1) gam2   = Gamma x ty (joinGam gam1 gam2)
+
+-- combine two type contexts into one
+joinDel :: Del -> Del -> Del
+joinDel EmptyD            del    = del
+joinDel del               EmptyD = del
+joinDel (Delta x ty del1) del2   = Delta x ty (joinDel del1 del2)
+
+-- combine two disjointness requirement datastructures into one
+joinDis :: Dis -> Dis -> Dis
+joinDis EmptyDis         dis      = dis
+joinDis dis              EmptyDis = dis
+joinDis (Disj x ty dis1) dis2     = Disj x ty (joinDis dis1 dis2)
+
+-- Destruct disjointness constraints
+destructD :: SType -> SType -> STcMonad Del
+destructD (TVar alph) t             = return $ Delta (translate alph) t EmptyD
+destructD t (TVar alph)             = return $ Delta (translate alph) t EmptyD
+destructD t1 t2 | topLike t1        = return $ EmptyD
+destructD t1 t2 | topLike t2        = return $ EmptyD
+destructD (Arr t1 t2) (Arr t3 t4)   = destructD t2 t4
+destructD (And t1 t2) t3            = do
+  del1 <- destructD t1 t3
+  del2 <- destructD t2 t3
+  return $ joinDel del1 del2
+destructD t1 (And t2 t3)            = do
+  del1 <- destructD t1 t2
+  del2 <- destructD t1 t3
+  return $ joinDel del1 del2
+destructD (SRecT l1 t1) (SRecT l2 t2) | l1 == l2 = destructD t1 t2
+destructD (SRecT l1 t1) (SRecT l2 t2) | l1 /= l2 = return $ EmptyD
+destructD NumT (Arr t1 t2)          = return $ EmptyD
+destructD (Arr t1 t2) NumT          = return $ EmptyD
+destructD NumT (SRecT l t)          = return $ EmptyD
+destructD (SRecT l t) NumT          = return $ EmptyD
+destructD (Arr t1 t2) (SRecT l t)   = return $ EmptyD
+destructD (SRecT l t) (Arr t1 t2)   = return $ EmptyD
+destructD BoolT (Arr t1 t2)         = return $ EmptyD
+destructD (Arr t1 t2) BoolT         = return $ EmptyD
+destructD BoolT (SRecT l t)         = return $ EmptyD
+destructD (SRecT l t) BoolT         = return $ EmptyD
+destructD BoolT NumT                = return $ EmptyD
+destructD NumT BoolT                = return $ EmptyD
+destructD _ _                       = errThrow [DS $ "Destruct disjointness constraint impossible case"]
 
 
 -- Combine disjointness constraints so that there is one constraint for each type variable
-combine :: Delta -> STcMonad Delta
-combine  EmptyDelta                    = return EmptyDelta
-combine (Del (TVar x, And t1 t2) cons) | t1 == t2 = combine $ Del (TVar x, t1) cons
-combine (Del (TVar x, t1)        cons) = case lookupDis cons x of
-          Nothing -> combine cons >>= \c -> return $ Del (TVar x, t1) c
-          Just t2 -> combine $ Del (TVar x, And t1 t2) cons
-combine  _                             = errThrow [DS $ "Combine impossible case"]
+combine :: Del -> STcMonad Del
+combine  EmptyD                               = return EmptyD
+combine (Delta x (And t1 t2) cons) | t1 == t2 = combine $ Delta x t1 cons
+combine (Delta x t1          cons) = case lookupDel cons x of
+          (Nothing, _)   -> combine cons >>= \c -> return $ Delta x t1 c
+          (Just t2, del) -> combine $ Delta x (And t1 t2) del
 
-
--- Look up disjointness constraints
-lookupDis :: Delta -> TyName -> Maybe SType
-lookupDis  EmptyDelta             _  = Nothing
-lookupDis (Del (TVar x1, t) cons) x2 = if x1 == x2 then Just t else lookupDis cons x2
-lookupDis (Del  _ cons)           x2 = lookupDis cons x2
-
-
----------------------
--- MONAD CONVERSION
----------------------
+----------------------
+-- MONAD CONVERSION --
+----------------------
 
 -- Convert monads
 iTcMtoSTcM :: ITcMonad a -> STcMonad a
@@ -798,36 +909,24 @@ iTcMtoSTcM x = askCtx >>= \ctx ->
                lift $ lift $ runReaderT (runFreshMT x) ctx'
 
 
--------------------------------------
--- CONSTRUCTING FINAL TYPE AND TERM
--------------------------------------
+--------------------------------------
+-- CONSTRUCTING FINAL TYPE AND TERM --
+--------------------------------------
 
--- Construct the final type by abstracting over the free variables
-constructFinalType :: Delta -> [TyName] -> SType -> Scheme
-constructFinalType cons []          ty = SType ty
-constructFinalType cons (name:rest) ty = case (lookupDis cons name) of
-  (Just disj) -> case disj of
-    TVar alph | elem alph rest -> constructFinalType cons (rest ++ [name]) ty
-    _ -> DForall (bind (name, Embed disj) (constructFinalType cons rest ty))
-  Nothing     -> DForall (bind (name, Embed TopT) (constructFinalType cons rest ty))
+constructFinalType :: Del -> SType -> Scheme
+constructFinalType  EmptyD          t2 = SType t2
+constructFinalType (Delta u t1 sub) t2 = DForall (bind (translate u, Embed t1) (constructFinalType sub t2))
 
--- Construct the final Fi+ term by abstracting over the free type variables
-constructFinalTerm :: Fresh m => Delta -> [TyName] -> I.FExpr -> m I.FExpr
-constructFinalTerm cons  []         e = return $ e
-constructFinalTerm cons (name:rest) e = case (lookupDis cons name) of
-    Just disj -> case disj of
-      TVar alph | elem alph rest -> constructFinalTerm cons (rest ++ [name]) e
-      _ -> do
-        ty    <- translSType disj
-        other <- constructFinalTerm cons rest e
-        return $ I.DLam (bind (translate name, Embed ty) other)
-    Nothing -> do
-      other <- constructFinalTerm cons rest e
-      return $ I.DLam (bind (translate name, Embed I.TopT) other)
+constructFinalTerm :: Fresh m => Del -> I.FExpr -> m I.FExpr
+constructFinalTerm  EmptyD          fe = return $ fe
+constructFinalTerm (Delta u t1 sub) fe = do
+  ty <- translSType t1
+  del' <- constructFinalTerm sub fe
+  return $ I.DLam (bind (translate u, Embed ty) del')
 
-------------------
--- Free variables
-------------------
+--------------------
+-- FREE VARIABLES --
+--------------------
 
 -- Free variables of a PHiDI monotype
 freevars :: SType -> Set TyName
@@ -913,9 +1012,34 @@ freevarsE (I.LamA b) = do
 freevarsE I.Bot = return $ Set.empty
 freevarsE (I.DRec' tb) = return $ Set.empty
 
---------------------
--- HELPER FUNCTIONS
---------------------
+------------------
+-- OCCURS CHECK --
+------------------
+
+-- OccursCheck returns true if a unification variable of the same
+-- polarity occurs on the other side of the constraint.
+occursCheck :: Polar PType -> Polar PType -> Bool
+occursCheck u              (PosT (P st))       = False
+occursCheck u              (NegT (P st))       = False
+occursCheck (PosT (Uni u)) (PosT (Uni u1))     = u == u1
+occursCheck (PosT (Uni u)) (NegT (Uni u1))     = False
+occursCheck (NegT (Uni u)) (PosT (Uni u1))     = False
+occursCheck (NegT (Uni u)) (NegT (Uni u1))     = u == u1
+occursCheck u              (PosT (Join p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
+occursCheck u              (NegT (Join p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
+occursCheck u              (PosT (Meet p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
+occursCheck u              (NegT (Meet p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
+occursCheck u              (PosT (PArr p1 p2)) = occursCheck u (NegT p1) || occursCheck u (PosT p2)
+occursCheck u              (NegT (PArr p1 p2)) = occursCheck u (PosT p1) || occursCheck u (NegT p2)
+occursCheck u              (PosT (PAnd p1 p2)) = occursCheck u (PosT p1) || occursCheck u (PosT p2)
+occursCheck u              (NegT (PAnd p1 p2)) = occursCheck u (NegT p1) || occursCheck u (NegT p2)
+occursCheck u              (PosT (PRecT l p))  = occursCheck u (PosT p)
+occursCheck u              (NegT (PRecT l p))  = occursCheck u (NegT p)
+occursCheck _              _                   = False
+
+----------------------
+-- HELPER FUNCTIONS --
+----------------------
 
 -- Make type application explicit
 applyVars :: I.FExpr -> [TUni] -> I.FExpr
@@ -923,8 +1047,9 @@ applyVars t []     = t
 applyVars t (u:us) = applyVars (I.TApp t (I.TVar (translate u))) us
 
 -- Replace a type variable by a unification variable in the given P type
-replaceTVar :: TyName -> TUni -> PType -> PType
-replaceTVar alph u (P (TVar x)) | alph == x = Uni u
+replaceTVar :: TUni -> TUni -> PType -> PType
+replaceTVar alph u (Uni x)      | alph == x = Uni u
+replaceTVar alph u (P (TVar x)) | alph == (translate x) = Uni u
 replaceTVar alph u (P (Arr p1 p2))          = PArr (replaceTVar alph u (P p1)) (replaceTVar alph u (P p2))
 replaceTVar alph u (PArr p1 p2)             = PArr (replaceTVar alph u p1)     (replaceTVar alph u p2)
 replaceTVar alph u (P (And p1 p2))          = PAnd (replaceTVar alph u (P p1)) (replaceTVar alph u (P p2))
@@ -933,23 +1058,41 @@ replaceTVar alph u (P (SRecT l p))          = PRecT l (replaceTVar alph u (P p))
 replaceTVar alph u (PRecT l p)              = PRecT l (replaceTVar alph u p)
 replaceTVar _    _  ty                      = ty
 
--- Concatenate subtyping constraints
-appendC :: SubCons -> SubCons -> SubCons
-appendC  EmptyC      c = c
-appendC (SeqC c1 cs) c = SeqC c1 (appendC cs c)
+convertDel :: Del -> Dis
+convertDel EmptyD = EmptyDis
+convertDel (Delta u st del) = Disj (Uni u) (P st) (convertDel del)
 
--- Concatenate disjointness constraints
-appendD :: DisCons -> DisCons -> DisCons
-appendD  EmptyD      d = d
-appendD (SeqD d1 ds) d = SeqD d1 (appendD ds d)
+-- convert a type scheme (forall a. ... τ) into a context type [Γ; ∆] τ
+convertScheme :: Fresh m => Scheme -> m CtxType
+convertScheme (SType st) = return $ CtxSch EmptyG EmptyD (P st)
+convertScheme (DForall b) = do
+  ((alph, Embed t1), a2) <- unbind b
+  let del' = Delta (translate alph) t1 EmptyD
+  CtxSch gam del ty <- convertScheme a2
+  return $ CtxSch gam (joinDel del' del) ty
 
--- Concatenate substitutions
-appendS :: Substitution typ -> Substitution typ -> Substitution typ
-appendS  EmptyS        s2 = s2
-appendS (PosS u ty s1) s2 = PosS u ty (appendS s1 s2)
-appendS (NegS u ty s1) s2 = NegS u ty (appendS s1 s2)
+-- Check if a unification variable occurs in a type
+occursIn :: TyName -> SType -> Bool
+occursIn u  NumT       = False
+occursIn u  BoolT      = False
+occursIn u (Arr s1 s2) = (occursIn u s1) || (occursIn u s2)
+occursIn u (And s1 s2) = (occursIn u s1) || (occursIn u s2)
+occursIn u (TVar u1)   = u == u1
+occursIn u (SRecT l s) = occursIn u s
+occursIn u  TopT       = False
+occursIn u  BotT       = False
 
--- Concatenate principality substitutions
-appendPr :: PrSubs typ -> PrSubs typ -> PrSubs typ
-appendPr  EmptyPrS     s2 = s2
-appendPr (Subs u t s1) s2 = Subs u t (appendPr s1 s2)
+occursInP :: TUni -> PType -> Bool
+occursInP u (P ty)       = occursIn (translate u) ty
+occursInP u (Uni u1)     = u == u1
+occursInP u (Join t1 t2) = (occursInP u t1) || (occursInP u t2)
+occursInP u (Meet t1 t2) = (occursInP u t1) || (occursInP u t2)
+occursInP u (PArr t1 t2) = (occursInP u t1) || (occursInP u t2)
+occursInP u (PAnd t1 t2) = (occursInP u t1) || (occursInP u t2)
+occursInP u (PRecT l t)  = occursInP u t
+
+-- A type is an element of another type if they are equal or element of
+-- one of the intersected types
+elementOf :: SType -> SType -> Bool
+elementOf t1 (And t2 t3) = t1 == (And t2 t3) || (elementOf t1 t2) || (elementOf t1 t3)
+elementOf t1 t2          = t1 == t2

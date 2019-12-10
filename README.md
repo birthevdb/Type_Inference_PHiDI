@@ -17,14 +17,43 @@ stack ghci
 stack ghci
 main
 > main = true ,, 3
-Fi+ term:         Merge (BoolV True) (LitV 3.0)
-Source type:      SType (And BoolT NumT)
-Fi+ type:         And BoolT NumT
 Typing result
 : (Bool & Double)
 
+Elaborated term
+~~>  True ,, 3.0
+
 Evaluation result
 => <Pair>
+```
+
+```
+stack ghci
+main
+> main = let ^f = 5 in (\x -> x) ^f
+Typing result
+: Double
+
+Elaborated term
+~~>  let f = 5.0 in (λ(x) . x : (Double → Double) : (Double → Double)) f
+
+Evaluation result
+=> <Pair>
+```
+
+```
+stack ghci
+main
+> main = letrec ^f : Double  = 5 in (\x -> x) ^f
+Typing result
+: Double
+
+Elaborated term
+~~> letrec f : Double = 5.0
+    in  (λ(x) . x : (Double → Double) : (Double → Double)) f
+
+Evaluation result
+=> 5.0
 ```
 * Testing soundness
 ```

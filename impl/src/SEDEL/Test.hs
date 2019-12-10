@@ -537,33 +537,33 @@ prop_soundness e = do
         Right (ftype, texpr) -> return True
 
 -- The completeness property
-prop_completeness :: Derivation -> IO Bool
-prop_completeness d = do
-  res1 <- runTcMonad emptyCtx $ extractor d
-  case res1 of
-    Left _ -> return True
-    Right (expr, ty1) -> do
-      res2 <- runTcMonad emptyCtx $ topLevelInfer expr
-      case res2 of
-        Left _ -> return False
-        Right (scheme, fexpr) -> do
-          return True
+-- prop_completeness :: Derivation -> IO Bool
+-- prop_completeness d = do
+--   res1 <- runTcMonad emptyCtx $ extractor d
+--   case res1 of
+--     Left _ -> return True
+--     Right (expr, ty1) -> do
+--       res2 <- runTcMonad emptyCtx $ topLevelInfer expr
+--       case res2 of
+--         Left _ -> return False
+--         Right (scheme, fexpr) -> do
+--           return True
 
 -- The principality property (not finished)
-prop_principality :: Derivation -> IO Bool
-prop_principality d = do
-  res1 <- runTcMonad emptyCtx $ extractor d
-  case res1 of
-    Left _ -> return True
-    Right (expr, ty1) -> do
-      res2 <- runTcMonad emptyCtx $ topLevelInfer expr
-      case res2 of
-        Left _ -> return False
-        Right (scheme, fexpr) -> do
-          b <- runTcMonad emptyCtx $ instanceOfScheme ty1 scheme []
-          case b of
-            Left _ -> return False
-            Right bl -> return bl
+-- prop_principality :: Derivation -> IO Bool
+-- prop_principality d = do
+--   res1 <- runTcMonad emptyCtx $ extractor d
+--   case res1 of
+--     Left _ -> return True
+--     Right (expr, ty1) -> do
+--       res2 <- runTcMonad emptyCtx $ topLevelInfer expr
+--       case res2 of
+--         Left _ -> return False
+--         Right (scheme, fexpr) -> do
+--           b <- runTcMonad emptyCtx $ instanceOfScheme ty1 scheme []
+--           case b of
+--             Left _ -> return False
+--             Right bl -> return bl
 
 -------------
 -- ARBITRARY
@@ -639,63 +639,64 @@ contains (DForall b) alph = do
   return $ b1
 
 -- Extract the type and term from a given PHiDI specification
-extractor :: Derivation -> STcMonad (Expr, Scheme)
-extractor  DTop     = return (Top, SType TopT)
-extractor (DNum i)  = return (LitV i, SType NumT)
-extractor (DBool b) = return (BoolV b, SType BoolT)
-extractor (DVar x)  = lookupVarTy x >>= \ty -> case ty of
-    CtxUni u   -> errThrow [DS "DVar: Variable not found in term context"]
-    CtxSch sch -> return (Var x, sch)
-extractor (DApp d1 d2) = extractor d1 >>= \(e1, a1) -> case a1 of
-    SType (Arr t1 t2) -> extractor d2 >>= \(e2, a2) -> case a2 of
-      SType t3 -> if (t1 == t3)
-                  then (return (App e1 e2, SType t2))
-                  else errThrow [DS "DApp: No corresponding types"]
-      _        -> errThrow [DS "DApp: Type scheme instead of monotype"]
-    _                 -> errThrow [DS "DApp: Should be a function type"]
-extractor (DAbs d x t1) = localCtx (extendVarCtx x (CtxSch (SType t1))) $ extractor d >>= \(e, a2) -> case a2 of
-    SType t2 -> return (Lam (bind x e), SType (Arr t1 t2))
-    _        -> errThrow [DS "DAbs: Type scheme instead of monotype"]
-extractor (DRec d l) = extractor d >>= \(e, a) -> case a of
-    SType t -> return (Rec l e, SType (SRecT l t))
-    _       -> errThrow [DS "DRec: Type scheme instead of monotype"]
-extractor (DProj d l) = extractor d >>= \(e, a) -> case a of
-    SType (SRecT l1 t) -> if (l == l1)
-                          then return (Proj e l, SType t)
-                          else errThrow [DS "DProj: Not the same label"]
-    _                  -> errThrow [DS "DProj: No record type"]
-extractor (DMerge d1 d2) = extractor d1 >>= \(e1, a1) -> case a1 of
-      SType t1 -> extractor d2 >>= \(e2, a2) -> case a2 of
-        SType t2 -> do
-          ctx <- askCtx
-          disjoint ctx t1 t2
-          return (Merge e1 e2, SType (And t1 t2))
-        _        -> errThrow [DS "DMerge: Type scheme instead of monotype"]
-      _        -> errThrow [DS "DMerge: Type scheme instead of monotype"]
-extractor (DTAbs d alph t) = do
-    (e, a) <- localCtx (extendConstrainedSTVarCtx alph t) $ extractor d
-    wfSType t
-    b <- contains a alph
-    if b then return (e, DForall (bind (alph, Embed t) a))
-                       else errThrow [DS "Ambiguous term"]
-extractor (DTApp d ty) = extractor d >>= \(e, a1) -> case a1 of
-    DForall b -> do
-      ((alph, Embed t), a2) <- unbind b
-      ctx <- askCtx
-      disjoint ctx ty t
-      a2' <- substituteScheme alph ty a2
-      return (e, a2')
-    _ -> errThrow [DS "DTApp: Monotype instead of type scheme"]
-extractor (DSub d t2) = extractor d >>= \(e, a1) -> case a1 of
-    SType t1 -> do
-      ctx <- askCtx
-      let _ = subtype ctx (SType t1) (SType t2)
-      return (e, SType t2)
-    _ -> errThrow [DS "DSub: Type scheme instead of monotype"]
-extractor (DLet x d1 d2) = extractor d1 >>= \(e1, a1) ->
-      localCtx (extendVarCtx x (CtxSch a1)) $ extractor d2 >>= \(e2, a2) -> case a2 of
-      SType t2 -> return (Let (bind x (e1, e2)), SType t2)
-      _        -> errThrow [DS "DLet: Type scheme instead of monotype"]
+-- extractor :: Derivation -> STcMonad (Expr, Scheme)
+-- extractor  DTop     = return (Top, SType TopT)
+-- extractor (DNum i)  = return (LitV i, SType NumT)
+-- extractor (DBool b) = return (BoolV b, SType BoolT)
+-- extractor (DVar x)  = do
+--   CtxSch gam dis ty <- lookupVarTy x
+--   scheme <- translPType ty
+--   return (Var x, scheme)
+-- extractor (DApp d1 d2) = extractor d1 >>= \(e1, a1) -> case a1 of
+--     SType (Arr t1 t2) -> extractor d2 >>= \(e2, a2) -> case a2 of
+--       SType t3 -> if (t1 == t3)
+--                   then (return (App e1 e2, SType t2))
+--                   else errThrow [DS "DApp: No corresponding types"]
+--       _        -> errThrow [DS "DApp: Type scheme instead of monotype"]
+--     _                 -> errThrow [DS "DApp: Should be a function type"]
+-- extractor (DAbs d x t1) = localCtx (extendVarCtx x (CtxSch (SType t1))) $ extractor d >>= \(e, a2) -> case a2 of
+--     SType t2 -> return (Lam (bind x e), SType (Arr t1 t2))
+--     _        -> errThrow [DS "DAbs: Type scheme instead of monotype"]
+-- extractor (DRec d l) = extractor d >>= \(e, a) -> case a of
+--     SType t -> return (Rec l e, SType (SRecT l t))
+--     _       -> errThrow [DS "DRec: Type scheme instead of monotype"]
+-- extractor (DProj d l) = extractor d >>= \(e, a) -> case a of
+--     SType (SRecT l1 t) -> if (l == l1)
+--                           then return (Proj e l, SType t)
+--                           else errThrow [DS "DProj: Not the same label"]
+--     _                  -> errThrow [DS "DProj: No record type"]
+-- extractor (DMerge d1 d2) = extractor d1 >>= \(e1, a1) -> case a1 of
+--       SType t1 -> extractor d2 >>= \(e2, a2) -> case a2 of
+--         SType t2 -> do
+--           ctx <- askCtx
+--           disjoint ctx t1 t2
+--           return (Merge e1 e2, SType (And t1 t2))
+--         _        -> errThrow [DS "DMerge: Type scheme instead of monotype"]
+--       _        -> errThrow [DS "DMerge: Type scheme instead of monotype"]
+-- extractor (DTAbs d alph t) = do
+--     (e, a) <- localCtx (extendConstrainedSTVarCtx alph t) $ extractor d
+--     wfSType t
+--     b <- contains a alph
+--     if b then return (e, DForall (bind (alph, Embed t) a))
+--                        else errThrow [DS "Ambiguous term"]
+-- extractor (DTApp d ty) = extractor d >>= \(e, a1) -> case a1 of
+--     DForall b -> do
+--       ((alph, Embed t), a2) <- unbind b
+--       ctx <- askCtx
+--       disjoint ctx ty t
+--       a2' <- substituteScheme alph ty a2
+--       return (e, a2')
+--     _ -> errThrow [DS "DTApp: Monotype instead of type scheme"]
+-- extractor (DSub d t2) = extractor d >>= \(e, a1) -> case a1 of
+--     SType t1 -> do
+--       ctx <- askCtx
+--       let _ = subtype ctx (SType t1) (SType t2)
+--       return (e, SType t2)
+--     _ -> errThrow [DS "DSub: Type scheme instead of monotype"]
+-- extractor (DLet x d1 d2) = extractor d1 >>= \(e1, a1) ->
+--       localCtx (extendVarCtx x (CtxSch a1)) $ extractor d2 >>= \(e2, a2) -> case a2 of
+--       SType t2 -> return (Let (bind x (e1, e2)), SType t2)
+--       _        -> errThrow [DS "DLet: Type scheme instead of monotype"]
 
 
 -- Check if a given type scheme is an instance of another type scheme
@@ -831,8 +832,8 @@ disjointAx t1 t2 =
 test_soundness :: IO ()
 test_soundness = quickCheck (prop_soundness :: Expr -> IO Bool)
 
-test_completeness :: IO ()
-test_completeness = quickCheck (prop_completeness :: Derivation -> IO Bool)
+-- test_completeness :: IO ()
+-- test_completeness = quickCheck (prop_completeness :: Derivation -> IO Bool)
 
-test_principality :: IO ()
-test_principality = quickCheck (prop_principality :: Derivation -> IO Bool)
+-- test_principality :: IO ()
+-- test_principality = quickCheck (prop_principality :: Derivation -> IO Bool)

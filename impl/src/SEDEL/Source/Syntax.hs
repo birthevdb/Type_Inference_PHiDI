@@ -1,5 +1,4 @@
 {-# LANGUAGE DeriveGeneric, MultiParamTypeClasses, TemplateHaskell, FlexibleInstances #-}
-             -- , DataKinds, GADTs, GADTSyntax, StandaloneDeriving #-} --PolyKinds
 
 module SEDEL.Source.Syntax where
 
@@ -43,6 +42,7 @@ type TyName = Name SType
 
 -- Expression
 data Expr = Var TmName
+          | VarPoly TmName
           | App Expr Expr
           | Lam (Bind TmName Expr)
           | Letrec (Bind (TmName, Embed Scheme) (Expr, Expr))
@@ -63,23 +63,6 @@ data Expr = Var TmName
 
 type Label = String
 
--- data TypeSort = P | S deriving (Show, Generic)
---
--- data Type a where
---   NumT :: Type S
---   BoolT :: Type S
---   Arr :: Type a -> Type a -> Type a
---   And :: Type a -> Type a -> Type a
---   RecT :: Label -> Type a -> Type a
---   TopT :: Type S
---   BotT :: Type S
---   TVar :: TyName -> Type S
---   Join :: Type a -> Type a -> Type P
---   Meet :: Type a -> Type a -> Type P
---   Uni :: TUni -> Type P
-
-
--- type SType = Type S
 data SType = NumT
           | BoolT
           | Arr SType SType
@@ -94,7 +77,10 @@ data Scheme = SType SType | DForall (Bind (TyName, Embed SType) Scheme) deriving
 
 type TUni = Name PType
 
--- type PType = Type P
+data Gam = EmptyG   | Gamma TmName PType Gam deriving (Eq, Show)
+data Del = EmptyD   | Delta TUni   SType Del deriving (Eq, Show)
+data Dis = EmptyDis | Disj  PType  PType Dis deriving (Eq, Show)
+
 data PType = P SType
            | Uni TUni
            | Join PType PType
@@ -104,43 +90,11 @@ data PType = P SType
            | PAnd PType PType
    deriving (Generic)
 
-data CtxType = CtxSch Scheme | CtxUni TUni deriving (Show, Generic)
+data CtxType = CtxSch Gam Del PType deriving (Eq, Show, Generic)
 
 -- Kinds k := * | k -> k
 data Kind = Star | KArrow Kind Kind deriving (Eq, Show, Generic)
 
--- instance Eq (Type a) where
---   NumT        == NumT        = True
---   BoolT       == BoolT       = True
---   Arr t1 t2   == Arr t3 t4   = (t1 == t3) && (t2 == t4)
---   And t1 t2   == And t3 t4   = (t1 == t3) && (t2 == t4)
---   TVar x1     == TVar x2     =  x1 == x2
---   RecT l1 t1  == RecT l2 t2  = (l1 == l2) && (t1 == t2)
---   TopT        == TopT        = True
---   BotT        == BotT        = True
---   Uni   u1    == Uni   u2    = u1 == u2
---   Join  t1 t2 == Join  t3 t4 = (t1 == t3) && (t2 == t4)
---   Meet  t1 t2 == Meet  t3 t4 = (t1 == t3) && (t2 == t4)
---   _           == _           = False
-
--- instance Show (Type a) where
---   show  NumT        = "NumT"
---   show  BoolT       = "BoolT"
---   show (Arr t1 t2)  = "Arr " ++ (show t1) ++ " " ++ (show t2)
---   show (And t1 t2)  = "And " ++ (show t1) ++ " " ++ (show t2)
---   show (TVar x1)    = "TVar " ++ (show x1)
---   show (RecT l1 t1) = "RecT " ++ (show l1) ++ " " ++ (show t1)
---   show  TopT        = "TopT"
---   show  BotT        = "BotT"
---   show (Uni u1)     = "Uni " ++ (show u1)
---   show (Join t1 t2) = "Join " ++ (show t1) ++ " " ++ (show t2)
---   show (Meet t1 t2) = "Meet " ++ (show t1) ++ " " ++ (show t2)
---
--- instance Generic a => Generic (Type a) where
---   type Rep (Type a) = Type (Rep a)
---
---   from = undefined
---   to = undefined
 
 instance Eq SType where
   NumT         == NumT        = True

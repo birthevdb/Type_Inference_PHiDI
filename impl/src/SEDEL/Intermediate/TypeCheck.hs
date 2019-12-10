@@ -21,6 +21,7 @@ import           SEDEL.Intermediate.Syntax
 import qualified SEDEL.Target.Syntax as T
 import           SEDEL.Translations
 
+
 -- | Kinding.
 kind :: Fresh m => ICtx -> FType -> m (Maybe Kind)
 kind d (TVar a) = return $ lookupTVarKindMaybe d a
