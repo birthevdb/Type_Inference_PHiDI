@@ -211,20 +211,17 @@ infer (Proj e l) = do
   Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   Π, ^x : [Γ1; ∆1] τ1 ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
   ------------------------------------------------------------------
-  Γ ⊢ let ^x = E1 in E2 : [Γ1 ∪ Γ2; ∆1 ∪ ∆2] τ2 ~> let x = e1 in e2
+  Γ ⊢ let ^x = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x = e1 in e2
 -}
 infer (Let b) = do
   (x, (e1, e2))        <- unbind b
   (gam1, dis1, t1, f1) <- infer e1
   (principal1, _)      <- ground $ flatten $ t1
   del1                 <- combine =<< groundDestruct dis1
-  let a1                = constructFinalType del1 principal1
   (gam2, dis2, t2, f2) <- localCtx (extendVarCtx x (CtxSch gam1 del1 t1)) $ infer e2
   let gam               = joinGam gam1 gam2
-  let dis               = joinDis dis1 dis2
-  aFi                  <- translType a1
   f1'                  <- constructFinalTerm del1 f1
-  return (gam, dis, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
+  return (gam, dis2, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
 
 {-
   A = [Γ'; ∆'] τ'
@@ -232,7 +229,7 @@ infer (Let b) = do
   θ = solve(τ1 <: τ')                   ∆' |= θ(∆1)
   Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
   -------------------------------------------------------------------------------
-  Π ⊢ letrec ^x : A = E1 in E2 : [Γ1 ∪ Γ2; ∆1 ∪ ∆2] τ2 ~> let x : |A| = |θ|(e1) in e2
+  Π ⊢ letrec ^x : A = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x : |A| = |θ|(e1) in e2
 -}
 infer (Letrec b) = do
   ((x, Embed a), (e1, e2)) <- unbind b
@@ -249,7 +246,7 @@ infer (Letrec b) = do
       -- Γ = Γ1 ∪ Γ2
       let gam                   = substInGam (joinGam gam1 gam2) theta
       -- ∆ = ∆1 ∪ ∆2
-      let dis                   = substInDis (joinDis dis1 dis2) theta
+      let dis                   = substInDis dis2 theta -- substInDis (joinDis dis1 dis2) theta
       -- θ(∆1)
       del1                     <- combine =<< groundDestruct (substInDis dis1 theta)
       -- check  ∆' |= θ(∆1)
@@ -894,6 +891,8 @@ destructD _ _                       = errThrow [DS $ "Destruct disjointness cons
 combine :: Del -> STcMonad Del
 combine  EmptyD                               = return EmptyD
 combine (Delta x (And t1 t2) cons) | t1 == t2 = combine $ Delta x t1 cons
+combine (Delta x (And t1 TopT) cons) = combine $ Delta x t1 cons
+combine (Delta x (And TopT t2) cons) = combine $ Delta x t2 cons
 combine (Delta x t1          cons) = case lookupDel cons x of
           (Nothing, _)   -> combine cons >>= \c -> return $ Delta x t1 c
           (Just t2, del) -> combine $ Delta x (And t1 t2) del
