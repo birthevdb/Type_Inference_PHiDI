@@ -78,7 +78,7 @@ data Scheme = SType SType | DForall (Bind (TyName, Embed SType) Scheme) deriving
 type TUni = Name PType
 
 data Gam = EmptyG   | Gamma TmName PType Gam deriving (Eq, Show)
-data Del = EmptyD   | Delta TUni   SType Del deriving (Eq, Show)
+data Del = EmptyD   | Delta TyName SType Del deriving (Eq, Show)
 data Dis = EmptyDis | Disj  PType  PType Dis deriving (Eq, Show)
 
 data PType = P SType
