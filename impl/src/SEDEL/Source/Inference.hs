@@ -733,17 +733,13 @@ ground (Meet (P (TVar alph)) p) = do
   let x       = translate alph
   let t'      = if (occursIn x t && TVar x /= t) then (And (TVar x) t) else t
   return (t', theta)
--- ground (Meet (P TopT) p2) = ground p2
--- ground (Meet p1 (P TopT)) = ground p1
+ground (Meet (P TopT) p2) = ground p2
+ground (Meet p1 (P TopT)) = ground p1
 ground (Meet p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2', theta2) <- ground p2
   let t2 = substInSType theta1 t2'
-  case t1 of
-    TopT -> return (t2, appendPr theta2 theta1)
-    _    -> case t2 of
-      TopT -> return (t1, appendPr theta2 theta1)
-      _    -> if (elementOf t1 t2)
+  if (elementOf t1 t2)
               then return (t2, appendPr theta2 theta1)
               else return (And t1 t2, appendPr theta2 theta1)
 ground (Join (Uni u) p)         = ground p >>= \(t, theta) -> return $ (t, appendPr theta (Subs (translate u) t EmptyPrS))
