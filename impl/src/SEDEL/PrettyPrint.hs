@@ -277,14 +277,14 @@ instance FPretty S.Expr where
       t' <- ppr t
       (long, short) <- do
         let long =
-                 "letrec " <>
+                 "let " <>
                  Pretty.align
                    (Pretty.pretty x <> Pretty.hardline <> ": " <> t' <>
                     Pretty.hardline <>
                     "= " <>
                     e')
             short =
-                 "letrec " <> Pretty.pretty x <> " : " <> t' <> " = " <> e'
+                 "let " <> Pretty.pretty x <> " : " <> t' <> " = " <> e'
         return (long, short)
       let d = [Pretty.group (Pretty.flatAlt long short), b']
       return $ enclose' "" "" " in " ("in  ") (fmap duplicate d)
@@ -393,14 +393,14 @@ instance FPretty I.FExpr where
           (\tt -> do
              t' <- ppr tt
              let long =
-                   "letrec " <>
+                   "let " <>
                    Pretty.align
                      (Pretty.pretty x <> Pretty.hardline <> ": " <> t' <>
                       Pretty.hardline <>
                       "= " <>
                       e')
                  short =
-                   "letrec " <> Pretty.pretty x <> " : " <> t' <> " = " <> e'
+                   "let " <> Pretty.pretty x <> " : " <> t' <> " = " <> e'
              return (long, short))
           t
       let d = [Pretty.group (Pretty.flatAlt long short), b']

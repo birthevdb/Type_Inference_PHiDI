@@ -43,7 +43,7 @@ tcTmDecl decl =
   lookupTmDef (s2n n) >>= \case
     Nothing -> do
       (typ, fTerm)    <- topLevelInfer term
-      let ty           = bidirect fTerm
+      let ty           = DT.trace (show typ) $ bidirect fTerm
       (typFi, tranFi) <- iTcMtoSTcM $ ty
       return $ ((s2n n, typ), (s2n n, fTerm), (s2n n, tranFi))
     Just _  -> errThrow [DS $ "Multiple definitions of" <+> Pretty.pretty n]
@@ -63,7 +63,7 @@ type DisRule = (PType, PType)
 data Queue = EmptyQ
            | QL Label Queue
            | QA PType Queue
-           deriving Show
+           deriving (Show, Eq)
 -- | Collection of substitutions of the form [u+ -> T, ...] or [u- -> T, ...]
 data Substitution typ = EmptyS
                       | PosS TUni typ (Substitution typ)
@@ -159,8 +159,8 @@ infer (App e1 e2) = do
   uFresh  <- getFreshUni
   theta   <- solve $ initC ((t1', PArr t2' (Uni uFresh)))
   let gam  = substInGam (joinGam gam1' gam2') theta
-  -- let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-  let dis  = substInDis (joinDis dis2' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  -- let dis  = substInDis (joinDis dis2' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   let t    = substInType theta (PosT (Uni uFresh))
   theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PArr t2' (Uni uFresh))
@@ -213,15 +213,15 @@ infer (Proj e l) = do
   ------------------------------------------------------------------
   Γ ⊢ let ^x = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x = e1 in e2
 -}
-infer (Let b) = do
-  (x, (e1, e2))        <- unbind b
-  (gam1, dis1, t1, f1) <- infer e1
-  (principal1, _)      <- ground $ flatten $ t1
-  del1                 <- combine =<< groundDestruct dis1
-  (gam2, dis2, t2, f2) <- localCtx (extendVarCtx x (CtxSch gam1 del1 t1)) $ infer e2
-  let gam               = joinGam gam1 gam2
-  f1'                  <- constructFinalTerm del1 f1
-  return (gam, dis2, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
+-- infer (Let b) = do
+--   (x, (e1, e2))        <- unbind b
+--   (gam1, dis1, t1, f1) <- infer e1
+--   (principal1, _)      <- ground $ flatten $ t1
+--   del1                 <- combine =<< groundDestruct dis1
+--   (gam2, dis2, t2, f2) <- localCtx (extendVarCtx x (CtxSch gam1 del1 t1)) $ infer e2
+--   let gam               = joinGam gam1 gam2
+--   f1'                  <- constructFinalTerm del1 f1
+--   return (gam, dis2, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
 
 {-
   A = [Γ'; ∆'] τ'
@@ -229,7 +229,7 @@ infer (Let b) = do
   θ = solve(τ1 <: τ')                   ∆' |= θ(∆1)
   Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
   -------------------------------------------------------------------------------
-  Π ⊢ letrec ^x : A = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x : |A| = |θ|(e1) in e2
+  Π ⊢ let ^x : A = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x : |A| = |θ|(e1) in e2
 -}
 infer (Letrec b) = do
   ((x, Embed a), (e1, e2)) <- unbind b
@@ -238,7 +238,7 @@ infer (Letrec b) = do
   -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, dis1, t1, f1)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e1
   -- θ = solve(τ1 <: τ')
-  th                       <- unification [(EmptyQ, (t1, t'))]
+  th                       <- DT.trace (show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
   case th of
     Just theta -> do
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
@@ -351,7 +351,7 @@ initC (a1, a2) = [(EmptyQ, (a1, a2))]
 
 solve :: [(Queue, SubRule)] -> STcMonad (Substitution PType)
 solve [] = return $ EmptyS
-solve cons = unification cons >>= \subs -> case subs of
+solve cons = DT.trace (show cons) $ unification cons >>= \subs -> case subs of
   Just sub -> return $ sub
   Nothing -> errThrow [DS "Destruct subtyping impossible case"]
 
@@ -364,10 +364,16 @@ unification ((EmptyQ, s):lqc) | substWithUni s = do
       Just theta2 -> return $ Just (appendS theta1 theta2)
       Nothing     -> return $ Nothing
 
-unification ((EmptyQ, (P NumT,  P BoolT)):lqc) = return $ Nothing
-unification ((EmptyQ, (P BoolT, P NumT)) :lqc) = return $ Nothing
+unification ((EmptyQ, (P NumT,  P BoolT))  :lqc) = return $ Nothing
+unification ((EmptyQ, (P BoolT, P NumT))   :lqc) = return $ Nothing
+unification ((EmptyQ, (P BoolT, P (TVar _))):lqc) = return $ Nothing
+unification ((EmptyQ, (P NumT, P (TVar _))) :lqc) = return $ Nothing
+unification ((EmptyQ, (P (TVar _), P NumT)) :lqc) = return $ Nothing
+unification ((EmptyQ, (P (TVar _), P BoolT)):lqc) = return $ Nothing
 unification ((EmptyQ, (P NumT,  P NumT)) :lqc) = unification lqc
 unification ((EmptyQ, (P BoolT, P BoolT)):lqc) = unification lqc
+unification ((EmptyQ, (P (TVar a1), P (TVar a2))):lqc) | a1 == a2 = unification lqc
+unification ((EmptyQ, (P (TVar a1), P (TVar a2))):lqc) = return $ Nothing
 
 unification ((_,(P BotT, _))     :lqc) = unification lqc
 unification ((_,(_,      P TopT)):lqc) = unification lqc
@@ -566,7 +572,8 @@ substInSType _        NumT       = NumT
 substInSType _        BoolT      = BoolT
 substInSType _        TopT       = TopT
 substInSType _        BotT       = BotT
-substInSType _       (TVar x)    = TVar x
+substInSType (Subs name ty subs) (TVar x) | name == x = substInSType subs ty
+substInSType (Subs name ty subs) (TVar x) = substInSType subs (TVar x)
 
 -- Apply a non-polar substitution to an elaborated term (Fi+)
 substFExpr :: PrSubs I.FType -> I.FExpr -> STcMonad I.FExpr
@@ -1041,7 +1048,7 @@ replaceTVar alph u (P (SRecT l p))          = PRecT l (replaceTVar alph u (P p))
 replaceTVar alph u (PRecT l p)              = PRecT l (replaceTVar alph u p)
 replaceTVar _    _  ty                      = ty
 
--- convert a type scheme (forall a. ... τ) into a context type [Γ; ∆] τ
+-- convert a type scheme (forall a. ... T) into a context type [Γ; ∆] τ
 convertScheme :: Fresh m => Scheme -> m CtxType
 convertScheme (SType st) = return $ CtxSch EmptyG EmptyD (P st)
 convertScheme (DForall b) = do

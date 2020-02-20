@@ -96,7 +96,7 @@ atom =
   choice
     [ pLambda
     , pLetrec
-    , pLet
+    -- , pLet
     , pIf
     , LitV <$> float
     , topVal
@@ -131,20 +131,20 @@ pLambda = do
   e <- expr
   return $ foldr elam (elam (last xs) e) (init xs)
 
-pLet :: Parser Expr
-pLet = do
-  rword "let"
-  symbol "^"
-  n <- lidentifier
-  symbol "="
-  e1 <- expr
-  rword "in"
-  e2 <- expr
-  return $ elet n e1 e2
+-- pLet :: Parser Expr
+-- pLet = do
+--   rword "let"
+--   symbol "^"
+--   n <- lidentifier
+--   symbol "="
+--   e1 <- expr
+--   rword "in"
+--   e2 <- expr
+--   return $ elet n e1 e2
 
 pLetrec :: Parser Expr
 pLetrec = do
-  rword "letrec"
+  rword "let"
   symbol "^"
   n <- lidentifier
   colon
