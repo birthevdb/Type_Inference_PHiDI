@@ -64,6 +64,17 @@ data Queue = EmptyQ
            | QL Label Queue
            | QA PType Queue
            deriving (Show, Eq)
+
+pushLabel :: Label -> Queue -> Queue
+pushLabel l EmptyQ    = QL l EmptyQ
+pushLabel l (QL l' q) = QL l' (pushLabel l q)
+pushLabel l (QA t q)  = QA t (pushLabel l q)
+
+pushType :: PType -> Queue -> Queue
+pushType t EmptyQ    = QA t EmptyQ
+pushType t (QL l q)  = QL l (pushType t q)
+pushType t (QA t' q) = QA t' (pushType t q)
+
 -- | Collection of substitutions of the form [u+ -> T, ...] or [u- -> T, ...]
 data Substitution typ = EmptyS
                       | PosS TUni typ (Substitution typ)
@@ -388,10 +399,10 @@ unification ((q,(a,          PAnd a1 a2))   :lqc) = unification ((q,(a,a1))  :(q
 -- unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a2 == a4 =
 --   unification ((q,(PArr (PAnd a1 a3) a2,PArr a5 a6)):lqc)
 
-unification ((q,(a1, P (SRecT l a2))):lqc) = unification ((QL l      q,(a1,P a2)):lqc)
-unification ((q,(a1, PRecT l a2))    :lqc) = unification ((QL l      q,(a1,a2))  :lqc)
-unification ((q,(a1, P (Arr a2 a3))) :lqc) = unification ((QA (P a2) q,(a1,P a3)):lqc)
-unification ((q,(a1, PArr a2 a3))    :lqc) = unification ((QA a2     q,(a1,a3))  :lqc)
+unification ((q,(a1, P (SRecT l a2))):lqc) = unification ((pushLabel l     q,(a1,P a2)):lqc)
+unification ((q,(a1, PRecT l a2))    :lqc) = unification ((pushLabel l     q,(a1,a2))  :lqc)
+unification ((q,(a1, P (Arr a2 a3))) :lqc) = unification ((pushType (P a2) q,(a1,P a3)):lqc)
+unification ((q,(a1, PArr a2 a3))    :lqc) = unification ((pushType a2     q,(a1,a3))  :lqc)
 
 unification ((QA p q,(P (Arr a1 a2), a)):lqc) = unification [(q,(p, P a1))] >>= \sub -> case sub of
     Just cs -> unification ((q,(p, P a1))  :(q, (P a2, a)):lqc)
