@@ -95,7 +95,6 @@ translSType (S.SRecT l t) = do
 translSType S.TopT = return $ I.TopT
 translSType S.BotT = return $ I.BotT
 
-
 translPType :: Fresh m => S.PType -> m I.FType
 translPType (P t) = translSType t
 translPType (Uni u) = return $ I.TVar (translate u)

@@ -94,11 +94,22 @@ data PrSubs typ = EmptyPrS | Subs TyName typ (PrSubs typ) deriving Show
 topLevelInfer :: Expr -> STcMonad (Scheme, I.FExpr)
 topLevelInfer expr = do
   (gam, dis, ty, fTerm) <- infer expr
-  (principal, _)        <- ground $ flatten $ ty
-  del                   <- combine =<< groundDestruct dis
-  fTerm'                <- constructFinalTerm del fTerm
+  (principal, theta)    <- DT.trace (show fTerm) $ ground $ flatten $ ty
+  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ combine =<< groundDestruct (applySubst theta dis)
+  theta' <- translSubst theta
+  f' <- substFExpr theta' fTerm
+  fTerm'                <- DT.trace (show del) $ constructFinalTerm del f'
   let ty'                = constructFinalType del principal
   return (ty', fTerm')
+
+
+translSubst :: Fresh m => PrSubs SType -> m (PrSubs I.FType)
+translSubst EmptyPrS = return $ EmptyPrS
+translSubst (Subs name st subs) = do
+  ft <- translSType st
+  subs' <- translSubst subs
+  return (Subs name ft subs')
+
 
 ---------------------------------
 -- ALGORITHMIC INFERENCE RULES --
@@ -173,10 +184,11 @@ infer (App e1 e2) = do
   let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   -- let dis  = substInDis (joinDis dis2' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   let t    = substInType theta (PosT (Uni uFresh))
-  theta'  <- groundS theta EmptyPrS
+  theta'  <- DT.trace (show theta) $ groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PArr t2' (Uni uFresh))
-  tFi     <- translSType st
-  f       <- substFExpr theta' (I.App (I.Anno f1' tFi) f2')
+  tFi     <- DT.trace (show theta') $ translSType st
+  -- f       <- substFExpr theta' (I.App (I.Anno f1' tFi) f2')
+  let f   = I.App (I.Anno f1' tFi) f2'
   return (gam, dis, t, f)
 
 {-
@@ -215,7 +227,8 @@ infer (Proj e l) = do
   theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PRecT l (Uni uFresh))
   tFi     <- translSType st
-  f       <- substFExpr theta' (I.Acc (I.Anno f' tFi) l)
+  -- f       <- substFExpr theta' (I.Acc (I.Anno f' tFi) l)
+  let f    = I.Acc (I.Anno f' tFi) l
   return (gam, dis, t, f)
 
 {-
@@ -265,7 +278,8 @@ infer (Letrec b) = do
       -- θ(e1)
       aFi                      <- translType a
       theta'                   <- groundS theta EmptyPrS
-      f'                       <- substFExpr theta' f1
+      -- f'                       <- substFExpr theta' f1
+      let f' = f1
       f1'                      <- constructFinalTerm del1 f'
       return (gam, dis, t2, I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2)))
     Nothing    -> errThrow [DS "Letrec not possible"]
@@ -288,7 +302,8 @@ infer (If e1 e2 e3) = do
   let dis = substInDis (joinDis (joinDis dis1' (joinDis dis2' dis3')) (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   let t   = substInType theta (PosT (Uni uFresh))
   theta' <- groundS theta EmptyPrS
-  f      <- substFExpr theta' (I.If f1' f2' f3')
+  -- f      <- substFExpr theta' (I.If f1' f2' f3')
+  let f = I.If f1' f2' f3'
   return (gam, dis, t, f)
 
 {-
@@ -310,7 +325,8 @@ infer (PrimOp op e1 e2) = do
       let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
       let t   = substInType theta (PosT (Uni uFresh))
       theta' <- groundS theta EmptyPrS
-      f      <- substFExpr theta' f'
+      -- f      <- substFExpr theta' f'
+      let f = f'
       return (gam, dis, t, f)
     Comp    _ -> do
       let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P NumT)) ++ (initC (t2', P NumT))
@@ -319,7 +335,8 @@ infer (PrimOp op e1 e2) = do
       let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
       let t   = substInType theta (PosT (Uni uFresh))
       theta' <- groundS theta EmptyPrS
-      f      <- substFExpr theta' f'
+      -- f      <- substFExpr theta' f'
+      let f = f'
       return (gam, dis, t, f)
     Logical _ -> do
       let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P BoolT)) ++ (initC (t2', P BoolT))
@@ -328,7 +345,8 @@ infer (PrimOp op e1 e2) = do
       let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
       let t   = substInType theta (PosT (Uni uFresh))
       theta' <- groundS theta EmptyPrS
-      f      <- substFExpr theta' f'
+      -- f      <- substFExpr theta' f'
+      let f = f'
       return (gam, dis, t, f)
 
 infer (Pos p tm) = extendSourceLocation p tm $ infer tm
@@ -342,7 +360,7 @@ infer a = errThrow [DS "Infer not implemented:", DD a]
 entails :: Del -> Del -> STcMonad ()
 entails del1 EmptyD = return ()
 entails del1 (Delta uni ty del2) = do
-  ent del1 (translate uni) ty
+  DT.trace (show del1 ++ "\n" ++ show uni) $ ent del1 (translate uni) ty
   entails del1 del2
   where
     ent :: Del -> TyName -> SType -> STcMonad ()
@@ -501,6 +519,12 @@ applySubstC _      []                    = []
 applySubstC s      ((q, (ty1, ty2)):lqc) = ((q, (substInType s (PosT ty1),
                                                  substInType s (NegT ty2)))
                                             :(applySubstC s lqc))
+
+applySubst :: PrSubs SType -> Dis -> Dis
+applySubst EmptyPrS dis = dis
+applySubst subs EmptyDis = EmptyDis
+applySubst subs (Disj p1 p2 dis) = Disj (groundSubstInPType subs p1) (groundSubstInPType subs p2) (applySubst subs dis)
+
 
 -- Apply a polar substitution to a polar type
 substInType :: Substitution PType -> Polar PType -> PType
@@ -737,8 +761,8 @@ flatten (Meet p1 p2) = case p1' of
 
 -- Ground the type, resulting in a new type and a non-polar substitution
 ground :: PType -> STcMonad (SType, PrSubs SType)
-ground (P (And t1 TopT))        = return (t1, EmptyPrS)
-ground (P (And TopT t2))        = return (t2, EmptyPrS)
+-- ground (P (And t1 TopT))        = return (t1, EmptyPrS)
+-- ground (P (And TopT t2))        = return (t2, EmptyPrS)
 ground (P t)                    = return $ (t, EmptyPrS)
 ground (Uni u)                  = return $ (TVar $ translate u, Subs (translate u) (TVar $ translate u) EmptyPrS)
 ground (Meet (Uni u) p)         = do
@@ -766,8 +790,12 @@ ground (Join p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2', theta2) <- ground p2
   let t2 = substInSType theta1 t2'
-  let t'        = if (elementOf t1 t2) then t1 else TopT
+  let t' = if ((elementOf t1 t2) || t1 == TopT || t2 == TopT) then t1 else TopT
   return (t', appendPr theta2 theta1)
+ground (PAnd (Join (Uni u) p1) p2) = do
+  (t1, theta1) <- ground (Join (Uni u) p1)
+  (t2, theta2) <- ground p2
+  if (elementOfP p1 p2) then return (And TopT t2, appendPr theta2 (Subs (translate u) TopT EmptyPrS)) else return (And t1 t2, appendPr theta2 theta1)
 ground (PAnd p1 p2)             = do
   (t1, theta1) <- ground p1
   (t2', theta2) <- ground p2
@@ -797,7 +825,7 @@ groundS :: Substitution PType -> PrSubs SType -> STcMonad (PrSubs I.FType)
 groundS EmptyS _ = return $ EmptyPrS
 groundS (PosS u p subs) groundSub = do
   (st, groundSub') <- ground $ flatten $ groundSubstInPType groundSub p
-  subs'            <- groundS subs (appendPr groundSub' groundSub)
+  subs'            <- DT.trace (show st) $ groundS subs (appendPr groundSub' groundSub)
   ft               <- translSType st
   return $ Subs (translate u) ft subs'
 groundS (NegS u p subs) groundSub = do
@@ -886,7 +914,7 @@ destructD BoolT (SRecT l t)         = return $ EmptyD
 destructD (SRecT l t) BoolT         = return $ EmptyD
 destructD BoolT NumT                = return $ EmptyD
 destructD NumT BoolT                = return $ EmptyD
-destructD _ _                       = errThrow [DS $ "Destruct disjointness constraint impossible case"]
+destructD a b                       = DT.trace (show a ++ "\n" ++ show b) $ errThrow [DS $ "Destruct disjointness constraint impossible case"]
 
 
 -- Combine disjointness constraints so that there is one constraint for each type variable
@@ -1093,3 +1121,8 @@ occursInP u (PRecT l t)  = occursInP u t
 elementOf :: SType -> SType -> Bool
 elementOf t1 (And t2 t3) = t1 == (And t2 t3) || (elementOf t1 t2) || (elementOf t1 t3)
 elementOf t1 t2          = t1 == t2
+
+elementOfP :: PType -> PType -> Bool
+elementOfP t1 (PAnd t2 t3) = t1 == (PAnd t2 t3) || (elementOfP t1 t2) || (elementOfP t1 t3)
+elementOfP t1 (P (And t2 t3)) = t1 == (PAnd (P t2) (P t3)) || t1 == (P (And t2 t3)) || (elementOfP t1 (P t2)) || (elementOfP t1 (P t3))
+elementOfP t1 t2           = t1 == t2
