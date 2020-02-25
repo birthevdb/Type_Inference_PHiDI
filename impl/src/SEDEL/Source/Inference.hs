@@ -8,6 +8,7 @@ import           Unbound.Generics.LocallyNameless
 import           Data.Text.Prettyprint.Doc ((<+>))
 import qualified Data.Text.Prettyprint.Doc as Pretty
 import qualified Data.Set as Set
+import qualified Data.List as List
 
 import           SEDEL.Environment
 import           SEDEL.PrettyPrint
@@ -96,7 +97,7 @@ topLevelInfer expr = do
   (gam, dis, ty, fTerm) <- infer expr
   (principal, theta)    <- DT.trace (show fTerm) $ ground $ flatten $ ty
   let dis'               = DT.trace ("dis        " ++ show dis) $ applySubst theta dis
-  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ combine =<< groundDestruct dis'
+  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ reorder =<< combine =<< groundDestruct dis'
   theta'                <- DT.trace ("dis'       " ++ show dis') $ translSubst theta
   f'                    <- substFExpr theta' fTerm
   fTerm'                <- DT.trace (show del) $ constructFinalTerm del f'
@@ -949,6 +950,31 @@ combine (Delta alph (And TopT t2) cons) = combine $ Delta alph t2 cons
 combine (Delta alph t1            cons) = case lookupDel cons alph of
           (Nothing, _)   -> combine cons >>= \c -> return $ Delta alph t1 c
           (Just t2, del) -> combine $ Delta alph (And t1 t2) del
+
+
+reorder :: Del -> STcMonad Del
+reorder d = reorderDo [] d
+
+
+reorderDo :: [TyName] -> Del -> STcMonad Del
+reorderDo _ EmptyD = return EmptyD
+reorderDo names (Delta alph t1 cons)
+  = if allContained t1 names
+      then do
+        tail <- reorderDo (alph:names) cons
+        return $ Delta alph t1 tail
+      else reorderDo names (joinDel cons (Delta alph t1 EmptyD))
+    where
+      allContained :: SType -> [TyName] -> Bool
+      allContained (NumT) lst = True
+      allContained (BoolT) lst = True
+      allContained (Arr ty1 ty2) lst = allContained ty1 lst && allContained ty2 lst
+      allContained (And ty1 ty2) lst = allContained ty1 lst && allContained ty2 lst
+      allContained (TVar name) lst = List.elem name lst
+      allContained (SRecT l ty1) lst = allContained ty1 lst
+      allContained (TopT) lst = True
+      allContained (BotT) lst = True
+
 
 ----------------------
 -- MONAD CONVERSION --
