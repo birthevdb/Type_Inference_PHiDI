@@ -95,9 +95,10 @@ topLevelInfer :: Expr -> STcMonad (Scheme, I.FExpr)
 topLevelInfer expr = do
   (gam, dis, ty, fTerm) <- infer expr
   (principal, theta)    <- DT.trace (show fTerm) $ ground $ flatten $ ty
-  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ combine =<< groundDestruct (applySubst theta dis)
-  theta' <- translSubst theta
-  f' <- substFExpr theta' fTerm
+  let dis'               = DT.trace ("dis        " ++ show dis) $ applySubst theta dis
+  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ combine =<< groundDestruct dis'
+  theta'                <- DT.trace ("dis'       " ++ show dis') $ translSubst theta
+  f'                    <- substFExpr theta' fTerm
   fTerm'                <- DT.trace (show del) $ constructFinalTerm del f'
   let ty'                = constructFinalType del principal
   return (ty', fTerm')
@@ -262,24 +263,25 @@ infer (Letrec b) = do
   -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, dis1, t1, f1)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e1
   -- θ = solve(τ1 <: τ')
-  th                       <- DT.trace (show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
+  th                       <- DT.trace ("dis1       " ++ show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
   case th of
     Just theta -> do
+      -- (∆_loc, ∆_glob) = splitDel Γ ∆
+      let (loc1, glob1) = splitDel gam1 dis1
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, dis2, t2, f2)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
+      (gam2, dis2, t2, f2)     <- DT.trace ("loc:    " ++ show loc1 ++ "\nglob:     " ++ show glob1) $ localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
       -- Γ = Γ1 ∪ Γ2
       let gam                   = substInGam (joinGam gam1 gam2) theta
-      -- ∆ = ∆1 ∪ ∆2
-      let dis                   = substInDis dis2 theta -- substInDis (joinDis dis1 dis2) theta
+      -- ∆ = ∆_glob ∪ ∆2
+      let dis                   = substInDis (joinDis glob1 dis2) theta -- substInDis (joinDis dis1 dis2) theta
       -- θ(∆1)
-      del1                     <- combine =<< groundDestruct (substInDis dis1 theta)
-      -- check  ∆' |= θ(∆1)
+      del1                     <- DT.trace ("dis        " ++ show dis) $ combine =<< groundDestruct (substInDis loc1 theta)
+      -- check  ∆' |= θ(∆_loc)
       entails del' del1
       -- θ(e1)
-      aFi                      <- translType a
-      theta'                   <- groundS theta EmptyPrS
-      -- f'                       <- substFExpr theta' f1
-      let f' = f1
+      aFi                      <- DT.trace ("del1       " ++ show del1) $ translType a
+      theta'                   <- DT.trace ("aFi        " ++ show aFi) $ groundS theta EmptyPrS
+      f'                       <- substFExpr theta' f1
       f1'                      <- constructFinalTerm del1 f'
       return (gam, dis, t2, I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2)))
     Nothing    -> errThrow [DS "Letrec not possible"]
@@ -353,6 +355,27 @@ infer (Pos p tm) = extendSourceLocation p tm $ infer tm
 
 infer a = errThrow [DS "Infer not implemented:", DD a]
 
+---------------------------------------
+-- SPLIT DISJOINTNESS LOCAL - GLOBAL --
+---------------------------------------
+
+-- splitDel :: Γ -> ∆ -> (∆_loc, ∆_glob)
+splitDel :: Gam -> Dis -> (Dis, Dis)
+splitDel gam EmptyDis = (EmptyDis, EmptyDis)
+splitDel gam (Disj p1 p2 dis) = if isGlob then (loc, Disj p1 p2 glob) else (Disj p1 p2 loc, glob)
+  where
+    (loc, glob) = splitDel gam dis
+    isGlob = any (gamContains gam) (findUnis p1 ++ findUnis p2)
+
+findUnis :: PType -> [TUni]
+findUnis (P ty) = []
+findUnis (Uni uni) = [uni]
+findUnis (Join t1 t2) = findUnis t1 ++ findUnis t2
+findUnis (Meet t1 t2) = findUnis t1 ++ findUnis t2
+findUnis (PArr t1 t2) = findUnis t1 ++ findUnis t2
+findUnis (PRecT l t) = findUnis t
+findUnis (PAnd t1 t2) = findUnis t1 ++ findUnis t2
+
 --------------------
 -- ENTAILMENT LET --
 --------------------
@@ -392,16 +415,16 @@ unification ((EmptyQ, s):lqc) | substWithUni s = do
     case sub of
       Just theta2 -> return $ Just (appendS theta1 theta2)
       Nothing     -> return $ Nothing
-
+unification ((EmptyQ, (t1, t2)) : lqc) | t1 == t2 = unification lqc
 unification ((EmptyQ, (P NumT,  P BoolT))  :lqc) = return $ Nothing
 unification ((EmptyQ, (P BoolT, P NumT))   :lqc) = return $ Nothing
 unification ((EmptyQ, (P BoolT, P (TVar _))):lqc) = return $ Nothing
 unification ((EmptyQ, (P NumT, P (TVar _))) :lqc) = return $ Nothing
 unification ((EmptyQ, (P (TVar _), P NumT)) :lqc) = return $ Nothing
 unification ((EmptyQ, (P (TVar _), P BoolT)):lqc) = return $ Nothing
-unification ((EmptyQ, (P NumT,  P NumT)) :lqc) = unification lqc
-unification ((EmptyQ, (P BoolT, P BoolT)):lqc) = unification lqc
-unification ((EmptyQ, (P (TVar a1), P (TVar a2))):lqc) | a1 == a2 = unification lqc
+-- unification ((EmptyQ, (P NumT,  P NumT)) :lqc) = unification lqc
+-- unification ((EmptyQ, (P BoolT, P BoolT)):lqc) = unification lqc
+-- unification ((EmptyQ, (P (TVar a1), P (TVar a2))):lqc) | a1 == a2 = unification lqc
 unification ((EmptyQ, (P (TVar a1), P (TVar a2))):lqc) = return $ Nothing
 
 unification ((_,(P BotT, _))     :lqc) = unification lqc
@@ -815,8 +838,8 @@ groundDestruct :: Dis -> STcMonad Del
 groundDestruct  EmptyDis = return EmptyD
 groundDestruct (Disj p1 p2 d) = do
   (t1', _) <- ground $ flatten p1
-  (t2', _) <- ground $ flatten p2
-  del      <- destructD t1' t2'
+  (t2', _) <- DT.trace ("t1'     " ++ show t1') $ ground $ flatten p2
+  del      <- DT.trace ("t2'     " ++ show t2') $ destructD t1' t2'
   d'       <- groundDestruct d
   return $ joinDel del d'
 
@@ -889,8 +912,6 @@ joinDis (Disj x ty dis1) dis2     = Disj x ty (joinDis dis1 dis2)
 destructD :: SType -> SType -> STcMonad Del
 destructD (TVar alph) t             = return $ Delta (translate alph) t EmptyD
 destructD t (TVar alph)             = return $ Delta (translate alph) t EmptyD
-destructD t1 t2 | topLike t1        = return $ EmptyD
-destructD t1 t2 | topLike t2        = return $ EmptyD
 destructD (Arr t1 t2) (Arr t3 t4)   = destructD t2 t4
 destructD (And t1 t2) t3            = do
   del1 <- destructD t1 t3
@@ -914,6 +935,8 @@ destructD BoolT (SRecT l t)         = return $ EmptyD
 destructD (SRecT l t) BoolT         = return $ EmptyD
 destructD BoolT NumT                = return $ EmptyD
 destructD NumT BoolT                = return $ EmptyD
+destructD t1 t2 | topLike t1        = return $ EmptyD
+destructD t1 t2 | topLike t2        = return $ EmptyD
 destructD a b                       = DT.trace (show a ++ "\n" ++ show b) $ errThrow [DS $ "Destruct disjointness constraint impossible case"]
 
 
