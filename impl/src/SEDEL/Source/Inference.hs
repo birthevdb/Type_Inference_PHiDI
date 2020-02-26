@@ -186,9 +186,9 @@ infer (App e1 e2) = do
   let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   -- let dis  = substInDis (joinDis dis2' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   let t    = substInType theta (PosT (Uni uFresh))
-  theta'  <- DT.trace (show theta) $ groundS theta EmptyPrS
+  theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PArr t2' (Uni uFresh))
-  tFi     <- DT.trace (show theta') $ translSType st
+  tFi     <- translSType st
   -- f       <- substFExpr theta' (I.App (I.Anno f1' tFi) f2')
   let f   = I.App (I.Anno f1' tFi) f2'
   return (gam, dis, t, f)
@@ -264,24 +264,25 @@ infer (Letrec b) = do
   -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, dis1, t1, f1)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e1
   -- θ = solve(τ1 <: τ')
-  th                       <- DT.trace ("dis1       " ++ show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
+  th                       <- DT.trace ("sub       " ++ show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
   case th of
     Just theta -> do
       -- (∆_loc, ∆_glob) = splitDel Γ ∆
       let (loc1, glob1) = splitDel gam1 dis1
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, dis2, t2, f2)     <- DT.trace ("loc:    " ++ show loc1 ++ "\nglob:     " ++ show glob1) $ localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
+      (gam2, dis2, t2, f2)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
       -- Γ = Γ1 ∪ Γ2
       let gam                   = substInGam (joinGam gam1 gam2) theta
       -- ∆ = ∆_glob ∪ ∆2
       let dis                   = substInDis (joinDis glob1 dis2) theta -- substInDis (joinDis dis1 dis2) theta
       -- θ(∆1)
-      del1                     <- DT.trace ("dis        " ++ show dis) $ combine =<< groundDestruct (substInDis loc1 theta)
+      del1                     <- reorder =<< combine =<< groundDestruct (substInDis loc1 theta)
+      del''                    <- reorder del'
       -- check  ∆' |= θ(∆_loc)
-      entails del' del1
+      entails del'' del1
       -- θ(e1)
-      aFi                      <- DT.trace ("del1       " ++ show del1) $ translType a
-      theta'                   <- DT.trace ("aFi        " ++ show aFi) $ groundS theta EmptyPrS
+      aFi                      <- translType a
+      theta'                   <- groundS theta EmptyPrS
       f'                       <- substFExpr theta' f1
       f1'                      <- constructFinalTerm del1 f'
       return (gam, dis, t2, I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2)))
@@ -383,14 +384,15 @@ findUnis (PAnd t1 t2) = findUnis t1 ++ findUnis t2
 
 entails :: Del -> Del -> STcMonad ()
 entails del1 EmptyD = return ()
-entails del1 (Delta uni ty del2) = do
-  DT.trace (show del1 ++ "\n" ++ show uni) $ ent del1 (translate uni) ty
-  entails del1 del2
+entails del1 (Delta name ty del2) = do
+  DT.trace ("ENTAILMENT\ndel1    : " ++ show del1 ++ "\ndel2    : " ++ show (Delta name ty del2)) $ ent del1 (translate name) ty
+  DT.trace "OK" $ entails del1 del2
   where
     ent :: Del -> TyName -> SType -> STcMonad ()
-    ent EmptyD u1 a = errThrow [DS "No entailment in letrec."]
-    ent (Delta u1 a _) u2 b | u1 == u2 = unification [(EmptyQ, (P a, P b))] >>= \th -> case th of
-      Nothing -> if (topLike b) then return () else errThrow [DS "No entailment in letrec."]
+    ent EmptyD _ _ = errThrow [DS "No entailment in letrec."]
+    ent (Delta u1 (TVar a) d) u2 (TVar b) = if u1 == b && a == u2 then return () else ent d u2 (TVar b)
+    ent (Delta u1 a d) u2 b | u1 == u2 = unification [(EmptyQ, (P a, P b))] >>= \th -> case th of
+      Nothing -> if (topLike b) then return () else ent d u2 b
       Just x -> return ()
     ent (Delta u1 a d) u2 b = ent d u2 b
 
@@ -404,7 +406,7 @@ initC (a1, a2) = [(EmptyQ, (a1, a2))]
 
 solve :: [(Queue, SubRule)] -> STcMonad (Substitution PType)
 solve [] = return $ EmptyS
-solve cons = DT.trace (show cons) $ unification cons >>= \subs -> case subs of
+solve cons = DT.trace ("solve cons:     " ++ show cons) $ unification cons >>= \subs -> case subs of
   Just sub -> return $ sub
   Nothing -> errThrow [DS "Destruct subtyping impossible case"]
 
@@ -446,35 +448,43 @@ unification ((q,(a1, PRecT l a2))    :lqc) = unification ((pushLabel l     q,(a1
 unification ((q,(a1, P (Arr a2 a3))) :lqc) = unification ((pushType (P a2) q,(a1,P a3)):lqc)
 unification ((q,(a1, PArr a2 a3))    :lqc) = unification ((pushType a2     q,(a1,a3))  :lqc)
 
-unification ((QA p q,(P (Arr a1 a2), a)):lqc) = unification [(q,(p, P a1))] >>= \sub -> case sub of
-    Just cs -> unification ((q,(p, P a1))  :(q, (P a2, a)):lqc)
+unification ((QA p q,(P (Arr a1 a2), a)):lqc) = unification [(EmptyQ,(p, P a1))] >>= \sub -> case sub of
+    Just cs -> unification ((EmptyQ,(p, P a1))  :(q, (P a2, a)):lqc)
     Nothing -> unification ((q,(P TopT, a)):lqc)
-unification ((QA p q,(PArr a1 a2,    a)):lqc) = unification [(q,(p, a1))]   >>= \sub -> case sub of
-    Just cs -> unification ((q,(p, a1))    :(q, (a2, a)):lqc)
+unification ((QA p q,(PArr a1 a2,    a)):lqc) = unification [(EmptyQ,(p, a1))] >>= \sub -> case sub of
+    Just cs -> unification ((EmptyQ,(p, a1))    :(q, (a2, a)):lqc)
     Nothing -> unification ((q,(P TopT, a)):lqc)
 unification ((QL l q,(P (SRecT l1 a1), a2)):lqc) | l == l1 = unification ((q,(P a1,a2)):lqc)
 unification ((QL l q,(PRecT l1 a1, a2))    :lqc) | l == l1 = unification ((q,(a1,a2))  :lqc)
 
 unification ((q,(P (And a1 a2), P a3)):lqc) | a1 == a3 || a2 == a3 = unification lqc
 unification ((q,(PAnd a1 a2,    a3))  :lqc) | a1 == a3 || a2 == a3 = unification lqc
-unification ((q,(P (And a1 a2), a3))  :lqc) = getFreshUni >>= \u1 ->
-                                              getFreshUni >>= \u2 ->
-                                              unification ((q,     (P a1,                   Uni u1)):
-                                                           (q,     (P a2,                   Uni u2)):
-                                                           (EmptyQ,(PAnd (Uni u1) (Uni u2), a3)):
-                                                           lqc)
-unification ((q,(PAnd a1 a2,    a3))  :lqc) = getFreshUni >>= \u1 ->
-                                              getFreshUni >>= \u2 ->
-                                              unification ((q,      (a1,                     Uni u1)):
-                                                           (q,      (a2,                     Uni u2)):
-                                                           (EmptyQ, (PAnd (Uni u1) (Uni u2), a3)):
-                                                           lqc)
+
+unification ((q,(P (And a1 a2), a3))  :lqc) = unification [(q, (P a1, a3))] >>= \sub -> case sub of
+  Just cs -> unification ((q, (P a1, a3)) : lqc)
+  Nothing -> unification ((q, (P a2, a3)) : lqc)
+unification ((q,(PAnd a1 a2, a3))  :lqc) = unification [(q, (a1, a3))] >>= \sub -> case sub of
+  Just cs -> unification ((q, (a1, a3)) : lqc)
+  Nothing -> unification ((q, (a2, a3)) : lqc)
+
+-- unification ((q,(P (And a1 a2), a3))  :lqc) = getFreshUni >>= \u1 ->
+--                                               getFreshUni >>= \u2 ->
+--                                               unification ((q,     (P a1,                   Uni u1)):
+--                                                            (q,     (P a2,                   Uni u2)):
+--                                                            (EmptyQ,(PAnd (Uni u1) (Uni u2), a3)):
+--                                                            lqc)
+-- unification ((q,(PAnd a1 a2,    a3))  :lqc) = getFreshUni >>= \u1 ->
+--                                               getFreshUni >>= \u2 ->
+--                                               unification ((q,      (a1,                     Uni u1)):
+--                                                            (q,      (a2,                     Uni u2)):
+--                                                            (EmptyQ, (PAnd (Uni u1) (Uni u2), a3)):
+--                                                            lqc)
 unification ((QA p q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PArr p a2)) :lqc)
 unification ((QL l q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PRecT l a2)):lqc)
 unification ((QA p q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
 unification ((QL l q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
 
-unification _ = return Nothing
+unification x = DT.trace ("other:   " ++ show x) $ return Nothing
 
 -- Construct a substitution [u- |-> u /\ P] or [u+ |-> u \/ P]
 makeSubst :: SubRule -> STcMonad (Substitution PType)
@@ -839,8 +849,8 @@ groundDestruct :: Dis -> STcMonad Del
 groundDestruct  EmptyDis = return EmptyD
 groundDestruct (Disj p1 p2 d) = do
   (t1', _) <- ground $ flatten p1
-  (t2', _) <- DT.trace ("t1'     " ++ show t1') $ ground $ flatten p2
-  del      <- DT.trace ("t2'     " ++ show t2') $ destructD t1' t2'
+  (t2', _) <- ground $ flatten p2
+  del      <- destructD t1' t2'
   d'       <- groundDestruct d
   return $ joinDel del d'
 
@@ -849,7 +859,7 @@ groundS :: Substitution PType -> PrSubs SType -> STcMonad (PrSubs I.FType)
 groundS EmptyS _ = return $ EmptyPrS
 groundS (PosS u p subs) groundSub = do
   (st, groundSub') <- ground $ flatten $ groundSubstInPType groundSub p
-  subs'            <- DT.trace (show st) $ groundS subs (appendPr groundSub' groundSub)
+  subs'            <- groundS subs (appendPr groundSub' groundSub)
   ft               <- translSType st
   return $ Subs (translate u) ft subs'
 groundS (NegS u p subs) groundSub = do
@@ -938,7 +948,7 @@ destructD BoolT NumT                = return $ EmptyD
 destructD NumT BoolT                = return $ EmptyD
 destructD t1 t2 | topLike t1        = return $ EmptyD
 destructD t1 t2 | topLike t2        = return $ EmptyD
-destructD a b                       = DT.trace (show a ++ "\n" ++ show b) $ errThrow [DS $ "Destruct disjointness constraint impossible case"]
+destructD a b                       = errThrow [DS $ "Destruct disjointness constraint impossible case"]
 
 
 -- Combine disjointness constraints so that there is one constraint for each type variable
@@ -1172,6 +1182,6 @@ elementOf t1 (And t2 t3) = t1 == (And t2 t3) || (elementOf t1 t2) || (elementO
 elementOf t1 t2          = t1 == t2
 
 elementOfP :: PType -> PType -> Bool
-elementOfP t1 (PAnd t2 t3) = t1 == (PAnd t2 t3) || (elementOfP t1 t2) || (elementOfP t1 t3)
+elementOfP t1 (PAnd t2 t3)    = t1 == (PAnd t2 t3) || (elementOfP t1 t2) || (elementOfP t1 t3)
 elementOfP t1 (P (And t2 t3)) = t1 == (PAnd (P t2) (P t3)) || t1 == (P (And t2 t3)) || (elementOfP t1 (P t2)) || (elementOfP t1 (P t3))
-elementOfP t1 t2           = t1 == t2
+elementOfP t1 t2              = t1 == t2
