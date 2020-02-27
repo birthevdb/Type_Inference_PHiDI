@@ -1,4 +1,4 @@
-# “Polymorphic Hindley-Milner for Disjoint Intersection types
+# Polymorphic Hindley-Milner for Disjoint Intersection types
 
 ## Dependencies
 
@@ -122,6 +122,42 @@ Evaluation result
     ```
     main = (\x -> if x < 0 then false else true) (0.0 - 3)
     ```
+
+## More examples
+
+```
+> main = \x -> x x
+Typing result
+: (∀(u*Top) . (∀(u1*Top) . ((u & (u → u1)) → u1)))
+
+Elaborated term
+~~> Λ(u * Top)
+    . Λ(u1 * Top)
+      . λ(x) . (x : ((u → u1) → u1)) x : (((u → u1) & ((u → u1) → u1)) → u1)
+
+Evaluation result
+=> <lambda>
+```
+
+```
+> main = (\x -> x x) (\x -> x x)
+1:8:
+Occurs check: cannot construct infinite type.
+In the expression:
+(λ(x) . x x) (λ(x) . x x)
+```
+
+```
+> main = (\x -> x) ,, (\x -> x)
+Typing result
+: (∀(u*Top) . (∀(u1*u) . ((u1 → u1) & (u → u))))
+
+Elaborated term
+~~> Λ(u * Top) . Λ(u1 * u) . λ(x) . x : (u1 → u1) ,, λ(x) . x : (u → u)
+
+Evaluation result
+=> <Pair>
+```
 
 <!--
 ## Tests
