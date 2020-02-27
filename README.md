@@ -1,21 +1,33 @@
-# Type_Inference_PHiDI
+# “Polymorphic Hindley-Milner for Disjoint Intersection types
 
-## Build and Run
+## Dependencies
 
-This project can be built with
-[stack](https://docs.haskellstack.org/en/stable/README/) version 1.9.
+- [stack](https://docs.haskellstack.org/en/stable/README/) >= 1.9
 
-```
-stack build
-stack ghci
+## Building
+
+```shell
+$ stack build
 ```
 
 ## Usage
 
-* Main program
+The interpreter can be launched with
+
+```shell
+$ stack ghci
 ```
-stack ghci
-main
+
+In the interpreter, the main loop can be started with
+
+```shell
+> main
+```
+
+In the main loop, you can evaluate PHiDI expressions and get information about
+their type. You need to write your expressions in the form `main = expression`.
+
+```shell
 > main = true ,, 3
 Typing result
 : (Bool & Double)
@@ -27,51 +39,113 @@ Evaluation result
 => <Pair>
 ```
 
-```
-stack ghci
-main
-> main = let ^f = 5 in (\x -> x) ^f
-Typing result
-: Double
+## Syntax
 
-Elaborated term
-~~>  let f = 5.0 in (λ(x) . x : (Double → Double) : (Double → Double)) f
+### Types
 
-Evaluation result
-=> <Pair>
-```
+- Int: `Double`
+- Top: `Top`
+- Bottom: `Bot`
+- Arrow: `Double -> Bool`
+- Record: `{label : Double}`
+- Intersection: `Top & Double`
+- Type variable: `X`
+- Boolean: `Bool`
+- Forall: `forall (X * Top) . X -> X`
 
-```
-stack ghci
-main
-> main = letrec ^f : Double  = 5 in (\x -> x) ^f
-Typing result
-: Double
+### Expressions
 
-Elaborated term
-~~> letrec f : Double = 5.0
-    in  (λ(x) . x : (Double → Double) : (Double → Double)) f
+- Literal
+    ```
+    3.14
+    ```
+- Top
+    ```
+    ()
+    ```
+- Lambda variable
+    ```
+    x
+    ```
+- Let variable
+    ```
+    ^x
+    ```
+- Lambda
+    ```
+    \x -> x + 5
+    \_ -> true
+    ```
+- Application
+    ```
+    (\x -> x) 3
+    ```
+- Record construction
+    ```
+    {label = 3.0}
+    ```
+- Record extraction
+    ```
+    {label = 3.0} . label
+    ```
+- Merge
+    ```
+    3.0 ,, true
+    ```
+- Letrec
+    ```
+    let ^id : forall (X * Top) . X -> X = \v -> v in ^id 5
+    ```
+- Boolean literal
+    ```
+    true
+    false
+    ```
+- Primitive operations
+    ```
+    2 * 4
+    4 / 2
+    3 + 1
+    5 - 0
+    3 > 1
+    1 < 2
+    3 == 2
+    4 /= 5
+    true && false
+    false || true
+    ```
+    An example:
+    ```
+    main = let ^pos : (Double -> Bool) = \x -> x == 0 || x > 0 in ^pos 1.5
+    ```
+- If
+    ```
+    main = (\x -> if x < 0 then false else true) (0.0 - 3)
+    ```
 
-Evaluation result
-=> 5.0
-```
-* Testing soundness
+<!--
+## Tests
+
+### Testing soundness
+
 ```
 stack ghci
 test_soundness
 ```
-* Testing completeness
+
+### Testing completeness
+
 ```
 stack ghci
 test_completeness
 ```
-* Testing principality
+
+### Testing principality
+
 ```
 stack ghci
 test_principality
 ```
+
 Testing this property is future work.
-
-## Code
-
-The code for testing properties can be found in [Test.hs](impl/src/SEDEL/Test.hs).
+-->
