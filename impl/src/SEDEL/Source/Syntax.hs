@@ -40,7 +40,7 @@ data TmBind = TmBind
 type TmName = Name Expr
 type TyName = Name SType
 
--- Expression
+-- Expressions
 data Expr = Var TmName
           | VarPoly TmName
           | App Expr Expr
@@ -88,7 +88,7 @@ data PType = P SType
            | PArr PType PType
            | PRecT Label PType
            | PAnd PType PType
-   deriving (Generic)
+   deriving (Show, Generic)
 
 data CtxType = CtxSch Gam Del PType deriving (Eq, Show, Generic)
 
@@ -128,14 +128,14 @@ instance Eq PType where
   Meet  t1 t2 == Meet  t3 t4 = ((t1 == t3) && (t2 == t4)) || ((t1 == t4) && (t2 == t3))
   _           == _           = False
 
-instance Show PType where
-  show (P     t1   )  = show t1
-  show (PArr  t1 t2)  = "(" ++ (show t1) ++ " -> " ++ (show t2) ++ ")"
-  show (PAnd  t1 t2)  = "(" ++ (show t1) ++ " & " ++ (show t2) ++ ")"
-  show (PRecT l1 t1)  = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
-  show (Uni   u1   )  = "Uni " ++ (show u1)
-  show (Join  t1 t2)  = "(" ++ (show t1) ++ " ⊔ " ++ (show t2) ++ ")"
-  show (Meet  t1 t2)  = "(" ++ (show t1) ++ " ⊓ " ++ (show t2) ++ ")"
+-- instance Show PType where
+--   show (P     t1   )  = show t1
+--   show (PArr  t1 t2)  = "(" ++ (show t1) ++ " -> " ++ (show t2) ++ ")"
+--   show (PAnd  t1 t2)  = "(" ++ (show t1) ++ " & " ++ (show t2) ++ ")"
+--   show (PRecT l1 t1)  = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
+--   show (Uni   u1   )  = "Uni " ++ (show u1)
+--   show (Join  t1 t2)  = "(" ++ (show t1) ++ " ⊔ " ++ (show t2) ++ ")"
+--   show (Meet  t1 t2)  = "(" ++ (show t1) ++ " ⊓ " ++ (show t2) ++ ")"
 
 
 instance Pretty (Name a) where

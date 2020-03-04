@@ -95,7 +95,7 @@ data PrSubs typ = EmptyPrS | Subs TyName typ (PrSubs typ) deriving Show
 topLevelInfer :: Expr -> STcMonad (Scheme, I.FExpr)
 topLevelInfer expr = do
   (gam, dis, ty, fTerm) <- infer expr
-  (principal, theta)    <- DT.trace (show fTerm) $ ground $ flatten $ ty
+  (principal, theta)    <- DT.trace (show fTerm ++ "\n" ++ show ty) $ ground $ flatten $ ty
   let dis'               = DT.trace ("dis        " ++ show dis) $ applySubst theta dis
   del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ reorder =<< combine =<< groundDestruct dis'
   theta'                <- DT.trace ("dis'       " ++ show dis') $ translSubst theta
@@ -184,13 +184,10 @@ infer (App e1 e2) = do
   theta   <- solve $ initC ((t1', PArr t2' (Uni uFresh)))
   let gam  = substInGam (joinGam gam1' gam2') theta
   let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-  -- let dis  = substInDis (joinDis dis2' (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
   let t    = substInType theta (PosT (Uni uFresh))
-  theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PArr t2' (Uni uFresh))
   tFi     <- translSType st
-  -- f       <- substFExpr theta' (I.App (I.Anno f1' tFi) f2')
-  let f   = I.App (I.Anno f1' tFi) f2'
+  let f    = I.App (I.Anno f1' tFi) f2'
   return (gam, dis, t, f)
 
 {-
@@ -203,7 +200,9 @@ infer (Merge e1 e2) = do
   (gam2', dis2', t2', f2') <- infer e2
   let gam = joinGam gam1' gam2'
   let dis = joinDis (joinDis dis1' dis2') (Disj t1' t2' EmptyDis)
-  return (gam, dis, PAnd t1' t2', I.Merge f1' f2')
+  (pr1, th1) <- ground $ flatten t1'
+  (pr2, th2) <- DT.trace ("pr1:     " ++ show pr1) $ ground $ flatten t2'
+  DT.trace ("pr2:     " ++ show pr2) $ return (gam, dis, PAnd (P pr1) (P pr2), I.Merge f1' f2')
 
 {-
               Π ⊢ E : [Γ; ∆] τ ~> e
@@ -229,25 +228,8 @@ infer (Proj e l) = do
   theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (PRecT l (Uni uFresh))
   tFi     <- translSType st
-  -- f       <- substFExpr theta' (I.Acc (I.Anno f' tFi) l)
   let f    = I.Acc (I.Anno f' tFi) l
   return (gam, dis, t, f)
-
-{-
-  Π ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
-  Π, ^x : [Γ1; ∆1] τ1 ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-  ------------------------------------------------------------------
-  Γ ⊢ let ^x = E1 in E2 : [Γ1 ∪ Γ2; ∆2] τ2 ~> let x = e1 in e2
--}
--- infer (Let b) = do
---   (x, (e1, e2))        <- unbind b
---   (gam1, dis1, t1, f1) <- infer e1
---   (principal1, _)      <- ground $ flatten $ t1
---   del1                 <- combine =<< groundDestruct dis1
---   (gam2, dis2, t2, f2) <- localCtx (extendVarCtx x (CtxSch gam1 del1 t1)) $ infer e2
---   let gam               = joinGam gam1 gam2
---   f1'                  <- constructFinalTerm del1 f1
---   return (gam, dis2, t2, I.Letrec (bind (translate x, embed Nothing) (f1', f2)))
 
 {-
   A = [Γ'; ∆'] τ'
@@ -268,14 +250,14 @@ infer (Letrec b) = do
   case th of
     Just theta -> do
       -- (∆_loc, ∆_glob) = splitDel Γ ∆
-      let (loc1, glob1) = splitDel gam1 dis1
+      let (loc1, glob1)         = splitDel gam1 dis1
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, dis2, t2, f2)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
+      (gam2, dis2, t2, f2)     <- DT.trace ("theta:       " ++ show theta) $ localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
       -- Γ = Γ1 ∪ Γ2
       let gam                   = substInGam (joinGam gam1 gam2) theta
       -- ∆ = ∆_glob ∪ ∆2
-      let dis                   = substInDis (joinDis glob1 dis2) theta -- substInDis (joinDis dis1 dis2) theta
-      -- θ(∆1)
+      let dis                   = substInDis (joinDis glob1 dis2) theta
+      -- θ(∆_loc)
       del1                     <- reorder =<< combine =<< groundDestruct (substInDis loc1 theta)
       del''                    <- reorder del'
       -- check  ∆' |= θ(∆_loc)
@@ -299,15 +281,15 @@ infer (If e1 e2 e3) = do
   (gam1', dis1', t1', f1') <- infer e1
   (gam2', dis2', t2', f2') <- infer e2
   (gam3', dis3', t3', f3') <- infer e3
-  uFresh <- getFreshUni
+  uFresh  <- getFreshUni
   let cons = (initC (t1', P BoolT)) ++ (initC (t2', Uni uFresh)) ++ (initC (t3', Uni uFresh))
-  theta  <- solve cons
-  let gam = substInGam (joinGam gam1' (joinGam gam2' gam3')) theta
-  let dis = substInDis (joinDis (joinDis dis1' (joinDis dis2' dis3')) (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-  let t   = substInType theta (PosT (Uni uFresh))
-  theta' <- groundS theta EmptyPrS
-  -- f      <- substFExpr theta' (I.If f1' f2' f3')
-  let f = I.If f1' f2' f3'
+  theta   <- DT.trace ("cons:       " ++ show cons) $ solve cons
+  let gam  = substInGam (joinGam gam1' (joinGam gam2' gam3')) theta
+  let dis  = substInDis (joinDis (joinDis dis1' (joinDis dis2' dis3')) (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+  let t    = substInType theta (PosT (Uni uFresh))
+  (_, th) <- ground $ flatten $ t1'
+  theta'  <- translSubst th
+  f       <- substFExpr theta' (I.If f1' f2' f3')
   return (gam, dis, t, f)
 
 {-
@@ -319,39 +301,47 @@ infer (If e1 e2 e3) = do
 infer (PrimOp op e1 e2) = do
   (gam1', dis1', t1', f1') <- infer e1
   (gam2', dis2', t2', f2') <- infer e2
-  let f' = I.PrimOp op f1' f2'
   uFresh <- getFreshUni
   case op of
     Arith   _ -> do
       let cons = (initC (P NumT, Uni uFresh)) ++ (initC (t1', P NumT)) ++ (initC (t2', P NumT))
-      theta  <- solve cons
-      let gam = substInGam (joinGam gam1' gam2') theta
-      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-      let t   = substInType theta (PosT (Uni uFresh))
-      theta' <- groundS theta EmptyPrS
-      -- f      <- substFExpr theta' f'
-      let f = f'
-      return (gam, dis, t, f)
+      theta   <- solve cons
+      let gam  = substInGam (joinGam gam1' gam2') theta
+      let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t    = substInType theta (PosT (Uni uFresh))
+      (_, th1) <- ground $ flatten $ t1'
+      theta1'  <- translSubst th1
+      (_, th2) <- ground $ flatten $ t2'
+      theta2'  <- translSubst th2
+      f        <- substFExpr theta1' (I.PrimOp op f1' f2')
+      f'       <- substFExpr theta2' f
+      return (gam, dis, t, f')
     Comp    _ -> do
       let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P NumT)) ++ (initC (t2', P NumT))
-      theta  <- solve cons
-      let gam = substInGam (joinGam gam1' gam2') theta
-      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-      let t   = substInType theta (PosT (Uni uFresh))
-      theta' <- groundS theta EmptyPrS
-      -- f      <- substFExpr theta' f'
-      let f = f'
-      return (gam, dis, t, f)
+      theta   <- solve cons
+      let gam  = substInGam (joinGam gam1' gam2') theta
+      let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t    = substInType theta (PosT (Uni uFresh))
+      (_, th1) <- ground $ flatten $ t1'
+      theta1'  <- translSubst th1
+      (_, th2) <- ground $ flatten $ t2'
+      theta2'  <- translSubst th2
+      f        <- substFExpr theta1' (I.PrimOp op f1' f2')
+      f'       <- substFExpr theta2' f
+      return (gam, dis, t, f')
     Logical _ -> do
       let cons = (initC (P BoolT, Uni uFresh)) ++ (initC (t1', P BoolT)) ++ (initC (t2', P BoolT))
-      theta  <- solve cons
-      let gam = substInGam (joinGam gam1' gam2') theta
-      let dis = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
-      let t   = substInType theta (PosT (Uni uFresh))
-      theta' <- groundS theta EmptyPrS
-      -- f      <- substFExpr theta' f'
-      let f = f'
-      return (gam, dis, t, f)
+      theta   <- solve cons
+      let gam  = substInGam (joinGam gam1' gam2') theta
+      let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (Uni uFresh) (P TopT) EmptyDis)) theta
+      let t    = substInType theta (PosT (Uni uFresh))
+      (_, th1) <- ground $ flatten $ t1'
+      theta1'  <- translSubst th1
+      (_, th2) <- ground $ flatten $ t2'
+      theta2'  <- translSubst th2
+      f        <- substFExpr theta1' (I.PrimOp op f1' f2')
+      f'       <- substFExpr theta2' f
+      return (gam, dis, t, f')
 
 infer (Pos p tm) = extendSourceLocation p tm $ infer tm
 
@@ -438,10 +428,17 @@ unification ((q,(a,          Meet a1 a2))   :lqc) = unification ((q,(a,a1))  :(q
 unification ((q,(a,          P (And a1 a2))):lqc) = unification ((q,(a,P a1)):(q,(a,P a2)):lqc)
 unification ((q,(a,          PAnd a1 a2))   :lqc) = unification ((q,(a,a1))  :(q,(a,a2))  :lqc)
 
--- unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a1 == a3 =
---   unification ((q,(PArr a1 (PAnd a2 a4),PArr a5 a6)):lqc)
--- unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a2 == a4 =
---   unification ((q,(PArr (PAnd a1 a3) a2,PArr a5 a6)):lqc)
+--------------------------------------------------------------------------------
+unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a1 == a3 = DT.trace "BCD" $
+  unification ((q,(PArr a1 (PAnd a2 a4),PArr a5 a6)):lqc)
+unification ((q,(PAnd (P (Arr a1 a2)) (P (Arr a3 a4)), PArr a5 a6)):lqc) | a1 == a3 = DT.trace "BCD" $
+  unification ((q,(PArr (P a1) (PAnd (P a2) (P a4)),PArr a5 a6)):lqc)
+unification ((q,(PAnd (PArr a1 a2) (PArr a3 a4), PArr a5 a6)):lqc) | a2 == a4 = DT.trace "BCD" $
+  unification ((q,(PArr (PAnd a1 a3) a2,PArr a5 a6)):lqc)
+unification ((q, (PAnd (PRecT l1 a1) (PRecT l2 a2), PRecT l3 a3)):lqc) | l1 == l2 = DT.trace "BCD" $
+  unification ((q, (PRecT l1 (PAnd a1 a2), PRecT l3 a3)):lqc)
+-- TODO main = ((\x -> x + 1) ,, (\x -> x > 0)) 2 
+--------------------------------------------------------------------------------
 
 unification ((q,(a1, P (SRecT l a2))):lqc) = unification ((pushLabel l     q,(a1,P a2)):lqc)
 unification ((q,(a1, PRecT l a2))    :lqc) = unification ((pushLabel l     q,(a1,a2))  :lqc)
@@ -455,17 +452,28 @@ unification ((QA p q,(PArr a1 a2,    a)):lqc) = unification [(EmptyQ,(p, a1))] >
     Just cs -> unification ((EmptyQ,(p, a1))    :(q, (a2, a)):lqc)
     Nothing -> unification ((q,(P TopT, a)):lqc)
 unification ((QL l q,(P (SRecT l1 a1), a2)):lqc) | l == l1 = unification ((q,(P a1,a2)):lqc)
-unification ((QL l q,(PRecT l1 a1, a2))    :lqc) | l == l1 = unification ((q,(a1,a2))  :lqc)
+unification ((QL l q,(PRecT l1 a1, a2))    :lqc) | l == l1 = unification ((q,(a1, a2)) :lqc)
 
-unification ((q,(P (And a1 a2), P a3)):lqc) | a1 == a3 || a2 == a3 = unification lqc
-unification ((q,(PAnd a1 a2,    a3))  :lqc) | a1 == a3 || a2 == a3 = unification lqc
+-- unification ((q,(P (And a1 a2), P a3)):lqc) | a1 == a3 || a2 == a3 = unification lqc
+-- unification ((q,(PAnd a1 a2,    a3))  :lqc) | a1 == a3 || a2 == a3 = unification lqc
 
-unification ((q,(P (And a1 a2), a3))  :lqc) = unification [(q, (P a1, a3))] >>= \sub -> case sub of
-  Just cs -> unification ((q, (P a1, a3)) : lqc)
-  Nothing -> unification ((q, (P a2, a3)) : lqc)
-unification ((q,(PAnd a1 a2, a3))  :lqc) = unification [(q, (a1, a3))] >>= \sub -> case sub of
-  Just cs -> unification ((q, (a1, a3)) : lqc)
-  Nothing -> unification ((q, (a2, a3)) : lqc)
+--------------------------------------------------------------------------------
+unification ((q,(P (And a1 a2), a3))  :lqc) = unification [(q, (P a1, a3))] >>= \res1 -> case res1 of
+  Just sub1 -> (unification $ applySubstC sub1 [(q, (P a2, a3))]) >>= \res2 -> case res2 of
+    Just sub2 -> unification ((q, (P a1, a3)) : (q, (P a2, a3)) : lqc)
+    -- Just sub2 -> unification $ applySubstC (composeSubs sub1 sub2) lqc
+    Nothing   -> unification ((q, (P a1, a3)) : lqc)
+  Nothing   -> unification [(q, (P a2, a3))] >>= \res2 -> case res2 of
+    Just sub2 -> unification ((q, (P a2, a3)) : lqc)
+    Nothing   -> return $ Nothing
+unification ((q,(PAnd a1 a2, a3))  :lqc) = unification [(q, (a1, a3))] >>= \res1 -> case res1 of
+  Just sub1 -> DT.trace ("sub1     " ++ show sub1) $ (unification $ applySubstC sub1 [(q, (a2, a3))]) >>= \res2 -> case res2 of
+    Just sub2 -> DT.trace ("sub1 & sub2     " ++ show sub2) $ unification ((q, (a1, a3)) : (q, (a2, a3)) : lqc)
+    -- Just sub2 -> unification $ applySubstC (composeSubs sub1 sub2) lqc
+    Nothing   -> unification ((q, (a1, a3)) : lqc)
+  Nothing -> unification [(q, (a2, a3))] >>= \res2 -> case res2 of
+    Just sub2 -> DT.trace ("sub2     " ++ show sub2) $ unification ((q, (a2, a3)) : lqc)
+    Nothing   -> return $ Nothing
 
 -- unification ((q,(P (And a1 a2), a3))  :lqc) = getFreshUni >>= \u1 ->
 --                                               getFreshUni >>= \u2 ->
@@ -479,12 +487,35 @@ unification ((q,(PAnd a1 a2, a3))  :lqc) = unification [(q, (a1, a3))] >>= \sub 
 --                                                            (q,      (a2,                     Uni u2)):
 --                                                            (EmptyQ, (PAnd (Uni u1) (Uni u2), a3)):
 --                                                            lqc)
-unification ((QA p q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PArr p a2)) :lqc)
-unification ((QL l q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PRecT l a2)):lqc)
-unification ((QA p q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
-unification ((QL l q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
+--------------------------------------------------------------------------------
+
+-- unification ((QA p q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PArr p a2)) :lqc)
+-- unification ((QL l q, (Uni u1, a2))    :lqc) = unification ((q,(Uni u1, PRecT l a2)):lqc)
+-- unification ((QA p q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
+-- unification ((QL l q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
 
 unification x = DT.trace ("other:   " ++ show x) $ return Nothing
+
+-- composeSubs :: Substitution PType -> Substitution PType -> Substitution PType
+-- composeSubs EmptyS sub = sub
+-- composeSubs (PosS u1 ty1 sub1) sub2 = case containsPosSubsFor u1 sub2 of
+--   Nothing        -> PosS u1 ty1 (composeSubs sub1 sub2)
+--   Just (ty, sub) -> PosS u1 (PAnd ty1 ty) (composeSubs sub1 sub)
+-- composeSubs (NegS u1 ty1 sub1) sub2 = case containsNegSubsFor u1 sub2 of
+--   Nothing        -> NegS u1 ty1 (composeSubs sub1 sub2)
+--   Just (ty, sub) -> NegS u1 (PAnd ty1 ty) (composeSubs sub1 sub)
+--
+-- containsPosSubsFor :: TUni -> Substitution PType -> Maybe (PType, Substitution PType)
+-- containsPosSubsFor _ EmptyS = Nothing
+-- containsPosSubsFor u (PosS u1 ty1 subs) | u == u1 = Just (ty1, subs)
+-- containsPosSubsFor u (PosS _ _ subs) = containsPosSubsFor u subs
+-- containsPosSubsFor u (NegS _ _ subs) = containsPosSubsFor u subs
+--
+-- containsNegSubsFor :: TUni -> Substitution PType -> Maybe (PType, Substitution PType)
+-- containsNegSubsFor _ EmptyS = Nothing
+-- containsNegSubsFor u (NegS u1 ty1 subs) | u == u1 = Just (ty1, subs)
+-- containsNegSubsFor u (NegS _ _ subs) = containsNegSubsFor u subs
+-- containsNegSubsFor u (PosS _ _ subs) = containsNegSubsFor u subs
 
 -- Construct a substitution [u- |-> u /\ P] or [u+ |-> u \/ P]
 makeSubst :: SubRule -> STcMonad (Substitution PType)
