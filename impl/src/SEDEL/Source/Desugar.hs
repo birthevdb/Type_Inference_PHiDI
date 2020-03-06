@@ -1,5 +1,5 @@
-{-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE LambdaCase #-}
+{-# LANGUAGE NoImplicitPrelude,
+             LambdaCase #-}
 
 
 module SEDEL.Source.Desugar
@@ -15,6 +15,7 @@ import Unbound.Generics.LocallyNameless
 
 import SEDEL.Environment
 import SEDEL.Source.Syntax
+import SEDEL.Fix
 
 desugar :: [SDecl] -> [SDecl]
 desugar = map go
@@ -130,7 +131,7 @@ normalize tyParams params e ret = (body, tbody)
            foldrM
              (\(_, x) y -> maybe Nothing (\x' -> getSType y >>= \y' ->
                                                  getSType x' >>= \x'' ->
-                                                 Just $ SType $ Arr x'' y') x)
+                                                 Just $ SType $ mkArr x'' y') x)
              t
              params)
         ret
@@ -149,33 +150,16 @@ expandType :: SCtx -> Scheme -> Scheme
 expandType ctx ty = runFreshM (go ctx ty)
   where
     -- Interesting cases:
-    go' :: SCtx -> SType -> FreshM SType
-    go' d (TVar a) =
-      case lookupTVarSynMaybe d a of
-        Nothing -> return $ TVar a
-        Just t -> go' d t
-    go' _ NumT = return NumT
-    go' _ BoolT = return BoolT
-    go' d (Arr t1 t2) = do
-      t1' <- go' d t1
-      t2' <- go' d t2
-      return $ Arr t1' t2'
-    go' d (And t1 t2) = do
-      t1' <- go' d t1
-      t2' <- go' d t2
-      return $ And t1' t2'
-    go' d (SRecT l t) = do
-      t' <- go' d t
-      return $ SRecT l t'
-    go' _ TopT = return TopT
-    go' _ BotT = return BotT
+    alg' :: SCtx -> SType' (FreshM SType) ->  FreshM SType
+    alg' d (TVar a) = case lookupTVarSynMaybe d a of
+      Nothing -> return $ mkTVar a
+      Just t -> cata (alg' d) t
+    alg' d t = fmap In $ sequence t
 
     go :: SCtx -> Scheme -> FreshM Scheme
     go d (DForall b) = do
       ((a, Embed t1), t2) <- unbind b
-      t1' <- go' d t1
+      t1' <- cata (alg' d) t1
       t2' <- go d t2
       return $ DForall (bind (a, embed t1') t2')
-    go d (SType t) = do
-      t' <- go' d t
-      return $ SType t'
+    go d (SType t) = SType <$> cata (alg' d) t

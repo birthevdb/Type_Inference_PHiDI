@@ -43,6 +43,7 @@ library
       SEDEL.Parser.Parser
       SEDEL.Environment
       SEDEL.Common
+      SEDEL.Fix
       SEDEL.PrettyPrint
       SEDEL.Source.Syntax
       SEDEL.Source.Subtyping

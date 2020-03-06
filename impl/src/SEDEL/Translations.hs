@@ -3,6 +3,7 @@ module SEDEL.Translations where
 import SEDEL.Source.Syntax as S
 import SEDEL.Intermediate.Syntax as I
 import SEDEL.Environment
+import SEDEL.Fix
 
 import Unbound.Generics.LocallyNameless
 import Unbound.Generics.LocallyNameless.Name
@@ -75,49 +76,27 @@ translType (S.SType t) = translSType t
 
 translCtxType :: Fresh m => S.CtxType -> m I.FType
 translCtxType (CtxSch gam dis ty) = translPType ty
--- translCtxType (CtxUni u) = return $ I.TVar (translate u)
 
 translSType :: Fresh m => S.SType -> m I.FType
-translSType S.NumT = return $ I.NumT
-translSType S.BoolT = return $ I.BoolT
-translSType (S.Arr t1 t2) = do
-  t1' <- translSType t1
-  t2' <- translSType t2
-  return $ I.Arr t1' t2'
-translSType (S.And t1 t2) = do
-  t1' <- translSType t1
-  t2' <- translSType t2
-  return $ I.And t1' t2'
-translSType (S.TVar x) = return $ I.TVar (translate x)
-translSType (S.SRecT l t) = do
-  t' <- translSType t
-  return $ I.SRecT l t'
-translSType S.TopT = return $ I.TopT
-translSType S.BotT = return $ I.BotT
+translSType = cata sAlg
+
+sAlg :: Fresh m => S.SType' (m I.FType) -> m I.FType
+sAlg (S.TVar x)    = return $ I.TVar (translate x)
+sAlg S.NumT        = return $ I.NumT
+sAlg S.BoolT       = return $ I.BoolT
+sAlg S.TopT        = return $ I.TopT
+sAlg S.BotT        = return $ I.BotT
+sAlg (S.Arr t1 t2) = I.Arr <$> t1 <*> t2
+sAlg (S.And t1 t2) = I.And <$> t1 <*> t2
+sAlg (S.SRecT l t) = I.SRecT l <$> t
+
+aAlg :: Fresh m => S.AType' (m I.FType) -> m I.FType
+aAlg (S.Uni u) = return $ I.TVar (translate u)
+aAlg (S.Join t1 t2) = DT.trace "translate join type" $ I.And <$> t1 <*> t2
+aAlg (S.Meet t1 t2) = DT.trace "translate meet type" $ I.And <$> t1 <*> t2
 
 translPType :: Fresh m => S.PType -> m I.FType
-translPType (P t) = translSType t
-translPType (Uni u) = return $ I.TVar (translate u)
-translPType (Join p1 p2) = do
-  p1' <- DT.trace "translate join type" $ translPType p1
-  p2' <- translPType p2
-  return $ I.And p1' p2'
-translPType (Meet p1 p2) = do
-  p1' <- DT.trace "translate meet type" $ translPType p1
-  p2' <- translPType p2
-  return $ I.And p1' p2'
-translPType (PArr p1 p2) = do
-  p1' <- translPType p1
-  p2' <- translPType p2
-  return $ I.Arr p1' p2'
-translPType (PAnd p1 p2) = do
-  p1' <- translPType p1
-  p2' <- translPType p2
-  return $ I.And p1' p2'
-translPType (PRecT l p) = do
-  p' <- translPType p
-  return $ I.SRecT l p'
-
+translPType = cata (sAlg `composeAlg` aAlg)
 
 -- Translation function for expressions
 translExp :: Fresh m => S.Expr -> m I.FExpr
@@ -209,32 +188,3 @@ translPars ((n, Just ty):pars) = do
 translKind :: S.Kind -> I.Kind
 translKind S.Star = I.Star
 translKind (S.KArrow k1 k2) = I.KArrow (translKind k1) (translKind k2)
-
-
-
-equiv :: S.Scheme -> I.FType -> FreshM Bool
-equiv (SType S.NumT)          I.NumT        = return True
-equiv (SType S.BoolT)         I.BoolT       = return True
-equiv (SType S.TopT)          I.TopT        = return True
-equiv (SType S.BotT)          I.BotT        = return True
-equiv (SType (S.Arr t1 t2))  (I.Arr f1 f2)  = do
-  b1 <- equiv (SType t1) f1
-  b2 <- equiv (SType t2) f2
-  return $ b1 && b2
-equiv (SType (S.And t1 t2))  (I.And f1 f2)  = do
-  b1 <- equiv (SType t1) f1
-  b2 <- equiv (SType t2) f2
-  b3 <- equiv (SType t1) f2
-  b4 <- equiv (SType t2) f1
-  return $ (b1 && b2) || (b3 && b4)
-equiv (SType (S.SRecT l1 t)) (I.SRecT l2 f) = do
-  b <- equiv (SType t) f
-  return $ (l1 == l2) && b
-equiv (SType (S.TVar x))     (I.TVar y)     = return $ x == (translate y)
-equiv (S.DForall c1)         (I.DForall c2) = do
-  ((alph1, Embed t1), a1) <- unbind c1
-  ((alph2, Embed t2), a2) <- unbind c2
-  b1 <- equiv (SType t1) t2
-  b2 <- equiv a1 a2
-  return $ (alph1 == (translate alph2)) && b1 && b2
-equiv  _                      _             = return False

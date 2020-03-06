@@ -1,4 +1,10 @@
-{-# LANGUAGE FlexibleInstances, ExistentialQuantification, OverloadedStrings, NoImplicitPrelude, RankNTypes #-}
+{-# LANGUAGE FlexibleInstances,
+             ExistentialQuantification,
+             OverloadedStrings,
+             NoImplicitPrelude,
+             RankNTypes,
+             TypeOperators,
+             UndecidableInstances #-}
 
 
 module SEDEL.PrettyPrint
@@ -18,6 +24,7 @@ import           SEDEL.Common
 import qualified SEDEL.Source.Syntax as S
 import qualified SEDEL.Intermediate.Syntax as I
 import qualified Data.List
+import           SEDEL.Fix
 
 instance Pretty SourcePos where
   pretty (SourcePos _ line col) =
@@ -92,7 +99,7 @@ instance FPretty S.Scheme where
          "∀" <> Pretty.parens (Pretty.pretty x <> "*" <> t') <+>
          Pretty.dot <+> a')
 
-instance FPretty S.SType where
+instance FPretty a => FPretty (S.SType' a) where
   ppr (S.Arr t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
@@ -110,30 +117,23 @@ instance FPretty S.SType where
   ppr S.TopT = return $ "Top"
   ppr S.BotT = return $ "Bottom"
 
-
-instance FPretty S.PType where
-  ppr (S.P t) = ppr t
+instance FPretty a => FPretty (S.AType' a) where
   ppr (S.Uni u) = return (Pretty.pretty u)
   ppr (S.Join t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "v" <+> t2')
+    return $ Pretty.parens (t1' <+> "⊔" <+> t2')
   ppr (S.Meet t1 t2) = do
     t1' <- ppr t1
     t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "∧" <+> t2')
-  ppr (S.PArr t1 t2) = do
-    t1' <- ppr t1
-    t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "→" <+> t2')
-  ppr (S.PRecT l t) = do
-    t' <- ppr t
-    return (Pretty.braces $ Pretty.pretty l <+> Pretty.colon <+> t')
-  ppr (S.PAnd t1 t2) = do
-    t1' <- ppr t1
-    t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "&" <+> t2')
+    return $ Pretty.parens (t1' <+> "⊓" <+> t2')
 
+instance (FPretty (f a), FPretty (g a)) => FPretty ((f S.:+: g) a) where
+  ppr (S.Inl x) = ppr x
+  ppr (S.Inr y) = ppr y
+
+instance FPretty (f (Fix f)) => FPretty (Fix f) where
+  ppr (In x) = ppr x
 
 instance FPretty I.FType where
   ppr (I.Arr t1 t2) = do

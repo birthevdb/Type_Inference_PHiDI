@@ -196,8 +196,8 @@ pType = choice [pForall, parens pType, atypescheme]
 
 tOperators :: [[Operator Parser SType]]
 tOperators =
-  [ [InfixL (And <$ symbol "&")]
-  , [InfixR (Arr <$ symbol "->")]
+  [ [InfixL (mkAnd <$ symbol "&")]
+  , [InfixR (mkArr <$ symbol "->")]
   ]
 
 ascheme :: Parser Scheme
@@ -228,10 +228,10 @@ recordType = braces (mkRecdsT <$> sepBy1 recordparam comma)
 tconst :: Parser SType
 tconst =
   choice
-    [ rword "Double" $> NumT
-    , rword "Bool" $> BoolT
-    , rword "Top" $> TopT
-    , rword "Bot" $> BotT
+    [ rword "Double" $> mkNumT
+    , rword "Bool" $> mkBoolT
+    , rword "Top" $> mkTopT
+    , rword "Bot" $> mkBotT
     ]
 
 
@@ -285,7 +285,7 @@ pCtyparam :: Parser (String, SType)
 pCtyparam =
   choice
     [ do n <- uidentifier
-         return (n, TopT)
+         return (n, mkTopT)
     , parens constrainTy
     ]
 
@@ -294,7 +294,7 @@ ctyparam :: Parser (String, SType)
 ctyparam =
   choice
     [ do n <- uidentifier
-         return (n, TopT)
+         return (n, mkTopT)
     , brackets constrainTy
     ]
 

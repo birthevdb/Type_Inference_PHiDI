@@ -1,7 +1,8 @@
 module SEDEL.Util where
 
-import SEDEL.Source.Syntax
-import qualified SEDEL.Intermediate.Syntax as I
+import            SEDEL.Source.Syntax
+import qualified  SEDEL.Intermediate.Syntax as I
+import            SEDEL.Fix
 
 import Data.List (foldl', foldl1')
 import Unbound.Generics.LocallyNameless
@@ -19,7 +20,7 @@ evarFi :: String -> I.FExpr
 evarFi = I.Var . s2n
 
 tvar :: String -> SType
-tvar = TVar . s2n
+tvar = mkTVar . s2n
 
 ebind :: String -> Expr -> Bind TmName Expr
 ebind n = bind (s2n n)
@@ -41,11 +42,8 @@ mkRecds' :: [TmBind] -> Expr
 mkRecds' = foldl1' Merge . map DRec'
 
 mkRecdsT :: [(Label, SType)] -> SType
-mkRecdsT [] = TopT
-mkRecdsT ((l, e):r) = foldl (\t (l', e') -> And t (SRecT l' e')) (SRecT l e) r
-
-mkArr :: SType -> [SType] ->SType
-mkArr = foldr Arr
+mkRecdsT [] = mkTopT
+mkRecdsT ((l, e):r) = foldl (\t (l', e') -> mkAnd t (mkSRecT l' e')) (mkSRecT l e) r
 
 eletr :: String -> I.FType -> I.FExpr -> I.FExpr -> I.FExpr
 eletr s t e b = I.Letrec (bind (s2n s, embed (Just t)) (e, b))
@@ -60,8 +58,8 @@ getFreshUni :: Fresh m => m TUni
 getFreshUni = fresh (Fn "u" 0)
 
 topLike :: SType -> Bool
-topLike  TopT       = True
-topLike (And a b)   = (topLike a) && (topLike b)
-topLike (Arr _ b)   = topLike b
-topLike (SRecT _ t) = topLike t
-topLike  _          = False
+topLike (In  TopT)       = True
+topLike (In (And t1 t2)) = topLike t1 && topLike t2
+topLike (In (Arr _   t)) = topLike t
+topLike (In (SRecT _ t)) = topLike t
+topLike _                = False
