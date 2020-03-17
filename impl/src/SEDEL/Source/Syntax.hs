@@ -7,8 +7,7 @@
              DeriveFoldable,
              FlexibleContexts,
              DeriveTraversable,
-             StandaloneDeriving,
-             OverlappingInstances #-}
+             StandaloneDeriving #-}
 
 module SEDEL.Source.Syntax where
 
@@ -92,12 +91,12 @@ instance Functor f => f <: f where
   inj = id
   prj = Just
 
-instance (Functor f, Functor g) => f <: (f :+: g) where
+instance {-# OVERLAPPING #-} (Functor f, Functor g) => f <: (f :+: g) where
   inj = Inl
   prj (Inl x) = Just x
   prj (Inr _) = Nothing
 
-instance (Functor f, Functor g, Functor h, f <: g) => f <: (h :+: g) where
+instance {-# OVERLAPPING #-} (Functor f, Functor g, Functor h, f <: g) => f <: (h :+: g) where
     inj = Inr . inj
     prj (Inl _) = Nothing
     prj (Inr x) = prj x
