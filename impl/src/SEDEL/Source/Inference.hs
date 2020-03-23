@@ -864,13 +864,20 @@ ground (In (Inl (SRecT l p))) = do
 
 -- ground and subsequently destruct disjointness constraints
 groundDestruct :: Dis -> STcMonad Del
-groundDestruct  EmptyDis = return EmptyD
-groundDestruct (Disj p1 p2 d) = do
-  (t1', th1) <- ground $ flatten p1
-  (t2', th2) <- DT.trace ("th1     " ++ show th1) $ ground $ flatten $ groundSubstInPType th1 p2
-  del        <- DT.trace ("th2     " ++ show th2) $ destructD t1' t2'
-  d'         <- groundDestruct d
-  return $ joinDel del d'
+groundDestruct d = do
+  (del, _) <- groundDestructDo d
+  return del
+
+groundDestructDo :: Dis -> STcMonad (Del, PrSubs SType)
+groundDestructDo EmptyDis = return (EmptyD, EmptyPrS)
+groundDestructDo (Disj p1 p2 d) = do
+  (d', sub)  <- groundDestructDo d
+  (t1', th1) <- ground $ flatten $ groundSubstInPType sub p1
+  let sub' = appendPr sub th1
+  (t2', th2) <- DT.trace ("sub':  " ++ show sub' ++ "\np2:  " ++ show p2) $ ground $ flatten $ groundSubstInPType sub' p2
+  del        <- DT.trace ("th2:  " ++ show th2 ++ "\nt1'  " ++ show t1' ++ "\nt2'  " ++ show t2') $ destructD t1' t2'
+  return $ DT.trace ("del  " ++ show del ++ "\nd'  " ++ show d') $ (joinDel del d', appendPr sub' th2)
+
 
 --------------------------------------------------------------------------------
 
