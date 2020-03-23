@@ -49,7 +49,7 @@ tcTmDecl decl =
   lookupTmDef (s2n n) >>= \case
     Nothing -> do
       (typ, fTerm)    <- topLevelInfer term
-      let ty           = DT.trace (show typ) $ bidirect fTerm
+      let ty           = bidirect fTerm
       (typFi, tranFi) <- iTcMtoSTcM $ ty
       return $ ((s2n n, typ), (s2n n, fTerm), (s2n n, tranFi))
     Just _  -> errThrow [DS $ "Multiple definitions of" <+> Pretty.pretty n]
@@ -100,11 +100,11 @@ data PrSubs typ = EmptyPrS | Subs TyName typ (PrSubs typ) deriving Show
 topLevelInfer :: Expr -> STcMonad (Scheme, I.FExpr)
 topLevelInfer expr = do
   (gam, dis, ty, fTerm) <- infer expr
-  (principal, theta)    <- DT.trace ("ty         " ++ show ty) $ DT.trace (show fTerm ++ "\n" ++ show ty) $ ground $ flatten $ ty
-  let dis'               = DT.trace ("dis        " ++ show dis) $ applySubst theta dis
-  del                   <- DT.trace ("toplevelinfer     " ++ show theta) $ reorder =<< combine =<< groundDestruct dis'
-  theta'                <- DT.trace ("dis'       " ++ show dis') $ translSubst theta
-  f'                    <- DT.trace ("del        " ++ show del) $ substFExpr theta' fTerm
+  (principal, theta)    <- ground $ flatten $ ty
+  let dis'               = applySubst theta dis
+  del                   <- reorder =<< combine =<< groundDestruct dis'
+  theta'                <- translSubst theta
+  f'                    <- substFExpr theta' fTerm
   fTerm'                <- constructFinalTerm del f'
   let ty'                = constructFinalType del principal
   return (ty', fTerm')
@@ -185,13 +185,13 @@ infer (Lam b) = do
 infer (App e1 e2) = do
   (gam1', dis1', t1', f1') <- infer e1
   (gam2', dis2', t2', f2') <- infer e2
-  uFresh  <- getFreshUni
+  uFresh  <- DT.trace ("t1:     " ++ show t1' ++ "\nt2:     " ++ show t2') $ getFreshUni
   theta   <- solve $ initC ((t1', mkArr t2' (mkUni uFresh)))
   let gam  = substInGam (joinGam gam1' gam2') theta
   let dis  = substInDis (joinDis (joinDis dis1' dis2') (Disj (mkUni uFresh) mkTopT EmptyDis)) theta
-  let t    = DT.trace ("theta:      " ++ show theta) $ substInType theta (PosT, (mkUni uFresh))
-  (st, _) <- DT.trace ("t:          " ++ show t) $ ground $ flatten $ (mkArr t2' t)
-  tFi     <- DT.trace ("st:         " ++ show st) $ translSType st
+  let t    = substInType theta (PosT, (mkUni uFresh))
+  (st, _) <- ground $ flatten $ (mkArr t2' t)
+  tFi     <- translSType st
   let f    = I.App (I.Anno f1' tFi) f2'
   return (gam, dis, t, f)
 
@@ -206,9 +206,9 @@ infer (Merge e1 e2) = do
   let gam     = joinGam gam1' gam2'
   let dis     = joinDis (joinDis dis1' dis2') (Disj t1' t2' EmptyDis)
   (pr1, th1) <- ground $ flatten t1'
-  (pr2, th2) <- DT.trace ("pr1:     " ++ show pr1) $ ground $ flatten t2'
+  (pr2, th2) <- ground $ flatten t2'
   let t       = mkAnd (replaceVars $ convertSType pr1) (replaceVars $ convertSType pr2)
-  DT.trace ("pr2:     " ++ show pr2) $ return (gam, dis, t, I.Merge f1' f2')
+  return (gam, dis, t, I.Merge f1' f2')
 
 {-
               Π ⊢ E : [Γ; ∆] τ ~> e
@@ -231,7 +231,6 @@ infer (Proj e l) = do
   let gam = substInGam gam' theta
   let dis = substInDis (joinDis dis' (Disj (mkUni uFresh) mkTopT EmptyDis)) theta
   let t   = substInType theta (PosT, (mkUni uFresh))
-  theta'  <- groundS theta EmptyPrS
   (st, _) <- ground $ flatten $ (mkSRecT l t)
   tFi     <- translSType st
   let f    = I.Acc (I.Anno f' tFi) l
@@ -252,13 +251,13 @@ infer (Letrec b) = do
   -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, dis1, t1, f1)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e1
   -- θ = solve(τ1 <: τ')
-  th                       <- DT.trace ("sub       " ++ show (t1, t')) $ unification [(EmptyQ, (t1, t'))]
+  th                       <- unification [(EmptyQ, (t1, t'))]
   case th of
     Just theta -> do
       -- (∆_loc, ∆_glob) = splitDel Γ ∆
       let (loc1, glob1)         = splitDel gam1 dis1
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, dis2, t2, f2)     <- DT.trace ("theta:       " ++ show theta) $ localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
+      (gam2, dis2, t2, f2)     <- localCtx (extendVarCtx x (CtxSch gam' del' t')) $ infer e2
       -- Γ = Γ1 ∪ Γ2
       let gam                   = substInGam (joinGam gam1 gam2) theta
       -- ∆ = ∆_glob ∪ ∆2
@@ -289,7 +288,7 @@ infer (If e1 e2 e3) = do
   (gam3', dis3', t3', f3') <- infer e3
   uFresh  <- getFreshUni
   let cons = (initC (t1', mkBoolT)) ++ (initC (t2', mkUni uFresh)) ++ (initC (t3', mkUni uFresh))
-  theta   <- DT.trace ("cons:       " ++ show cons) $ solve cons
+  theta   <- solve cons
   let gam  = substInGam (joinGam gam1' (joinGam gam2' gam3')) theta
   let dis  = substInDis (joinDis (joinDis dis1' (joinDis dis2' dis3')) (Disj (mkUni uFresh) mkTopT EmptyDis)) theta
   let t    = substInType theta (PosT, (mkUni uFresh))
@@ -411,8 +410,8 @@ initC (a1, a2) = [(EmptyQ, (a1, a2))]
 
 solve :: [(Queue, SubRule)] -> STcMonad (Substitution PType)
 solve [] = return $ EmptyS
-solve cons = DT.trace ("solve cons:     " ++ show cons) $ unification cons >>= \subs -> case subs of
-  Just sub -> return $ sub
+solve cons = DT.trace ("cons:    " ++ show cons) $ unification cons >>= \subs -> case subs of
+  Just sub -> DT.trace ("sub:    " ++ show sub) $ return $ sub
   Nothing -> errThrow [DS "Destruct subtyping impossible case"]
 
 --------------------------------------------------------------------------------
@@ -441,11 +440,11 @@ unification ((q,(In (Inr (Join a1 a2)), a)):lqc) = unification ((q,(a1,a)):(q,(a
 unification ((q,(a, In (Inr (Meet a1 a2)))):lqc) = unification ((q,(a,a1)):(q,(a,a2)):lqc)
 unification ((q,(a, In (Inl (And a1 a2)))) :lqc) = unification ((q,(a,a1)):(q,(a,a2)):lqc)
 
-unification ((q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) | a1 == a3 = DT.trace "BCD" $
+unification ((q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) | a1 == a3 =
   unification ((q,(mkArr a1 (mkAnd a2 a4), mkArr a5 a6)):lqc)
-unification ((q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) | a2 == a4 = DT.trace "BCD" $
+unification ((q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) | a2 == a4 =
   unification ((q,(mkArr (mkAnd a1 a3) a2, mkArr a5 a6)):lqc)
-unification ((q,(In (Inl (And (In (Inl (SRecT l1 a1))) (In (Inl(SRecT l2 a2))))), In (Inl (SRecT l3 a3)))):lqc) | l1 == l2 = DT.trace "BCD" $
+unification ((q,(In (Inl (And (In (Inl (SRecT l1 a1))) (In (Inl(SRecT l2 a2))))), In (Inl (SRecT l3 a3)))):lqc) | l1 == l2 =
   unification ((q,(mkSRecT l1 (mkAnd a1 a2), mkSRecT l3 a3)):lqc)
 --------------------------------------------------------------------------------
 
@@ -458,17 +457,15 @@ unification ((QA p q,(In (Inl (Arr a1 a2)), a)) : lqc) = unification [(EmptyQ,(p
 unification ((QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) | l == l1 = unification ((q,(a1, a2)) :lqc)
 --------------------------------------------------------------------------------
 unification ((q,(In (Inl (And a1 a2)), a3))  :lqc) = unification [(q, (a1, a3))] >>= \res1 -> case res1 of
-  Just sub1 -> DT.trace ("sub1     " ++ show sub1) $ (unification $ applySubstC sub1 [(q, (a2, a3))]) >>= \res2 -> case res2 of
-    -- Just sub2 -> DT.trace ("sub1 & sub2     " ++ show sub2) $ unification ((q, (a1, a3)) : (q, (a2, a3)) : lqc)
+  Just sub1 -> (unification $ applySubstC sub1 [(q, (a2, a3))]) >>= \res2 -> case res2 of
     Just sub2 -> do
-      -- DT.trace ("sub1 & sub2     " ++ show sub2 ++ "\ncomposed:     " ++ show (composeSubs sub1 sub2) )
       let sub = composeSubs sub1 sub2
       unification (applySubstC sub lqc) >>= \res3 -> case res3 of
         Just uni -> return $ Just $ appendS sub uni
         Nothing  -> return $ Nothing
     Nothing   -> unification ((q, (a1, a3)) : lqc)
   Nothing -> unification [(q, (a2, a3))] >>= \res2 -> case res2 of
-    Just sub2 -> DT.trace ("sub2     " ++ show sub2) $ unification ((q, (a2, a3)) : lqc)
+    Just sub2 -> unification ((q, (a2, a3)) : lqc)
     Nothing   -> return $ Nothing
 --------------------------------------------------------------------------------
 
@@ -478,12 +475,6 @@ unification ((q,(In (Inl (And a1 a2)), a3))  :lqc) = unification [(q, (a1, a3))]
 -- unification ((QL l q, (a1,     Uni u2)):lqc) = unification ((q,(P TopT, Uni u2))    :lqc)
 
 unification x = DT.trace ("other:   " ++ show x) $ return Nothing
-
---------------------------------------------------------------------------------
-
-
-
-
 
 --------------------------------------------------------------------------------
 
@@ -862,10 +853,10 @@ ground (In (Inl (SRecT l p))) = do
 
 --------------------------------------------------------------------------------
 
--- ground and subsequently destruct disjointness constraints
+-- ground and destruct disjointness constraints
 groundDestruct :: Dis -> STcMonad Del
-groundDestruct d = do
-  (del, _) <- groundDestructDo d
+groundDestruct dis = do
+  (del, _) <- groundDestructDo dis
   return del
 
 groundDestructDo :: Dis -> STcMonad (Del, PrSubs SType)
@@ -874,9 +865,9 @@ groundDestructDo (Disj p1 p2 d) = do
   (d', sub)  <- groundDestructDo d
   (t1', th1) <- ground $ flatten $ groundSubstInPType sub p1
   let sub' = appendPr sub th1
-  (t2', th2) <- DT.trace ("sub':  " ++ show sub' ++ "\np2:  " ++ show p2) $ ground $ flatten $ groundSubstInPType sub' p2
-  del        <- DT.trace ("th2:  " ++ show th2 ++ "\nt1'  " ++ show t1' ++ "\nt2'  " ++ show t2') $ destructD t1' t2'
-  return $ DT.trace ("del  " ++ show del ++ "\nd'  " ++ show d') $ (joinDel del d', appendPr sub' th2)
+  (t2', th2) <- ground $ flatten $ groundSubstInPType sub' p2
+  del        <- destructD t1' t2'
+  return $ (joinDel del d', appendPr sub' th2)
 
 
 --------------------------------------------------------------------------------
