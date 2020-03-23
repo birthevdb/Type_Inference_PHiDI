@@ -76,6 +76,10 @@ eval env (UApp f x) = do
 eval env (ULam b) = do
   (n, e) <- unbind b
   return $ VLam $ \x -> eval (M.insert n x env) e
+eval env (ULet b) = mdo
+  (n, (e1, e2)) <- unbind b
+  e1' <- mkThunk (eval (M.insert n e1' env) e1)
+  eval (M.insert n e1' env) e2
 eval env (UBLam b) = do
   (n, e) <- unbind b
   return $ VBLam $ \x -> eval env e

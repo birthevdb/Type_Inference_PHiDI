@@ -28,6 +28,7 @@ data UExpr = UVar UName
            | UApp UExpr UExpr
            | ULam (Bind UName UExpr)
            -- ^ only for internal use
+           | ULet (Bind UName (UExpr, UExpr))  -- recursive let
            | UPair UExpr UExpr
            | UP1 UExpr
            | UP2 UExpr
@@ -65,4 +66,4 @@ eapp :: UExpr -> UExpr -> UExpr
 eapp = UApp
 
 elet :: UName -> UExpr -> UExpr -> UExpr
-elet n e b = UApp (ULam (bind n b)) e
+elet n e b = ULet (bind n (e, b))
