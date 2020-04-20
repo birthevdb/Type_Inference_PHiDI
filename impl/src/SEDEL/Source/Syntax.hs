@@ -12,6 +12,7 @@
 module SEDEL.Source.Syntax where
 
 import           Data.Maybe (fromMaybe)
+import           Data.List
 import           Data.Text.Prettyprint.Doc (Pretty)
 import qualified Data.Text.Prettyprint.Doc as Pretty
 import           GHC.Generics (Generic)
@@ -140,8 +141,6 @@ mkSRecT l t = In (inj (SRecT l t))
 type TUni = Name PType
 
 data AType' a = Uni TUni
-              | Join a a
-              | Meet a a
       deriving (Generic, Functor, Foldable, Traversable)
 
 type AType = Fix AType'
@@ -149,10 +148,6 @@ type AType = Fix AType'
 -- smart constructors
 mkUni :: (AType' <: f) => TUni -> Fix f
 mkUni u = In (inj (Uni u))
-
-mkJoin, mkMeet :: (AType' <: f) => Fix f -> Fix f -> Fix f
-mkJoin t1 t2 = In (inj (Join t1 t2))
-mkMeet t1 t2 = In (inj (Meet t1 t2))
 
 --------------------------------------------------------------------------------
 
@@ -168,10 +163,83 @@ data Gam = EmptyG   | Gamma TmName PType Gam deriving (Eq, Show)
 data Del = EmptyD   | Delta TyName SType Del deriving (Eq, Show)
 data Dis = EmptyDis | Disj  PType  PType Dis deriving (Eq, Show)
 
-data CtxType = CtxSch Gam Del PType deriving (Eq, Show, Generic)
+-- | Rule representing 1 subtyping constraint of the form T1 <: T2
+type SubRule = (PType, PType)
+-- | Rule representing 1 disjointness constraint of the form P1 * P2
+type DisRule = (PType, PType)
+
+data CtxType = CtxSch Gam [SubRule] [DisRule] PType deriving (Eq, Show, Generic)
 
 -- Kinds k := * | k -> k
 data Kind = Star | KArrow Kind Kind deriving (Eq, Show, Generic)
+
+--------------------------------------------------------------------------------
+-- tables with constraints
+type Table = [Entry]
+
+data Entry = Entry {univar :: TUni,
+                    lower :: [PType],
+                    upper :: [PType],
+                    disj :: [PType]} deriving Eq
+
+instance Show Entry where
+  show entry = (show $ univar entry) ++ "  --  " ++
+               (show $ lower entry) ++ "  --  " ++
+               (show $ upper entry) ++ "  --  " ++
+               (show $ disj entry) ++ "\n"
+
+emptyTable :: Table
+emptyTable = []
+
+getLower :: TUni -> Table -> [PType]
+getLower u [] = []
+getLower u (e:es) | univar e == u = lower e
+getLower u (e:es) = getLower u es
+
+getUpper :: TUni -> Table -> [PType]
+getUpper u [] = []
+getUpper u (e:es) | univar e == u = upper e
+getUpper u (e:es) = getUpper u es
+
+getDisj :: TUni -> Table -> [PType]
+getDisj u [] = []
+getDisj u (e:es) | univar e == u = disj e
+getDisj u (e:es) = getDisj u es
+
+getEntry :: TUni -> Table -> Maybe Entry
+getEntry u table = find (\e -> univar e == u) table
+
+getEntries :: [TUni] -> Table -> [Entry]
+getEntries [] table = []
+getEntries (u:us) table = (e ++ es)
+  where
+    e  = filter (\entry -> univar entry == u) table
+    es = getEntries us table
+
+-- popEntry :: TUni -> Table -> Maybe (Entry, Table)
+-- popEntry _ [] = Nothing
+-- popEntry u (e:es) | univar e == u = Just (e, es)
+-- popEntry u (e:es) = case popEntry u es of
+--   Just (e', es') -> Just (e', e :es')
+--   Nothing -> Nothing
+
+mkEntry :: TUni -> [PType] -> [PType] -> [PType] -> Entry
+mkEntry u low upp dis = Entry u low upp dis
+
+addDisj :: TUni -> PType -> Table -> Table
+addDisj uni ty [] = [mkEntry uni [] [] [ty]]
+addDisj uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (upper e) (ty : disj e)) es
+addDisj uni ty (e:es) = (:) e (addDisj uni ty es)
+
+addLower :: TUni -> PType -> Table -> Table
+addLower uni ty [] = [mkEntry uni [] [] [ty]]
+addLower uni ty (e:es) | uni == univar e = (:) (mkEntry uni (ty : lower e) (upper e) (disj e)) es
+addLower uni ty (e:es) = (:) e (addLower uni ty es)
+
+addUpper :: TUni -> PType -> Table -> Table
+addUpper uni ty [] = [mkEntry uni [] [] [ty]]
+addUpper uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (ty : upper e) (disj e)) es
+addUpper uni ty (e:es) = (:) e (addUpper uni ty es)
 
 --------------------------------------------------------------------------------
 -- eq instances
@@ -188,9 +256,6 @@ instance Eq a => Eq (SType' a) where
 
 instance Eq a => Eq (AType' a) where
   Uni   u1    == Uni   u2    = u1 == u2
-  Join  t1 t2 == Join  t3 t4 = ((t1 == t3) && (t2 == t4)) || ((t1 == t4) && (t2 == t3))
-  Meet  t1 t2 == Meet  t3 t4 = ((t1 == t3) && (t2 == t4)) || ((t1 == t4) && (t2 == t3))
-  _           == _           = False
 
 instance (Eq (f a), Eq (g a)) => Eq ((f :+: g) a) where
   (Inl x1) == (Inl x2) = x1 == x2
@@ -204,19 +269,17 @@ binOp :: Show a => a -> String -> a -> String
 binOp l op r = concat ["(", show l, " ", op, " ", show r, ")"]
 
 instance Show a => Show (SType' a) where
-  show (NumT)        = "Int"
-  show (BoolT)       = "Bool"
+  show (NumT)        = "N"
+  show (BoolT)       = "B"
   show (Arr   t1 t2) = binOp t1 "->" t2
   show (And   t1 t2) = binOp t1 "&" t2
   show (SRecT l1 t1) = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
-  show (TVar  u1   ) = "Var " ++ (show u1)
+  show (TVar  u1   ) = "Var " ++ show u1
   show (TopT)        = "⊤"
   show (BotT)        = "⊥"
 
 instance Show a => Show (AType' a) where
-  show (Uni   u1   ) = "Uni " ++ (show u1)
-  show (Join  t1 t2) = binOp t1 "⊔" t2
-  show (Meet  t1 t2) = binOp t1 "⊓" t2
+  show (Uni   u1   ) = show u1
 
 instance (Show (f a), Show (g a)) => Show ((f :+: g) a) where
   show (Inl x) = show x

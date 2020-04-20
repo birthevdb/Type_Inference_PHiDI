@@ -9,8 +9,6 @@ import Unbound.Generics.LocallyNameless
 import Unbound.Generics.LocallyNameless.Name
 import qualified Data.Map.Strict as M
 
-import Debug.Trace as DT
-
 -- | Change the sort of a name.
 translate :: Name a -> Name b
 translate (Fn x y) = Fn x y
@@ -75,7 +73,7 @@ translType (S.DForall b) = do
 translType (S.SType t) = translSType t
 
 translCtxType :: Fresh m => S.CtxType -> m I.FType
-translCtxType (CtxSch gam dis ty) = translPType ty
+translCtxType (CtxSch _ _ _ ty) = translPType ty
 
 translSType :: Fresh m => S.SType -> m I.FType
 translSType = cata sAlg
@@ -92,8 +90,6 @@ sAlg (S.SRecT l t) = I.SRecT l <$> t
 
 aAlg :: Fresh m => S.AType' (m I.FType) -> m I.FType
 aAlg (S.Uni u) = return $ I.TVar (translate u)
-aAlg (S.Join t1 t2) = DT.trace "translate join type" $ I.And <$> t1 <*> t2
-aAlg (S.Meet t1 t2) = DT.trace "translate meet type" $ I.And <$> t1 <*> t2
 
 translPType :: Fresh m => S.PType -> m I.FType
 translPType = cata (sAlg `composeAlg` aAlg)

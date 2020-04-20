@@ -63,3 +63,11 @@ topLike (In (And t1 t2)) = topLike t1 && topLike t2
 topLike (In (Arr _   t)) = topLike t
 topLike (In (SRecT _ t)) = topLike t
 topLike _                = False
+
+
+topLikeP :: PType -> Bool
+topLikeP (In (Inl TopT))        = True
+topLikeP (In (Inl (And t1 t2))) = topLikeP t1 && topLikeP t2
+topLikeP (In (Inl (Arr _   t))) = topLikeP t
+topLikeP (In (Inl (SRecT _ t))) = topLikeP t
+topLikeP _                      = False

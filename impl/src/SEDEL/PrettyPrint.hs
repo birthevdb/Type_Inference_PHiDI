@@ -119,14 +119,6 @@ instance FPretty a => FPretty (S.SType' a) where
 
 instance FPretty a => FPretty (S.AType' a) where
   ppr (S.Uni u) = return (Pretty.pretty u)
-  ppr (S.Join t1 t2) = do
-    t1' <- ppr t1
-    t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "⊔" <+> t2')
-  ppr (S.Meet t1 t2) = do
-    t1' <- ppr t1
-    t2' <- ppr t2
-    return $ Pretty.parens (t1' <+> "⊓" <+> t2')
 
 instance (FPretty (f a), FPretty (g a)) => FPretty ((f S.:+: g) a) where
   ppr (S.Inl x) = ppr x
