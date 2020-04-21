@@ -222,7 +222,7 @@ infer (Letrec b) = do
   (gam1, t1, f1, cons1, dis1) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
   -- θ = solve(τ1 <: τ')
   table                       <- constructTable cons1 dis1
-  case bounds [(EmptyQ, (t1, t'))] table of
+  case bounds [(EmptyQ, (t1, t'))] table [] of
     Nothing     -> errThrow [DS "Letrec not possible"]
     Just table' -> do
       -- θ = solve(table')
@@ -313,16 +313,14 @@ addDisjointness ((p1, p2):dis) table = do
 --------------------------------------------------------------------------------
 
 addSubtyping :: [SubRule] -> Table -> STcMonad Table
-addSubtyping [] table = return table
-addSubtyping (c:cs) table = DT.trace (show c) $ case bounds (initC c) table of
-  Just table' -> DT.trace ("just") $ addSubtyping cs table'
-  Nothing     -> DT.trace (show c ++ "\n" ++ show table) $ errThrow [DS $ "Destructing subtyping constraints is impossible"]
+addSubtyping cs table = case bounds (initC' cs) table [] of
+  Just table' -> return table'
+  Nothing     -> errThrow [DS $ "Destructing subtyping constraints is impossible"]
 
 --------------------------------
 -- EXPANDING CONSTRAINT TABLE --
 --------------------------------
 
--- TODO occurs check
 expand :: Table -> STcMonad (Subst')
 expand []         = return []
 -- first solve variable cases
@@ -627,54 +625,55 @@ disjoint _ _ _ = errThrow [DS $ "Destructing disjointness constraints is impossi
 ---------------------------
 
 -- Initialization function
-initC :: SubRule -> [(Queue, SubRule)]
-initC (a1, a2) = [(EmptyQ, (a1, a2))]
+initC' :: [SubRule] -> [(Queue, SubRule)]
+initC' cons = [(EmptyQ, t) | t <- cons]
 
 -- deconstruct a subtyping rule
-bounds :: [(Queue,SubRule)] -> Table -> Maybe Table
-bounds [] table = Just table
+bounds :: [(Queue,SubRule)] -> Table -> [(Queue,SubRule)] -> Maybe Table
+bounds [] table _ = Just table
 -- add upper and/or lower bounds
-bounds ((EmptyQ, s)       :lqc) table | containsUni s = bounds (lqc ++ cons) table'
+bounds (c@(EmptyQ, s):lqc) table seen | containsUni s =
+  bounds (lqc ++ (cons List.\\ seen)) table' (c:seen)
   where (table', cons) = addBounds s table
 -- same types
-bounds ((EmptyQ, (t1, t2)):lqc) table | t1 == t2 = bounds lqc table
+bounds ((EmptyQ, (t1, t2)):lqc) table seen | t1 == t2 = bounds lqc table seen
 -- failure
-bounds ((EmptyQ, (In (Inl NumT),     In (Inl BoolT)))   :lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl BoolT),    In (Inl NumT)))    :lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl BoolT),    In (Inl (TVar _)))):lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl NumT),     In (Inl (TVar _)))):lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl NumT)))    :lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl BoolT)))   :lqc) _ = Nothing
-bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl (TVar _)))):lqc) _ = Nothing
+bounds ((EmptyQ, (In (Inl NumT),     In (Inl BoolT)))   :lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl BoolT),    In (Inl NumT)))    :lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl BoolT),    In (Inl (TVar _)))):lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl NumT),     In (Inl (TVar _)))):lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl NumT)))    :lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl BoolT)))   :lqc) _ _ = Nothing
+bounds ((EmptyQ, (In (Inl (TVar _)), In (Inl (TVar _)))):lqc) _ _ = Nothing
 -- bot and top
-bounds ((_,(In (Inl BotT), _)):lqc) table = bounds lqc table
-bounds ((_,(_, In (Inl TopT))):lqc) table = bounds lqc table
+bounds ((_,(In (Inl BotT), _)):lqc) table seen = bounds lqc table seen
+bounds ((_,(_, In (Inl TopT))):lqc) table seen = bounds lqc table seen
 -- BCD
-bounds ((q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) table =
-  bounds ((q,(mkArr (mkAnd a1 a3) (mkAnd a2 a4), mkArr a5 a6)):lqc) table
-bounds ((q,(In (Inl (And (In (Inl (SRecT l1 a1))) (In (Inl (SRecT l2 a2))))), In (Inl (SRecT l3 a3)))):lqc) table | l1 == l2 =
-  bounds ((q,(mkSRecT l1 (mkAnd a1 a2), mkSRecT l3 a3)):lqc) table
+bounds (c@(q,(In (Inl (And (In (Inl (Arr a1 a2))) (In (Inl (Arr a3 a4))))), In (Inl (Arr a5 a6)))):lqc) table seen =
+  bounds ((q,(mkArr (mkAnd a1 a3) (mkAnd a2 a4), mkArr a5 a6)):lqc) table (c:seen)
+bounds (c@(q,(In (Inl (And (In (Inl (SRecT l1 a1))) (In (Inl (SRecT l2 a2))))), In (Inl (SRecT l3 a3)))):lqc) table seen | l1 == l2 =
+  bounds ((q,(mkSRecT l1 (mkAnd a1 a2), mkSRecT l3 a3)):lqc) table (c:seen)
 -- first destruct right type
 -- push to queue
-bounds ((q,(a1, In (Inl (Arr a2 a3)))) :lqc) table = bounds ((pushType  a2 q,(a1,a3)):lqc) table
-bounds ((q,(a1, In (Inl (SRecT l a2)))):lqc) table = bounds ((pushLabel l  q,(a1,a2)):lqc) table
+bounds (c@(q,(a1, In (Inl (Arr a2 a3)))) :lqc) table seen = bounds ((pushType  a2 q,(a1,a3)):lqc) table (c:seen)
+bounds (c@(q,(a1, In (Inl (SRecT l a2)))):lqc) table seen = bounds ((pushLabel l  q,(a1,a2)):lqc) table (c:seen)
 -- intersection types
-bounds ((q,(a,  In (Inl (And a1 a2)))):lqc) table = bounds ((q,(a,a1)):(q,(a,a2)):lqc) table
+bounds (c@(q,(a,  In (Inl (And a1 a2)))) :lqc) table seen = bounds ((q,(a,a1)):(q,(a,a2)):lqc) table (c:seen)
 -- then destruct left type
 -- take from queue
-bounds ((QA p q,(In (Inl (Arr a1 a2)),   a)) :lqc) table = case bounds [(EmptyQ,(p, a1))] table of
-    Just tbl -> bounds ((q,(a2, a))    :lqc) tbl
-    Nothing  -> bounds ((q,(mkTopT, a)):lqc) table
-bounds ((QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) table | l == l1 = bounds ((q,(a1, a2)) :lqc) table
+bounds (c@(QA p q,(In (Inl (Arr a1 a2)),   a)) :lqc) table seen = case bounds [(EmptyQ,(p, a1))] table (c:seen) of
+    Just tbl -> bounds ((q,(a2, a))    :lqc) tbl   ((EmptyQ,(p, a1)):c:seen)
+    Nothing  -> bounds ((q,(mkTopT, a)):lqc) table (c:seen)
+bounds (c@(QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) table seen | l == l1 = bounds ((q,(a1, a2)) :lqc) table (c:seen)
 -- intersection types
-bounds ((q,(In (Inl (And a1 a2)), a3))  :lqc) table = case bounds [(q, (a1, a3))] table of
-  Just tbl1 -> case bounds [(q, (a2, a3))] tbl1 of
+bounds (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case bounds [(q, (a1, a3))] table (c:seen) of
+  Just tbl1 -> case bounds [(q, (a2, a3))] tbl1 (c:seen) of
     Just tbl2 -> Just tbl2
     Nothing   -> Just tbl1
-  Nothing -> case bounds [(q, (a2, a3))] table of
+  Nothing -> case bounds [(q, (a2, a3))] table (c:seen) of
     Just tbl2 -> Just tbl2
     Nothing   -> Nothing
-bounds x _ = DT.trace ("other:   " ++ show x) $ Nothing
+bounds x _ _ = DT.trace ("other:   " ++ show x) $ Nothing
 
 --------------------------------------------------------------------------------
 
@@ -939,10 +938,6 @@ freevars _                = Set.empty
 -- freevarsE (I.LamA b)            = unbind b >>= \((_,Embed _),fe) -> freevarsE fe
 -- freevarsE I.Bot                 = return $ Set.empty
 -- freevarsE (I.DRec' tb)          = return $ Set.empty
-
-------------------
--- OCCURS CHECK --
-------------------
 
 ----------------------
 -- CONVERSION FUNCTIONS --
