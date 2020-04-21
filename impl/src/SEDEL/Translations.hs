@@ -73,7 +73,7 @@ translType (S.DForall b) = do
 translType (S.SType t) = translSType t
 
 translCtxType :: Fresh m => S.CtxType -> m I.FType
-translCtxType (CtxSch _ _ _ ty) = translPType ty
+translCtxType (CtxSch _ ty) = translPType ty
 
 translSType :: Fresh m => S.SType -> m I.FType
 translSType = cata sAlg

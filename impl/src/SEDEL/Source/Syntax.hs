@@ -103,7 +103,6 @@ instance {-# OVERLAPPING #-} (Functor f, Functor g, Functor h, f <: g) => f <: (
     prj (Inr x) = prj x
 
 --------------------------------------------------------------------------------
-
 type Label = String
 type TyName = Name SType
 
@@ -137,9 +136,9 @@ mkSRecT :: (SType' <: f) => Label -> Fix f -> Fix f
 mkSRecT l t = In (inj (SRecT l t))
 
 --------------------------------------------------------------------------------
-
 type TUni = Name PType
 
+-- unification variables
 data AType' a = Uni TUni
       deriving (Generic, Functor, Foldable, Traversable)
 
@@ -155,26 +154,26 @@ type PType' = SType' :+: AType'
 type PType = Fix PType'
 
 --------------------------------------------------------------------------------
-
+-- | Type schemes
 data Scheme = SType SType | DForall (Bind (TyName, Embed SType) Scheme) deriving (Show,Generic)
 
+-- | Term context gamma and type context delta
+data Gam = EmptyG | Gamma TmName PType Gam deriving (Eq, Show)
+data Del = EmptyD | Delta TyName SType Del deriving (Eq, Show)
 
-data Gam = EmptyG   | Gamma TmName PType Gam deriving (Eq, Show)
-data Del = EmptyD   | Delta TyName SType Del deriving (Eq, Show)
-data Dis = EmptyDis | Disj  PType  PType Dis deriving (Eq, Show)
-
--- | Rule representing 1 subtyping constraint of the form T1 <: T2
+-- | Rule representing 1 subtyping constraint of the form P1 <: P2
 type SubRule = (PType, PType)
 -- | Rule representing 1 disjointness constraint of the form P1 * P2
 type DisRule = (PType, PType)
 
-data CtxType = CtxSch Gam [SubRule] [DisRule] PType deriving (Eq, Show, Generic)
+data CtxType = CtxSch Del PType deriving (Eq, Show, Generic)
 
--- Kinds k := * | k -> k
+-- | Kinds k := * | k -> k
 data Kind = Star | KArrow Kind Kind deriving (Eq, Show, Generic)
 
 --------------------------------------------------------------------------------
--- tables with constraints
+-- | Table with unification variables, their upper and lower bounds and their
+-- | disjointness requirements.
 type Table = [Entry]
 
 data Entry = Entry {univar :: TUni,
@@ -182,33 +181,33 @@ data Entry = Entry {univar :: TUni,
                     upper :: [PType],
                     disj :: [PType]} deriving Eq
 
-instance Show Entry where
-  show entry = (show $ univar entry) ++ "  --  " ++
-               (show $ lower entry) ++ "  --  " ++
-               (show $ upper entry) ++ "  --  " ++
-               (show $ disj entry) ++ "\n"
-
+-- construct an empty table
 emptyTable :: Table
 emptyTable = []
 
+-- get the lower bounds for a given unification variable
 getLower :: TUni -> Table -> [PType]
 getLower u [] = []
 getLower u (e:es) | univar e == u = lower e
 getLower u (e:es) = getLower u es
 
+-- get the upper bounds for a given unification variable
 getUpper :: TUni -> Table -> [PType]
 getUpper u [] = []
 getUpper u (e:es) | univar e == u = upper e
 getUpper u (e:es) = getUpper u es
 
+-- get the disjointness requirements for a given unification variable
 getDisj :: TUni -> Table -> [PType]
 getDisj u [] = []
 getDisj u (e:es) | univar e == u = disj e
 getDisj u (e:es) = getDisj u es
 
+-- get the entry for a given unification variable
 getEntry :: TUni -> Table -> Maybe Entry
 getEntry u table = find (\e -> univar e == u) table
 
+-- get the entries for a given list of unification variables
 getEntries :: [TUni] -> Table -> [Entry]
 getEntries [] table = []
 getEntries (u:us) table = (e ++ es)
@@ -216,30 +215,27 @@ getEntries (u:us) table = (e ++ es)
     e  = filter (\entry -> univar entry == u) table
     es = getEntries us table
 
--- popEntry :: TUni -> Table -> Maybe (Entry, Table)
--- popEntry _ [] = Nothing
--- popEntry u (e:es) | univar e == u = Just (e, es)
--- popEntry u (e:es) = case popEntry u es of
---   Just (e', es') -> Just (e', e :es')
---   Nothing -> Nothing
-
+-- make a new entry
 mkEntry :: TUni -> [PType] -> [PType] -> [PType] -> Entry
 mkEntry u low upp dis = Entry u low upp dis
 
-addDisj :: TUni -> PType -> Table -> Table
-addDisj uni ty [] = [mkEntry uni [] [] [ty]]
-addDisj uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (upper e) (ty : disj e)) es
-addDisj uni ty (e:es) = (:) e (addDisj uni ty es)
-
+-- add a lower bound for a given unification variable
 addLower :: TUni -> PType -> Table -> Table
 addLower uni ty [] = [mkEntry uni [] [] [ty]]
 addLower uni ty (e:es) | uni == univar e = (:) (mkEntry uni (ty : lower e) (upper e) (disj e)) es
 addLower uni ty (e:es) = (:) e (addLower uni ty es)
 
+-- add an upper bound for a given unification variable
 addUpper :: TUni -> PType -> Table -> Table
 addUpper uni ty [] = [mkEntry uni [] [] [ty]]
 addUpper uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (ty : upper e) (disj e)) es
 addUpper uni ty (e:es) = (:) e (addUpper uni ty es)
+
+-- add a disjointness requirement for a given unification variable
+addDisj :: TUni -> PType -> Table -> Table
+addDisj uni ty [] = [mkEntry uni [] [] [ty]]
+addDisj uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (upper e) (ty : disj e)) es
+addDisj uni ty (e:es) = (:) e (addDisj uni ty es)
 
 --------------------------------------------------------------------------------
 -- eq instances
@@ -284,6 +280,13 @@ instance Show a => Show (AType' a) where
 instance (Show (f a), Show (g a)) => Show ((f :+: g) a) where
   show (Inl x) = show x
   show (Inr y) = show y
+
+
+instance Show Entry where
+  show entry = (show $ univar entry) ++ "  --  " ++
+               (show $ lower entry) ++ "  --  " ++
+               (show $ upper entry) ++ "  --  " ++
+               (show $ disj entry) ++ "\n"
 
 --------------------------------------------------------------------------------
 
