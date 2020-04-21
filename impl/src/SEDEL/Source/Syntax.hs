@@ -221,13 +221,13 @@ mkEntry u low upp dis = Entry u low upp dis
 
 -- add a lower bound for a given unification variable
 addLower :: TUni -> PType -> Table -> Table
-addLower uni ty [] = [mkEntry uni [] [] [ty]]
+addLower uni ty [] = [mkEntry uni [ty] [] []]
 addLower uni ty (e:es) | uni == univar e = (:) (mkEntry uni (ty : lower e) (upper e) (disj e)) es
 addLower uni ty (e:es) = (:) e (addLower uni ty es)
 
 -- add an upper bound for a given unification variable
 addUpper :: TUni -> PType -> Table -> Table
-addUpper uni ty [] = [mkEntry uni [] [] [ty]]
+addUpper uni ty [] = [mkEntry uni [] [ty] []]
 addUpper uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (ty : upper e) (disj e)) es
 addUpper uni ty (e:es) = (:) e (addUpper uni ty es)
 

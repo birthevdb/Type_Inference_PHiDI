@@ -79,9 +79,9 @@ topLevelInfer expr = do
   table        <- DT.trace ("construct table") $ constructTable cons diss
   subs'        <- DT.trace ("TABLE:\n" ++ show table) $ expand table
   let ty'       = convertPType $ multipleSubs subs' PosT ty
-  f            <- DT.trace ("fterm:    " ++ show fTerm) $ substFExpr' subs' fTerm
-  del'         <- reorder $ constructDel subs' table (toList $ freevars ty')
-  finalTerm    <- DT.trace ("fterm:    " ++ show f) $ constructFinalTerm del' f
+  f            <- DT.trace ("ty:    " ++ show ty') $ substFExpr' subs' fTerm
+  del'         <- DT.trace ("fterm:    " ++ show f) $ reorder $ constructDel subs' table (toList $ freevars ty')
+  finalTerm    <- DT.trace ("del:    " ++ show del') $ constructFinalTerm del' f
   let finalType = constructFinalType del' ty'
   return (finalType, finalTerm)
 
@@ -109,9 +109,9 @@ infer (BoolV b) = return (EmptyG, mkBoolT, I.BoolV b, [], [])
 -}
 infer (VarPoly x) = do
   CtxSch del ty  <- lookupVarTy x
-  (dis', ty', vars) <- findAndSubstVars del ty
+  (dis', ty', vars) <- DT.trace ("varpoly:  " ++ show ty) $ findAndSubstVars del ty
   let fTerm = applyVars (I.Var (translate x)) vars
-  return (EmptyG, ty', fTerm, [], dis')
+  DT.trace ("fterm poly:  " ++ show fTerm) $ return (EmptyG, ty', fTerm, [], dis')
 
 {-
   ----------------------------------
@@ -153,13 +153,13 @@ infer (Lam b) = do
 infer (App e1 e2) = do
   (gam1, t1, f1, cons1, dis1) <- infer e1
   (gam2, t2, f2, cons2, dis2) <- infer e2
-  uFresh  <- getFreshUni
+  uFresh  <- DT.trace ("APP: " ++ show t1 ++ "\n" ++ show t2) $getFreshUni
   let gam  = joinGam gam1 gam2
   tFi     <- translPType (mkArr t2 (mkUni uFresh))
   let f    = I.App (I.Anno f1 tFi) f2
   let cons = (t1, mkArr t2 (mkUni uFresh)) : (cons1 ++ cons2)
   let dis  = (mkUni uFresh, mkTopT) : (dis1 ++ dis2)
-  return (gam, mkUni uFresh, f, cons, dis)
+  DT.trace ("CONS: " ++ show cons) $ return (gam, mkUni uFresh, f, cons, dis)
 
 {-
   Π ⊢ E1 : τ1 [Γ1; S1; ∆1] ~> e1             Π ⊢ E2 : τ2 [Γ2; S2; ∆2] ~> e2
@@ -177,7 +177,7 @@ infer (Merge e1 e2) = do
   subs2   <- expand table2
   let subs = subs1 ++ subs2
   let gam  = applySubstGam subs (joinGam gam1 gam2)
-  let t    = multipleSubs subs PosT (mkAnd t1 t2)
+  let t    = replaceVars $ multipleSubs subs PosT (mkAnd t1 t2)
   f       <- substFExpr' subs (I.Merge f1 f2)
   let cons = applySubstCons subs (cons1 ++ cons2)
   let dis  = applySubstDis subs ((t1, t2) : (dis1 ++ dis2))
@@ -220,29 +220,30 @@ infer (Letrec b) = do
   (CtxSch del' t')            <- convertScheme a
   -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, t1, f1, cons1, dis1) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
+  -- (S_loc, S_glob) = splitCons Γ1 S1
+  let (sloc, sglob) = splitCons gam1 cons1
+  -- (∆_loc, ∆_glob) = splitDis Γ1 ∆1
+  let (dloc, dglob) = splitDis gam1 dis1
   -- θ = solve(τ1 <: τ')
-  table                       <- constructTable cons1 dis1
-  case bounds [(EmptyQ, (t1, t'))] table [] of
+  table <- DT.trace ("cons:   " ++ show sloc) $ constructTable cons1 dis1
+  case bounds (initC' ((t1, t'):sloc)) table [] of
     Nothing     -> errThrow [DS "Letrec not possible"]
     Just table' -> do
       -- θ = solve(table')
       subs             <- expand table'
-      -- (S_loc, S_glob) = splitCons Γ S
-      let (sloc, sglob) = splitCons gam1 cons1
-      -- (∆_loc, ∆_glob) = splitDis Γ ∆
-      let (dloc, dglob) = splitDis gam1 dis1
       -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
       (gam2, t2, f2, cons2, dis2) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
       -- check  ∆' |= θ(∆_loc)
-      -- entails del'' del1 -- TODO
+      tbl <- addDisjointness (applySubstDis subs dloc) emptyTable
+      DT.trace ("ENTAILMENT...\n" ++ show del' ++ "\n" ++ show (constructDel subs tbl (map (translate . univar) tbl))) $ entails del' (constructDel subs tbl (map (translate . univar) tbl))
       -- Γ = Γ1 ∪ Γ2
-      let gam  = joinGam gam1 gam2
+      let gam  = applySubstGam subs (joinGam gam1 gam2)
       -- ∆ = ∆_glob ∪ ∆2
-      let dis  = dglob ++ dis2
+      let dis  = applySubstDis subs (dglob ++ dis2)
       -- S = S_glob ∪ S2
-      let cons = sglob ++ dis2
+      let cons = applySubstCons subs (sglob ++ cons2)
       -- θ(e1)
-      aFi     <- translType a
+      aFi     <- DT.trace ("gam  " ++ show gam) $ translType a
       f1'     <- substFExpr' subs f1
       let f    = I.Letrec (bind (translate x, embed (Just aFi)) (f1', f2))
       -- result
@@ -297,9 +298,9 @@ infer a = errThrow [DS "Infer not implemented:", DD a]
 -----------------------------------
 
 constructTable :: [SubRule] -> [DisRule] -> STcMonad Table
-constructTable subs dis = do
+constructTable cons dis = do
   table1 <- addDisjointness dis  emptyTable
-  table2 <- addSubtyping    subs table1
+  table2 <- addSubtyping    cons table1
   return $ table2
 
 --------------------------------------------------------------------------------
@@ -313,7 +314,7 @@ addDisjointness ((p1, p2):dis) table = do
 --------------------------------------------------------------------------------
 
 addSubtyping :: [SubRule] -> Table -> STcMonad Table
-addSubtyping cs table = case bounds (initC' cs) table [] of
+addSubtyping cs table = DT.trace ("addsub :  " ++ show cs) $ case bounds (initC' cs) table [] of
   Just table' -> return table'
   Nothing     -> errThrow [DS $ "Destructing subtyping constraints is impossible"]
 
@@ -325,10 +326,10 @@ expand :: Table -> STcMonad (Subst')
 expand []         = return []
 -- first solve variable cases
 expand (e:table) | (not $ null unis) && (not $ null entries) = DT.trace ("with vars") $ do
-  if (univar e) `elem` unis then errThrow [DS $ "2. Occurs check: cannot construct infinite type."] else do
+  if (univar e) `elem` unis then errThrow [DS $ "Occurs check: cannot construct infinite type."] else do
     sub       <- DT.trace ("unis: " ++ show unis) $ expand entries
     let table' = applySubstTable sub ((List.\\) (e:table) entries)
-    rest      <- expand table'
+    rest      <- DT.trace ("sub: " ++ show sub) $ expand table'
     return (sub ++ rest)
   where
     unis    = hasUnis (lower e ++ upper e ++ disj e)
@@ -474,22 +475,22 @@ applySubstGam :: Subst' -> Gam -> Gam
 applySubstGam _ EmptyG = EmptyG
 applySubstGam subs (Gamma x p gam) = Gamma x p' gam'
   where
-    p'   = multipleSubs subs NegT p
+    p'   = replaceVars $ multipleSubs subs NegT p
     gam' = applySubstGam subs gam
 
 applySubstCons :: Subst' -> [SubRule] -> [SubRule]
 applySubstCons _ [] = []
 applySubstCons subs ((p1, p2): cons) = (:) (p1', p2') (applySubstCons subs cons)
   where
-    p1' = multipleSubs subs PosT p1
-    p2' = multipleSubs subs NegT p2
+    p1' = replaceVars $ multipleSubs subs PosT p1
+    p2' = replaceVars $ multipleSubs subs NegT p2
 
 applySubstDis :: Subst' -> [DisRule] -> [DisRule]
 applySubstDis _ [] = []
 applySubstDis subs ((p1, p2): dis) = (:) (p1', p2') (applySubstDis subs dis)
   where
-    p1' = multipleSubs subs PosT p1
-    p2' = multipleSubs subs PosT p2
+    p1' = replaceVars $ multipleSubs subs PosT p1
+    p2' = replaceVars $ multipleSubs subs PosT p2
 
 substInTable :: (Polarity, TUni, SType) -> Table -> Table
 substInTable _ [] = []
@@ -633,7 +634,9 @@ bounds :: [(Queue,SubRule)] -> Table -> [(Queue,SubRule)] -> Maybe Table
 bounds [] table _ = Just table
 -- add upper and/or lower bounds
 bounds (c@(EmptyQ, s):lqc) table seen | containsUni s =
-  bounds (lqc ++ (cons List.\\ seen)) table' (c:seen)
+  DT.trace ("sub: " ++ show s ++ "\nseen: " ++ show seen ++ "\nnewcons: " ++ show cons
+    ++ "\ntable: " ++ show table ++ "\nnewtable: " ++ show table') $
+    bounds (((List.\\) cons seen) ++ lqc) table' (c:seen)
   where (table', cons) = addBounds s table
 -- same types
 bounds ((EmptyQ, (t1, t2)):lqc) table seen | t1 == t2 = bounds lqc table seen
@@ -663,12 +666,13 @@ bounds (c@(q,(a,  In (Inl (And a1 a2)))) :lqc) table seen = bounds ((q,(a,a1)):(
 -- take from queue
 bounds (c@(QA p q,(In (Inl (Arr a1 a2)),   a)) :lqc) table seen = case bounds [(EmptyQ,(p, a1))] table (c:seen) of
     Just tbl -> bounds ((q,(a2, a))    :lqc) tbl   ((EmptyQ,(p, a1)):c:seen)
+    -- Nothing  -> bounds lqc table (c:seen)
     Nothing  -> bounds ((q,(mkTopT, a)):lqc) table (c:seen)
 bounds (c@(QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) table seen | l == l1 = bounds ((q,(a1, a2)) :lqc) table (c:seen)
 -- intersection types
-bounds (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case bounds [(q, (a1, a3))] table (c:seen) of
+bounds (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = DT.trace "AND" $ case bounds [(q, (a1, a3))] table (c:seen) of
   Just tbl1 -> case bounds [(q, (a2, a3))] tbl1 (c:seen) of
-    Just tbl2 -> Just tbl2
+    Just tbl2 -> Just tbl2 -- TODO merge van twee tables
     Nothing   -> Just tbl1
   Nothing -> case bounds [(q, (a2, a3))] table (c:seen) of
     Just tbl2 -> Just tbl2
@@ -679,12 +683,12 @@ bounds x _ _ = DT.trace ("other:   " ++ show x) $ Nothing
 
 -- add bounds to the table
 addBounds :: SubRule -> Table -> (Table, [(Queue,SubRule)])
-addBounds (In (Inr (Uni u1)), In (Inr (Uni u2))) table = DT.trace (show cons) $ (table', cons)
+addBounds (In (Inr (Uni u1)), In (Inr (Uni u2))) table = (table', cons)
   where table' = addUpper u1 (mkUni u2) table
         cons   = [(EmptyQ, (t1, mkUni u2)) | t1 <- getLower u1 table]
-addBounds (In (Inr (Uni u)), t) table = DT.trace (show cons) $ (addUpper u t table, cons)
+addBounds (In (Inr (Uni u)), t) table = (addUpper u t table, cons)
   where cons = [(EmptyQ, (t', t)) | t' <- getLower u table]
-addBounds (t, In (Inr (Uni u))) table = DT.trace (show cons) $ (addLower u t table, cons)
+addBounds (t, In (Inr (Uni u))) table = (addLower u t table, cons)
   where cons = [(EmptyQ, (t, t')) | t' <- getUpper u table]
 addBounds _ table = (table, [])
 
@@ -717,24 +721,23 @@ splitCons gam ((p1, p2):dis) = if isGlob then (loc, ((p1, p2):glob))
 --------------------
 -- ENTAILMENT LET --
 --------------------
--- TODO
--- entails :: Del -> Del -> STcMonad ()
--- entails del1 EmptyD = return ()
--- entails del1 (Delta name ty del2) = do
---   ent del1 (translate name) ty
---   entails del1 del2
---   where
---     ent :: Del -> TyName -> SType -> STcMonad ()
---     ent EmptyD _ _ = errThrow [DS "No entailment in letrec."]
---     ent (Delta u1 (In (TVar a)) d) u2 (In (TVar b)) = if u1 == b && a == u2
---                                                       then return ()
---                                                       else ent d u2 (mkTVar b)
---     ent (Delta u1 a d) u2 b | u1 == u2 =
---       unification [(EmptyQ, (convertSType a, convertSType b))] >>= \th -> case th of
---         Nothing -> if (topLike b) then return () else ent d u2 b
---         Just x  -> return ()
---     ent (Delta u1 a d) u2 b = ent d u2 b
 
+entails :: Del -> Del -> STcMonad ()
+entails del1 EmptyD = return ()
+entails del1 (Delta name ty del2) = do
+  ent del1 (translate name) ty
+  entails del1 del2
+  where
+    ent :: Del -> TyName -> SType -> STcMonad ()
+    ent EmptyD _ _ = errThrow [DS "No entailment in letrec."]
+    ent (Delta u1 (In (TVar a)) d) u2 (In (TVar b)) = if u1 == b && a == u2
+                                                      then return ()
+                                                      else ent d u2 (mkTVar b)
+    ent (Delta u1 a d) u2 b | u1 == u2 =
+      case bounds [(EmptyQ, (convertSType a, convertSType b))] emptyTable [] of
+        Nothing -> if (topLike b) then return () else ent d u2 b
+        Just t  -> return ()
+    ent (Delta u1 a d) u2 b = ent d u2 b
 
 -------------------------------------
 -- CHECK FOR UNIFICATION VARIABLES --
@@ -870,7 +873,7 @@ constructDel sub table [] = EmptyD
 constructDel sub table (f:fs) = Delta f st (constructDel sub table fs)
   where
     d  = getDisj (translate f) (applySubstTable sub table)
-    st = foldr lub mkBotT (map convertPType d)
+    st = foldr glb mkTopT (map convertPType d)
 
 constructFinalType :: Del -> SType -> Scheme
 constructFinalType  EmptyD          t2 = SType t2
@@ -1024,3 +1027,22 @@ findUnis = cata alg
     alg :: PType' [TUni] -> [TUni]
     alg (Inr (Uni uni)) = DT.trace (show uni) $ [uni]
     alg (Inl ty) = concat ty
+
+--------------------------------------------------------------------------------
+
+replaceVars :: PType -> PType
+replaceVars (In (Inr (Uni uni2))) = mkUni uni2
+replaceVars (In (Inl (TVar a))) = mkUni $ translate a
+replaceVars (In (Inl NumT)) = mkNumT
+replaceVars (In (Inl BoolT)) = mkBoolT
+replaceVars (In (Inl BotT)) = mkBotT
+replaceVars (In (Inl TopT)) = mkTopT
+replaceVars (In (Inl (Arr t1 t2))) = mkArr (replaceVars t1) (replaceVars t2)
+replaceVars (In (Inl (And t1 t2))) = mkAnd (replaceVars t1) (replaceVars t2)
+replaceVars (In (Inl (SRecT l t))) = mkSRecT l (replaceVars t)
+
+-- replaceVars = cata alg
+--   where
+--     alg :: PType' PType -> PType
+--     alg (Inl (TVar name)) = mkUni (translate name)
+--     alg pt = In $ pt
