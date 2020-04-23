@@ -177,9 +177,9 @@ data Kind = Star | KArrow Kind Kind deriving (Eq, Show, Generic)
 type Table = [Entry]
 
 data Entry = Entry {univar :: TUni,
-                    lower :: [PType],
-                    upper :: [PType],
-                    disj :: [PType]} deriving Eq
+                    lower  :: [PType],
+                    upper  :: [PType],
+                    disj   :: [PType]} deriving Eq
 
 -- construct an empty table
 emptyTable :: Table
@@ -187,19 +187,19 @@ emptyTable = []
 
 -- get the lower bounds for a given unification variable
 getLower :: TUni -> Table -> [PType]
-getLower u [] = []
+getLower u []     = []
 getLower u (e:es) | univar e == u = lower e
 getLower u (e:es) = getLower u es
 
 -- get the upper bounds for a given unification variable
 getUpper :: TUni -> Table -> [PType]
-getUpper u [] = []
+getUpper u []     = []
 getUpper u (e:es) | univar e == u = upper e
 getUpper u (e:es) = getUpper u es
 
 -- get the disjointness requirements for a given unification variable
 getDisj :: TUni -> Table -> [PType]
-getDisj u [] = []
+getDisj u []     = []
 getDisj u (e:es) | univar e == u = disj e
 getDisj u (e:es) = getDisj u es
 
@@ -209,7 +209,7 @@ getEntry u table = find (\e -> univar e == u) table
 
 -- get the entries for a given list of unification variables
 getEntries :: [TUni] -> Table -> [Entry]
-getEntries [] table = []
+getEntries []     table = []
 getEntries (u:us) table = (e ++ es)
   where
     e  = filter (\entry -> univar entry == u) table
@@ -221,21 +221,37 @@ mkEntry u low upp dis = Entry u low upp dis
 
 -- add a lower bound for a given unification variable
 addLower :: TUni -> PType -> Table -> Table
-addLower uni ty [] = [mkEntry uni [ty] [] []]
+addLower uni ty []     = [mkEntry uni [ty] [] []]
 addLower uni ty (e:es) | uni == univar e = (:) (mkEntry uni (ty : lower e) (upper e) (disj e)) es
 addLower uni ty (e:es) = (:) e (addLower uni ty es)
 
 -- add an upper bound for a given unification variable
 addUpper :: TUni -> PType -> Table -> Table
-addUpper uni ty [] = [mkEntry uni [] [ty] []]
+addUpper uni ty []     = [mkEntry uni [] [ty] []]
 addUpper uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (ty : upper e) (disj e)) es
 addUpper uni ty (e:es) = (:) e (addUpper uni ty es)
 
 -- add a disjointness requirement for a given unification variable
 addDisj :: TUni -> PType -> Table -> Table
-addDisj uni ty [] = [mkEntry uni [] [] [ty]]
+addDisj uni ty []     = [mkEntry uni [] [] [ty]]
 addDisj uni ty (e:es) | uni == univar e = (:) (mkEntry uni (lower e) (upper e) (ty : disj e)) es
 addDisj uni ty (e:es) = (:) e (addDisj uni ty es)
+
+addEntry :: Entry -> Table -> Table
+addEntry e table = table3
+  where
+    table3 = addBoundsD (univar e) (disj e)  table2
+    table2 = addBoundsU (univar e) (upper e) table1
+    table1 = addBoundsL (univar e) (lower e) table
+    addBoundsL :: TUni -> [PType] -> Table -> Table
+    addBoundsL uni []     tbl = tbl
+    addBoundsL uni (b:bs) tbl = addBoundsL uni bs (addLower uni b tbl)
+    addBoundsU :: TUni -> [PType] -> Table -> Table
+    addBoundsU uni []     tbl = tbl
+    addBoundsU uni (b:bs) tbl = addBoundsU uni bs (addUpper uni b tbl)
+    addBoundsD :: TUni -> [PType] -> Table -> Table
+    addBoundsD uni []     tbl = tbl
+    addBoundsD uni (b:bs) tbl = addBoundsD uni bs (addDisj uni b tbl)
 
 --------------------------------------------------------------------------------
 -- eq instances
@@ -248,7 +264,7 @@ instance Eq a => Eq (SType' a) where
   SRecT l1 t1  == SRecT l2 t2 = (l1 == l2) && (t1 == t2)
   TopT         == TopT        = True
   BotT         == BotT        = True
-  _           == _           = False
+  _            == _           = False
 
 instance Eq a => Eq (AType' a) where
   Uni   u1    == Uni   u2    = u1 == u2
