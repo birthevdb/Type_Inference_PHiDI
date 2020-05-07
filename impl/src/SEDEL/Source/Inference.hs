@@ -85,8 +85,8 @@ topLevelInfer expr = do
   f            <- substFExpr subs' fTerm
   del'         <- reorder $ constructDel subs' table (toList $ freevars ty')
   let finalType = constructFinalType del' ty'
-  finalTerm    <- constructFinalTerm del' f
-  return (finalType, finalTerm)
+  finalTerm    <- DT.trace ("FINAL TYPE:\n" ++ show finalType) $ constructFinalTerm del' f
+  DT.trace ("FINAL TERM:\n" ++ show finalTerm) $ return (finalType, finalTerm)
 
 ---------------------------------
 -- ALGORITHMIC INFERENCE RULES --
@@ -118,12 +118,12 @@ infer (VarPoly x) = do
 
 {-
   ----------------------------------
-  Π ⊢ x : u [x : u ; •; u * ⊤] ~> x
+  Π ⊢ x : u [x : u ; •; •] ~> x
 -}
 infer (Var x) = do
   uFresh  <- getFreshUni
   let gam  = Gamma x (mkUni uFresh) EmptyG
-  return (gam, mkUni uFresh, I.Var (translate x), [], [(mkUni uFresh, mkTopT)])
+  return (gam, mkUni uFresh, I.Var (translate x), [], [])
 
 {-
   Π ⊢ E : τ [Γ; S; ∆] ~> e
@@ -157,7 +157,7 @@ infer (App e1 e2) = do
   tFi     <- translPType (mkArr t2 (mkUni uFresh))
   let f    = I.App (I.Anno f1 tFi) f2
   let cons = (t1, mkArr t2 (mkUni uFresh)) : (cons1 ++ cons2)
-  let dis  = (mkUni uFresh, mkTopT) : (dis1 ++ dis2)
+  let dis  = dis1 ++ dis2
   return (gam, mkUni uFresh, f, cons, dis)
 
 {-
@@ -201,14 +201,13 @@ infer (Proj e l) = do
   uFresh   <- getFreshUni
   tFi      <- translPType (mkSRecT l (mkUni uFresh))
   let cons' = (t, mkSRecT l (mkUni uFresh)) : cons
-  let diss  = (mkUni uFresh, mkTopT) : dis
   return (gam, mkUni uFresh, I.Acc (I.Anno f tFi) l, cons', dis)
 
 {-
-  A = [Γ'; ∆'] τ'
-  Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : τ1 [Γ1; S1; ∆1] ~> e1
+  A = [∆'] τ'
+  Π, ^x : [∆'] τ' ⊢ E1 : τ1 [Γ1; S1; ∆1] ~> e1
   θ = solve(τ1 <: τ')                   ∆' |= θ(∆1loc)
-  Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : τ2 [Γ2; S2; ∆2] ~> e2
+  Π, ^x : [∆'] τ' ⊢ E2 : τ2 [Γ2; S2; ∆2] ~> e2
   --------------------------------------------------------------------
   Π ⊢ let ^x : A = E1 in E2 : τ2 [Γ1 ∪ Γ2; S1glob ∪ S2; ∆1glob ∪ ∆2]
                             ~> let x : |A| = |θ|(e1) in e2
@@ -268,8 +267,8 @@ infer (If e1 e2 e3) = do
   uFresh  <- getFreshUni
   let gam  = joinGam gam1 (joinGam gam2 gam3)
   let cons = (t1, mkBoolT) : (t2, mkUni uFresh) : (t3, mkUni uFresh) : (cons1 ++ cons2 ++ cons3)
-  let diss = (mkUni uFresh, mkTopT) : (dis1 ++ dis2 ++ dis3)
-  return (gam, mkUni uFresh, I.If f1 f2 f3, cons, diss)
+  let dis  = dis1 ++ dis2 ++ dis3
+  return (gam, mkUni uFresh, I.If f1 f2 f3, cons, dis)
 
 {-
   Π ⊢ E1 : [Γ1; S1; ∆1] τ1 ~> e1    Π ⊢ E2 : [Γ2; S2; ∆2] τ2 ~> e2       u fresh
@@ -279,19 +278,19 @@ infer (If e1 e2 e3) = do
 infer (PrimOp op e1 e2) = do
   (gam1, t1, f1, cons1, dis1) <- infer e1
   (gam2, t2, f2, cons2, dis2) <- infer e2
-  uFresh  <- getFreshUni
-  let gam  = joinGam gam1 gam2
-  let diss = (mkUni uFresh, mkTopT) : (dis1 ++ dis2)
+  uFresh <- getFreshUni
+  let gam = joinGam gam1 gam2
+  let dis = dis1 ++ dis2
   case op of
     Arith   _ -> do
       let cons = (mkNumT, mkUni uFresh) : (t1, mkNumT)   : (t2, mkNumT)  : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, diss)
+      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
     Comp    _ -> do
       let cons = (mkBoolT, mkUni uFresh) : (t1, mkNumT)  : (t2, mkNumT)  : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, diss)
+      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
     Logical _ -> do
       let cons = (mkBoolT, mkUni uFresh) : (t1, mkBoolT) : (t2, mkBoolT) : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, diss)
+      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
 
 infer (Pos p tm) = extendSourceLocation p tm $ infer tm
 
@@ -655,14 +654,6 @@ destruct (c@(EmptyQ, s):lqc) table seen | containsUni s = destruct (((List.\\) c
   where (table', cons) = addBounds s table
 -- same types
 destruct ((EmptyQ, (t1, t2)):lqc) table seen | t1 == t2 = destruct lqc table seen
--- incompatible types
-destruct ((EmptyQ, (In (Inl NumT),     In (Inl BoolT)))   :lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl BoolT),    In (Inl NumT)))    :lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl BoolT),    In (Inl (TVar _)))):lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl NumT),     In (Inl (TVar _)))):lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl (TVar _)), In (Inl NumT)))    :lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl (TVar _)), In (Inl BoolT)))   :lqc) _ _ = Nothing
-destruct ((EmptyQ, (In (Inl (TVar _)), In (Inl (TVar _)))):lqc) _ _ = Nothing
 -- bot and top
 destruct ((_,(In (Inl BotT), _)):lqc) table seen = destruct lqc table seen
 destruct ((_,(_, In (Inl TopT))):lqc) table seen = destruct lqc table seen
@@ -681,7 +672,7 @@ destruct (c@(QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) table seen | l == l1 = de
 -- intersection types
 destruct (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case destruct [(q, (a1, a3))] table (c:seen) of
   Just tbl1 -> case destruct [(q, (a2, a3))] table (c:seen) of
-    Just tbl2 -> Just $ mergeTables table tbl1 tbl2
+    Just tbl2 -> destruct lqc (mergeTables table tbl1 tbl2) ((q, (a1, a3)):(q, (a2, a3)):seen)
     Nothing   -> Just tbl1
   Nothing -> case destruct [(q, (a2, a3))] table (c:seen) of
     Just tbl2 -> Just tbl2
