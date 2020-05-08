@@ -83,7 +83,8 @@ topLevelInfer expr = do
   subs'        <- expand table
   let ty'       = convertPtoS $ multipleSubs subs' PosT ty
   f            <- substFExpr subs' fTerm
-  del'         <- reorder $ constructDel subs' table (toList $ freevars ty')
+  alph         <- freevarsE f
+  del'         <- reorder $ constructDel subs' table (toList alph) -- (toList $ freevars ty')
   let finalType = constructFinalType del' ty'
   finalTerm    <- DT.trace ("FINAL TYPE:\n" ++ show finalType) $ constructFinalTerm del' f
   DT.trace ("FINAL TERM:\n" ++ show finalTerm) $ return (finalType, finalTerm)
@@ -244,7 +245,8 @@ infer (Letrec b) = do
       aFi     <- translType a
       let t1'  = convertPtoS $ multipleSubs subs PosT t1
       f1'     <- substFExpr subs f1
-      del1    <- reorder $ constructDel subs table' (toList $ freevars t1')
+      alph    <- freevarsE f1'
+      del1    <- reorder $ constructDel subs table' (toList alph) -- (toList $ freevars t1')
       f1''    <- constructFinalTerm del1 f1'
       -- f = let x : A = θ(e1) in e2
       let f    = I.Letrec (bind (translate x, embed (Just aFi)) (f1'', f2))
@@ -932,6 +934,51 @@ freevars (In (And t1 t2)) = Set.union (freevars t1) (freevars t2)
 freevars (In (Arr t1 t2)) = Set.union (freevars t1) (freevars t2)
 freevars (In (SRecT l t)) = freevars t
 freevars _                = Set.empty
+
+--------------------------------------------------------------------------------
+
+-- Free variables of an Fi+ type
+freevarsF :: I.FType -> Set TyName
+freevarsF (I.Arr ft1 ft2) = Set.union (freevarsF ft1) (freevarsF ft2)
+freevarsF (I.And ft1 ft2) = Set.union (freevarsF ft1) (freevarsF ft2)
+freevarsF (I.TVar x)      = Set.singleton (translate x)
+freevarsF (I.SRecT l ft)  = freevarsF ft
+freevarsF _               = Set.empty
+
+------------------------------------------------------------------------------
+
+-- Free variables of an Fi+ term
+freevarsE :: I.FExpr -> STcMonad (Set TyName)
+freevarsE (I.Anno fe ft)  = do
+  fv1 <- freevarsE fe
+  return $ Set.union fv1 (freevarsF ft)
+freevarsE (I.Var tn)      = return $ Set.empty
+freevarsE (I.App fe1 fe2) = Set.union <$> freevarsE fe1 <*> freevarsE fe2
+freevarsE (I.Lam b)       = unbind b >>= \(_,fe) -> freevarsE fe
+freevarsE (I.Letrec b)    = unbind b >>= \((_,Embed _),(_,fe)) -> freevarsE fe
+freevarsE (I.DLam b)      = unbind b >>= \((_,Embed _),fe) -> freevarsE fe
+freevarsE (I.TApp fe ft)  = do
+  fv1 <- freevarsE fe
+  return $ Set.union fv1 (freevarsF ft)
+freevarsE (I.Rec l fe)    = freevarsE fe
+freevarsE (I.Acc fe l)    = freevarsE fe
+freevarsE (I.Remove fe l Nothing)   = freevarsE fe
+freevarsE (I.Remove fe l (Just ft)) = do
+  fv1 <- freevarsE fe
+  return $ Set.union fv1 (freevarsF ft)
+freevarsE (I.Merge fe1 fe2)     = Set.union <$> freevarsE fe1 <*> freevarsE fe2
+freevarsE (I.LitV i)            = return $ Set.empty
+freevarsE (I.BoolV b)           = return $ Set.empty
+freevarsE (I.PrimOp op fe1 fe2) = Set.union <$> freevarsE fe1 <*> freevarsE fe2
+freevarsE (I.If fe1 fe2 fe3)    = Set.union <$>
+                                (Set.union <$> freevarsE fe1 <*> freevarsE fe2)
+                                <*> freevarsE fe3
+freevarsE I.Top                 = return $ Set.empty
+freevarsE (I.Pos sp fe)         = freevarsE fe
+freevarsE (I.LamA b)            = unbind b >>= \((_,Embed _),fe) -> freevarsE fe
+freevarsE I.Bot                 = return $ Set.empty
+freevarsE (I.DRec' tb)          = return $ Set.empty
+
 
 --------------------------
 -- CONVERSION FUNCTIONS --
