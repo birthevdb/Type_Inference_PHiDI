@@ -106,9 +106,9 @@ infer (LitV n) = return (EmptyG, mkNumT, I.LitV n, [], [])
 infer (BoolV b) = return (EmptyG, mkBoolT, I.BoolV b, [], [])
 
 {-
-   Π (x) = [Γ; S; ∆] τ       ∆ = α * τ'       u fresh
+   Π (x) = [∆] τ       ∆ = α * τ'       u fresh
    --------------------------------------------------------------
-   Π ⊢ x : [α -> u]τ [ [α -> u]Γ; [α -> u]S; [α -> u]∆ ]~> x |u|
+   Π ⊢ x : [α -> u]τ [ •; •; [α -> u]∆ ]~> x |u|
 
 -}
 infer (VarPoly x) = do
@@ -215,9 +215,9 @@ infer (Proj e l) = do
 -}
 infer (Letrec b) = do
   ((x, Embed a), (e1, e2))    <- unbind b
-  -- A = [Γ'; ∆'] τ'
+  -- A = [∆'] τ'
   (CtxSch del' t')            <- convertScheme a
-  -- Π, ^x : [Γ'; ∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
+  -- Π, ^x : [∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
   (gam1, t1, f1, cons1, dis1) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
   -- (S_loc, S_glob) = splitCons Γ1 S1
   let (sloc, sglob) = splitCons gam1 cons1
@@ -230,7 +230,7 @@ infer (Letrec b) = do
     Just table' -> do
       -- θ = solve(table')
       subs             <- expand table'
-      -- Π, ^x : [Γ'; ∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
+      -- Π, ^x : [∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
       (gam2, t2, f2, cons2, dis2) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
       -- check  ∆' |= θ(∆_loc)
       tbl <- addDisjointness (applySubstDis subs dloc) emptyTable
