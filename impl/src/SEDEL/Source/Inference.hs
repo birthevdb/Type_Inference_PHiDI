@@ -218,7 +218,7 @@ infer (Letrec b) = do
   -- A = [∆'] τ'
   (CtxSch del' t')            <- convertScheme a
   -- Π, ^x : [∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
-  (gam1, t1, f1, cons1, dis1) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
+  (gam1, t1, f1, cons1, dis1) <- DT.trace "PART 1" $ localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
   -- (S_loc, S_glob) = splitCons Γ1 S1
   let (sloc, sglob) = splitCons gam1 cons1
   -- (∆_loc, ∆_glob) = splitDis Γ1 ∆1
@@ -231,9 +231,9 @@ infer (Letrec b) = do
       -- θ = solve(table')
       subs             <- expand table'
       -- Π, ^x : [∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, t2, f2, cons2, dis2) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
+      (gam2, t2, f2, cons2, dis2) <- DT.trace "PART 2" $ localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
       -- check  ∆' |= θ(∆_loc)
-      tbl <- addDisjointness (applySubstDis subs dloc) emptyTable
+      tbl <- DT.trace (show cons2) $ addDisjointness (applySubstDis subs dloc) emptyTable
       entails del' (constructDel subs tbl (map (translate . univar) tbl))
       -- Γ = Γ1 ∪ Γ2
       let gam  = applySubstGam subs (joinGam gam1 gam2)
@@ -616,25 +616,28 @@ substInFType (sub:subs)          pol (I.TVar a) = substInFType subs pol (I.TVar 
 ---------------------------
 -- Destruct disjointness constraints between two types and add them to the table
 disjoint :: PType -> PType -> Table -> STcMonad Table
-disjoint (In (Inr (Uni u))) t table = return $ addDisj u t table
-disjoint t (In (Inr (Uni u))) table = return $ addDisj u t table
+disjoint (In (Inr (Uni u1))) (In (Inr (Uni u2))) table = if u2 > u1
+                                                         then return $ addDisj u2 (mkUni u1) table
+                                                         else return $ addDisj u1 (mkUni u2) table
+disjoint (In (Inr (Uni u))) t  table = return $ addDisj u t table
+disjoint t (In (Inr (Uni u)))  table = return $ addDisj u t table
 disjoint (In (Inl (TVar a))) t table = return $ addDisj (translate a) t table
 disjoint t (In (Inl (TVar a))) table = return $ addDisj (translate a) t table
-disjoint (In (Inl (Arr t1 t2))) (In (Inl (Arr t3 t4))) table = disjoint t2 t4 table
+disjoint (In (Inl (Arr t1 t2)))   (In (Inl (Arr t3 t4)))   table = disjoint t2 t4 table
 disjoint (In (Inl (SRecT l1 t1))) (In (Inl (SRecT l2 t2))) table | l1 == l2 = disjoint t1 t2 table
-disjoint (In (Inl (SRecT l1 _))) (In (Inl (SRecT l2 _))) table | l1 /= l2 = return $ table
-disjoint (In (Inl NumT)) (In (Inl (Arr _ _))) table = return $ table
-disjoint (In (Inl (Arr _ _))) (In (Inl NumT)) table = return $ table
-disjoint (In (Inl NumT)) (In (Inl (SRecT _ _))) table = return $ table
-disjoint (In (Inl (SRecT _ _))) (In (Inl NumT)) table = return $ table
-disjoint (In (Inl (Arr _ _))) (In (Inl (SRecT _ _))) table = return $ table
-disjoint (In (Inl (SRecT _ _))) (In (Inl (Arr _ _))) table = return $ table
-disjoint (In (Inl BoolT)) (In (Inl (Arr _ _))) table = return $ table
-disjoint (In (Inl (Arr _ _))) (In (Inl BoolT)) table = return $ table
-disjoint (In (Inl BoolT)) (In (Inl (SRecT _ _))) table = return $ table
-disjoint (In (Inl (SRecT _ _))) (In (Inl BoolT)) table = return $ table
-disjoint (In (Inl BoolT)) (In (Inl NumT)) table = return $ table
-disjoint (In (Inl NumT)) (In (Inl BoolT)) table = return $ table
+disjoint (In (Inl (SRecT l1 _)))  (In (Inl (SRecT l2 _)))  table | l1 /= l2 = return $ table
+disjoint (In (Inl  NumT))         (In (Inl (Arr _ _)))     table = return $ table
+disjoint (In (Inl (Arr _ _)))     (In (Inl  NumT))         table = return $ table
+disjoint (In (Inl  NumT))         (In (Inl (SRecT _ _)))   table = return $ table
+disjoint (In (Inl (SRecT _ _)))   (In (Inl  NumT))         table = return $ table
+disjoint (In (Inl (Arr _ _)))     (In (Inl (SRecT _ _)))   table = return $ table
+disjoint (In (Inl (SRecT _ _)))   (In (Inl (Arr _ _)))     table = return $ table
+disjoint (In (Inl  BoolT))        (In (Inl (Arr _ _)))     table = return $ table
+disjoint (In (Inl (Arr _ _)))     (In (Inl  BoolT))        table = return $ table
+disjoint (In (Inl  BoolT))        (In (Inl (SRecT _ _)))   table = return $ table
+disjoint (In (Inl (SRecT _ _)))   (In (Inl  BoolT))        table = return $ table
+disjoint (In (Inl  BoolT))        (In (Inl  NumT))         table = return $ table
+disjoint (In (Inl  NumT))         (In (Inl  BoolT))        table = return $ table
 disjoint t1 t2 table | topLikeP t1 || topLikeP t2 = return $ table
 disjoint (In (Inl (And t1 t2))) t3 table = disjoint t1 t3 table >>= \table' -> disjoint t2 t3 table'
 disjoint t1 (In (Inl (And t2 t3))) table = disjoint t1 t2 table >>= \table' -> disjoint t1 t3 table'
@@ -716,7 +719,7 @@ mergeLowerBounds (e:es) table = case getEntry (univar e) table of
   Nothing -> e     : (mergeLowerBounds es table)
   Just e' -> entry : (mergeLowerBounds es table')
     where
-      low    = [mkInt (lower e ++ lower e')]
+      low    = if ((null $ lower e) && (null $ lower e')) then [] else [mkInt (lower e ++ lower e')]
       entry  = mkEntry (univar e) low (upper e ++ upper e') (disj e ++ disj e')
       table' = List.delete e' table
 

@@ -287,8 +287,8 @@ instance Show a => Show (SType' a) where
   show (And   t1 t2) = binOp t1 "&" t2
   show (SRecT l1 t1) = "{" ++ (show l1) ++ ":" ++ (show t1) ++ "}"
   show (TVar  u1   ) = "Var " ++ show u1
-  show (TopT)        = "⊤"
-  show (BotT)        = "⊥"
+  show (TopT)        = "Top" -- "⊤"
+  show (BotT)        = "Bot" -- "⊥"
 
 instance Show a => Show (AType' a) where
   show (Uni   u1   ) = show u1
