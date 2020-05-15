@@ -218,7 +218,7 @@ infer (Letrec b) = do
   -- A = [∆'] τ'
   (CtxSch del' t')            <- convertScheme a
   -- Π, ^x : [∆'] τ' ⊢ E1 : [Γ1; ∆1] τ1 ~> e1
-  (gam1, t1, f1, cons1, dis1) <- DT.trace "PART 1" $ localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
+  (gam1, t1, f1, cons1, dis1) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e1
   -- (S_loc, S_glob) = splitCons Γ1 S1
   let (sloc, sglob) = splitCons gam1 cons1
   -- (∆_loc, ∆_glob) = splitDis Γ1 ∆1
@@ -231,9 +231,9 @@ infer (Letrec b) = do
       -- θ = solve(table')
       subs             <- expand table'
       -- Π, ^x : [∆'] τ' ⊢ E2 : [Γ2; ∆2] τ2 ~> e2
-      (gam2, t2, f2, cons2, dis2) <- DT.trace "PART 2" $ localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
+      (gam2, t2, f2, cons2, dis2) <- localCtx (extendVarCtx x (CtxSch del' t')) $ infer e2
       -- check  ∆' |= θ(∆_loc)
-      tbl <- DT.trace (show cons2) $ addDisjointness (applySubstDis subs dloc) emptyTable
+      tbl <- addDisjointness (applySubstDis subs dloc) emptyTable
       entails del' (constructDel subs tbl (map (translate . univar) tbl))
       -- Γ = Γ1 ∪ Γ2
       let gam  = applySubstGam subs (joinGam gam1 gam2)
@@ -270,7 +270,8 @@ infer (If e1 e2 e3) = do
   let gam  = joinGam gam1 (joinGam gam2 gam3)
   let cons = (t1, mkBoolT) : (t2, mkUni uFresh) : (t3, mkUni uFresh) : (cons1 ++ cons2 ++ cons3)
   let dis  = dis1 ++ dis2 ++ dis3
-  return (gam, mkUni uFresh, I.If f1 f2 f3, cons, dis)
+  tFi     <- translPType mkBoolT
+  return (gam, mkUni uFresh, I.If (I.Anno f1 tFi) f2 f3, cons, dis)
 
 {-
   Π ⊢ E1 : [Γ1; S1; ∆1] τ1 ~> e1    Π ⊢ E2 : [Γ2; S2; ∆2] τ2 ~> e2       u fresh
@@ -283,16 +284,18 @@ infer (PrimOp op e1 e2) = do
   uFresh <- getFreshUni
   let gam = joinGam gam1 gam2
   let dis = dis1 ++ dis2
+  fiNum  <- translPType mkNumT
+  fiBool <- translPType mkBoolT
   case op of
     Arith   _ -> do
       let cons = (mkNumT, mkUni uFresh) : (t1, mkNumT)   : (t2, mkNumT)  : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
+      return (gam, mkUni uFresh, I.PrimOp op (I.Anno f1 fiNum) (I.Anno f2 fiNum), cons, dis)
     Comp    _ -> do
       let cons = (mkBoolT, mkUni uFresh) : (t1, mkNumT)  : (t2, mkNumT)  : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
+      return (gam, mkUni uFresh, I.PrimOp op (I.Anno f1 fiNum) (I.Anno f2 fiNum), cons, dis)
     Logical _ -> do
       let cons = (mkBoolT, mkUni uFresh) : (t1, mkBoolT) : (t2, mkBoolT) : (cons1 ++ cons2)
-      return (gam, mkUni uFresh, I.PrimOp op f1 f2, cons, dis)
+      return (gam, mkUni uFresh, I.PrimOp op (I.Anno f1 fiBool) (I.Anno f2 fiBool), cons, dis)
 
 infer (Pos p tm) = extendSourceLocation p tm $ infer tm
 
@@ -675,11 +678,18 @@ destruct (c@(QA p q,(In (Inl (Arr a1 a2)),   a)) :lqc) table seen = case destruc
     Nothing  -> destruct ((q,(mkTopT, a)):lqc) table (c:seen)
 destruct (c@(QL l q,(In (Inl (SRecT l1 a1)), a2)):lqc) table seen | l == l1 = destruct ((q,(a1, a2)) :lqc) table (c:seen)
 -- intersection types
-destruct (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case destruct [(q, (a1, a3))] table (c:seen) of
-  Just tbl1 -> case destruct [(q, (a2, a3))] table (c:seen) of
+destruct (c@(q,(In (Inl (And (In (Inr (Uni u1))) (In (Inr (Uni u2))))), a3))  :lqc) table seen = case destruct ((q, ((In (Inr (Uni u1))), a3)):lqc) table (c:seen) of
+  Just tbl1 -> case destruct ((q, ((In (Inr (Uni u2))), a3)):lqc) table (c:seen) of
+    Just tbl2 -> destruct lqc table (c:seen)
+    Nothing   -> Just tbl1
+  Nothing -> case destruct ((q, ((In (Inr (Uni u2))), a3)):lqc) table (c:seen) of
+    Just tbl2 -> Just tbl2
+    Nothing   -> Nothing
+destruct (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case destruct ((q, (a1, a3)):lqc) table (c:seen) of
+  Just tbl1 -> case destruct ((q, (a2, a3)):lqc) table (c:seen) of
     Just tbl2 -> destruct lqc (mergeTables table tbl1 tbl2) ((q, (a1, a3)):(q, (a2, a3)):seen)
     Nothing   -> Just tbl1
-  Nothing -> case destruct [(q, (a2, a3))] table (c:seen) of
+  Nothing -> case destruct ((q, (a2, a3)):lqc) table (c:seen) of
     Just tbl2 -> Just tbl2
     Nothing   -> Nothing
 destruct x _ _ = DT.trace ("other:   " ++ show x) $ Nothing
@@ -775,7 +785,7 @@ entails del1 (Delta name ty del2) = do
     ent  EmptyD                    _   _            =
       errThrow [DS "No entailment in letrec."]
     ent (Delta u1 (In (TVar a)) d) u2 (In (TVar b)) =
-      if u1 == b && a == u2 then return () else ent d u2 (mkTVar b)
+      if (u1 == b && a == u2) || (u1 == u2 && a == b) then return () else ent d u2 (mkTVar b)
     ent (Delta u1 a d)             u2  b | u1 == u2 =
       case destruct [(EmptyQ, (convertStoP a, convertStoP b))] emptyTable [] of
         Nothing -> if (topLike b) then return () else ent d u2 b
