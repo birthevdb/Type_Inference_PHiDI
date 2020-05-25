@@ -86,8 +86,8 @@ topLevelInfer expr = do
   alph         <- freevarsE f
   del'         <- reorder $ constructDel subs' table (toList alph) -- (toList $ freevars ty')
   let finalType = constructFinalType del' ty'
-  finalTerm    <- DT.trace ("FINAL TYPE:\n" ++ show finalType) $ constructFinalTerm del' f
-  DT.trace ("FINAL TERM:\n" ++ show finalTerm) $ return (finalType, finalTerm)
+  finalTerm    <- constructFinalTerm del' f
+  return (finalType, finalTerm)
 
 ---------------------------------
 -- ALGORITHMIC INFERENCE RULES --
@@ -692,7 +692,7 @@ destruct (c@(q,(In (Inl (And a1 a2)), a3))  :lqc) table seen = case destruct ((q
   Nothing -> case destruct ((q, (a2, a3)):lqc) table (c:seen) of
     Just tbl2 -> Just tbl2
     Nothing   -> Nothing
-destruct x _ _ = DT.trace ("other:   " ++ show x) $ Nothing
+destruct x _ _ = Nothing
 
 --------------------
 -- MERGING TABLES --
