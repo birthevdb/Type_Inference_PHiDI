@@ -1,0 +1,116 @@
+cabal-version: 1.12
+
+-- This file has been generated from package.yaml by hpack version 0.31.1.
+--
+-- see: https://github.com/sol/hpack
+--
+-- hash: 657f39bc7d994a23d73cea62fbfb4d0bbcd41084b264e4019e4ef6cdbe354790
+
+name:           sedel
+version:        0.1.0.0
+synopsis:       type system for first-class traits
+description:    Please see README.md
+category:       Language
+author:         Anonymous
+maintainer:     anonymous@gmail.com
+copyright:      2018, Xuan Bi
+license:        BSD3
+license-file:   LICENSE
+build-type:     Simple
+
+library
+  hs-source-dirs:
+      src
+  ghc-options: -fwarn-tabs -fwarn-unused-imports -fwarn-missing-signatures -fwarn-name-shadowing -fwarn-incomplete-patterns
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , directory
+    , filepath
+    , haskeline
+    , megaparsec >=6.0
+    , mtl
+    , parser-combinators
+    , prettyprinter
+    , protolude >=0.2
+    , repline
+    , scientific
+    , text
+    , unbound-generics
+    , QuickCheck
+  exposed-modules:
+      SEDEL.Parser.Parser
+      SEDEL.Environment
+      SEDEL.Common
+      SEDEL.Fix
+      SEDEL.PrettyPrint
+      SEDEL.Source.Syntax
+      SEDEL.Source.Subtyping
+      SEDEL.Source.Inference
+      SEDEL.Source.Desugar
+      SEDEL.Intermediate.Syntax
+      SEDEL.Intermediate.Subtyping
+      SEDEL.Intermediate.TypeCheck
+      SEDEL.Intermediate.Desugar
+      SEDEL.Target.Syntax
+      SEDEL.Target.Eval
+      SEDEL.Util
+      SEDEL.Translations
+      SEDEL.Test
+      SEDEL
+  other-modules:
+      Paths_sedel
+  default-language: Haskell2010
+
+executable sedel-exe
+  main-is: Main.hs
+  hs-source-dirs:
+      app
+  ghc-options: -fwarn-tabs -fwarn-unused-imports -fwarn-missing-signatures -fwarn-name-shadowing -fwarn-incomplete-patterns -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , directory
+    , filepath
+    , haskeline
+    , megaparsec >=6.0
+    , mtl
+    , prettyprinter
+    , protolude >=0.2
+    , repline
+    , scientific
+    , sedel
+    , text
+    , QuickCheck
+  other-modules:
+      Paths_sedel
+  default-language: Haskell2010
+
+test-suite sedel-test
+  type: exitcode-stdio-1.0
+  main-is: Spec.hs
+  hs-source-dirs:
+      test
+  ghc-options: -fwarn-tabs -fwarn-unused-imports -fwarn-missing-signatures -fwarn-name-shadowing -fwarn-incomplete-patterns -threaded -rtsopts -with-rtsopts=-N
+  build-depends:
+      array
+    , base >=4.7 && <5
+    , containers
+    , directory
+    , filepath
+    , haskeline
+    , megaparsec >=6.0
+    , mtl
+    , prettyprinter
+    , protolude >=0.2
+    , repline
+    , scientific
+    , sedel
+    , tasty >=0.11.1
+    , tasty-hspec >=1.1.3.1
+    , text
+  other-modules:
+      Paths_sedel
+  default-language: Haskell2010
