@@ -4,7 +4,7 @@ cabal-version: 1.12
 --
 -- see: https://github.com/sol/hpack
 --
--- hash: c33557dfc6fc0b522df779beab955124df4667c30d7380f16d4f4535d8392ecb
+-- hash: 13b8d682522fc30f74eed37774f9053866769bdcd70dc79c6784178b25f1199a
 
 name:           unification
 version:        0.1.0.0
@@ -27,13 +27,18 @@ source-repository head
 
 library
   exposed-modules:
-      Lib
+      Unification
+      Parser
+      Syntax
   other-modules:
       Paths_unification
   hs-source-dirs:
       src
   build-depends:
       base >=4.7 && <5
+    , unbound-generics
+    , megaparsec >=6.0
+    , parser-combinators
   default-language: Haskell2010
 
 executable unification-exe
@@ -46,6 +51,8 @@ executable unification-exe
   build-depends:
       base >=4.7 && <5
     , unification
+    , megaparsec >=6.0
+    , parser-combinators
   default-language: Haskell2010
 
 test-suite unification-test
@@ -59,4 +66,6 @@ test-suite unification-test
   build-depends:
       base >=4.7 && <5
     , unification
+    , megaparsec >=6.0
+    , parser-combinators
   default-language: Haskell2010
