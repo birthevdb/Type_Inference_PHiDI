@@ -1,7 +1,7 @@
 all: build run
 
 run:
-	@stack exec sedel-exe
+	@stack exec phidi-exe
 
 build:
 	@stack build

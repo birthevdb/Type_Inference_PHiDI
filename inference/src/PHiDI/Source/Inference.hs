@@ -4,7 +4,7 @@
 {-# LANGUAGE OverloadedStrings #-}
 {-# LANGUAGE PatternGuards     #-}
 
-module SEDEL.Source.Inference
+module PHiDI.Source.Inference
   ( tcModule, topLevelInfer ) where
 
 import qualified Data.List                        as List
@@ -14,17 +14,17 @@ import qualified Data.Text.Prettyprint.Doc        as Pretty
 import           Protolude
 import           Unbound.Generics.LocallyNameless
 
-import           SEDEL.Common
-import           SEDEL.Environment
-import           SEDEL.Fix
-import qualified SEDEL.Intermediate.Syntax        as I
-import           SEDEL.Intermediate.TypeCheck     as TC
-import           SEDEL.PrettyPrint
-import           SEDEL.Source.Desugar
-import           SEDEL.Source.Syntax
-import qualified SEDEL.Target.Syntax              as T
-import           SEDEL.Translations
-import           SEDEL.Util
+import           PHiDI.Environment
+import           PHiDI.Fix
+import qualified PHiDI.Intermediate.Syntax        as I
+import           PHiDI.Intermediate.TypeCheck     as TC
+import           PHiDI.Operators
+import           PHiDI.PrettyPrint
+import           PHiDI.Source.Desugar
+import           PHiDI.Source.Syntax
+import qualified PHiDI.Target.Syntax              as T
+import           PHiDI.Translations
+import           PHiDI.Util
 
 import           Debug.Trace                      as DT
 
@@ -84,9 +84,10 @@ topLevelInfer expr = do
   let ty'       = convertPtoS $ multipleSubs subs PosT ty
   f            <- substFExpr subs fTerm
   alph         <- freevarsE f
-  let subs'     = instFreeVars (toList alph)
+  let alph'     = toList $ freevars ty'
+  let subs'     = instFreeVars $ (List.\\) (toList alph) alph'
   f'           <- substFExpr subs' f
-  del'         <- reorder $ constructDel (subs ++ subs') table (toList $ freevars ty') -- (toList alph)
+  del'         <- reorder $ constructDel (subs ++ subs') table alph'
   let finalType = constructFinalType del' ty'
   finalTerm    <- DT.trace ("del':    " ++ show del') $ constructFinalTerm del' f'
   DT.trace ("TYPE:   " ++ show finalType ++ "\nTERM:   " ++ show finalTerm) $ return (finalType, finalTerm)

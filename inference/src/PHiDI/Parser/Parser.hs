@@ -1,4 +1,4 @@
-module SEDEL.Parser.Parser (parseModule, parseType) where
+module PHiDI.Parser.Parser (parseModule, parseType) where
 
 import           Control.Arrow                    (first, second)
 import           Control.Monad.Combinators.Expr
@@ -11,9 +11,9 @@ import           Text.Megaparsec.Char
 import qualified Text.Megaparsec.Char.Lexer       as L
 import           Unbound.Generics.LocallyNameless
 
-import           SEDEL.Common
-import           SEDEL.Source.Syntax
-import           SEDEL.Util
+import           PHiDI.Operators
+import           PHiDI.Source.Syntax
+import           PHiDI.Util
 
 
 type Parser = Parsec Void String
@@ -51,10 +51,10 @@ mainDecl = do
 
 
 decl :: Parser SDecl
-decl = sedel
+decl = phidi
 
-sedel :: Parser SDecl
-sedel = DefDecl <$> tmBind
+phidi :: Parser SDecl
+phidi = DefDecl <$> tmBind
 
 tmBind :: Parser TmBind
 tmBind = do

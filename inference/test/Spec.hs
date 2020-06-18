@@ -1,13 +1,13 @@
-import Control.Monad (forM_)
-import Test.Tasty
-import Test.Tasty.Hspec
-import System.FilePath
-import Data.List (isSuffixOf)
-import System.Directory
-import SEDEL.PrettyPrint
-import SEDEL
+import           Control.Monad     (forM_)
+import           Data.List         (isSuffixOf)
+import           PHiDI
+import           PHiDI.PrettyPrint
+import           System.Directory
+import           System.FilePath
+import           Test.Tasty
+import           Test.Tasty.Hspec
 
-import Debug.Trace as DT
+import           Debug.Trace       as DT
 
 data TestResult = Res FDoc Bool
 

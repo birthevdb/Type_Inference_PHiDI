@@ -1,6 +1,13 @@
-{-# LANGUAGE FlexibleContexts, PatternGuards, NoImplicitPrelude, LambdaCase, OverloadedStrings, TypeSynonymInstances, FlexibleInstances, ScopedTypeVariables #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE LambdaCase           #-}
+{-# LANGUAGE NoImplicitPrelude    #-}
+{-# LANGUAGE OverloadedStrings    #-}
+{-# LANGUAGE PatternGuards        #-}
+{-# LANGUAGE ScopedTypeVariables  #-}
+{-# LANGUAGE TypeSynonymInstances #-}
 
-module SEDEL.Test where
+module PHiDI.Test where
 
 -- import           Protolude
 -- import           Unbound.Generics.LocallyNameless

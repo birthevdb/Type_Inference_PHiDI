@@ -1,20 +1,20 @@
-{-# LANGUAGE FlexibleContexts #-}
-{-# LANGUAGE FlexibleInstances #-}
-{-# LANGUAGE OverloadedStrings #-}
-{-# LANGUAGE RankNTypes #-}
+{-# LANGUAGE FlexibleContexts     #-}
+{-# LANGUAGE FlexibleInstances    #-}
+{-# LANGUAGE OverloadedStrings    #-}
+{-# LANGUAGE RankNTypes           #-}
+{-# LANGUAGE RecursiveDo          #-}
+{-# LANGUAGE TypeOperators        #-}
 {-# LANGUAGE TypeSynonymInstances #-}
-{-# LANGUAGE TypeOperators #-}
-{-# LANGUAGE RecursiveDo #-}
 
-module SEDEL.Target.Eval (evaluate) where
+module PHiDI.Target.Eval (evaluate) where
 
 import           Control.Monad.Except
 import           Data.IORef
-import qualified Data.Map.Strict as M
+import qualified Data.Map.Strict                  as M
 import           Unbound.Generics.LocallyNameless
 
-import           SEDEL.Target.Syntax
-import           SEDEL.Common
+import           PHiDI.Operators
+import           PHiDI.Target.Syntax
 
 -- call-by-need environment
 type Env = M.Map UName Thunk
@@ -50,13 +50,13 @@ data Value
   | VBLam !(Thunk -> EvalM Value)
 
 instance Show Value where
-  show (VLit n) = show n
-  show (VBool True) = "true"
+  show (VLit n)      = show n
+  show (VBool True)  = "true"
   show (VBool False) = "false"
-  show (VPair _ _) = "<Pair>"
-  show VUnit = "()"
-  show (VLam _) = "<lambda>"
-  show (VBLam _) = "<Lambda>"
+  show (VPair _ _)   = "<Pair>"
+  show VUnit         = "()"
+  show (VLam _)      = "<lambda>"
+  show (VBLam _)     = "<Lambda>"
 
 
 runEvalM :: EvalM a -> IO (Either String a)
@@ -113,18 +113,18 @@ eval _ Bot = throwError "Damn it, it's an infinite loop!"
 
 
 evalApp :: Value -> Thunk -> EvalM Value
-evalApp (VLam f) t  = f t
-evalApp v _ = throwError $ "Expected a function, but got: " ++ show v
+evalApp (VLam f) t = f t
+evalApp v _        = throwError $ "Expected a function, but got: " ++ show v
 
 
 evalP1 :: Value -> EvalM Value
-evalP1 (VPair v1 _)   = force v1
-evalP1 v = throwError $ "Expected a pair, but got: " ++ show v
+evalP1 (VPair v1 _) = force v1
+evalP1 v            = throwError $ "Expected a pair, but got: " ++ show v
 
 
 evalP2 :: Value -> EvalM Value
-evalP2 (VPair _ v2)   = force v2
-evalP2 v = throwError $ "Expected a pair, but got: " ++ show v
+evalP2 (VPair _ v2) = force v2
+evalP2 v            = throwError $ "Expected a pair, but got: " ++ show v
 
 evalOp :: Operation -> Value -> Value -> EvalM Value
 evalOp (Arith Add) (VLit x) (VLit y) = return $ VLit $ x + y

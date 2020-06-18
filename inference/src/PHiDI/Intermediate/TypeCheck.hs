@@ -1,25 +1,29 @@
-{-# LANGUAGE FlexibleContexts, PatternGuards, NoImplicitPrelude, LambdaCase, OverloadedStrings #-}
+{-# LANGUAGE FlexibleContexts  #-}
+{-# LANGUAGE LambdaCase        #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE PatternGuards     #-}
 
-module SEDEL.Intermediate.TypeCheck
+module PHiDI.Intermediate.TypeCheck
   ( bidirect
   ) where
 
-import qualified Data.Map as M
-import           Data.Text.Prettyprint.Doc ((<+>))
-import qualified Data.Text.Prettyprint.Doc as Pretty
+import qualified Data.Map                         as M
+import           Data.Text.Prettyprint.Doc        ((<+>))
+import qualified Data.Text.Prettyprint.Doc        as Pretty
 import           Protolude
 import           Unbound.Generics.LocallyNameless
 import           Unsafe
 
 
-import           SEDEL.Common
-import           SEDEL.Environment
-import           SEDEL.PrettyPrint
-import           SEDEL.Intermediate.Desugar
-import           SEDEL.Intermediate.Subtyping
-import           SEDEL.Intermediate.Syntax
-import qualified SEDEL.Target.Syntax as T
-import           SEDEL.Translations
+import           PHiDI.Operators
+import           PHiDI.Environment
+import           PHiDI.Intermediate.Desugar
+import           PHiDI.Intermediate.Subtyping
+import           PHiDI.Intermediate.Syntax
+import           PHiDI.PrettyPrint
+import qualified PHiDI.Target.Syntax              as T
+import           PHiDI.Translations
 
 
 -- | Kinding.
@@ -560,17 +564,17 @@ disjointAx t1 t2 =
   type2num t1 < 5 && type2num t2 < 5 && type2num t1 /= type2num t2
   where
     type2num :: FType -> Int
-    type2num NumT = 0
-    type2num BoolT = 1
-    type2num Arr {} = 2
+    type2num NumT       = 0
+    type2num BoolT      = 1
+    type2num Arr {}     = 2
     type2num DForall {} = 3
-    type2num SRecT {} = 4
-    type2num TopT {} = 5
-    type2num And {} = 6
-    type2num TVar {} = 7
-    type2num OpAbs {} = 8
-    type2num OpApp {} = 9
-    type2num BotT {} = 10
+    type2num SRecT {}   = 4
+    type2num TopT {}    = 5
+    type2num And {}     = 6
+    type2num TVar {}    = 7
+    type2num OpAbs {}   = 8
+    type2num OpApp {}   = 9
+    type2num BotT {}    = 10
 
 
 

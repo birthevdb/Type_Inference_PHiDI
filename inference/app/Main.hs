@@ -3,26 +3,26 @@
 
 module Main where
 
-import           Control.Exception (SomeException, try)
+import           Control.Exception                     (SomeException, try)
 import           Control.Monad.State.Strict
-import           Data.List (isPrefixOf)
-import           Data.Maybe (fromMaybe)
-import qualified Data.Text.IO as TIO
-import           System.IO                    (hPutStrLn, stderr)
-import           Data.Text.Prettyprint.Doc ((<+>), (<>))
-import qualified Data.Text.Prettyprint.Doc as Pretty
+import           Data.List                             (isPrefixOf)
+import           Data.Maybe                            (fromMaybe)
+import qualified Data.Text.IO                          as TIO
+import           Data.Text.Prettyprint.Doc             ((<+>), (<>))
+import qualified Data.Text.Prettyprint.Doc             as Pretty
 import qualified Data.Text.Prettyprint.Doc.Render.Text as Pretty
 import           System.Console.GetOpt
 import           System.Console.Repline
-import           System.Environment (getArgs)
+import           System.Environment                    (getArgs)
 import           System.Exit
+import           System.IO                             (hPutStrLn, stderr)
 
-import           SEDEL
-import           SEDEL.Environment
-import           SEDEL.Parser.Parser
-import           SEDEL.Source.Desugar
-import           SEDEL.Source.Syntax
-import           SEDEL.PrettyPrint
+import           PHiDI
+import           PHiDI.Environment
+import           PHiDI.Parser.Parser
+import           PHiDI.PrettyPrint
+import           PHiDI.Source.Desugar
+import           PHiDI.Source.Syntax
 
 
 data ReplState = ReplState
@@ -81,7 +81,7 @@ load args = do
   contents <- readTry $ readFile (unwords args)
   case contents of
     Left err -> ppMsg $ "Load file error" <+> Pretty.pretty (show err)
-    Right s -> exec s
+    Right s  -> exec s
 
 -- :quit command
 quit :: a -> Repl ()
@@ -145,7 +145,7 @@ shell pre =
   evalRepl (pure "> ") exec options (Just ':') (Prefix (wordCompleter comp) defaultMatcher) pre
 
 verStr :: String
-verStr = "SEDEL, version 0.1"
+verStr = "Type Inference PHiDI, version 0.1"
 
 ini :: Repl ()
 ini = putMsg $ verStr ++ ", :? for help"
@@ -188,11 +188,11 @@ parseArgs args =
               findInput [] = ""
               findInput (x:xs) = case x of
                 Input f -> f
-                _ -> findInput xs
+                _       -> findInput xs
               findOutput [] = ""
               findOutput (x:xs) = case x of
                 Output f -> f
-                _ -> findInput xs
+                _        -> findInput xs
               inputArg = findInput opts
               inputPath
                 | not (null inputArg) = inputArg
@@ -207,7 +207,7 @@ parseArgs args =
     (_, _, msgs)   ->
       exitSucc False $ concat msgs ++ usageInfo header flags
   where header = "To start the REPL, run the program without parameters.\n" ++
-          "Usage: sedel [OPTIONS] [FILE]"
+          "Usage: phidi [OPTIONS] [FILE]"
 
 
 main :: IO ()

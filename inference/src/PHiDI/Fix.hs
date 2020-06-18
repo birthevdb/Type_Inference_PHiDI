@@ -2,7 +2,7 @@
              UndecidableInstances #-}
 
 
-module SEDEL.Fix where
+module PHiDI.Fix where
 
 import           GHC.Generics (Generic)
 

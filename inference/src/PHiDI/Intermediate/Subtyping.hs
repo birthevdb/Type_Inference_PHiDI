@@ -1,24 +1,24 @@
-{-# LANGUAGE FlexibleContexts #-}
+{-# LANGUAGE FlexibleContexts  #-}
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module SEDEL.Intermediate.Subtyping
+module PHiDI.Intermediate.Subtyping
   ( subtype
   ) where
 
 
-import           Data.Sequence ((|>), Seq(..))
-import qualified Data.Sequence as Q
-import qualified Data.Text.Prettyprint.Doc as Pretty
-import           Data.Text.Prettyprint.Doc ((<+>))
+import           Data.Sequence                    (Seq (..), (|>))
+import qualified Data.Sequence                    as Q
+import           Data.Text.Prettyprint.Doc        ((<+>))
+import qualified Data.Text.Prettyprint.Doc        as Pretty
 import           Protolude
 import           Unbound.Generics.LocallyNameless
 
-import           SEDEL.Environment
-import           SEDEL.PrettyPrint
-import           SEDEL.Intermediate.Syntax
-import           SEDEL.Intermediate.Desugar
-import qualified SEDEL.Target.Syntax as T
+import           PHiDI.Environment
+import           PHiDI.Intermediate.Desugar
+import           PHiDI.Intermediate.Syntax
+import           PHiDI.PrettyPrint
+import qualified PHiDI.Target.Syntax              as T
 
 data L = LTy FType | LLa Label | LAll TyName FType
 
@@ -86,9 +86,9 @@ calTop (LTy _ :<| fs) =
 calTop (LAll _ _ :<| fs) = coTrans (calTop fs) coId
 
 calAnd :: Seq L -> Co
-calAnd Empty = coId
-calAnd (LLa _ :<| fs) = coTrans (calAnd fs) coId
-calAnd (LTy _ :<| fs) = coTrans (coArr coId (calAnd fs)) coDistArr
+calAnd Empty             = coId
+calAnd (LLa _ :<| fs)    = coTrans (calAnd fs) coId
+calAnd (LTy _ :<| fs)    = coTrans (coArr coId (calAnd fs)) coDistArr
 calAnd (LAll _ _ :<| fs) = coTrans (calAnd fs) coId
 
 

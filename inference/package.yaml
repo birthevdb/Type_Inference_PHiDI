@@ -1,11 +1,11 @@
-name: sedel
+name: phidi
 version: 0.1.0.0
-synopsis: type system for first-class traits
-description: Please see README.md
+description: Please see the README on GitHub at <https://github.com/birthevdb/Type_Inference_PHiDI/inference#readme>
+github: "birthevdb/Type_Inference_PHiDI/inference"
 category: Language
-author: Anonymous
-maintainer: anonymous@gmail.com
-copyright: 2018, Xuan Bi
+author: Birthe van den Berg
+maintainer: birthe.vandenberg@kuleuven.be
+copyright: 2020, Birthe van den Berg
 license: BSD3
 dependencies:
   - base >=4.7 && <5
@@ -33,25 +33,25 @@ ghc-options:
 library:
   source-dirs: src
   exposed-modules:
-    - SEDEL.Parser.Parser
-    - SEDEL.Environment
-    - SEDEL.Common
-    - SEDEL.PrettyPrint
-    - SEDEL.Source.Syntax
-    - SEDEL.Source.Subtyping
-    - SEDEL.Source.Inference
-    - SEDEL.Source.Desugar
-    - SEDEL.Target.Syntax
-    - SEDEL.Target.Eval
-    - SEDEL.Util
-    - SEDEL.Translations
-    - SEDEL.Test
-    - SEDEL
+    - PHiDI.Parser.Parser
+    - PHiDI.Environment
+    - PHiDI.Operators
+    - PHiDI.PrettyPrint
+    - PHiDI.Source.Syntax
+    - PHiDI.Source.Subtyping
+    - PHiDI.Source.Inference
+    - PHiDI.Source.Desugar
+    - PHiDI.Target.Syntax
+    - PHiDI.Target.Eval
+    - PHiDI.Util
+    - PHiDI.Translations
+    - PHiDI.Test
+    - PHiDI
   dependencies:
     - unbound-generics
 
 executables:
-  sedel-exe:
+  phidi-exe:
     main: Main.hs
     source-dirs: app
     ghc-options:
@@ -59,10 +59,10 @@ executables:
       - -rtsopts
       - -with-rtsopts=-N
     dependencies:
-      - sedel
+      - phidi
 
 tests:
-  sedel-test:
+  phidi-test:
     main: Spec.hs
     source-dirs: test
     ghc-options:
@@ -72,4 +72,4 @@ tests:
     dependencies:
       - tasty >=0.11.1
       - tasty-hspec >=1.1.3.1
-      - sedel
+      - phidi

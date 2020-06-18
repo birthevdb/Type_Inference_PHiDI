@@ -1,8 +1,8 @@
-{-# LANGUAGE NoImplicitPrelude,
-             LambdaCase #-}
+{-# LANGUAGE LambdaCase        #-}
+{-# LANGUAGE NoImplicitPrelude #-}
 
 
-module SEDEL.Source.Desugar
+module PHiDI.Source.Desugar
   ( desugarExpr
   , desugar
   , desugarTmBind
@@ -10,12 +10,12 @@ module SEDEL.Source.Desugar
   , expandType
   ) where
 
-import Protolude
-import Unbound.Generics.LocallyNameless
+import           Protolude
+import           Unbound.Generics.LocallyNameless
 
-import SEDEL.Environment
-import SEDEL.Source.Syntax
-import SEDEL.Fix
+import           PHiDI.Environment
+import           PHiDI.Fix
+import           PHiDI.Source.Syntax
 
 desugar :: [SDecl] -> [SDecl]
 desugar = map go
@@ -153,7 +153,7 @@ expandType ctx ty = runFreshM (go ctx ty)
     alg' :: SCtx -> SType' (FreshM SType) ->  FreshM SType
     alg' d (TVar a) = case lookupTVarSynMaybe d a of
       Nothing -> return $ mkTVar a
-      Just t -> cata (alg' d) t
+      Just t  -> cata (alg' d) t
     alg' d t = fmap In $ sequence t
 
     go :: SCtx -> Scheme -> FreshM Scheme

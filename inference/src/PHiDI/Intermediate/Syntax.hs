@@ -3,7 +3,7 @@
 {-# LANGUAGE MultiParamTypeClasses #-}
 {-# LANGUAGE TemplateHaskell       #-}
 
-module SEDEL.Intermediate.Syntax where
+module PHiDI.Intermediate.Syntax where
 
 import           Data.Maybe                          (fromMaybe)
 import           GHC.Generics                        (Generic)
@@ -11,7 +11,7 @@ import           Text.Megaparsec
 import           Unbound.Generics.LocallyNameless
 import           Unbound.Generics.LocallyNameless.TH
 
-import           SEDEL.Common
+import           PHiDI.Operators
 
 
 -- | Modules

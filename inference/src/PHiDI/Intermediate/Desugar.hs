@@ -1,8 +1,8 @@
+{-# LANGUAGE LambdaCase        #-}
 {-# LANGUAGE NoImplicitPrelude #-}
-{-# LANGUAGE LambdaCase #-}
 
 
-module SEDEL.Intermediate.Desugar
+module PHiDI.Intermediate.Desugar
   ( desugar
   , desugarExpr
   , desugarTmBind
@@ -10,12 +10,12 @@ module SEDEL.Intermediate.Desugar
   , expandType
   ) where
 
-import Protolude
-import Unbound.Generics.LocallyNameless
+import           Protolude
+import           Unbound.Generics.LocallyNameless
 
-import SEDEL.Environment
-import SEDEL.Intermediate.Syntax
-import SEDEL.Util
+import           PHiDI.Environment
+import           PHiDI.Intermediate.Syntax
+import           PHiDI.Util
 
 desugar :: [SDecl] -> [SDecl]
 desugar = map go
@@ -170,7 +170,7 @@ expandType ctx ty = runFreshM (go ctx ty)
     go d (TVar a) =
       case lookupTVarSynMaybe d a of
         Nothing -> return $ TVar a
-        Just t -> go d t
+        Just t  -> go d t
     go d (OpAbs b) = do
       ((x, Embed k), t) <- unbind b
       t' <- go (extendTVarCtx x k d) t

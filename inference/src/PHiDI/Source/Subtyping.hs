@@ -2,7 +2,7 @@
 {-# LANGUAGE NoImplicitPrelude #-}
 {-# LANGUAGE OverloadedStrings #-}
 
-module SEDEL.Source.Subtyping (subtype, equalSch) where
+module PHiDI.Source.Subtyping (subtype, equalSch) where
 
 
 import           Data.Sequence ((|>), Seq(..))
@@ -11,10 +11,10 @@ import           Protolude
 import           Unbound.Generics.LocallyNameless
 import           Data.Map as M
 
-import           SEDEL.Environment
-import           SEDEL.Source.Syntax
-import           SEDEL.Source.Desugar
-import           SEDEL.Fix
+import           PHiDI.Environment
+import           PHiDI.Source.Syntax
+import           PHiDI.Source.Desugar
+import           PHiDI.Fix
 
 data L = LTy SType | LLa Label | LAll TyName SType
 

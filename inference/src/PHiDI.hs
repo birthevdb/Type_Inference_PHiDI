@@ -1,26 +1,27 @@
-{-# LANGUAGE OverloadedStrings, NoImplicitPrelude #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
 
-module SEDEL
+module PHiDI
   ( readAndEval
   , driver
   , render
   , evalFile
   ) where
 
-import           Control.Exception (SomeException, try)
-import qualified Data.Text as T
+import           Control.Exception         (SomeException, try)
+import qualified Data.Text                 as T
 import           Data.Text.Prettyprint.Doc ((<+>))
 import qualified Data.Text.Prettyprint.Doc as Pretty
-import           Protolude hiding (evaluate)
-import           Prelude (String)
+import           Prelude                   (String)
+import           Protolude                 hiding (evaluate)
 
-import           SEDEL.Environment
-import           SEDEL.Parser.Parser (parseModule, parseType)
-import           SEDEL.PrettyPrint
-import           SEDEL.Source.Syntax
-import           SEDEL.Source.Inference
-import           SEDEL.Source.Subtyping
-import           SEDEL.Target.Eval
+import           PHiDI.Environment
+import           PHiDI.Parser.Parser       (parseModule, parseType)
+import           PHiDI.PrettyPrint
+import           PHiDI.Source.Inference
+import           PHiDI.Source.Subtyping
+import           PHiDI.Source.Syntax
+import           PHiDI.Target.Eval
 
 type Result = Either FDoc (Scheme, FDoc, Text)
 

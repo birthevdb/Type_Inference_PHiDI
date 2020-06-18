@@ -1,12 +1,12 @@
-module SEDEL.Util where
+module PHiDI.Util where
 
-import            SEDEL.Source.Syntax
-import qualified  SEDEL.Intermediate.Syntax as I
-import            SEDEL.Fix
+import           PHiDI.Fix
+import qualified PHiDI.Intermediate.Syntax             as I
+import           PHiDI.Source.Syntax
 
-import Data.List (foldl', foldl1')
-import Unbound.Generics.LocallyNameless
-import Unbound.Generics.LocallyNameless.Name
+import           Data.List                             (foldl', foldl1')
+import           Unbound.Generics.LocallyNameless
+import           Unbound.Generics.LocallyNameless.Name
 
 -- Utility for parsing
 
@@ -35,7 +35,7 @@ eapp :: Expr -> Expr -> Expr
 eapp = App
 
 mkRecds :: [(Label, Expr)] -> Expr
-mkRecds [] = Top
+mkRecds []         = Top
 mkRecds ((l, e):r) = foldl' (\t (l', e') -> Merge t (Rec l' e')) (Rec l e) r
 
 mkRecds' :: [TmBind] -> Expr

@@ -1,11 +1,12 @@
-{-# LANGUAGE DeriveGeneric, MultiParamTypeClasses #-}
+{-# LANGUAGE DeriveGeneric         #-}
+{-# LANGUAGE MultiParamTypeClasses #-}
 
-module SEDEL.Target.Syntax where
+module PHiDI.Target.Syntax where
 
-import Unbound.Generics.LocallyNameless
-import GHC.Generics (Generic)
+import           GHC.Generics                     (Generic)
+import           Unbound.Generics.LocallyNameless
 
-import SEDEL.Common
+import           PHiDI.Operators
 
 
 ---------------------------
@@ -51,7 +52,7 @@ instance Subst UExpr CompOp
 instance Subst UExpr UType
 instance Subst UExpr UExpr where
   isvar (UVar v) = Just (SubstName v)
-  isvar _ = Nothing
+  isvar _        = Nothing
 
 evar :: String -> UExpr
 evar = UVar . s2n

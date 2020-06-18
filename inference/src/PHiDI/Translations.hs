@@ -1,13 +1,13 @@
-module SEDEL.Translations where
+module PHiDI.Translations where
 
-import SEDEL.Source.Syntax as S
-import SEDEL.Intermediate.Syntax as I
-import SEDEL.Environment
-import SEDEL.Fix
+import           PHiDI.Environment
+import           PHiDI.Fix
+import           PHiDI.Intermediate.Syntax             as I
+import           PHiDI.Source.Syntax                   as S
 
-import Unbound.Generics.LocallyNameless
-import Unbound.Generics.LocallyNameless.Name
-import qualified Data.Map.Strict as M
+import qualified Data.Map.Strict                       as M
+import           Unbound.Generics.LocallyNameless
+import           Unbound.Generics.LocallyNameless.Name
 
 -- | Change the sort of a name.
 translate :: Name a -> Name b
@@ -182,5 +182,5 @@ translPars ((n, Just ty):pars) = do
 
 -- Translation function for kinds
 translKind :: S.Kind -> I.Kind
-translKind S.Star = I.Star
+translKind S.Star           = I.Star
 translKind (S.KArrow k1 k2) = I.KArrow (translKind k1) (translKind k2)

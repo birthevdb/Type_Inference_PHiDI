@@ -9,7 +9,7 @@
 {-# LANGUAGE TemplateHaskell       #-}
 {-# LANGUAGE TypeOperators         #-}
 
-module SEDEL.Source.Syntax where
+module PHiDI.Source.Syntax where
 
 import           Data.List
 import           Data.Maybe                          (fromMaybe)
@@ -20,8 +20,8 @@ import           Text.Megaparsec
 import           Unbound.Generics.LocallyNameless
 import           Unbound.Generics.LocallyNameless.TH
 
-import           SEDEL.Common
-import           SEDEL.Fix
+import           PHiDI.Operators
+import           PHiDI.Fix
 
 
 -- | Modules

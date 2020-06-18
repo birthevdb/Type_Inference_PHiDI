@@ -1,18 +1,22 @@
-{-# LANGUAGE GADTs, OverloadedStrings, FlexibleContexts, NoImplicitPrelude, RankNTypes #-}
+{-# LANGUAGE FlexibleContexts  #-}
+{-# LANGUAGE GADTs             #-}
+{-# LANGUAGE NoImplicitPrelude #-}
+{-# LANGUAGE OverloadedStrings #-}
+{-# LANGUAGE RankNTypes        #-}
 
-module SEDEL.Environment where
+module PHiDI.Environment where
 
 
-import qualified Data.Map.Strict as M
-import           Data.Text.Prettyprint.Doc ((<+>))
-import qualified Data.Text.Prettyprint.Doc as Pretty
+import qualified Data.Map.Strict                  as M
+import           Data.Text.Prettyprint.Doc        ((<+>))
+import qualified Data.Text.Prettyprint.Doc        as Pretty
 import           Protolude
 import           Text.Megaparsec
 import           Unbound.Generics.LocallyNameless
 
-import qualified SEDEL.Source.Syntax as S
-import qualified SEDEL.Intermediate.Syntax as I
-import           SEDEL.PrettyPrint
+import qualified PHiDI.Intermediate.Syntax        as I
+import           PHiDI.PrettyPrint
+import qualified PHiDI.Source.Syntax              as S
 
 type TcMonad tm_name scheme ty_name kind typ exp = FreshMT (ReaderT (Ctx tm_name scheme ty_name kind typ exp) (ExceptT Err IO))
 
@@ -31,9 +35,9 @@ data TypeValue typ
 
 -- | (Polymorphic) environment manipulation and accessing functions
 data Ctx tm_name scheme ty_name kind typ exp = Ctx
-  { varCtx :: M.Map tm_name scheme
-  , tyCtx :: M.Map ty_name (kind, typ, TypeValue typ)
-  , bndCtx :: M.Map tm_name exp
+  { varCtx         :: M.Map tm_name scheme
+  , tyCtx          :: M.Map ty_name (kind, typ, TypeValue typ)
+  , bndCtx         :: M.Map tm_name exp
   , sourceLocation :: [SourceLocation]
   }
 
@@ -91,14 +95,14 @@ lookupVarTy :: (Ord tm_name, Pretty.Pretty tm_name) => (MonadReader (Ctx tm_name
 lookupVarTy v = do
   env <- asks varCtx
   case M.lookup v env of
-    Nothing -> errThrow [DS $ "Not in scope:" <+> Pretty.pretty v]
+    Nothing  -> errThrow [DS $ "Not in scope:" <+> Pretty.pretty v]
     Just res -> return res
 
 lookupTVarConstraint :: (Ord ty_name, Pretty.Pretty ty_name) => (MonadReader (Ctx tm_name scheme ty_name kind typ exp) m, MonadError Err m) => ty_name -> m typ
 lookupTVarConstraint v = do
   env <- asks tyCtx
   case M.lookup v env of
-    Nothing  -> errThrow [DS $ "Not in scope:" <+> Pretty.pretty v]
+    Nothing        -> errThrow [DS $ "Not in scope:" <+> Pretty.pretty v]
     Just (_, c, _) -> return c
 
 lookupTVarKindMaybe :: (Show ty_name, Show kind, Show typ, Ord ty_name) => Ctx tm_name scheme ty_name kind typ exp -> ty_name -> Maybe kind
@@ -111,8 +115,8 @@ lookupTVarConstraintMaybe ctx v =
 lookupTVarSynMaybe :: Ord ty_name => Ctx tm_name scheme ty_name kind typ exp -> ty_name -> Maybe typ
 lookupTVarSynMaybe ctx v =
   case (\(_, _, t) -> t) <$> M.lookup v (tyCtx ctx) of
-    Nothing -> Nothing
-    Just TerminalType -> Nothing
+    Nothing                  -> Nothing
+    Just TerminalType        -> Nothing
     Just (NonTerminalType t) -> Just t
 
 lookupTmDef :: Ord tm_name => (MonadReader (Ctx tm_name scheme ty_name kind typ exp) m) => tm_name -> m (Maybe exp)

@@ -7,7 +7,7 @@
              UndecidableInstances #-}
 
 
-module SEDEL.PrettyPrint
+module PHiDI.PrettyPrint
   ( pprint
   , FPretty(..)
   , FDoc
@@ -20,11 +20,11 @@ import           Unbound.Generics.LocallyNameless
 import           Protolude
 import           Text.Megaparsec
 
-import           SEDEL.Common
-import qualified SEDEL.Source.Syntax as S
-import qualified SEDEL.Intermediate.Syntax as I
+import           PHiDI.Operators
+import qualified PHiDI.Source.Syntax as S
+import qualified PHiDI.Intermediate.Syntax as I
 import qualified Data.List
-import           SEDEL.Fix
+import           PHiDI.Fix
 
 instance Pretty SourcePos where
   pretty (SourcePos _ line col) =

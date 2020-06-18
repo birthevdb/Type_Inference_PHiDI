@@ -9,7 +9,7 @@ let
       , scientific, stdenv, tasty, tasty-hspec, text, unbound-generics
       }:
       mkDerivation {
-        pname = "sedel";
+        pname = "phidi";
         version = "0.1.0.0";
         src = ./.;
         isLibrary = true;
