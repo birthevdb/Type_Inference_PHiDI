@@ -26,13 +26,6 @@ parseInput = do
     (Right t1, Right t2) -> do
       putStrLn $ show $ checkSubtyping t1 t2
       return ()
-      -- case checkSubtyping t1 t2 of
-      --   Nothing -> do
-      --     putStrLn "Subtyping constraint not solvable."
-      --     exitWith (ExitFailure 1)
-      --   Just table -> do
-      --     putStrLn $ show table
-      --     return ()
 
 
 main :: IO ()

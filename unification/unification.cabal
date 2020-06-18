@@ -8,12 +8,12 @@ cabal-version: 1.12
 
 name:           unification
 version:        0.1.0.0
-description:    Please see the README on GitHub at <https://github.com/githubuser/unification#readme>
-homepage:       https://github.com/githubuser/unification#readme
-bug-reports:    https://github.com/githubuser/unification/issues
-author:         Author name here
-maintainer:     example@example.com
-copyright:      2020 Author name here
+description:    Please see the README on GitHub at <https://github.com/birthevdb/Type_Inference_PHiDI/unification#readme>
+homepage:       https://github.com/birthevdb/Type_Inference_PHiDI/unification#readme
+bug-reports:    https://github.com/birthevdb/Type_Inference_PHiDI/unification/issues
+author:         Birthe van en Berg
+maintainer:     birthe.vandenberg@kuleuven.be
+copyright:      2020, Birthe van den Berg
 license:        BSD3
 license-file:   LICENSE
 build-type:     Simple
@@ -23,13 +23,15 @@ extra-source-files:
 
 source-repository head
   type: git
-  location: https://github.com/githubuser/unification
+  location: https://github.com/birthevdb/Type_Inference_PHiDI/unification
 
 library
   exposed-modules:
       Unification
       Parser
       Syntax
+      Util
+      ConstraintChecker
   other-modules:
       Paths_unification
   hs-source-dirs:
@@ -68,4 +70,6 @@ test-suite unification-test
     , unification
     , megaparsec >=6.0
     , parser-combinators
+    , QuickCheck
+    , unbound-generics
   default-language: Haskell2010

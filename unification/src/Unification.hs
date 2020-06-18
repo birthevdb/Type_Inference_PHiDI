@@ -5,13 +5,15 @@ module Unification
 import qualified Data.List   as List
 import           Debug.Trace as DT
 import           Syntax
+import           Util
 
 ---------------------------------
 -- CHECK SUBTYPING CONSTRAINTS --
 ---------------------------------
 
 checkSubtyping :: Type -> Type -> [Substitution]
-checkSubtyping t1 t2 = map expand (possTbls [(EmptyQ, t1, t2)] [] []) -- empty table, empty cache
+checkSubtyping t1 t2 = DT.trace ("tables: " ++ show tbls) $ map expand tbls
+  where tbls = possTbls [(EmptyQ, t1, t2)] [] [] -- empty table, empty cache
 
 -----------------------------
 -- COMPUTE POSSIBLE TABLES --
@@ -20,14 +22,14 @@ checkSubtyping t1 t2 = map expand (possTbls [(EmptyQ, t1, t2)] [] []) -- empty t
 -- Computes a list of possible tables as output from the destruct function
 possTbls :: Subs -> Table -> Subs -> [Table]
 possTbls []       table _     = [table]
-possTbls (s:subs) table cache = result $ destruct s table
+possTbls (s:subs) table cache = DT.trace ("result:  " ++ show (destruct s table)) $ interpret $ destruct s table
   where
-    result :: Result -> [Table]
-    result  Same           = possTbls subs table (s:cache)
-    result (Tab table' cs) = possTbls (((List.\\) cs (s:cache)) ++ subs) table' (s:cache)
-    result (Cons cons)     = possTbls (cons ++ subs) table (s:cache)
-    result (Branch r1 r2)  = (result r1) ++ (result r2)
-    result  Fail           = []
+    interpret :: Result -> [Table]
+    interpret  Same              = possTbls subs table (s:cache)
+    interpret (Tab table' cons') = possTbls (((List.\\) cons' (s:cache)) ++ subs) table' (s:cache)
+    interpret (Cons cons)        = possTbls (cons ++ subs) table (s:cache)
+    interpret (Branch r1 r2)     = interpret r1 ++ interpret r2
+    interpret  Fail              = []
 
 -- The result of a constraint can be the following:
 data Result = Same                  -- ignore the constraint
@@ -35,6 +37,7 @@ data Result = Same                  -- ignore the constraint
             | Cons   Subs           -- destruct into smaller constraints
             | Branch Result Result  -- make a branch, i.e. multiple possible results
             | Fail                  -- the constraints can not be solved
+            deriving (Eq, Show)
 
 ------------------------------------
 -- DESTRUCT SUBTYPING CONSTRAINTS --
@@ -44,62 +47,69 @@ data Result = Same                  -- ignore the constraint
 -- Returns a result as described above
 destruct :: Sub -> Table -> Result
 
--- (2) Trivial cases : ignore
--- (2.1) Same types
-destruct (EmptyQ, t1, t2) _ | t1 == t2 = Same
--- (2.2) Bottom
-destruct (_, Bot, _) _ = Same
--- (2.3) Top
-destruct (_, _, t2) _ | toplike t2 = Same
--- (2.4) BCD distributivity A & B <: A and A & B <: B
-destruct (EmptyQ, And t1 t2, t3) _ | t1 == t3 || t2 == t3 = Same
+-- (1) Trivial cases : ignore
+-- (1.1) Same types
+destruct (EmptyQ, c1, c2) _ | isPrim c1 && isPrim c2 && c1 == c2 = Same
+-- (1.2) Bottom
+destruct (_, Bot, c) _  | isPrim c = Same
+-- (1.3) Top
+destruct (_, _, c) _ | toplike c = Same
+-- -- (1.4) BCD distributivity A & B <: A and A & B <: B
+-- destruct (EmptyQ, And t1 t2, t3) _ | t1 == t3 || t2 == t3 = Same
 
--- (3) Add upper and/or lower bounds to the table
+-- (2) Add upper and/or lower bounds to the table
 destruct c table | containsUni c = occursCheck table c
 
--- (4) Destruct the right type of the constraint first
--- (4.1) Push type to queue
+-- (3) Destruct the right type of the constraint first
+-- (3.1) Push type to queue
 destruct (q, t1, Arr t2 t3) _ = Cons [(pushType t2 q, t1, t3)]
--- (4.2) Push label to queue
+-- (3.2) Push label to queue
 destruct (q, t1, Rec l t2)  _ = Cons [(pushLabel l q, t1, t2)]
--- (4.3) Intersection type
+-- (3.3) Intersection type
 destruct (q, t1, And t2 t3) _ = Cons ((q, t1, t2) : (q, t1, t3) : [])
 
--- (5) Destruct the left type of the constraint
--- (5.1) Pop type from queue
-destruct (QA t q, Arr t1 t2, t3) _ = Cons ((EmptyQ, t, t1) : (q, t2, t3) : [])
--- (5.1) Pop label from queue
-destruct (QL l q, Rec l' t1, t2) _ | l == l' = Cons [(q, t1, t2)]
--- (5.3) Intersection types
--- (5.3.1) BCD subtyping function types
-destruct (q, And (Arr t1 t2) (Arr t3 t4), t) _ = Branch c1 (Branch c2 c3)
+-- (4) Destruct the left type of the constraint
+-- (4.1) Pop type from queue
+destruct (QA t q, Arr t1 t2, c3) _ | isPrim c3 = Cons ((EmptyQ, t, t1) : (q, t2, c3) : [])
+-- (4.2) Pop label from queue
+destruct (QL l q, Rec l' t1, c2) _ | isPrim c2 = if l == l' then Cons [(q, t1, c2)] else Fail
+-- (4.3) Intersection types
+destruct (q, And t1 t2, c) _ | isPrim c = Branch br1 (Branch br2 br3)
   where
-    c1 = Cons [(q, Arr t1 t2, t)]
-    c2 = Cons [(q, Arr t3 t4, t)]
-    c3 = Cons [(q, Arr (And t1 t3) (And t2 t4), t)]
--- (5.3.2) BCD subtyping record types
-destruct (q, And (Rec l1 t1) (Rec l2 t2), t) _ =  Branch c1 (Branch c2 c3)
-  where
-    c1 = Cons [(q, Rec l1 t1, t)]
-    c2 = Cons [(q, Rec l2 t2, t)]
-    c3 = if l1 == l2 then Cons [(q, Rec l1 (And t1 t2), t)] else Same
--- (5.3.3) Other intersections
-destruct (q, And t1 t2, t3) _ = Branch c1 c2
-  where
-    c1 = Cons [(q, t1, t3)]
-    c2 = Cons [(q, t2, t3)]
+    br1 = Cons [(q, t1, c)]
+    br2 = Cons [(q, t2, c)]
+    br3 = Cons ((q, t1, c) : (q, t2, c) : [])
 
--- (6) Reconstruct constraints
--- (6.1) Pop type from queue : Q, t ⊢ u <: t' ==> Q ⊢ u <: t -> t'
-destruct (QA t q, Uni u, t')  _ = Cons [(q, Uni u, Arr t t')]
--- (6.2) Pop label from queue : Q, l ⊢ u <: t ==> Q ⊢ u <: {l : t}
-destruct (QL l q, Uni u, t)   _ = Cons [(q, Uni u, Rec l t)]
--- (6.3) Unification variable is toplike
+-- (5) Reconstruct constraints
+-- (5.1) Pop type from queue : Q, t ⊢ u <: t' ==> Q ⊢ u <: t -> t'
+--                             Q, l ⊢ u <: t ==> Q ⊢ u <: {l : t}
+destruct (q, Uni u, c)  _ | isPrim c = Cons [(EmptyQ, Uni u, expandType q c)]
+-- (5.3) Unification variable is toplike
 destruct (QL _ _, Top, Uni u) _ = Cons [(EmptyQ, Top, Uni u)]
 destruct (QA _ _, Top, Uni u) _ = Cons [(EmptyQ, Top, Uni u)]
+-- (5.4) Q ⊢ c <: u
+destruct (QL _ _, c, Uni u) _ | isPrim c = Cons [(EmptyQ, Top, Uni u)] -- Fail
+destruct (QA _ _, c, Uni u) _ | isPrim c = Cons [(EmptyQ, Top, Uni u)] -- Fail
 
--- (7) Other cases : fail
-destruct _ _ = Fail
+-- (6) Other cases : fail
+-- (6.1) Q ⊢ c1 <: c2
+destruct (_, c1, c2) _ | isPrim c1 && isPrim c2 && c1 /= c2 = Fail
+-- (6.2) t1 -> t2 <: c
+destruct (EmptyQ, Arr _ _, c) _ | isPrim c = Fail
+-- (6.3) {l : t} <: c
+destruct (EmptyQ, Rec _ _, c) _ | isPrim c = Fail
+-- (6.4) t1 -> t2 <: {l : t}
+destruct (QL _ _, Arr _ _, c) _ | isPrim c = Fail
+-- (6.5) {l : t} <: t1 -> t2
+destruct (QA _ _, Rec _ _, c) _ | isPrim c = Fail
+-- (6.6) Q ⊢ Top <: c
+destruct (_, t, c) _ | isPrim c && toplike t && (not $ toplike c) = Fail
+-- (6.7) Q ⊢ c <: c
+destruct (QA _ _, c1, c2) _ | isPrim c1 && isPrim c2 = Fail
+destruct (QL _ _, c1, c2) _ | isPrim c1 && isPrim c2 = Fail
+
+
+destruct s _ = DT.trace ("OTHER......    " ++ show s) $ Fail
 
 -------------------
 -- DETECT CYCLES --
@@ -110,7 +120,11 @@ type Cycle = [TUni]
 
 -- The occurs check properly deals with cycles in the subtyping constraints
 occursCheck :: Table -> Sub -> Result
-occursCheck table (q, Uni u, t) =
+occursCheck table (q, And t1 t2, Uni u2) | elem (Uni u2) (elemInt (And t1 t2)) = Same
+occursCheck table (q, And t1 t2, Uni u2) | elem (Uni u2) (elemInt (And t1 t2))  = Same
+occursCheck table (q, Uni u1, And (Uni u2) t) | u1 == u2 = occursCheck table (q, Uni u1, t)
+occursCheck table (q, Uni u1, And t (Uni u2)) | u1 == u2 = occursCheck table (q, Uni u1, t)
+occursCheck table c@(q, Uni u, t) =
   -- (1) t has no unification vars => add bounds to the table
   if List.null unis then Tab table' cons'
     -- (2) t has unification vars including u => instantiate u with Top
@@ -119,14 +133,15 @@ occursCheck table (q, Uni u, t) =
       else if empty cycles then Tab table' cons'
         -- (4) t has unification vars including cycle => instantiate the
         -- unification variables in turn with Top
-        else constructBranches table' cycles
+        else DT.trace ("cycles: " ++ show cycles ++ "\nconstop1  " ++ show consTop) $ constructBranches table cycles c
   where
     unis            = List.nub $ findUnis t
     (table', cons') = addBounds (q, Uni u, t) table
-    tableTop        = Tab (substTop u table') [(q, Top, replaceTop u t)]
+    consTop         = (q, Top, replaceTop u t) : [(EmptyQ, Top, t) | t <- getUpper u table']
+    tableTop        = Tab (substTop u table') consTop
     cycles          = map (\ux -> detectCycle [ux] table') unis
 
-occursCheck table (q, t, Uni u) =
+occursCheck table c@(q, t, Uni u) =
   -- (1) t has no unification vars => add bounds to the table
   if List.null unis then Tab table' cons'
     -- (2) t has unification vars including u => instantiate u with Top
@@ -135,29 +150,42 @@ occursCheck table (q, t, Uni u) =
       else if empty cycles then Tab table' cons'
         -- (4) t has unification vars including cycle => instantiate the
         -- unification variables in turn with Top
-        else constructBranches table' cycles
+        else DT.trace ("cycles: " ++ show cycles ++ "\nconstop2  " ++ show consTop) $ constructBranches table cycles c
   where
     unis            = List.nub $ findUnis t
     (table', cons') = addBounds (q, t, Uni u) table
-    tableTop        = Tab (substTop u table') [(q, replaceTop u t, Top)]
+    consTop         = (q, Top, replaceTop u t) : [(EmptyQ, Top, t) | t <- getUpper u table']
+    tableTop        = Tab (substTop u table') consTop
     cycles          = map (\ux -> detectCycle [ux] table') unis
 
 -- Construct branches for a list of cycles of unification vars
-constructBranches :: Table -> [Cycle] -> Result
-constructBranches table [c]    = constructBranch table c
-constructBranches table (c:cs) = Branch (constructBranch table c) (constructBranches table cs)
+constructBranches :: Table -> [Cycle] -> Sub -> Result
+constructBranches table [cyc]      c = constructBranch table cyc c
+constructBranches table (cyc:cycs) c = Branch (constructBranch table cyc c) (constructBranches table cycs c)
 
 -- Construct branches for a cycle (i.e. a list of unification variables)
 -- by instantiating them in turn with Top
-constructBranch :: Table -> Cycle -> Result
-constructBranch table [u]    = Tab table' ((EmptyQ, Top, Uni u) : consTable table')
+constructBranch :: Table -> Cycle -> Sub -> Result
+constructBranch tab [] c = Tab table cons
   where
-    table' = substTop u table
-constructBranch table (u:us) = Branch result' (constructBranch table us)
+    (table, cons)  = addBounds c tab
+constructBranch tab [u] c@(q, t1, t2) = DT.trace ("CONS : " ++ show cons') $ Tab table' cons'
   where
-    result' = Tab table' cons'
-    table' = substTop u table
-    cons'  = (EmptyQ, Top, Uni u) : consTable table'
+    (table, _) = addBounds c tab
+    cons1      = [(EmptyQ, Top, Uni u)]
+    cons2      = [(EmptyQ, Top, t) | t <- getUpper u table]
+    cons3      = [(substTopQueue u q, substTopType u t1, substTopType u t2)]
+    table'     = substTop u table
+    cons'      = cons1 ++ cons2 ++ cons3 ++ consTable table'
+constructBranch tab (u:us) c@(q, t1, t2) = DT.trace ("CONS : " ++ show cons') $ Branch result' (constructBranch tab us (q, t1, t2))
+  where
+    (table, _) = addBounds c tab
+    cons1      = [(EmptyQ, Top, Uni u)]
+    cons2      = [(EmptyQ, Top, t) | t <- getUpper u table]
+    cons3      = [(substTopQueue u q, substTopType u t1, substTopType u t2)]
+    result'    = Tab table' cons'
+    table'     = substTop u table
+    cons'      = cons1 ++ cons2 ++ cons3 ++ consTable table'
 
 -- Detect a cycle in a table
 detectCycle :: [TUni] -> Table -> Cycle
@@ -171,6 +199,7 @@ detectCycle acc@(u:us) table = concat $ map go (findAllUnis u table)
 --------------------------------
 -- EXPANDING CONSTRAINT TABLE --
 --------------------------------
+
 -- Expand a constraint table
 expand :: Table -> Substitution
 -- base case
@@ -182,41 +211,27 @@ expand (e:es) | (not $ null unis) && (not $ null entries) = sub ++ rest
     entries = getEntries unis es
     sub     = expand entries
     rest    = expand (applySubstTable sub ((List.\\) (e:es) entries))
-expand (e:es) | (not $ null unis) && (null entries) = sub ++ rest
-  where
-    unis    = hasUnis (lower e ++ upper e)
-    entries = getEntries unis es
-    sub     = [(uni e, PosT, lub $ lower e),
-               (uni e, NegT, glb $ upper e)]
-    rest    = expand $ applySubstTable sub es
--- no lower/upper bounds
 expand (e:es) | null (lower e) && null (upper e) = sub ++ rest
   where
     sub  = [(uni e, PosT, Var $ uni e),
             (uni e, NegT, Var $ uni e)]
     rest = expand $ applySubstTable sub es
--- only an upper bound
-expand (e:es) | null (lower e) = sub ++ rest
-  where
-    sub  = [(uni e, PosT, glb $ upper e), (uni e, NegT, glb $ upper e)]
-    rest = expand $ applySubstTable sub es
--- only a lower bound
-expand (e:es) | null (upper e) = sub ++ rest
-  where
-    sub  = [(uni e, PosT, lub $ lower e), (uni e, NegT, lub $ lower e)]
-    rest = expand $ applySubstTable sub es
--- lower bound and upper bound
+
 expand (e:es) = sub ++ rest
   where
-    sub  = [(uni e, PosT, lub $ lower e), (uni e, NegT, glb $ upper e)]
-    rest = expand $ applySubstTable sub es
+    sub     = if null $ lower e
+              then [(uni e, PosT, glb $ upper e), (uni e, NegT, glb $ upper e)]
+              else if null $ upper e
+                   then [(uni e, PosT, lub $ lower e), (uni e, NegT, lub $ lower e)]
+                   else [(uni e, PosT, lub $ lower e), (uni e, NegT, glb $ upper e)]
+    rest    = expand $ applySubstTable sub es
 
 ----------------
 -- EDIT TABLE --
 ----------------
 
 -- Add (upper/lower) bounds to the table
-addBounds :: Sub -> Table -> (Table, [Sub])
+addBounds :: Sub -> Table -> (Table, Subs)
 addBounds (_, Uni u1, Uni u2) table = (addUpper u1 (Uni u2) table, cons)
   -- all lower bounds should be a subtype of the new upper bound
   where cons   = [(EmptyQ, t1, Uni u2) | t1 <- getLower u1 table]
@@ -273,52 +288,15 @@ consTable (e:es) = go (lower e) (upper e) ++ consTable es
     go []         _    = []
     go (low:lows) upps = map (\upp -> (EmptyQ, low, upp)) upps ++ go lows upps
 
--------------------
--- SUBSTITUTIONS --
--------------------
-
--- Substitute a unification variable with Top in a table
-substTop :: TUni -> Table -> Table
-substTop u []     = []
-substTop u (e:es) | uni e == u = Entry u [Top] [] : substTop u es
-substTop u (e:es) = e' : substTop u es
-  where
-    e' = Entry (uni e) low upp
-    low = map (replaceTop u) (lower e)
-    upp = map (replaceTop u) (upper e)
-
--- Apply a substitution to a table
-applySubstTable :: Substitution -> Table -> Table
-applySubstTable []         table = table
-applySubstTable (sub:subs) table = applySubstTable subs (substInTable sub table)
-
--- Apply a substitution to a table
-substInTable :: (TUni, Polarity, Type) -> Table -> Table
-substInTable _    []    = []
-substInTable sub (e:es) = Entry (uni e) low upp : substInTable sub es
-  where
-    low  = map (substInType sub PosT) (lower e)
-    upp  = map (substInType sub NegT) (upper e)
-    rest = substInTable sub es
-
--- Apply a substitution to a type with a given polarity
-substInType :: (TUni, Polarity, Type) -> Polarity -> Type -> Type
-substInType (u1, pol1, t1) pol2 (Uni u2) | pol1 == pol2 && u1 == u2 = t1
-substInType (u1, pol1, t1) pol2 (Var a2) | pol1 == pol2 && u1 == a2 = t1
-substInType s pol (Arr t1 t2) = Arr (substInType s (inv pol) t1)
-                                    (substInType s pol t2)
-substInType s pol (And t1 t2) = And (substInType s pol t1)
-                                    (substInType s pol t2)
-substInType s pol (Rec l t)   = Rec l (substInType s pol t)
-substInType _ _ t = t
-
 ----------------------------
 -- UPPER AND LOWER BOUNDS --
 ----------------------------
 
 -- Compute the least upper bound of a list of types
 lub :: [Type] -> Type
-lub = foldr lub' Bot
+-- lub []     = Top -- TODO
+lub [t]    = t
+lub (t:ts) = lub' t (lub ts)
 
 -- Compute the least upper bound of two types
 lub' :: Type -> Type -> Type
@@ -341,94 +319,26 @@ lub' _ _ = Top
 
 -- Compute the greatest lower bound of a list of types
 glb :: [Type] -> Type
-glb = foldr glb' Top
+-- glb []     = Bot -- TODO
+glb [t]    = t
+glb (t:ts) = glb' t (glb ts)
 
 -- Compute the greatest lower bound of two types
 glb' :: Type -> Type -> Type
--- BCD subtyping
-glb' (Arr t11 t12) (Arr t21 t22) = Arr (glb' t11 t21) (glb' t12 t22)
+glb' t1             t2           | t1 == t2 = t1
+glb' t1             Top          = t1
+glb' Top            t2           = t2
+glb' (Arr t11 t12) (Arr t21 t22) = Arr (lub' t11 t21) (glb' t12 t22)
 glb' (Rec l1 t1)   (Rec l2 t2)   | l1 == l2 = Rec l1 (glb' t1 t2)
--- simplify intersections e.g. A & B & A & C & B = A & B & C
 glb' (And t11 t12)  t2           = simplify $ And (glb' t11 t2) (glb' t12 t2)
 glb' t1            (And t21 t22) = simplify $ And (glb' t1 t21) (glb' t1 t22)
 glb' t1             t2           = And t1 t2
-
-------------------------------------
--- SIMPLIFYING INTERSECTION TYPES --
-------------------------------------
-
--- Simplify an intersection type
-simplify :: Type -> Type
-simplify ty = mkInt $ simplInt ty []
-  where
-    simplInt :: Type -> [Type] -> [Type]
-    simplInt t           lst | t `elem` lst = lst
-    simplInt (And t1 t2) lst = simplInt t2 (simplInt t1 lst)
-    simplInt _           lst = lst
-    mkInt :: [Type] -> Type
-
-    mkInt []     = Top
-    mkInt [x]    = x
-    mkInt (x:xs) = And x (mkInt xs)
-
-----------------------
--- HELPER FUNCTIONS --
-----------------------
-
--- Toplike types are those types that are isomorphic to top
-toplike :: Type -> Bool
-toplike Top         = True
-toplike (And t1 t2) = toplike t1 && toplike t2
-toplike (Arr _   t) = toplike t
-toplike (Rec _ t)   = toplike t
-toplike _           = False
-
--- Check whether a subtyping rule contains a unification variable
-containsUni :: Sub -> Bool
-containsUni (EmptyQ, Uni u, _) = True
-containsUni (EmptyQ, _, Uni u) = True
-containsUni  _                 = False
-
--- Find all unification variables in a type
-findUnis :: Type -> [TUni]
-findUnis (Uni u)     = [u]
-findUnis (Arr t1 t2) = (findUnis t1) ++ (findUnis t2)
-findUnis (And t1 t2) = (findUnis t1) ++ (findUnis t2)
-findUnis (Rec _ t)   = findUnis t
-findUnis _           = []
-
--- Find all unification variables in a list of types
-hasUnis :: [Type] -> [TUni]
-hasUnis ts = foldr (++) [] (map findUnis ts)
-
--- Replace a unification variable in a type with top
-replaceTop :: TUni -> Type -> Type
-replaceTop u1 (Uni u2)   | u1 == u2 = Top
-replaceTop u (Arr t1 t2) = Arr (replaceTop u t1) (replaceTop u t2)
-replaceTop u (And t1 t2) = And (replaceTop u t1) (replaceTop u t2)
-replaceTop u (Rec l t)   = Rec l (replaceTop u t)
-replaceTop _ t           = t
-
--- Check whether a list of lists is empty
-empty :: [[a]] -> Bool
-empty []   = True
-empty [[]] = True
-empty _    = False
-
-inv :: Polarity -> Polarity
-inv PosT = NegT
-inv NegT = PosT
-
--- TODO: proof strategy
-
--- [C] = { Theta | |= Theta(C)}
--- forall c, c'. (c >-> c') => [c] = [c']
--- forall c, c1, c2. (c >-> c1) and (c >-> c2) => [c] = [c1] and [c] = [c2]
-
--- zie paper Inferring Algebraic Effects (3.2, Theorem 3.3)
-
-
--- \usepackage{stmaryrd}
--- \begin{equation}
---   \llbracket     1 \rrbracket       \quad
--- \end{equation}
+-- -- equal types
+-- glb' t1            t2            | t1 == t2 = t1
+-- -- BCD subtyping
+-- glb' (Arr t11 t12) (Arr t21 t22) = Arr (glb' t11 t21) (glb' t12 t22)
+-- glb' (Rec l1 t1)   (Rec l2 t2)   | l1 == l2 = Rec l1 (glb' t1 t2)
+-- -- simplify intersections e.g. A & B & A & C & B = A & B & C
+-- glb' (And t11 t12)  t2           = simplify $ And (glb' t11 t2) (glb' t12 t2)
+-- glb' t1            (And t21 t22) = simplify $ And (glb' t1 t21) (glb' t1 t22)
+-- glb' t1             t2           = And t1 t2
